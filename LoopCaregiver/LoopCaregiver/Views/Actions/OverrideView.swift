@@ -1,0 +1,93 @@
+//
+//  OverrideView.swift
+//  LoopCaregiver
+//
+//  Created by Bill Gestrich on 11/13/22.
+//
+
+import SwiftUI
+import NightscoutClient
+
+struct OverrideView: View {
+    
+    @ObservedObject var looper: Looper
+    @Binding var showSheetView: Bool
+    
+    @State private var overidePresets: [NightscoutOverridePreset] = []
+    @State private var overrideFromNightscout: NightscoutOverridePreset?
+    @State private var pickerCurrentlySelectedOverride: NightscoutOverridePreset?
+    
+    var body: some View {
+        
+        NavigationStack {
+            VStack {
+                Spacer()
+                HStack {
+                    Spacer()
+                    Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
+                        Text("None").tag(nil as NightscoutOverridePreset?)
+                        ForEach(overidePresets, id: \.self) { overrideValue in
+                            Text("\(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
+                        }
+                    }.pickerStyle(.wheel)
+                        .labelsHidden()
+                    Spacer()
+                        .onAppear(perform: {
+                            Task {
+                                let profiles = try await looper.nightscoutService.getProfiles()
+                                if let activeProfile = profiles.first, let loopSettings = activeProfile.loopSettings {
+                                    overidePresets = loopSettings.overridePresets
+                                    if let activeOverride = loopSettings.scheduleOverride {
+                                        self.overrideFromNightscout = activeOverride
+                                        self.pickerCurrentlySelectedOverride = activeOverride
+                                    }
+                                }
+                            }
+                        })
+                }
+                Spacer()
+                Button("Update") {
+                    Task {
+                        guard let selectedOverride = pickerCurrentlySelectedOverride else {
+                            let _ = try await self.looper.nightscoutService.cancelOverride()
+                            showSheetView = false
+                            return
+                        }
+                        
+                        do {
+                            //TODO: Set appropriate display symbol
+                            let _ = try await self.looper.nightscoutService.startOverride(overrideName: selectedOverride.name, overrideDisplay: "A", durationInMinutes: 60)
+                            showSheetView = false
+                        } catch {
+                            //TODO: Show user error
+                            print(error)
+                        }
+                        
+                    }
+                }
+                .buttonStyle(.borderedProminent)
+                .frame(maxWidth: .infinity)
+            }
+            .navigationBarTitle(Text("Custom Preset"), displayMode: .inline)
+            .navigationBarItems(leading: Button(action: {
+                self.showSheetView = false
+            }) {
+                Text("Cancel")
+            })
+        }
+    }
+}
+
+extension NightscoutOverridePreset: Hashable {
+    
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    
+    public static func == (lhs: NightscoutOverridePreset, rhs: NightscoutOverridePreset) -> Bool {
+        lhs.name == rhs.name
+    }
+    
+    
+}

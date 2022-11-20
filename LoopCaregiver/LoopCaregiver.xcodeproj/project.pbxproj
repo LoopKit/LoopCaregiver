@@ -1,0 +1,621 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		A948D1A6292AB765003C5683 /* LoopUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C9292A65E400079AAF /* LoopUI.framework */; };
+		A948D1A7292AB765003C5683 /* LoopUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C9292A65E400079AAF /* LoopUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50BF292A602F00079AAF /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */; };
+		A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C6292A657F00079AAF /* LoopKitUI.framework */; };
+		A95F50C8292A657F00079AAF /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C6292A657F00079AAF /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A95F50CE292A66F200079AAF /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A95F50CD292A66F200079AAF /* SwiftCharts */; };
+		A95F50CF292A671300079AAF /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A95F50CD292A66F200079AAF /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A95F50D1292A68E800079AAF /* LoopCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50D0292A68E800079AAF /* LoopCore.framework */; };
+		A95F50D2292A68E800079AAF /* LoopCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50D0292A68E800079AAF /* LoopCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A95F50D4292A6A7D00079AAF /* LoopGraphTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50D3292A6A7D00079AAF /* LoopGraphTestView.swift */; };
+		A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929342926E5CE00B8BF43 /* HUDView.swift */; };
+		A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */; };
+		A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293A2926ECF500B8BF43 /* BottomBarView.swift */; };
+		A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
+		A96929402926EFEC00B8BF43 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* LooperService.swift */; };
+		A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */; };
+		A96929442927137400B8BF43 /* KeychainService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929432927137400B8BF43 /* KeychainService.swift */; };
+		A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969296C2927E9AB00B8BF43 /* LooperView.swift */; };
+		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
+		A96929912927FFBA00B8BF43 /* Persistence.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* Persistence.swift */; };
+		A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
+		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
+		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
+		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
+		A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */; };
+		A9EC197E291FEF940022D39F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197D291FEF940022D39F /* ContentView.swift */; };
+		A9EC1980291FEF950022D39F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9EC197F291FEF950022D39F /* Assets.xcassets */; };
+		A9EC1983291FEF950022D39F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9EC1982291FEF950022D39F /* Preview Assets.xcassets */; };
+		A9EC199C2920467E0022D39F /* NightscoutClient in Frameworks */ = {isa = PBXBuildFile; productRef = A9EC199B2920467E0022D39F /* NightscoutClient */; };
+		A9EC199E292101550022D39F /* TreatmentGraph.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC199D292101550022D39F /* TreatmentGraph.swift */; };
+		A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */; };
+		A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A9EC19A3292141980022D39F /* OneTimePassword */; };
+		A9EC19A9292144040022D39F /* OverrideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A8292144040022D39F /* OverrideView.swift */; };
+		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
+		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		A95F50C2292A602F00079AAF /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */,
+				A948D1A7292AB765003C5683 /* LoopUI.framework in Embed Frameworks */,
+				A95F50CF292A671300079AAF /* SwiftCharts in Embed Frameworks */,
+				A95F50C8292A657F00079AAF /* LoopKitUI.framework in Embed Frameworks */,
+				A95F50D2292A68E800079AAF /* LoopCore.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		A95F50BF292A602F00079AAF /* LoopKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoopKit.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictedGlucoseChartView.swift; sourceTree = "<group>"; };
+		A95F50C6292A657F00079AAF /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A95F50C9292A65E400079AAF /* LoopUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A95F50D0292A68E800079AAF /* LoopCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A95F50D3292A6A7D00079AAF /* LoopGraphTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGraphTestView.swift; sourceTree = "<group>"; };
+		A96929342926E5CE00B8BF43 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
+		A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentGraphDataSource.swift; sourceTree = "<group>"; };
+		A969293A2926ECF500B8BF43 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
+		A969293C2926EFEC00B8BF43 /* Looper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Looper.swift; sourceTree = "<group>"; };
+		A969293D2926EFEC00B8BF43 /* LooperService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
+		A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooperSetupView.swift; sourceTree = "<group>"; };
+		A96929432927137400B8BF43 /* KeychainService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeychainService.swift; sourceTree = "<group>"; };
+		A969296C2927E9AB00B8BF43 /* LooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperView.swift; sourceTree = "<group>"; };
+		A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoopCaregiver.xcdatamodel; sourceTree = "<group>"; };
+		A96929902927FFBA00B8BF43 /* Persistence.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Persistence.swift; sourceTree = "<group>"; };
+		A96929922929908100B8BF43 /* NightscoutDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSource.swift; sourceTree = "<group>"; };
+		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
+		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A9EC1978291FEF940022D39F /* LoopCaregiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverApp.swift; sourceTree = "<group>"; };
+		A9EC197D291FEF940022D39F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A9EC197F291FEF950022D39F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9EC1982291FEF950022D39F /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A9EC199D292101550022D39F /* TreatmentGraph.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentGraph.swift; sourceTree = "<group>"; };
+		A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentAnnotationView.swift; sourceTree = "<group>"; };
+		A9EC19A8292144040022D39F /* OverrideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideView.swift; sourceTree = "<group>"; };
+		A9EC19AA292156D80022D39F /* CarbInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbInputView.swift; sourceTree = "<group>"; };
+		A9EC19AC2921A19C0022D39F /* BolusInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusInputView.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A9EC1975291FEF940022D39F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9EC199C2920467E0022D39F /* NightscoutClient in Frameworks */,
+				A95F50D1292A68E800079AAF /* LoopCore.framework in Frameworks */,
+				A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */,
+				A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */,
+				A948D1A6292AB765003C5683 /* LoopUI.framework in Frameworks */,
+				A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */,
+				A95F50CE292A66F200079AAF /* SwiftCharts in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A95F50BE292A602E00079AAF /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A95F50D0292A68E800079AAF /* LoopCore.framework */,
+				A95F50C9292A65E400079AAF /* LoopUI.framework */,
+				A95F50C6292A657F00079AAF /* LoopKitUI.framework */,
+				A95F50BF292A602F00079AAF /* LoopKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A95F50C3292A641C00079AAF /* LoopGraphs */ = {
+			isa = PBXGroup;
+			children = (
+				A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */,
+				A95F50D3292A6A7D00079AAF /* LoopGraphTestView.swift */,
+			);
+			path = LoopGraphs;
+			sourceTree = "<group>";
+		};
+		A96929302926E2B700B8BF43 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				A96929432927137400B8BF43 /* KeychainService.swift */,
+				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
+				A969293C2926EFEC00B8BF43 /* Looper.swift */,
+				A969293D2926EFEC00B8BF43 /* LooperService.swift */,
+				A96929922929908100B8BF43 /* NightscoutDataSource.swift */,
+				A9B033E529230FF20052AA9E /* OTPManager.swift */,
+				A96929902927FFBA00B8BF43 /* Persistence.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		A96929332926E57C00B8BF43 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				A969296B29279DD700B8BF43 /* Actions */,
+				A969296A29279DCB00B8BF43 /* Home */,
+				A95F50C3292A641C00079AAF /* LoopGraphs */,
+				A969296929279D9F00B8BF43 /* Settings */,
+				A9EC199F292128BC0022D39F /* TreatmentGraph */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		A969296929279D9F00B8BF43 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				A969296C2927E9AB00B8BF43 /* LooperView.swift */,
+				A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */,
+				A9B033E729231DCE0052AA9E /* SettingsView.swift */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
+		A969296A29279DCB00B8BF43 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				A969293A2926ECF500B8BF43 /* BottomBarView.swift */,
+				A9EC197D291FEF940022D39F /* ContentView.swift */,
+				A96929342926E5CE00B8BF43 /* HUDView.swift */,
+			);
+			path = Home;
+			sourceTree = "<group>";
+		};
+		A969296B29279DD700B8BF43 /* Actions */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC19AC2921A19C0022D39F /* BolusInputView.swift */,
+				A9EC19AA292156D80022D39F /* CarbInputView.swift */,
+				A9EC19A8292144040022D39F /* OverrideView.swift */,
+			);
+			path = Actions;
+			sourceTree = "<group>";
+		};
+		A9EC196F291FEF940022D39F = {
+			isa = PBXGroup;
+			children = (
+				A9EC197A291FEF940022D39F /* LoopCaregiver */,
+				A9EC1979291FEF940022D39F /* Products */,
+				A95F50BE292A602E00079AAF /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		A9EC1979291FEF940022D39F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC1978291FEF940022D39F /* LoopCaregiver.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A9EC197A291FEF940022D39F /* LoopCaregiver */ = {
+			isa = PBXGroup;
+			children = (
+				A96929302926E2B700B8BF43 /* Models */,
+				A96929332926E57C00B8BF43 /* Views */,
+				A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */,
+				A9EC197F291FEF950022D39F /* Assets.xcassets */,
+				A9EC1981291FEF950022D39F /* Preview Content */,
+			);
+			path = LoopCaregiver;
+			sourceTree = "<group>";
+		};
+		A9EC1981291FEF950022D39F /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC1982291FEF950022D39F /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A9EC199F292128BC0022D39F /* TreatmentGraph */ = {
+			isa = PBXGroup;
+			children = (
+				A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */,
+				A9EC199D292101550022D39F /* TreatmentGraph.swift */,
+				A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */,
+			);
+			path = TreatmentGraph;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A9EC1977291FEF940022D39F /* LoopCaregiver */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9EC1986291FEF950022D39F /* Build configuration list for PBXNativeTarget "LoopCaregiver" */;
+			buildPhases = (
+				A9EC1974291FEF940022D39F /* Sources */,
+				A9EC1975291FEF940022D39F /* Frameworks */,
+				A9EC1976291FEF940022D39F /* Resources */,
+				A95F50C2292A602F00079AAF /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LoopCaregiver;
+			packageProductDependencies = (
+				A9EC199B2920467E0022D39F /* NightscoutClient */,
+				A9EC19A3292141980022D39F /* OneTimePassword */,
+				A9B033E3292306A90052AA9E /* CodeScanner */,
+				A95F50CD292A66F200079AAF /* SwiftCharts */,
+			);
+			productName = LoopCaregiver;
+			productReference = A9EC1978291FEF940022D39F /* LoopCaregiver.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A9EC1970291FEF940022D39F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1410;
+				LastUpgradeCheck = 1410;
+				TargetAttributes = {
+					A9EC1977291FEF940022D39F = {
+						CreatedOnToolsVersion = 14.1;
+					};
+				};
+			};
+			buildConfigurationList = A9EC1973291FEF940022D39F /* Build configuration list for PBXProject "LoopCaregiver" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = A9EC196F291FEF940022D39F;
+			packageReferences = (
+				A9EC199A2920467E0022D39F /* XCRemoteSwiftPackageReference "NightscoutClient" */,
+				A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */,
+				A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */,
+				A95F50CC292A66F200079AAF /* XCRemoteSwiftPackageReference "SwiftCharts" */,
+			);
+			productRefGroup = A9EC1979291FEF940022D39F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A9EC1977291FEF940022D39F /* LoopCaregiver */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A9EC1976291FEF940022D39F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9EC1983291FEF950022D39F /* Preview Assets.xcassets in Resources */,
+				A9EC1980291FEF950022D39F /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A9EC1974291FEF940022D39F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
+				A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */,
+				A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */,
+				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
+				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
+				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
+				A95F50D4292A6A7D00079AAF /* LoopGraphTestView.swift in Sources */,
+				A9EC199E292101550022D39F /* TreatmentGraph.swift in Sources */,
+				A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */,
+				A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */,
+				A96929912927FFBA00B8BF43 /* Persistence.swift in Sources */,
+				A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */,
+				A96929442927137400B8BF43 /* KeychainService.swift in Sources */,
+				A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */,
+				A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */,
+				A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */,
+				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
+				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
+				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
+				A96929402926EFEC00B8BF43 /* LooperService.swift in Sources */,
+				A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */,
+				A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		A9EC1984291FEF950022D39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		A9EC1985291FEF950022D39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A9EC1987291FEF950022D39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiver/Preview Content\"";
+				DEVELOPMENT_TEAM = 5K844XFC6W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used for scanning QR codes from Looper's device";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.loopkit.LoopCaregiver;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		A9EC1988291FEF950022D39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiver/Preview Content\"";
+				DEVELOPMENT_TEAM = 5K844XFC6W;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSCameraUsageDescription = "Used for scanning QR codes from Looper's device";
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = org.loopkit.LoopCaregiver;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A9EC1973291FEF940022D39F /* Build configuration list for PBXProject "LoopCaregiver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9EC1984291FEF950022D39F /* Debug */,
+				A9EC1985291FEF950022D39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9EC1986291FEF950022D39F /* Build configuration list for PBXNativeTarget "LoopCaregiver" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9EC1987291FEF950022D39F /* Debug */,
+				A9EC1988291FEF950022D39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		A95F50CC292A66F200079AAF /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts.git";
+			requirement = {
+				branch = master;
+				kind = branch;
+			};
+		};
+		A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/twostraws/CodeScanner";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.0;
+			};
+		};
+		A9EC199A2920467E0022D39F /* XCRemoteSwiftPackageReference "NightscoutClient" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gestrich/NightscoutClient.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/mattrubin/OneTimePassword.git";
+			requirement = {
+				branch = develop;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		A95F50CD292A66F200079AAF /* SwiftCharts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A95F50CC292A66F200079AAF /* XCRemoteSwiftPackageReference "SwiftCharts" */;
+			productName = SwiftCharts;
+		};
+		A9B033E3292306A90052AA9E /* CodeScanner */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */;
+			productName = CodeScanner;
+		};
+		A9EC199B2920467E0022D39F /* NightscoutClient */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9EC199A2920467E0022D39F /* XCRemoteSwiftPackageReference "NightscoutClient" */;
+			productName = NightscoutClient;
+		};
+		A9EC19A3292141980022D39F /* OneTimePassword */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
+			productName = OneTimePassword;
+		};
+/* End XCSwiftPackageProductDependency section */
+
+/* Begin XCVersionGroup section */
+		A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */,
+			);
+			currentVersion = A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */;
+			path = LoopCaregiver.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = A9EC1970291FEF940022D39F /* Project object */;
+}

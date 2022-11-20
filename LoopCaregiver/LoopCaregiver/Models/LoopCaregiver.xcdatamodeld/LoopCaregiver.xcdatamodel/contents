@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="21512" systemVersion="21G217" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="Item" representedClassName="Item" syncable="YES" codeGenerationType="class">
+        <attribute name="timestamp" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+    </entity>
+    <entity name="LooperCD" representedClassName="LooperCD" syncable="YES" codeGenerationType="class">
+        <attribute name="lastSelectedDate" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <attribute name="nightscoutAPISecret" optional="YES" attributeType="String"/>
+        <attribute name="nightscoutURL" optional="YES" attributeType="String"/>
+        <attribute name="otpURL" optional="YES" attributeType="String"/>
+    </entity>
+</model>
