@@ -95,8 +95,7 @@ extension NightscoutEGV: Equatable {
     public static func == (lhs: NightscoutEGV, rhs: NightscoutEGV) -> Bool {
         return lhs.displayTime == rhs.displayTime &&
         lhs.systemTime == rhs.displayTime &&
-        lhs.value == rhs.value &&
-        lhs.id == rhs.id
+        lhs.value == rhs.value
     }
 }
 

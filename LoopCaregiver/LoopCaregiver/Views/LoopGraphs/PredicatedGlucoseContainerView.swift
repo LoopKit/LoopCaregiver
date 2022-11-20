@@ -1,22 +1,19 @@
 //
-//  LoopGraphTestView.swift
+//  GraphContainerView.swift
 //  LoopCaregiver
 //
 //  Created by Bill Gestrich on 11/20/22.
 //
 
 import SwiftUI
-
-//Loop
 import LoopKit
 import LoopKitUI
 import LoopUI
 import SwiftCharts
 import HealthKit
-
 import NightscoutClient
 
-struct LoopGraphTestView: View {
+struct PredicatedGlucoseContainerView: View {
     
     @ObservedObject var nightscoutDataSource: NightscoutDataSource
     
@@ -43,8 +40,8 @@ struct LoopGraphTestView: View {
                         .font(.subheadline)
                         .foregroundColor(.gray)
                 }
-            }
-
+            }.opacity(isInteractingWithChart ? 0.0 : 1.0)
+            .padding(.leading)
             predictedGlucoseChart
         }
 
@@ -53,7 +50,7 @@ struct LoopGraphTestView: View {
     @ViewBuilder private var predictedGlucoseChart: some View {
         
         let hoursLookback = 1.0
-        let hoursLookahead = 4.0
+        let hoursLookahead = 5.0
         
         if nightscoutDataSource.egvs.count > 0, nightscoutDataSource.predictedEGVs.count > 0 {
 

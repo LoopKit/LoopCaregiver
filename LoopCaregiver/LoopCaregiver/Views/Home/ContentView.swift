@@ -49,7 +49,14 @@ struct HomeView: View {
         NavigationStack(path: $path) {
             VStack {
                 HUDView(looperService: looperService, selectedLooper: looper)
-                LoopGraphTestView(nightscoutDataSource: looper.nightscoutDataSource)
+                PredicatedGlucoseContainerView(nightscoutDataSource: looper.nightscoutDataSource)
+                HStack {
+                    Text("Nightscout")
+                        .bold()
+                        .font(.subheadline)
+                    Spacer()
+                }
+                .padding(.leading)
                 TreatmentGraphScrollView(looper: looper)
                 Spacer()
                 BottomBarView(looperService: looperService, looper: looper)

@@ -17,7 +17,7 @@
 		A95F50CF292A671300079AAF /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A95F50CD292A66F200079AAF /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A95F50D1292A68E800079AAF /* LoopCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50D0292A68E800079AAF /* LoopCore.framework */; };
 		A95F50D2292A68E800079AAF /* LoopCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50D0292A68E800079AAF /* LoopCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A95F50D4292A6A7D00079AAF /* LoopGraphTestView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50D3292A6A7D00079AAF /* LoopGraphTestView.swift */; };
+		A95F50D4292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50D3292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift */; };
 		A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929342926E5CE00B8BF43 /* HUDView.swift */; };
 		A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */; };
 		A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293A2926ECF500B8BF43 /* BottomBarView.swift */; };
@@ -64,12 +64,12 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		A95F50BF292A602F00079AAF /* LoopKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = LoopKit.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A95F50BF292A602F00079AAF /* LoopKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictedGlucoseChartView.swift; sourceTree = "<group>"; };
 		A95F50C6292A657F00079AAF /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50C9292A65E400079AAF /* LoopUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50D0292A68E800079AAF /* LoopCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A95F50D3292A6A7D00079AAF /* LoopGraphTestView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopGraphTestView.swift; sourceTree = "<group>"; };
+		A95F50D3292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicatedGlucoseContainerView.swift; sourceTree = "<group>"; };
 		A96929342926E5CE00B8BF43 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentGraphDataSource.swift; sourceTree = "<group>"; };
 		A969293A2926ECF500B8BF43 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
@@ -128,7 +128,7 @@
 			isa = PBXGroup;
 			children = (
 				A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */,
-				A95F50D3292A6A7D00079AAF /* LoopGraphTestView.swift */,
+				A95F50D3292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift */,
 			);
 			path = LoopGraphs;
 			sourceTree = "<group>";
@@ -325,7 +325,7 @@
 				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
-				A95F50D4292A6A7D00079AAF /* LoopGraphTestView.swift in Sources */,
+				A95F50D4292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift in Sources */,
 				A9EC199E292101550022D39F /* TreatmentGraph.swift in Sources */,
 				A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */,
 				A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */,

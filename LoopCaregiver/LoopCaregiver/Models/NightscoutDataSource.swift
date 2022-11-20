@@ -45,7 +45,6 @@ class NightscoutDataSource: ObservableObject {
     @MainActor
     func updateData() async throws {
         
-        let startDate = Date()
         var updatesOccured = false
         
         let egvs = try await fetchEGVs()
@@ -81,8 +80,6 @@ class NightscoutDataSource: ObservableObject {
         if updatesOccured {
             lastUpdate = nowDate()
         }
-        
-        print("Time to complete Nightscout update \(nowDate().timeIntervalSince(startDate)) seconds")
     }
     
     func fetchEGVs() async throws -> [NightscoutEGV] {
@@ -98,12 +95,16 @@ class NightscoutDataSource: ObservableObject {
             return []
         }
         
-        guard let predictedValues = latestDeviceStatus.loop?.predicted?.values else {
+        guard let loopPrediction = latestDeviceStatus.loop?.predicted else {
+            return []
+        }
+        
+        guard let predictedValues = loopPrediction.values else {
             return []
         }
         
         var predictedEGVs = [NightscoutEGV]()
-        var currDate = Date()
+        var currDate = loopPrediction.startDate
         for value in predictedValues {
             let egv = NightscoutEGV(value: Int(value), systemTime: currDate, displayTime: currDate, realtimeValue: nil, smoothedValue: nil, trendRate: nil, trendDescription: "")
             
