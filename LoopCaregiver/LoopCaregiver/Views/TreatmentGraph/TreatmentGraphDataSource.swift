@@ -17,7 +17,6 @@ struct TreatmentGraphConfiguration {
 
 class TreatmentGraphDataSource: ObservableObject {
     
-    @Published var lastUpdateDate: Date = Date()
     @Published var graphItems: [GraphItem] = []
     @Published var bolusEntryGraphItems: [GraphItem] = []
     @Published var carbEntryGraphItems: [GraphItem] = []
@@ -34,23 +33,24 @@ class TreatmentGraphDataSource: ObservableObject {
     }
     
     func startMonitoring() {
-        nightscoutDataSource.$lastUpdate.sink(receiveValue: { [weak self] lastEGVUpdate in
-            self?.updateGraphItems()
+        
+        nightscoutDataSource.$egvs.sink(receiveValue: { [weak self] egvs in
+            guard let self else {return}
+            self.graphItems = egvs.map({$0.graphItem()})
+        })
+        .store(in: &subscribers)
+        
+        nightscoutDataSource.$bolusEntries.sink(receiveValue: { [weak self] bolusEntries in
+            guard let self else {return}
+            self.bolusEntryGraphItems = bolusEntries.map({$0.graphItem(egvValues: self.nightscoutDataSource.egvs)})
+        })
+        .store(in: &subscribers)
+        
+        nightscoutDataSource.$carbEntries.sink(receiveValue: { [weak self] carbEntries in
+            guard let self else {return}
+            self.carbEntryGraphItems = carbEntries.map({$0.graphItem(egvValues: self.nightscoutDataSource.egvs)})
         })
         .store(in: &subscribers)
     }
-
-    func updateGraphItems(){
-        let egvs = nightscoutDataSource.egvs
-        graphItems = egvs.map({$0.graphItem()})
-        bolusEntryGraphItems = nightscoutDataSource.bolusEntries.map({$0.graphItem(egvValues: egvs)})
-        carbEntryGraphItems = nightscoutDataSource.carbEntries.map({$0.graphItem(egvValues: egvs)})
-        lastUpdateDate = Date()
-    }
-    
-    func nowDate() -> Date {
-        return Date()
-    }
-    
 }
 

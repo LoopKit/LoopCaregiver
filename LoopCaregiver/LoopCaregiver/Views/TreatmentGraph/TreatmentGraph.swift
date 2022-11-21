@@ -28,7 +28,7 @@ struct TreatmentGraphScrollView: View {
                         .padding()
                         .id(graphTag)
                 }
-                .onChange(of: dataSource.lastUpdateDate, perform: { newValue in
+                .onChange(of: dataSource.graphItems, perform: { newValue in
                     sp.scrollTo(graphTag, anchor: .trailing)
                 })
                 .onAppear(perform: {
@@ -159,7 +159,7 @@ enum GraphItemType {
     case carb(WGCarbEntry)
 }
 
-struct GraphItem: Identifiable {
+struct GraphItem: Identifiable, Equatable {
     
     var id = UUID()
     var type: GraphItemType
@@ -280,6 +280,13 @@ struct GraphItem: Identifiable {
     enum GraphItemLabelPosition {
         case top
         case bottom
+    }
+    
+    
+    //Equatable
+    
+    static func == (lhs: GraphItem, rhs: GraphItem) -> Bool {
+        return lhs.id == rhs.id
     }
 }
 
