@@ -10,6 +10,7 @@ import SwiftUI
 struct LooperView: View {
     
     @ObservedObject var looperService: LooperService
+    @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var looper: Looper
     @Binding var path: NavigationPath
     @State private var isPresentingConfirm: Bool = false
@@ -19,12 +20,12 @@ struct LooperView: View {
             Form {
                 Section {
                     LabeledContent {
-                        Text(looper.nightscoutURL)
+                        Text(looper.nightscoutCredentials.url.absoluteString)
                     } label: {
                         Text("Nightscout")
                     }
                     LabeledContent {
-                        Text(looper.otpCode)
+                        Text(nightscoutCredentialService.otpCode)
                     } label: {
                         Text("OTP")
                     }

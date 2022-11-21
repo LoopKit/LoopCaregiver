@@ -44,7 +44,7 @@ struct SettingsView: View {
             .navigationDestination(
                 for: Looper.self
             ) { looper in
-                LooperView(looperService: looperService, looper: looper, path: $path)
+                LooperView(looperService: looperService, nightscoutCredentialService: looper.nightscoutDataSource.credentialService, looper: looper, path: $path)
             }
             .navigationDestination(
                 for: String.self

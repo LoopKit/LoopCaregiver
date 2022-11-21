@@ -10,7 +10,6 @@ import OneTimePassword
 
 class OTPManager: ObservableObject {
     
-    
     weak var delegate: OTPManagerDelegate?
     let otpURL: String
     @Published var otpCode: String = "" {

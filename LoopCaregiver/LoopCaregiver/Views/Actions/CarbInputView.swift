@@ -50,8 +50,8 @@ struct CarbInputView: View {
                     Button("Deliver \(carbInput)g of carbs?", role: .none) {
                         buttonDisabled = true
                         Task {
-                            if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration), let otpCode = Int(looper.otpCode) {
-                                let _ = try await looper.nightscoutService.deliverCarbs(amountInGrams: carbAmountInGrams, amountInHours: durationInHours, otp: otpCode)
+                            if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration) {
+                                let _ = try await looper.nightscoutDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
                                 buttonDisabled = true
                                 showSheetView = false
                             }

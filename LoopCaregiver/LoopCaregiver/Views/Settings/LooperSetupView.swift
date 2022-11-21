@@ -156,8 +156,9 @@ struct LooperSetupView: View {
         guard let otpURL = otpURL, otpURL.count > 0 else {
             throw AccountViewModelError.genericError(message: "Must enter OTPURL")
         }
-        
-        let looper = Looper(name: name, nightscoutURL: nightscoutURL, apiSecret: apiSecret, otpURL: otpURL, lastSelectedDate: Date())
+
+        //TODO: Remove force cast
+        let looper = Looper(name: name, nightscoutCredentials: NightscoutCredentials(url: URL(string: nightscoutURL)!, secretKey: apiSecret, otpURL: otpURL), lastSelectedDate: Date())
         
         try looperService.addLooper(looper)
         try looperService.updateActiveLoopUser(looper)

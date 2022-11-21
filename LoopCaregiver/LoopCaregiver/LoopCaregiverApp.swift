@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct LoopCaregiverApp: App {
     
-    let persistenceController = PersistenceController.shared
+    let persistenceController = LooperCoreDataService.shared
     
     var body: some Scene {
         WindowGroup {

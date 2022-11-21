@@ -17,12 +17,18 @@ class NightscoutDataSource: ObservableObject {
     @Published var predictedEGVs: [NightscoutEGV] = []
     @Published var lastUpdate: Date = Date()
     
-    let nightscoutService: NightscoutService
+    var credentialService: NightscoutCredentialService
     
+    private let nightscoutService: NightscoutService
     private var timer: Timer?
     
-    init(nightscoutService: NightscoutService){
-        self.nightscoutService = nightscoutService
+    enum NightscoutDataSourceError: LocalizedError {
+        case badOTP
+    }
+    
+    init(nightscoutCredentials: NightscoutCredentials, otpManager: OTPManager){
+        self.nightscoutService = NightscoutService(baseURL: nightscoutCredentials.url, secret: nightscoutCredentials.secretKey, nowDateProvider: {Date()})
+        self.credentialService = NightscoutCredentialService(credentials: nightscoutCredentials)
         monitorForUpdates(updateInterval: 30)
     }
     
@@ -134,6 +140,38 @@ class NightscoutDataSource: ObservableObject {
     func nowDate() -> Date {
         return Date()
     }
+    
+    
+    //MARK: Actions
+    
+    func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws {
+        guard let otpCodeInt = Int(credentialService.otpCode) else {
+            throw NightscoutDataSourceError.badOTP
+        }
+        let _ = try await nightscoutService.deliverCarbs(amountInGrams: amountInGrams, amountInHours: durationInHours, otp: otpCodeInt)
+    }
+    
+    func deliverBolus(amountInUnits: Double) async throws {
+        guard let otpCodeInt = Int(credentialService.otpCode) else {
+            throw NightscoutDataSourceError.badOTP
+        }
+        let _ = try await nightscoutService.deliverBolus(amountInUnits: amountInUnits, otp: otpCodeInt)
+    }
+    
+    func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws {
+        let _ = try await nightscoutService.startOverride(overrideName: overrideName, overrideDisplay: overrideDisplay, durationInMinutes: durationInMinutes)
+    }
+    
+    func cancelOverride() async throws {
+        let _ = try await nightscoutService.cancelOverride()
+    }
+    
+    func getProfiles() async throws -> [NightscoutProfile] {
+        return try await nightscoutService.getProfiles()
+    }
+
 }
+
+
 
 

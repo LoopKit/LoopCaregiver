@@ -13,7 +13,7 @@ import LoopKit
 
 struct ContentView: View {
     
-    @ObservedObject var looperService = LooperService()
+    @ObservedObject var looperService = LooperService(coreDataService: LooperCoreDataService.shared)
     
     var body: some View {
         if let looper = looperService.selectedLooper {

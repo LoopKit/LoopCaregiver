@@ -9,54 +9,35 @@ import Foundation
 import NightscoutClient
 import SwiftUI
 
-class Looper: ObservableObject, Hashable, OTPManagerDelegate {
+class Looper: ObservableObject, Hashable {
     
-    @Published var otpCode: String
     @Published var nightscoutDataSource: NightscoutDataSource
     
     var name: String
-    var nightscoutURL: String
-    var apiSecret: String
-    var otpURL: String
     var lastSelectedDate: Date
-    var nightscoutService: NightscoutService //TODO hide this in nightscoutDataSource
+    let nightscoutCredentials: NightscoutCredentials
     
-    private var otpManager: OTPManager
-    
-    init(name: String, nightscoutURL: String, apiSecret: String, otpURL: String, lastSelectedDate: Date) {
+    init(name: String, nightscoutCredentials: NightscoutCredentials, lastSelectedDate: Date) {
         self.name = name
-        self.nightscoutURL = nightscoutURL
-        self.apiSecret = apiSecret
-        self.otpURL = otpURL
         self.lastSelectedDate = lastSelectedDate
-        self.nightscoutService = NightscoutService(baseURL: URL(string: nightscoutURL)!, secret: apiSecret, nowDateProvider: {Date()})
-        self.nightscoutDataSource = NightscoutDataSource(nightscoutService: nightscoutService)
-        self.otpManager = OTPManager(optURL: otpURL)
-        self.otpCode = self.otpManager.otpCode
-        self.otpManager.delegate = self
+        self.nightscoutCredentials = nightscoutCredentials
+        self.nightscoutDataSource = NightscoutDataSource(nightscoutCredentials: nightscoutCredentials, otpManager: OTPManager(optURL: nightscoutCredentials.otpURL))
     }
     
-    //MARK: OTPManagerDelegate
-    
-    func otpDidUpdate(manager: OTPManager, otpCode: String) {
-        self.otpCode = otpCode
-    }
     
     //MARK: Hashable
     
     func hash(into hasher: inout Hasher) {
-        hasher.combine(name + nightscoutURL + apiSecret + otpURL)
+        hasher.combine(name) //TODO: Don't assume names are unique. Use a UUID
     }
     
     
     //MARK: Equatable
     
     static func == (lhs: Looper, rhs: Looper) -> Bool {
-        return lhs.name == rhs.name &&
-        lhs.nightscoutURL == rhs.nightscoutURL &&
-        lhs.apiSecret == rhs.apiSecret &&
-        lhs.otpURL == rhs.otpURL
+        return lhs.name == rhs.name //TODO: Don't assume names are unique. Use a UUID
     }
+    
     
     deinit {
         do {
@@ -71,6 +52,7 @@ class Looper: ObservableObject, Hashable, OTPManagerDelegate {
 
 extension Looper: Identifiable {
     var id: String {
-        return String([name, nightscoutURL, apiSecret, otpURL].joined(separator: "-"))
+        //TODO: Don't assume names are unique. Use a UUID
+        return String([name].joined(separator: "-"))
     }
 }

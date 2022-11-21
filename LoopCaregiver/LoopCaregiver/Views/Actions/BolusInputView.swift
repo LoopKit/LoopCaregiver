@@ -39,8 +39,8 @@ struct BolusInputView: View {
                     Button("Deliver \(bolusAmount) of insulin?", role: .none) {
                         buttonDisabled = true
                         Task {
-                            if let bolusAmountInUnits = Double(bolusAmount), let otpCode = Int(looper.otpCode) {
-                                let _ = try await looper.nightscoutService.deliverBolus(amountInUnits: bolusAmountInUnits, otp: otpCode)
+                            if let bolusAmountInUnits = Double(bolusAmount) {
+                                let _ = try await looper.nightscoutDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
                                 buttonDisabled = false
                                 showSheetView = false
                             }
