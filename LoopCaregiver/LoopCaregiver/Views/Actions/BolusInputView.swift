@@ -47,7 +47,7 @@ struct BolusInputView: View {
                 .padding()
                 .confirmationDialog("Are you sure?",
                                     isPresented: $isPresentingConfirm) {
-                    Button("Deliver \(bolusAmount) of insulin?", role: .none) {
+                    Button("Deliver \(bolusAmount) of insulin to \(looper.name)?", role: .none) {
                         buttonDisabled = true
                         Task {
                             if let bolusAmountInUnits = Double(bolusAmount) {

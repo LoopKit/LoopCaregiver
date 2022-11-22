@@ -57,7 +57,7 @@ struct CarbInputView: View {
                 .padding()
                 .confirmationDialog("Are you sure?",
                                     isPresented: $isPresentingConfirm) {
-                    Button("Deliver \(carbInput)g of carbs?", role: .none) {
+                    Button("Deliver \(carbInput)g of carbs to \(looper.name)?", role: .none) {
                         buttonDisabled = true
                         Task {
                             if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration) {
