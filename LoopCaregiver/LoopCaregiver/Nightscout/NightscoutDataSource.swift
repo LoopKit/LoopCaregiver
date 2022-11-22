@@ -65,19 +65,23 @@ class NightscoutDataSource: ObservableObject {
             updatesOccured = true
         }
         
-        let predictedEGVs = try await fetchPredictedEGVs()
+        async let predictedEGVAsync = fetchPredictedEGVs()
+        async let carbEntriesAsync = fetchCarbEntries()
+        async let bolusEntriesAsync = fetchBolusEntries()
+        
+        let predictedEGVs = try await predictedEGVAsync
         if predictedEGVs != self.predictedEGVs {
             self.predictedEGVs = predictedEGVs
             updatesOccured = true
         }
-        
-        let carbEntries = try await fetchCarbEntries()
+
+        let carbEntries = try await carbEntriesAsync
         if carbEntries != self.carbEntries {
             self.carbEntries = carbEntries
             updatesOccured = true
         }
         
-        let bolusEntries = try await fetchBolusEntries()
+        let bolusEntries = try await bolusEntriesAsync
         if bolusEntries != self.bolusEntries {
             self.bolusEntries = bolusEntries
             updatesOccured = true
