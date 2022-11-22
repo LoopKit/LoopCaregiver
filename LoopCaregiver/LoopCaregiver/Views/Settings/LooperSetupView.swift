@@ -42,12 +42,14 @@ struct LooperSetupView: View {
                             })
                     .autocapitalization(.none)
                     .disableAutocorrection(true)
-                    SecureField(
+                    TextField(
                         "API Secret",
                         text: $apiSecretFieldText
                     ) {
                         self.save()
                     }
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
                     if qrURLFieldText == "" {
                         Button {
                             isShowingScanner = true
