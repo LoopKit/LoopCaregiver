@@ -14,10 +14,10 @@ struct BottomBarView: View {
     
     @ObservedObject var looperService: LooperService
     let looper: Looper
-    @State private var showCarbView = false
-    @State private var showBolusView = false
-    @State private var showOverrideView = false
-    @State private var showSettingsView = false
+    @Binding var showCarbView: Bool
+    @Binding var showBolusView: Bool
+    @Binding var showOverrideView: Bool
+    @Binding var showSettingsView: Bool
     
     var body: some View {
         HStack (alignment: .center) {
@@ -62,18 +62,6 @@ struct BottomBarView: View {
         .background(Color(red: 0.1, green: 0.1, blue: 0.1))
         .frame(height: 20, alignment: .center)
         .offset(.init(width: 0, height: -10))
-        .sheet(isPresented: $showCarbView) {
-            CarbInputView(looper: looper, showSheetView: $showCarbView)
-        }
-        .sheet(isPresented: $showBolusView) {
-            BolusInputView(looper: looper, showSheetView: $showBolusView)
-        }
-        .sheet(isPresented: $showOverrideView) {
-            OverrideView(looper: looper, showSheetView: $showOverrideView)
-        }
-        .sheet(isPresented: $showSettingsView) {
-            SettingsView(looperService: looperService, showSheetView: $showSettingsView)
-        }
     }
     
     func iconSize() -> Double {

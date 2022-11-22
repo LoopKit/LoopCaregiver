@@ -37,6 +37,12 @@ struct FirstRunView: View {
 struct HomeView: View {
     
     @ObservedObject var looperService: LooperService
+    
+    @State private var showCarbView = false
+    @State private var showBolusView = false
+    @State private var showOverrideView = false
+    @State private var showSettingsView = false
+    
     let looper: Looper
     
     init(looperService: LooperService, looper: Looper){
@@ -57,7 +63,20 @@ struct HomeView: View {
             .padding(.leading)
             TreatmentGraphScrollView(looper: looper)
             Spacer()
-            BottomBarView(looperService: looperService, looper: looper)
+            BottomBarView(looperService: looperService, looper: looper, showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
+        }
+        .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
+        .sheet(isPresented: $showCarbView) {
+            CarbInputView(looper: looper, showSheetView: $showCarbView)
+        }
+        .sheet(isPresented: $showBolusView) {
+            BolusInputView(looper: looper, showSheetView: $showBolusView)
+        }
+        .sheet(isPresented: $showOverrideView) {
+            OverrideView(looper: looper, showSheetView: $showOverrideView)
+        }
+        .sheet(isPresented: $showSettingsView) {
+            SettingsView(looperService: looperService, showSheetView: $showSettingsView)
         }
     }
 }
