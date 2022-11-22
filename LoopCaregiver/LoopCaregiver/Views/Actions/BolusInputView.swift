@@ -21,11 +21,17 @@ struct BolusInputView: View {
         NavigationStack {
             VStack {
                 Form {
-                    TextField(
-                        "Bolus units",
-                        text: $bolusAmount
-                    )
-                    .keyboardType(.decimalPad)
+                    HStack {
+                        Text("Bolus")
+                        Spacer()
+                        TextField(
+                            "0",
+                            text: $bolusAmount
+                        )
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        Text("U")
+                    }
                 }
                 Button("Deliver") {
                     isPresentingConfirm = true

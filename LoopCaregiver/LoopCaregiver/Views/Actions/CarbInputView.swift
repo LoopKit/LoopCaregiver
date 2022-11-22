@@ -16,27 +16,32 @@ struct CarbInputView: View {
     @State var duration: String = "3"
     @State private var buttonDisabled = false
     @State private var isPresentingConfirm: Bool = false
-//    
-//    init(nightscoutService: NightscoutService, looper: Looper, showSheetView: Binding<Bool>) {
-//        self.nightscoutService = nightscoutService
-//        self.looper = looper
-//        self.showSheetView = showSheetView
-//    }
     
     var body: some View {
         NavigationStack {
             VStack {
                 Form {
-                    TextField(
-                        "Carbs (grams)",
-                        text: $carbInput
-                    )
-                    .keyboardType(.decimalPad)
-                    TextField(
-                        "Duration",
-                        text: $duration
-                    )
-                    .keyboardType(.decimalPad)
+                    HStack {
+                        Text("Amount Consumed")
+                        Spacer()
+                        TextField(
+                            "0",
+                            text: $carbInput
+                        )
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        Text("g")
+                    }
+                    HStack {
+                        Text("Absorption Time")
+                        TextField(
+                            "",
+                            text: $duration
+                        )
+                        .multilineTextAlignment(.trailing)
+                        .keyboardType(.decimalPad)
+                        Text("hr")
+                    }
                 }
                 Button("Deliver") {
                     isPresentingConfirm = true
