@@ -42,13 +42,13 @@
       "location" : "https://github.com/gestrich/NightscoutClient.git",
       "state" : {
         "branch" : "main",
-        "revision" : "aed634c30568aa4836d5198b48f7f2d84c0db358"
+        "revision" : "5f2a891740b1ceed87332bdb13c66e6aa9025bca"
       }
     },
     {
       "identity" : "onetimepassword",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mattrubin/OneTimePassword.git",
+      "location" : "https://github.com/mattrubin/OneTimePassword",
       "state" : {
         "branch" : "develop",
         "revision" : "c3d8989f09a72ad7b00be7a45f1a5446e5f9e19b"
@@ -95,8 +95,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/apple/swift-nio.git",
       "state" : {
-        "revision" : "edfceecba13d68c1c993382806e72f7e96feaa86",
-        "version" : "2.44.0"
+        "revision" : "e855380cb5234e96b760d93e0bfdc403e381e928",
+        "version" : "2.45.0"
       }
     },
     {
@@ -138,7 +138,7 @@
     {
       "identity" : "swiftcharts",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ivanschuetz/SwiftCharts.git",
+      "location" : "https://github.com/ivanschuetz/SwiftCharts",
       "state" : {
         "branch" : "master",
         "revision" : "c354c1945bb35a1f01b665b22474f6db28cba4a2"
