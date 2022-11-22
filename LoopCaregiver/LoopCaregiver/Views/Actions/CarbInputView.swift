@@ -16,6 +16,7 @@ struct CarbInputView: View {
     @State var duration: String = "3"
     @State private var buttonDisabled = false
     @State private var isPresentingConfirm: Bool = false
+    @FocusState private var carbInputViewIsFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -30,6 +31,10 @@ struct CarbInputView: View {
                         )
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
+                        .focused($carbInputViewIsFocused)
+                        .onAppear(perform: {
+                            carbInputViewIsFocused = true
+                        })
                         Text("g")
                     }
                     HStack {

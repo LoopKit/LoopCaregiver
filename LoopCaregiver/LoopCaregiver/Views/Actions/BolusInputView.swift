@@ -16,6 +16,7 @@ struct BolusInputView: View {
     @State var duration: String = ""
     @State private var buttonDisabled = false
     @State private var isPresentingConfirm: Bool = false
+    @FocusState private var bolusInputViewIsFocused: Bool
     
     var body: some View {
         NavigationStack {
@@ -30,6 +31,10 @@ struct BolusInputView: View {
                         )
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
+                        .focused($bolusInputViewIsFocused)
+                        .onAppear(perform: {
+                            bolusInputViewIsFocused = true
+                        })
                         Text("U")
                     }
                 }
