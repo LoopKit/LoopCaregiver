@@ -38,7 +38,6 @@ struct HomeView: View {
     
     @ObservedObject var looperService: LooperService
     let looper: Looper
-    @State var path = NavigationPath()
     
     init(looperService: LooperService, looper: Looper){
         self.looperService = looperService
@@ -46,21 +45,19 @@ struct HomeView: View {
     }
     
     var body: some View {
-        NavigationStack(path: $path) {
-            VStack {
-                HUDView(looperService: looperService, selectedLooper: looper)
-                PredicatedGlucoseContainerView(nightscoutDataSource: looper.nightscoutDataSource)
-                HStack {
-                    Text("Nightscout")
-                        .bold()
-                        .font(.subheadline)
-                    Spacer()
-                }
-                .padding(.leading)
-                TreatmentGraphScrollView(looper: looper)
+        VStack {
+            HUDView(looperService: looperService, selectedLooper: looper)
+            PredicatedGlucoseContainerView(nightscoutDataSource: looper.nightscoutDataSource)
+            HStack {
+                Text("Nightscout")
+                    .bold()
+                    .font(.subheadline)
                 Spacer()
-                BottomBarView(looperService: looperService, looper: looper)
             }
+            .padding(.leading)
+            TreatmentGraphScrollView(looper: looper)
+            Spacer()
+            BottomBarView(looperService: looperService, looper: looper)
         }
     }
 }
