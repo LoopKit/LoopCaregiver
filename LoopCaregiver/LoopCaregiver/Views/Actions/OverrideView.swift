@@ -16,6 +16,7 @@ struct OverrideView: View {
     @State private var overidePresets: [NightscoutOverridePreset] = []
     @State private var overrideFromNightscout: NightscoutOverridePreset?
     @State private var pickerCurrentlySelectedOverride: NightscoutOverridePreset?
+    @State private var loadingOverrides = true
     
     var body: some View {
         
@@ -24,13 +25,17 @@ struct OverrideView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
-                        Text("None").tag(nil as NightscoutOverridePreset?)
-                        ForEach(overidePresets, id: \.self) { overrideValue in
-                            Text("\(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
-                        }
-                    }.pickerStyle(.wheel)
-                        .labelsHidden()
+                    if !loadingOverrides {
+                        Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
+                            Text("None").tag(nil as NightscoutOverridePreset?)
+                            ForEach(overidePresets, id: \.self) { overrideValue in
+                                Text("\(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
+                            }
+                        }.pickerStyle(.wheel)
+                            .labelsHidden()
+                    } else {
+                        ProgressView("Loading Overrides...")
+                    }
                     Spacer()
                         .onAppear(perform: {
                             Task {
@@ -42,6 +47,7 @@ struct OverrideView: View {
                                         self.pickerCurrentlySelectedOverride = activeOverride
                                     }
                                 }
+                                loadingOverrides = false
                             }
                         })
                 }
