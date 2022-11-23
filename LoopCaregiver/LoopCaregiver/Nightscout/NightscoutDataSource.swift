@@ -15,7 +15,6 @@ class NightscoutDataSource: ObservableObject {
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
     @Published var predictedEGVs: [NightscoutEGV] = []
-    @Published var lastUpdate: Date = Date()
     
     var credentialService: NightscoutCredentialService
     
@@ -51,18 +50,14 @@ class NightscoutDataSource: ObservableObject {
     @MainActor
     func updateData() async throws {
         
-        var updatesOccured = false
-        
         let egvs = try await fetchEGVs()
             .sorted(by: {$0.systemTime < $1.systemTime})
         if egvs != self.egvs {
             self.egvs = egvs
-            updatesOccured = true
         }
         
         if let latestEGV = egvs.filter({$0.systemTime <= nowDate()}).last, latestEGV != currentEGV {
             currentEGV = latestEGV
-            updatesOccured = true
         }
         
         async let predictedEGVAsync = fetchPredictedEGVs()
@@ -72,23 +67,16 @@ class NightscoutDataSource: ObservableObject {
         let predictedEGVs = try await predictedEGVAsync
         if predictedEGVs != self.predictedEGVs {
             self.predictedEGVs = predictedEGVs
-            updatesOccured = true
         }
 
         let carbEntries = try await carbEntriesAsync
         if carbEntries != self.carbEntries {
             self.carbEntries = carbEntries
-            updatesOccured = true
         }
         
         let bolusEntries = try await bolusEntriesAsync
         if bolusEntries != self.bolusEntries {
             self.bolusEntries = bolusEntries
-            updatesOccured = true
-        }
-        
-        if updatesOccured {
-            lastUpdate = nowDate()
         }
     }
     
