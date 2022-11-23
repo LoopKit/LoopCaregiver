@@ -31,9 +31,7 @@ class LooperService: ObservableObject, PersistenceControllerDelegate {
     }
     
     func updateActiveLoopUser(_ looper: Looper) throws {
-        let updatedLooper = Looper(name: looper.name, nightscoutCredentials: looper.nightscoutCredentials, lastSelectedDate: Date())
-        try removeLooper(looper)
-        try addLooper(updatedLooper)
+        let _ = try coreDataService.updateLooperLastSelectedDate(looper: looper, Date())
     }
     
     func removeAllLoopers() throws {
