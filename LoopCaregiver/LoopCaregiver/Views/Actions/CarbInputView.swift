@@ -18,13 +18,15 @@ struct CarbInputView: View {
     @State private var isPresentingConfirm: Bool = false
     @FocusState private var carbInputViewIsFocused: Bool
     
+    var unitFrameWidth: CGFloat {
+        return 20.0
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
                 Form {
-                    HStack {
-                        Text("Amount Consumed")
-                        Spacer()
+                    LabeledContent {
                         TextField(
                             "0",
                             text: $carbInput
@@ -36,9 +38,11 @@ struct CarbInputView: View {
                             carbInputViewIsFocused = true
                         })
                         Text("g")
+                            .frame(width: unitFrameWidth)
+                    } label: {
+                        Text("Amount Consumed")
                     }
-                    HStack {
-                        Text("Absorption Time")
+                    LabeledContent {
                         TextField(
                             "",
                             text: $duration
@@ -46,6 +50,9 @@ struct CarbInputView: View {
                         .multilineTextAlignment(.trailing)
                         .keyboardType(.decimalPad)
                         Text("hr")
+                            .frame(width: unitFrameWidth)
+                    } label: {
+                        Text("Absorption Time")
                     }
                 }
                 Button("Deliver") {

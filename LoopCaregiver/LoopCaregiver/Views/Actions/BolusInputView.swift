@@ -18,13 +18,15 @@ struct BolusInputView: View {
     @State private var isPresentingConfirm: Bool = false
     @FocusState private var bolusInputViewIsFocused: Bool
     
+    var unitFrameWidth: CGFloat {
+        return 20.0
+    }
+    
     var body: some View {
         NavigationStack {
             VStack {
                 Form {
-                    HStack {
-                        Text("Bolus")
-                        Spacer()
+                    LabeledContent {
                         TextField(
                             "0",
                             text: $bolusAmount
@@ -36,6 +38,9 @@ struct BolusInputView: View {
                             bolusInputViewIsFocused = true
                         })
                         Text("U")
+                            .frame(width: unitFrameWidth)
+                    } label: {
+                        Text("Amount Consumed")
                     }
                 }
                 Button("Deliver") {
@@ -73,4 +78,3 @@ struct BolusInputView: View {
         }
     }
 }
-
