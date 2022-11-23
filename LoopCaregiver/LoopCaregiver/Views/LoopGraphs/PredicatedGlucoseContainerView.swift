@@ -43,6 +43,7 @@ struct PredicatedGlucoseContainerView: View {
             }.opacity(isInteractingWithChart ? 0.0 : 1.0)
             .padding(.leading)
             predictedGlucoseChart
+                .frame(height: 200.0)
         }
 
     }
@@ -53,7 +54,6 @@ struct PredicatedGlucoseContainerView: View {
         let hoursLookahead = 5.0
         
         if nightscoutDataSource.egvs.count > 0, nightscoutDataSource.predictedEGVs.count > 0 {
-
             PredictedGlucoseChartView(chartManager: self.chartManager,
                                                   glucoseUnit: Self.glucoseUnits(),
                                       glucoseValues: nightscoutDataSource.egvs,
@@ -63,12 +63,9 @@ struct PredicatedGlucoseContainerView: View {
                                       scheduleOverride: nil,
                                       dateInterval: DateInterval(start: Date().addingTimeInterval(60.0 * 60.0 * -hoursLookback), duration: 60.0 * 60.0 * hoursLookahead),
                                       isInteractingWithChart: $isInteractingWithChart)
-            .frame(height: 200.0)
         } else {
-         Text("")
+            ProgressView()
         }
-        
-
     }
     
     static func glucoseUnits() -> HKUnit {
