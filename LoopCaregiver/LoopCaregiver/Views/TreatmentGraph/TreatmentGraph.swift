@@ -309,7 +309,11 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
     
     init(egvValue: Int) {
         switch egvValue {
-        case 0..<180:
+        case 0..<60:
+            self = ColorType.red
+        case 60..<80:
+            self = ColorType.yellow
+        case 80..<180:
             self = ColorType.green
         case 180...249:
             self = ColorType.yellow
