@@ -143,7 +143,7 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     }
     
     func fetchStartDate() -> Date {
-        return nowDate().addingTimeInterval(-60 * 60 * 24 * 3)
+        return nowDate().addingTimeInterval(-60 * 60 * 24 * 1)
     }
     
     func fetchEndDate() -> Date {
