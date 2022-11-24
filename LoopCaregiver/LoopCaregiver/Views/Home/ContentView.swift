@@ -13,7 +13,7 @@ import LoopKit
 
 struct ContentView: View {
     
-    @ObservedObject var accountService: AccountServiceManager //Survives life of app as it doesn't depend on specific Looper
+    @ObservedObject var accountService: AccountServiceManager
     
     init(){
         self.accountService = AccountServiceManager(accountService: CoreDataAccountService(inMemory: false))
@@ -21,20 +21,20 @@ struct ContentView: View {
     
     var body: some View {
         if let looper = accountService.selectedLooper {
-            HomeView(looperService: LooperService(looper: looper, accountService: accountService))
+            HomeView(looperService: LooperService(looper: looper, accountService: accountService, nightscoutDataSource: looper.createNightscoutDataSource()))
         } else {
-            FirstRunView(looperService: accountService, showSheetView: true)
+            FirstRunView(accountService: accountService, showSheetView: true)
         }
     }
 }
 
 struct FirstRunView: View {
     
-    @ObservedObject var looperService: AccountServiceManager
+    @ObservedObject var accountService: AccountServiceManager
     @State var showSheetView: Bool = false
     
     var body: some View {
-        SettingsView(looperService: looperService, showSheetView: $showSheetView)
+        SettingsView(accountService: accountService, showSheetView: $showSheetView)
     }
 }
 
@@ -42,6 +42,7 @@ struct HomeView: View {
     
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var nightscoutDataSource: NightscoutDataSource
+    let looperService: LooperService
     
     @State private var showCarbView = false
     @State private var showBolusView = false
@@ -51,15 +52,16 @@ struct HomeView: View {
     let looper: Looper
     
     init(looperService: LooperService){
+        self.looperService = looperService
         self.accountService = looperService.accountService
-        self.nightscoutDataSource = looperService.looper.nightscoutDataSource
+        self.nightscoutDataSource = looperService.nightscoutDataSource
         self.looper = looperService.looper
     }
     
     var body: some View {
         VStack {
-            HUDView(accountService: accountService, selectedLooper: looper)
-            PredicatedGlucoseContainerView(nightscoutDataSource: looper.nightscoutDataSource)
+            HUDView(looperService: looperService)
+            PredicatedGlucoseContainerView(nightscoutDataSource: nightscoutDataSource)
             HStack {
                 Text("Active Insulin")
                     .bold()
@@ -89,34 +91,34 @@ struct HomeView: View {
                 Spacer()
             }
             .padding(.leading)
-            TreatmentGraphScrollView(looper: looper)
+            TreatmentGraphScrollView(nightscoutDataSource: nightscoutDataSource)
             Spacer()
             BottomBarView(looper: looper, showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
         .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
         .sheet(isPresented: $showCarbView) {
-            CarbInputView(looper: looper, showSheetView: $showCarbView)
+            CarbInputView(looper: looper, nightscoutDataSource: nightscoutDataSource, showSheetView: $showCarbView)
         }
         .sheet(isPresented: $showBolusView) {
-            BolusInputView(looper: looper, showSheetView: $showBolusView)
+            BolusInputView(looper: looper, nightscoutDataSource: nightscoutDataSource, showSheetView: $showBolusView)
         }
         .sheet(isPresented: $showOverrideView) {
-            OverrideView(looper: looper, showSheetView: $showOverrideView)
+            OverrideView(looperService: looperService, looper: looperService.looper, showSheetView: $showOverrideView)
         }
         .sheet(isPresented: $showSettingsView) {
-            SettingsView(looperService: accountService, showSheetView: $showSettingsView)
+            SettingsView(accountService: accountService, showSheetView: $showSettingsView)
         }
     }
     
     func formattedCOB() -> String {
-        guard let cob = looper.nightscoutDataSource.currentCOB?.cob else {
+        guard let cob = nightscoutDataSource.currentCOB?.cob else {
             return ""
         }
         return String(format: "%.0f g", cob)
     }
     
     func formattedIOB() -> String {
-        guard let iob = looper.nightscoutDataSource.currentIOB?.iob else {
+        guard let iob = nightscoutDataSource.currentIOB?.iob else {
             return ""
         }
         return String(format: "%.1f U Total", iob)

@@ -11,6 +11,7 @@ import NightscoutClient
 struct CarbInputView: View {
 
     @ObservedObject var looper: Looper
+    @ObservedObject var nightscoutDataSource: NightscoutDataSource
     @Binding var showSheetView: Bool
     @State var carbInput: String = ""
     @State var duration: String = "3"
@@ -68,7 +69,7 @@ struct CarbInputView: View {
                         buttonDisabled = true
                         Task {
                             if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration) {
-                                let _ = try await looper.nightscoutDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
+                                let _ = try await nightscoutDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
                                 buttonDisabled = true
                                 showSheetView = false
                             }

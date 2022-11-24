@@ -11,6 +11,7 @@ import NightscoutClient
 struct BolusInputView: View {
 
     @ObservedObject var looper: Looper
+    @ObservedObject var nightscoutDataSource: NightscoutDataSource
     @Binding var showSheetView: Bool
     @State var bolusAmount: String = ""
     @State var duration: String = ""
@@ -56,7 +57,7 @@ struct BolusInputView: View {
                         buttonDisabled = true
                         Task {
                             if let bolusAmountInUnits = Double(bolusAmount) {
-                                let _ = try await looper.nightscoutDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
+                                let _ = try await nightscoutDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
                                 buttonDisabled = false
                                 showSheetView = false
                             }

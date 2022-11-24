@@ -16,9 +16,9 @@ struct HUDView: View {
     
     static let nowDate: () -> Date = {Date()}
     
-    init(accountService: AccountServiceManager, selectedLooper: Looper){
-        self.hudViewModel = HUDViewModel(selectedLooper: selectedLooper, accountService: accountService)
-        self.nightscoutDateSource = selectedLooper.nightscoutDataSource
+    init(looperService: LooperService){
+        self.hudViewModel = HUDViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService)
+        self.nightscoutDateSource = looperService.nightscoutDataSource
     }
     
     var body: some View {

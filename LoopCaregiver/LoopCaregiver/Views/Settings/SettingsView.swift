@@ -10,7 +10,7 @@ import NightscoutClient
 
 struct SettingsView: View {
 
-    @ObservedObject var looperService: AccountServiceManager
+    @ObservedObject var accountService: AccountServiceManager
     @Binding var showSheetView: Bool
     @State private var path = NavigationPath()
     
@@ -20,7 +20,7 @@ struct SettingsView: View {
                 Form {
                     
                     Section("Loopers"){
-                        List(looperService.loopers) { looper in
+                        List(accountService.loopers) { looper in
                             NavigationLink(value: looper) {
                                 Text(looper.name)
                             }
@@ -44,12 +44,13 @@ struct SettingsView: View {
             .navigationDestination(
                 for: Looper.self
             ) { looper in
-                LooperView(looperService: looperService, nightscoutCredentialService: looper.nightscoutDataSource.credentialService, looper: looper, path: $path)
+                //TODO: This makes anotheer NightscoutDataSource which may lead to multiple updates.
+                LooperView(looperService: accountService, nightscoutCredentialService: looper.createNightscoutDataSource().credentialService, looper: looper, path: $path)
             }
             .navigationDestination(
                 for: String.self
             ) { val in
-                LooperSetupView(looperService: looperService, path: $path)
+                LooperSetupView(looperService: accountService, path: $path)
             }
         }
     }

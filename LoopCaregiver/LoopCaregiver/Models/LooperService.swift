@@ -7,13 +7,24 @@
 
 import Foundation
 
-class LooperService {
+class LooperService: ObservableObject {
     
     let looper: Looper
     let accountService: AccountServiceManager
+    var nightscoutDataSource: NightscoutDataSource
     
-    internal init(looper: Looper, accountService: AccountServiceManager) {
+    init(looper: Looper, accountService: AccountServiceManager, nightscoutDataSource: NightscoutDataSource) {
         self.looper = looper
         self.accountService = accountService
+        self.nightscoutDataSource = nightscoutDataSource
+    }
+    
+    deinit {
+        do {
+            try self.nightscoutDataSource.shutdown()
+        } catch {
+            print("Shutdown error: \(error)")
+        }
+
     }
 }

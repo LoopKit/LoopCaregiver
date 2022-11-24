@@ -10,6 +10,7 @@ import NightscoutClient
 
 struct OverrideView: View {
     
+    let looperService: LooperService
     @ObservedObject var looper: Looper
     @Binding var showSheetView: Bool
     
@@ -39,7 +40,7 @@ struct OverrideView: View {
                     Spacer()
                         .onAppear(perform: {
                             Task {
-                                let profiles = try await looper.nightscoutDataSource.getProfiles()
+                                let profiles = try await looperService.nightscoutDataSource.getProfiles()
                                 if let activeProfile = profiles.first, let loopSettings = activeProfile.loopSettings {
                                     overidePresets = loopSettings.overridePresets
                                     if let activeOverride = loopSettings.scheduleOverride {
@@ -55,14 +56,14 @@ struct OverrideView: View {
                 Button("Update") {
                     Task {
                         guard let selectedOverride = pickerCurrentlySelectedOverride else {
-                            let _ = try await looper.nightscoutDataSource.cancelOverride()
+                            let _ = try await looperService.nightscoutDataSource.cancelOverride()
                             showSheetView = false
                             return
                         }
                         
                         do {
                             //TODO: Set appropriate display symbol
-                            let _ = try await looper.nightscoutDataSource.startOverride(overrideName: selectedOverride.name, overrideDisplay: "A", durationInMinutes: 60)
+                            let _ = try await looperService.nightscoutDataSource.startOverride(overrideName: selectedOverride.name, overrideDisplay: "A", durationInMinutes: 60)
                             showSheetView = false
                         } catch {
                             //TODO: Show user error

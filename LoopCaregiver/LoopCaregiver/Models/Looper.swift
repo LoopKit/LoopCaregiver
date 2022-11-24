@@ -11,8 +11,6 @@ import SwiftUI
 
 class Looper: ObservableObject, Hashable {
     
-    @Published var nightscoutDataSource: NightscoutDataSource
-    
     var name: String
     var lastSelectedDate: Date
     let nightscoutCredentials: NightscoutCredentials
@@ -21,7 +19,11 @@ class Looper: ObservableObject, Hashable {
         self.name = name
         self.lastSelectedDate = lastSelectedDate
         self.nightscoutCredentials = nightscoutCredentials
-        self.nightscoutDataSource = NightscoutDataSource(nightscoutCredentials: nightscoutCredentials, otpManager: OTPManager(optURL: nightscoutCredentials.otpURL))
+    }
+    
+    //TODO: Move to a higher level
+    func createNightscoutDataSource() -> NightscoutDataSource {
+        return NightscoutDataSource(nightscoutCredentials: nightscoutCredentials, otpManager: OTPManager(optURL: nightscoutCredentials.otpURL))
     }
     
     
@@ -36,16 +38,6 @@ class Looper: ObservableObject, Hashable {
     
     static func == (lhs: Looper, rhs: Looper) -> Bool {
         return lhs.name == rhs.name //TODO: Don't assume names are unique. Use a UUID
-    }
-    
-    
-    deinit {
-        do {
-            try self.nightscoutDataSource.shutdown()
-        } catch {
-            print("Shutdown error: \(error)")
-        }
-
     }
     
 }

@@ -15,8 +15,8 @@ struct TreatmentGraphScrollView: View {
     private let graphTag = 1000
     private let configuration = TreatmentGraphConfiguration()
     
-    init(looper: Looper) {
-        self.dataSource = TreatmentGraphDataSource(nightscoutDataSource: looper.nightscoutDataSource)
+    init(nightscoutDataSource: NightscoutDataSource) {
+        self.dataSource = TreatmentGraphDataSource(nightscoutDataSource: nightscoutDataSource)
     }
     
     var body: some View {
