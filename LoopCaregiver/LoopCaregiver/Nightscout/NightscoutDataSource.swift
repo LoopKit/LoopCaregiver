@@ -15,6 +15,8 @@ class NightscoutDataSource: ObservableObject {
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
     @Published var predictedEGVs: [NightscoutEGV] = []
+    @Published var currentIOB: WGLoopIOB? = nil
+    @Published var currentCOB: WGLoopCOB? = nil
     
     var credentialService: NightscoutCredentialService
     
@@ -63,6 +65,7 @@ class NightscoutDataSource: ObservableObject {
         async let predictedEGVAsync = fetchPredictedEGVs()
         async let carbEntriesAsync = fetchCarbEntries()
         async let bolusEntriesAsync = fetchBolusEntries()
+        async let deviceStatusesAsync = fetchDeviceStatuses()
         
         let predictedEGVs = try await predictedEGVAsync
         if predictedEGVs != self.predictedEGVs {
@@ -77,6 +80,17 @@ class NightscoutDataSource: ObservableObject {
         let bolusEntries = try await bolusEntriesAsync
         if bolusEntries != self.bolusEntries {
             self.bolusEntries = bolusEntries
+        }
+        
+        let deviceStatuses = try await deviceStatusesAsync
+            .sorted(by: {$0.created_at < $1.created_at})
+        if let iob = deviceStatuses.last?.loop?.iob,
+           iob != self.currentIOB {
+            self.currentIOB = iob
+        }
+        if let cob = deviceStatuses.last?.loop?.cob,
+           cob != self.currentCOB {
+            self.currentCOB = cob
         }
     }
     
@@ -119,6 +133,10 @@ class NightscoutDataSource: ObservableObject {
     
     func fetchCarbEntries() async throws -> [WGCarbEntry] {
         return try await nightscoutService.getCarbTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
+    }
+    
+    func fetchDeviceStatuses() async throws -> [NightscoutDeviceStatus] {
+        return try await nightscoutService.getDeviceStatuses(startDate: fetchStartDate(), endDate: fetchEndDate())
     }
     
     func fetchStartDate() -> Date {

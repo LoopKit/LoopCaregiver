@@ -35,3 +35,17 @@ extension WGBolusEntry: Equatable {
         lhs.date == rhs.date
     }
 }
+
+extension WGLoopCOB: Equatable {
+    public static func == (lhs: WGLoopCOB, rhs: WGLoopCOB) -> Bool {
+        return lhs.timestamp == rhs.timestamp &&
+        lhs.cob == rhs.cob
+    }
+}
+
+extension WGLoopIOB: Equatable {
+    public static func == (lhs: WGLoopIOB, rhs: WGLoopIOB) -> Bool {
+        return lhs.timestamp == rhs.timestamp &&
+        lhs.iob == rhs.iob
+    }
+}

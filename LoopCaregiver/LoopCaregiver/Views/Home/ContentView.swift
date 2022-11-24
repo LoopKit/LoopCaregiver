@@ -37,6 +37,7 @@ struct FirstRunView: View {
 struct HomeView: View {
     
     @ObservedObject var looperService: LooperService
+    @ObservedObject var nightscoutDataSource: NightscoutDataSource
     
     @State private var showCarbView = false
     @State private var showBolusView = false
@@ -47,6 +48,7 @@ struct HomeView: View {
     
     init(looperService: LooperService, looper: Looper){
         self.looperService = looperService
+        self.nightscoutDataSource = looper.nightscoutDataSource
         self.looper = looper
     }
     
@@ -54,6 +56,28 @@ struct HomeView: View {
         VStack {
             HUDView(looperService: looperService, selectedLooper: looper)
             PredicatedGlucoseContainerView(nightscoutDataSource: looper.nightscoutDataSource)
+            HStack {
+                Text("Active Insulin")
+                    .bold()
+                    .font(.subheadline)
+                Spacer()
+                Text(formattedIOB())
+                    .foregroundColor(.gray)
+                    .bold()
+                    .font(.subheadline)
+            }
+            .padding([.leading, .bottom])
+            HStack {
+                Text("Active Carbohydrates")
+                    .bold()
+                    .font(.subheadline)
+                Spacer()
+                Text(formattedCOB())
+                    .foregroundColor(.gray)
+                    .bold()
+                    .font(.subheadline)
+            }
+            .padding([.leading, .bottom])
             HStack {
                 Text("Nightscout")
                     .bold()
@@ -79,5 +103,20 @@ struct HomeView: View {
             SettingsView(looperService: looperService, showSheetView: $showSettingsView)
         }
     }
+    
+    func formattedCOB() -> String {
+        guard let cob = looper.nightscoutDataSource.currentCOB?.cob else {
+            return ""
+        }
+        return String(format: "%.0f g", cob)
+    }
+    
+    func formattedIOB() -> String {
+        guard let iob = looper.nightscoutDataSource.currentIOB?.iob else {
+            return ""
+        }
+        return String(format: "%.1f U Total", iob)
+    }
+    
 }
 

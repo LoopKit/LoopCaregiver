@@ -23,21 +23,23 @@ struct HUDView: View {
     
     var body: some View {
         VStack {
-            HStack {
+            HStack (alignment: .center) {
                 VStack (alignment: .center) {
                     Text(formatEGV(nightscoutDateSource.currentEGV))
                         .font(.largeTitle)
                         .foregroundColor(egvValueColor())
-                        .padding([.leading, .top])
-                    if let lastEGVChange = self.lastEGVChange() {
-                        Text("\(lastEGVChange)")
-                            .font(.footnote)
-                    }
+                        .padding([.leading])
                 }
                 if let egv = nightscoutDateSource.currentEGV {
                     Image(systemName: arrowImageName(egv: egv))
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 20.0)
                         .foregroundColor(egvValueColor())
                 }
+                Text(lastEGVFormatted())
+                    .font(.footnote)
+                    .padding([])
                 Spacer()
                 Picker("Looper", selection: $hudViewModel.selectedLooper) {
                     ForEach(hudViewModel.loopers()) { looper in
@@ -107,6 +109,20 @@ struct HUDView: View {
         }
     }
     
+    
+    func lastEGVFormatted() -> String {
+
+        if let lastEGVChange = self.lastEGVChange() {
+            if lastEGVChange > 0 {
+                return "+\(lastEGVChange)"
+            } else if lastEGVChange < 0 {
+                return "\(lastEGVChange)"
+            }
+        }
+        
+        return ""
+    }
+    
     enum EGVTrend: Int {
         case doubleUp = 1
         case singleUp = 2
@@ -130,7 +146,6 @@ struct HUDView: View {
         default:
             return ""
         }
-        
     }
 }
 
