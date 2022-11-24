@@ -21,9 +21,7 @@ struct ContentView: View {
     
     var body: some View {
         if let looper = accountService.selectedLooper {
-            HomeView(looperService: LooperService(looper: looper,
-                                                  accountService: accountService,
-                                                  remoteDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper))))
+            HomeView(looperService: accountService.createLooperService(looper: looper))
         } else {
             FirstRunView(accountService: accountService, showSheetView: true)
         }

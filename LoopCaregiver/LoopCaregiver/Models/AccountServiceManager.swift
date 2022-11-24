@@ -10,6 +10,7 @@ import NightscoutClient
 import LoopKit
 
 class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountService {
+    
     var delegate: AccountServiceDelegate?
     
     //Account Service
@@ -46,6 +47,15 @@ class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountSe
         for looper in loopers {
             try removeLooper(looper)
         }
+    }
+    
+    
+    //MARK:
+    
+    func createLooperService(looper: Looper) -> LooperService {
+        return LooperService(looper: looper,
+                                              accountService: self,
+                                              remoteDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper)))
     }
     
     func refresh(){

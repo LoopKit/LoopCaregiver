@@ -18,7 +18,6 @@ struct SettingsView: View {
         NavigationStack (path: $path) {
             VStack {
                 Form {
-                    
                     Section("Loopers"){
                         List(accountService.loopers) { looper in
                             NavigationLink(value: looper) {
@@ -44,9 +43,7 @@ struct SettingsView: View {
             .navigationDestination(
                 for: Looper.self
             ) { looper in
-                //TODO: This should probably receive a LooperService to have access to these things.
-                //We just need to make sure NS data won't be fetched and the Navigationlink things above need adjusted.
-                LooperView(accountService: accountService,
+                LooperView(looperService: accountService.createLooperService(looper: looper),
                            nightscoutCredentialService: NightscoutCredentialService(credentials: looper.nightscoutCredentials),
                            looper: looper,
                            path: $path)
