@@ -8,7 +8,7 @@
 import Foundation
 import NightscoutClient
 
-class NightscoutDataSource: ObservableObject {
+class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     
     @Published var currentEGV: NightscoutEGV? = nil
     @Published var egvs: [NightscoutEGV] = []
@@ -96,6 +96,7 @@ class NightscoutDataSource: ObservableObject {
         updating = false
     }
     
+    //MARK: RemoteDataServiceProvider
     func fetchEGVs() async throws -> [NightscoutEGV] {
         return try await nightscoutService.getEGVs(startDate: fetchStartDate(), endDate:fetchEndDate())
             .sorted(by: {$0.displayTime < $1.displayTime})
