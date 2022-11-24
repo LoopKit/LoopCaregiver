@@ -24,12 +24,10 @@ struct HUDView: View {
     var body: some View {
         VStack {
             HStack (alignment: .center) {
-                VStack (alignment: .center) {
-                    Text(formatEGV(nightscoutDateSource.currentEGV))
-                        .font(.largeTitle)
-                        .foregroundColor(egvValueColor())
-                        .padding([.leading])
-                }
+                Text(formatEGV(nightscoutDateSource.currentEGV))
+                    .font(.largeTitle)
+                    .foregroundColor(egvValueColor())
+                    .padding([.leading])
                 if let egv = nightscoutDateSource.currentEGV {
                     Image(systemName: arrowImageName(egv: egv))
                         .resizable()
@@ -37,9 +35,12 @@ struct HUDView: View {
                         .frame(width: 20.0)
                         .foregroundColor(egvValueColor())
                 }
-                Text(lastEGVFormatted())
-                    .font(.footnote)
-                    .padding([])
+                VStack {
+                    Text(lastEGVTimeFormatted())
+                        .font(.footnote)
+                    Text(lastEGVDeltaFormatted())
+                        .font(.footnote)
+                }
                 Spacer()
                 if nightscoutDateSource.updating {
                     ProgressView()
@@ -112,18 +113,27 @@ struct HUDView: View {
         }
     }
     
-    
-    func lastEGVFormatted() -> String {
-
-        if let lastEGVChange = self.lastEGVChange() {
-            if lastEGVChange > 0 {
-                return "+\(lastEGVChange)"
-            } else if lastEGVChange < 0 {
-                return "\(lastEGVChange)"
-            }
+    func lastEGVTimeFormatted() -> String {
+        guard let currentEGV = self.nightscoutDateSource.currentEGV else {
+            return ""
         }
         
-        return ""
+        return currentEGV.systemTime.formatted(.dateTime.hour().minute())
+    }
+    
+    func lastEGVDeltaFormatted() -> String {
+        
+        guard let lastEGVChange = self.lastEGVChange() else {
+            return ""
+        }
+        
+        if lastEGVChange > 0 {
+            return "+\(lastEGVChange)"
+        } else if lastEGVChange < 0 {
+            return "\(lastEGVChange)"
+        } else {
+            return ""
+        }
     }
     
     enum EGVTrend: Int {
