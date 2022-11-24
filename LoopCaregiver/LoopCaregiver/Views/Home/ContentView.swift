@@ -21,7 +21,7 @@ struct ContentView: View {
     
     var body: some View {
         if let looper = accountService.selectedLooper {
-            HomeView(looperService: accountService, looper: looper)
+            HomeView(looperService: LooperService(looper: looper, accountService: accountService))
         } else {
             FirstRunView(looperService: accountService, showSheetView: true)
         }
@@ -40,7 +40,7 @@ struct FirstRunView: View {
 
 struct HomeView: View {
     
-    @ObservedObject var looperService: AccountServiceManager
+    @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var nightscoutDataSource: NightscoutDataSource
     
     @State private var showCarbView = false
@@ -50,15 +50,15 @@ struct HomeView: View {
     
     let looper: Looper
     
-    init(looperService: AccountServiceManager, looper: Looper){
-        self.looperService = looperService
-        self.nightscoutDataSource = looper.nightscoutDataSource
-        self.looper = looper
+    init(looperService: LooperService){
+        self.accountService = looperService.accountService
+        self.nightscoutDataSource = looperService.looper.nightscoutDataSource
+        self.looper = looperService.looper
     }
     
     var body: some View {
         VStack {
-            HUDView(looperService: looperService, selectedLooper: looper)
+            HUDView(accountService: accountService, selectedLooper: looper)
             PredicatedGlucoseContainerView(nightscoutDataSource: looper.nightscoutDataSource)
             HStack {
                 Text("Active Insulin")
@@ -104,7 +104,7 @@ struct HomeView: View {
             OverrideView(looper: looper, showSheetView: $showOverrideView)
         }
         .sheet(isPresented: $showSettingsView) {
-            SettingsView(looperService: looperService, showSheetView: $showSettingsView)
+            SettingsView(looperService: accountService, showSheetView: $showSettingsView)
         }
     }
     

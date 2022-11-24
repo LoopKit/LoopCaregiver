@@ -16,8 +16,8 @@ struct HUDView: View {
     
     static let nowDate: () -> Date = {Date()}
     
-    init(looperService: AccountServiceManager, selectedLooper: Looper){
-        self.hudViewModel = HUDViewModel(selectedLooper: selectedLooper, looperService: looperService)
+    init(accountService: AccountServiceManager, selectedLooper: Looper){
+        self.hudViewModel = HUDViewModel(selectedLooper: selectedLooper, accountService: accountService)
         self.nightscoutDateSource = selectedLooper.nightscoutDataSource
     }
     
@@ -157,20 +157,20 @@ class HUDViewModel: ObservableObject {
     @Published var selectedLooper: Looper {
         didSet {
             do {
-                try looperService.updateActiveLoopUser(selectedLooper)
+                try accountService.updateActiveLoopUser(selectedLooper)
             } catch {
                 print(error)
             }
         }
     }
-    @ObservedObject var looperService: AccountServiceManager
+    @ObservedObject var accountService: AccountServiceManager
     private var subscribers: Set<AnyCancellable> = []
     
-    init(selectedLooper: Looper, looperService: AccountServiceManager) {
+    init(selectedLooper: Looper, accountService: AccountServiceManager) {
         self.selectedLooper = selectedLooper
-        self.looperService = looperService
+        self.accountService = accountService
         
-        self.looperService.$selectedLooper.sink { val in
+        self.accountService.$selectedLooper.sink { val in
         } receiveValue: { [weak self] updatedUser in
             if let self, let updatedUser, self.selectedLooper != updatedUser {
                 self.selectedLooper = updatedUser
@@ -179,6 +179,6 @@ class HUDViewModel: ObservableObject {
     }
     
     func loopers() -> [Looper] {
-        return looperService.loopers
+        return accountService.loopers
     }
 }
