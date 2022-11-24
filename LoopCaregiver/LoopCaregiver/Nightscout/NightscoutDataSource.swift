@@ -17,6 +17,7 @@ class NightscoutDataSource: ObservableObject {
     @Published var predictedEGVs: [NightscoutEGV] = []
     @Published var currentIOB: WGLoopIOB? = nil
     @Published var currentCOB: WGLoopCOB? = nil
+    @Published var updating: Bool = false
     
     var credentialService: NightscoutCredentialService
     
@@ -51,7 +52,7 @@ class NightscoutDataSource: ObservableObject {
     
     @MainActor
     func updateData() async throws {
-        
+        updating = true
         let egvs = try await fetchEGVs()
             .sorted(by: {$0.systemTime < $1.systemTime})
         if egvs != self.egvs {
@@ -92,6 +93,7 @@ class NightscoutDataSource: ObservableObject {
            cob != self.currentCOB {
             self.currentCOB = cob
         }
+        updating = false
     }
     
     func fetchEGVs() async throws -> [NightscoutEGV] {

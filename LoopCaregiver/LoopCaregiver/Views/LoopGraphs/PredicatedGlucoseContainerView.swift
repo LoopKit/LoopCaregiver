@@ -64,7 +64,7 @@ struct PredicatedGlucoseContainerView: View {
                                       dateInterval: DateInterval(start: Date().addingTimeInterval(60.0 * 60.0 * -hoursLookback), duration: 60.0 * 60.0 * hoursLookahead),
                                       isInteractingWithChart: $isInteractingWithChart)
         } else {
-            ProgressView()
+            Text("")
         }
     }
     

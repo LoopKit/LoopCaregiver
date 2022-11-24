@@ -41,6 +41,9 @@ struct HUDView: View {
                     .font(.footnote)
                     .padding([])
                 Spacer()
+                if nightscoutDateSource.updating {
+                    ProgressView()
+                }
                 Picker("Looper", selection: $hudViewModel.selectedLooper) {
                     ForEach(hudViewModel.loopers()) { looper in
                         Text(looper.name).tag(looper)
