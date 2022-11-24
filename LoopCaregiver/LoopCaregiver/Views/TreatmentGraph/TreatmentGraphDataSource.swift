@@ -21,13 +21,13 @@ class TreatmentGraphDataSource: ObservableObject {
     @Published var bolusEntryGraphItems: [GraphItem] = []
     @Published var carbEntryGraphItems: [GraphItem] = []
 
-    private let nightscoutDataSource: NightscoutDataSource
+    private let nightscoutDataSource: RemoteDataServiceManager
     private let configuration = TreatmentGraphConfiguration()
   
     private var subscribers: Set<AnyCancellable> = []
 
     
-    init(nightscoutDataSource: NightscoutDataSource) {
+    init(nightscoutDataSource: RemoteDataServiceManager) {
         self.nightscoutDataSource = nightscoutDataSource
         self.startMonitoring()
     }

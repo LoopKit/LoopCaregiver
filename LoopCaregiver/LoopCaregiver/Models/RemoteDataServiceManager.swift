@@ -8,7 +8,8 @@
 import Foundation
 import NightscoutClient
 
-class RemoteDataServiceManager {
+class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
+
     @Published var currentEGV: NightscoutEGV? = nil
     @Published var egvs: [NightscoutEGV] = []
     @Published var carbEntries: [WGCarbEntry] = []
@@ -21,8 +22,8 @@ class RemoteDataServiceManager {
     private let remoteDataProvider: RemoteDataServiceProvider
     private var timer: Timer?
     
-    init(looper: Looper){
-        self.remoteDataProvider = NightscoutDataSource(looper: looper)
+    init(remoteDataProvider: RemoteDataServiceProvider){
+        self.remoteDataProvider = remoteDataProvider
         monitorForUpdates(updateInterval: 30)
     }
     
@@ -90,6 +91,49 @@ class RemoteDataServiceManager {
     
     func nowDate() -> Date {
         return Date()
+    }
+    
+    
+    //MARK: RemoteDataServiceProvider
+    
+    func fetchEGVs() async throws -> [NightscoutClient.NightscoutEGV] {
+        return try await remoteDataProvider.fetchEGVs()
+    }
+    
+    func fetchPredictedEGVs() async throws -> [NightscoutClient.NightscoutEGV] {
+        return try await remoteDataProvider.fetchPredictedEGVs()
+    }
+    
+    func fetchBolusEntries() async throws -> [NightscoutClient.WGBolusEntry] {
+        return try await remoteDataProvider.fetchBolusEntries()
+    }
+    
+    func fetchCarbEntries() async throws -> [NightscoutClient.WGCarbEntry] {
+        return try await remoteDataProvider.fetchCarbEntries()
+    }
+    
+    func fetchDeviceStatuses() async throws -> [NightscoutClient.NightscoutDeviceStatus] {
+        return try await remoteDataProvider.fetchDeviceStatuses()
+    }
+    
+    func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws {
+        return try await remoteDataProvider.deliverCarbs(amountInGrams: amountInGrams, durationInHours: durationInHours)
+    }
+    
+    func deliverBolus(amountInUnits: Double) async throws {
+        return try await remoteDataProvider.deliverBolus(amountInUnits: amountInUnits)
+    }
+    
+    func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws {
+        return try await remoteDataProvider.startOverride(overrideName: overrideName, overrideDisplay: overrideDisplay, durationInMinutes: durationInMinutes)
+    }
+    
+    func cancelOverride() async throws {
+        return try await remoteDataProvider.cancelOverride()
+    }
+    
+    func getProfiles() async throws -> [NightscoutClient.NightscoutProfile] {
+        return try await remoteDataProvider.getProfiles()
     }
 }
 

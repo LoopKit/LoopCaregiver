@@ -15,14 +15,14 @@ import NightscoutClient
 
 struct PredicatedGlucoseContainerView: View {
     
-    @ObservedObject var nightscoutDataSource: NightscoutDataSource
+    @ObservedObject var nightscoutDataSource: RemoteDataServiceManager
     
     private let chartManager: ChartsManager
     @State private var isInteractingWithChart: Bool = false
     
     let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: Self.glucoseUnits())
     
-    init(nightscoutDataSource: NightscoutDataSource){
+    init(nightscoutDataSource: RemoteDataServiceManager){
         self.chartManager = Self.createChartManager()
         self.nightscoutDataSource = nightscoutDataSource
     }

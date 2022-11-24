@@ -12,7 +12,7 @@ import Combine
 struct HUDView: View {
     
     @ObservedObject var hudViewModel: HUDViewModel
-    @ObservedObject var nightscoutDateSource: NightscoutDataSource
+    @ObservedObject var nightscoutDateSource: RemoteDataServiceManager
     
     static let nowDate: () -> Date = {Date()}
     

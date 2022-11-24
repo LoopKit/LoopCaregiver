@@ -23,7 +23,7 @@ struct ContentView: View {
         if let looper = accountService.selectedLooper {
             HomeView(looperService: LooperService(looper: looper,
                                                   accountService: accountService,
-                                                  nightscoutDataSource: NightscoutDataSource(looper: looper)))
+                                                  nightscoutDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper))))
         } else {
             FirstRunView(accountService: accountService, showSheetView: true)
         }
@@ -43,7 +43,7 @@ struct FirstRunView: View {
 struct HomeView: View {
     
     @ObservedObject var accountService: AccountServiceManager
-    @ObservedObject var nightscoutDataSource: NightscoutDataSource
+    @ObservedObject var nightscoutDataSource: RemoteDataServiceManager
     let looperService: LooperService
     
     @State private var showCarbView = false
