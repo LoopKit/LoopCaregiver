@@ -1,5 +1,5 @@
 //
-//  LooperService.swift
+//  AccountServiceManager.swift
 //  
 //
 //  Created by Bill Gestrich on 5/11/22.
@@ -9,12 +9,12 @@ import Foundation
 import NightscoutClient
 import LoopKit
 
-class LooperService: ObservableObject, AccountServiceDelegate, AccountService {
+class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountService {
     var delegate: AccountServiceDelegate?
     
+    //Account Service
     @Published var loopers: [Looper] = []
     @Published var selectedLooper: Looper? = nil
-    
     private var accountService: AccountService
     
     init(accountService: AccountService){
@@ -76,7 +76,7 @@ class LooperService: ObservableObject, AccountServiceDelegate, AccountService {
     
 }
 
-extension LooperService {
+extension AccountServiceManager {
     func simulatorCredentials() -> NightscoutCredentials? {
         
         let fileURL = URL(filePath: "/Users/bill/Desktop/Loop/loopcaregiver-prod.json")

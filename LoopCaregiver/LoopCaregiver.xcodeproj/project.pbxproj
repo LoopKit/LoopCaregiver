@@ -22,7 +22,7 @@
 		A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */; };
 		A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293A2926ECF500B8BF43 /* BottomBarView.swift */; };
 		A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
-		A96929402926EFEC00B8BF43 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* LooperService.swift */; };
+		A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */; };
 		A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */; };
 		A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969296C2927E9AB00B8BF43 /* LooperView.swift */; };
 		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
@@ -77,7 +77,7 @@
 		A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentGraphDataSource.swift; sourceTree = "<group>"; };
 		A969293A2926ECF500B8BF43 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		A969293C2926EFEC00B8BF43 /* Looper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Looper.swift; sourceTree = "<group>"; };
-		A969293D2926EFEC00B8BF43 /* LooperService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
+		A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountServiceManager.swift; sourceTree = "<group>"; };
 		A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooperSetupView.swift; sourceTree = "<group>"; };
 		A969296C2927E9AB00B8BF43 /* LooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperView.swift; sourceTree = "<group>"; };
 		A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoopCaregiver.xcdatamodel; sourceTree = "<group>"; };
@@ -146,7 +146,7 @@
 				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
 				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
 				A969293C2926EFEC00B8BF43 /* Looper.swift */,
-				A969293D2926EFEC00B8BF43 /* LooperService.swift */,
+				A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -358,7 +358,7 @@
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
 				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
-				A96929402926EFEC00B8BF43 /* LooperService.swift in Sources */,
+				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
 				A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */,
 				A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */,
 			);

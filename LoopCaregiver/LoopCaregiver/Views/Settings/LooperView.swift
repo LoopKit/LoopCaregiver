@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LooperView: View {
     
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var looperService: AccountServiceManager
     @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var looper: Looper
     @Binding var path: NavigationPath

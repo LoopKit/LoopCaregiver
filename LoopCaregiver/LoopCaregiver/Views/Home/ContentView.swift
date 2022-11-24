@@ -13,27 +13,24 @@ import LoopKit
 
 struct ContentView: View {
     
-    //TODO: Make this not a singleton
-    let accountService: AccountService
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var accountService: AccountServiceManager //Survives life of app as it doesn't depend on specific Looper
     
     init(){
-        self.accountService = CoreDataAccountService(inMemory: false)
-        self.looperService = LooperService(accountService: self.accountService)
+        self.accountService = AccountServiceManager(accountService: CoreDataAccountService(inMemory: false))
     }
     
     var body: some View {
-        if let looper = looperService.selectedLooper {
-            HomeView(looperService: looperService, looper: looper)
+        if let looper = accountService.selectedLooper {
+            HomeView(looperService: accountService, looper: looper)
         } else {
-            FirstRunView(looperService: looperService, showSheetView: true)
+            FirstRunView(looperService: accountService, showSheetView: true)
         }
     }
 }
 
 struct FirstRunView: View {
     
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var looperService: AccountServiceManager
     @State var showSheetView: Bool = false
     
     var body: some View {
@@ -43,7 +40,7 @@ struct FirstRunView: View {
 
 struct HomeView: View {
     
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var looperService: AccountServiceManager
     @ObservedObject var nightscoutDataSource: NightscoutDataSource
     
     @State private var showCarbView = false
@@ -53,7 +50,7 @@ struct HomeView: View {
     
     let looper: Looper
     
-    init(looperService: LooperService, looper: Looper){
+    init(looperService: AccountServiceManager, looper: Looper){
         self.looperService = looperService
         self.nightscoutDataSource = looper.nightscoutDataSource
         self.looper = looper
@@ -94,7 +91,7 @@ struct HomeView: View {
             .padding(.leading)
             TreatmentGraphScrollView(looper: looper)
             Spacer()
-            BottomBarView(looperService: looperService, looper: looper, showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
+            BottomBarView(looper: looper, showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
         .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
         .sheet(isPresented: $showCarbView) {

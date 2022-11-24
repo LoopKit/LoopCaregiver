@@ -11,8 +11,7 @@ import SwiftUI
 import NightscoutClient
 
 struct BottomBarView: View {
-    
-    @ObservedObject var looperService: LooperService
+
     let looper: Looper
     @Binding var showCarbView: Bool
     @Binding var showBolusView: Bool

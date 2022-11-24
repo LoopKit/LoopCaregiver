@@ -10,7 +10,7 @@ import NightscoutClient
 
 struct SettingsView: View {
 
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var looperService: AccountServiceManager
     @Binding var showSheetView: Bool
     @State private var path = NavigationPath()
     

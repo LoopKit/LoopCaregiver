@@ -11,7 +11,7 @@ import CodeScanner
 
 struct LooperSetupView: View {
     
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var looperService: AccountServiceManager
     @State private var nightscoutURLFieldText: String = ""
     @State private var nameFieldText: String = ""
     @State private var apiSecretFieldText: String = ""

@@ -16,7 +16,7 @@ struct HUDView: View {
     
     static let nowDate: () -> Date = {Date()}
     
-    init(looperService: LooperService, selectedLooper: Looper){
+    init(looperService: AccountServiceManager, selectedLooper: Looper){
         self.hudViewModel = HUDViewModel(selectedLooper: selectedLooper, looperService: looperService)
         self.nightscoutDateSource = selectedLooper.nightscoutDataSource
     }
@@ -163,10 +163,10 @@ class HUDViewModel: ObservableObject {
             }
         }
     }
-    @ObservedObject var looperService: LooperService
+    @ObservedObject var looperService: AccountServiceManager
     private var subscribers: Set<AnyCancellable> = []
     
-    init(selectedLooper: Looper, looperService: LooperService) {
+    init(selectedLooper: Looper, looperService: AccountServiceManager) {
         self.selectedLooper = selectedLooper
         self.looperService = looperService
         
