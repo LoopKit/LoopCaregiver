@@ -11,7 +11,7 @@ import LoopKit
 
 class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountService {
     
-    var delegate: AccountServiceDelegate?
+    weak var delegate: AccountServiceDelegate?
     
     //Account Service
     @Published var loopers: [Looper] = []
