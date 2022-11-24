@@ -21,7 +21,9 @@ struct ContentView: View {
     
     var body: some View {
         if let looper = accountService.selectedLooper {
-            HomeView(looperService: LooperService(looper: looper, accountService: accountService, nightscoutDataSource: looper.createNightscoutDataSource()))
+            HomeView(looperService: LooperService(looper: looper,
+                                                  accountService: accountService,
+                                                  nightscoutDataSource: NightscoutDataSource(looper: looper)))
         } else {
             FirstRunView(accountService: accountService, showSheetView: true)
         }
@@ -49,13 +51,10 @@ struct HomeView: View {
     @State private var showOverrideView = false
     @State private var showSettingsView = false
     
-    let looper: Looper
-    
     init(looperService: LooperService){
         self.looperService = looperService
         self.accountService = looperService.accountService
         self.nightscoutDataSource = looperService.nightscoutDataSource
-        self.looper = looperService.looper
     }
     
     var body: some View {
@@ -93,17 +92,17 @@ struct HomeView: View {
             .padding(.leading)
             TreatmentGraphScrollView(nightscoutDataSource: nightscoutDataSource)
             Spacer()
-            BottomBarView(looper: looper, showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
+            BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
         .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
         .sheet(isPresented: $showCarbView) {
-            CarbInputView(looper: looper, nightscoutDataSource: nightscoutDataSource, showSheetView: $showCarbView)
+            CarbInputView(looperService: looperService, showSheetView: $showCarbView)
         }
         .sheet(isPresented: $showBolusView) {
-            BolusInputView(looper: looper, nightscoutDataSource: nightscoutDataSource, showSheetView: $showBolusView)
+            BolusInputView(looperService: looperService, showSheetView: $showBolusView)
         }
         .sheet(isPresented: $showOverrideView) {
-            OverrideView(looperService: looperService, looper: looperService.looper, showSheetView: $showOverrideView)
+            OverrideView(looperService: looperService, showSheetView: $showOverrideView)
         }
         .sheet(isPresented: $showSettingsView) {
             SettingsView(accountService: accountService, showSheetView: $showSettingsView)

@@ -28,9 +28,9 @@ class NightscoutDataSource: ObservableObject {
         case badOTP
     }
     
-    init(nightscoutCredentials: NightscoutCredentials, otpManager: OTPManager){
-        self.nightscoutService = NightscoutService(baseURL: nightscoutCredentials.url, secret: nightscoutCredentials.secretKey, nowDateProvider: {Date()})
-        self.credentialService = NightscoutCredentialService(credentials: nightscoutCredentials)
+    init(looper: Looper){
+        self.nightscoutService = NightscoutService(baseURL: looper.nightscoutCredentials.url, secret: looper.nightscoutCredentials.secretKey, nowDateProvider: {Date()})
+        self.credentialService = NightscoutCredentialService(credentials: looper.nightscoutCredentials)
         monitorForUpdates(updateInterval: 30)
     }
     

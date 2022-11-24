@@ -9,7 +9,7 @@ import SwiftUI
 
 struct LooperView: View {
     
-    @ObservedObject var looperService: AccountServiceManager
+    @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var looper: Looper
     @Binding var path: NavigationPath
@@ -20,7 +20,7 @@ struct LooperView: View {
             Form {
                 Section {
                     LabeledContent {
-                        Text(looper.nightscoutCredentials.url.absoluteString)
+                        Text(nightscoutCredentialService.credentials.url.absoluteString)
                     } label: {
                         Text("Nightscout")
                     }
@@ -45,7 +45,7 @@ struct LooperView: View {
                             isPresented: $isPresentingConfirm) {
             Button("Remove \(looper.name)?", role: .destructive) {
                 do {
-                    try looperService.removeLooper(looper)
+                    try accountService.removeLooper(looper)
                     path.removeLast()
                 } catch {
                     //TODO: Show errors here

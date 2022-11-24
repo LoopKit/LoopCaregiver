@@ -10,8 +10,7 @@ import NightscoutClient
 
 struct BolusInputView: View {
 
-    @ObservedObject var looper: Looper
-    @ObservedObject var nightscoutDataSource: NightscoutDataSource
+    let looperService: LooperService
     @Binding var showSheetView: Bool
     @State var bolusAmount: String = ""
     @State var duration: String = ""
@@ -53,11 +52,11 @@ struct BolusInputView: View {
                 .padding()
                 .confirmationDialog("Are you sure?",
                                     isPresented: $isPresentingConfirm) {
-                    Button("Deliver \(bolusAmount) of insulin to \(looper.name)?", role: .none) {
+                    Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
                         buttonDisabled = true
                         Task {
                             if let bolusAmountInUnits = Double(bolusAmount) {
-                                let _ = try await nightscoutDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
+                                let _ = try await looperService.nightscoutDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
                                 buttonDisabled = false
                                 showSheetView = false
                             }

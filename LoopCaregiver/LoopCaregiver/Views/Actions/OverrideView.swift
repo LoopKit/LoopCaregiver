@@ -11,7 +11,6 @@ import NightscoutClient
 struct OverrideView: View {
     
     let looperService: LooperService
-    @ObservedObject var looper: Looper
     @Binding var showSheetView: Bool
     
     @State private var overidePresets: [NightscoutOverridePreset] = []

@@ -44,8 +44,12 @@ struct SettingsView: View {
             .navigationDestination(
                 for: Looper.self
             ) { looper in
-                //TODO: This makes anotheer NightscoutDataSource which may lead to multiple updates.
-                LooperView(looperService: accountService, nightscoutCredentialService: looper.createNightscoutDataSource().credentialService, looper: looper, path: $path)
+                //TODO: This should probably receive a LooperService to have access to these things.
+                //We just need to make sure NS data won't be fetched and the Navigationlink things above need adjusted.
+                LooperView(accountService: accountService,
+                           nightscoutCredentialService: NightscoutCredentialService(credentials: looper.nightscoutCredentials),
+                           looper: looper,
+                           path: $path)
             }
             .navigationDestination(
                 for: String.self

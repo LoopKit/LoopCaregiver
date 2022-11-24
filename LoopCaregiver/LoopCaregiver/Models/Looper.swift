@@ -21,11 +21,6 @@ class Looper: ObservableObject, Hashable {
         self.nightscoutCredentials = nightscoutCredentials
     }
     
-    //TODO: Move to a higher level
-    func createNightscoutDataSource() -> NightscoutDataSource {
-        return NightscoutDataSource(nightscoutCredentials: nightscoutCredentials, otpManager: OTPManager(optURL: nightscoutCredentials.otpURL))
-    }
-    
     
     //MARK: Hashable
     

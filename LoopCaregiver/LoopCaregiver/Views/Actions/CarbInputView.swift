@@ -10,8 +10,7 @@ import NightscoutClient
 
 struct CarbInputView: View {
 
-    @ObservedObject var looper: Looper
-    @ObservedObject var nightscoutDataSource: NightscoutDataSource
+    var looperService: LooperService
     @Binding var showSheetView: Bool
     @State var carbInput: String = ""
     @State var duration: String = "3"
@@ -65,11 +64,11 @@ struct CarbInputView: View {
                 .padding()
                 .confirmationDialog("Are you sure?",
                                     isPresented: $isPresentingConfirm) {
-                    Button("Deliver \(carbInput)g of carbs to \(looper.name)?", role: .none) {
+                    Button("Deliver \(carbInput)g of carbs to \(looperService.looper.name)?", role: .none) {
                         buttonDisabled = true
                         Task {
                             if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration) {
-                                let _ = try await nightscoutDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
+                                let _ = try await looperService.nightscoutDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
                                 buttonDisabled = true
                                 showSheetView = false
                             }

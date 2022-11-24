@@ -12,7 +12,6 @@ import NightscoutClient
 
 struct BottomBarView: View {
 
-    let looper: Looper
     @Binding var showCarbView: Bool
     @Binding var showBolusView: Bool
     @Binding var showOverrideView: Bool
