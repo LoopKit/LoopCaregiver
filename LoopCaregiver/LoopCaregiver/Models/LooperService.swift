@@ -9,7 +9,8 @@ import Foundation
 import NightscoutClient
 import LoopKit
 
-class LooperService: ObservableObject, AccountServiceDelegate {
+class LooperService: ObservableObject, AccountServiceDelegate, AccountService {
+    var delegate: AccountServiceDelegate?
     
     @Published var loopers: [Looper] = []
     @Published var selectedLooper: Looper? = nil
@@ -19,20 +20,26 @@ class LooperService: ObservableObject, AccountServiceDelegate {
     init(accountService: AccountService){
         self.accountService = accountService
         refreshSync()
-        //TODO: Get rid of singleton
-        CoreDataAccountService.shared.delegate = self
+        accountService.delegate = self
     }
         
+    
+    //MARK: Account Service
+    
+    func getLoopers() throws -> [Looper] {
+        return try accountService.getLoopers()
+    }
+    
+    func updateActiveLoopUser(_ looper: Looper) throws {
+        try accountService.updateActiveLoopUser(looper)
+    }
+    
     func addLooper(_ looper: Looper) throws {
         try accountService.addLooper(looper)
     }
     
     func removeLooper(_ looper: Looper) throws {
         try accountService.removeLooper(looper)
-    }
-    
-    func updateActiveLoopUser(_ looper: Looper) throws {
-        let _ = try accountService.updateLooperLastSelectedDate(looper: looper, Date())
     }
     
     func removeAllLoopers() throws {

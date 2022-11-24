@@ -14,7 +14,13 @@ import LoopKit
 struct ContentView: View {
     
     //TODO: Make this not a singleton
-    @ObservedObject var looperService = LooperService(accountService: CoreDataAccountService.shared)
+    let accountService: AccountService
+    @ObservedObject var looperService: LooperService
+    
+    init(){
+        self.accountService = CoreDataAccountService(inMemory: false)
+        self.looperService = LooperService(accountService: self.accountService)
+    }
     
     var body: some View {
         if let looper = looperService.selectedLooper {

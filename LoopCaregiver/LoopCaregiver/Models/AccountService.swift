@@ -7,12 +7,11 @@
 
 import Foundation
 
-protocol AccountService {
+protocol AccountService: AnyObject {
     var delegate: AccountServiceDelegate? {get set}
-    func addLooper(_ looper: Looper) throws
-    func fetchLooperCD(name: String) throws -> LooperCD?
-    func updateLooperLastSelectedDate(looper: Looper, _ date: Date) throws -> Looper
     func getLoopers() throws -> [Looper]
+    func updateActiveLoopUser(_ looper: Looper) throws
+    func addLooper(_ looper: Looper) throws
     func removeLooper(_ looper: Looper) throws
 }
 

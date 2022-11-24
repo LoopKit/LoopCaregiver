@@ -9,8 +9,6 @@ import CoreData
 
 class CoreDataAccountService: AccountService {
     
-    static let shared = CoreDataAccountService()
-    
     let container: NSPersistentContainer
     weak var delegate: AccountServiceDelegate?
     
@@ -50,21 +48,18 @@ class CoreDataAccountService: AccountService {
         return looperCD
     }
     
-    
-    func updateLooperLastSelectedDate(looper: Looper, _ date: Date) throws -> Looper {
+    func updateActiveLoopUser(_ looper: Looper) throws {
         let context = mainContext()
         guard let looperCD = try fetchLooperCD(name: looper.name) else {
             throw LooperPersistenceError.updateError
         }
         
-        looperCD.lastSelectedDate = date
+        looperCD.lastSelectedDate = Date()
         try context.save()
         
-        guard let result = try fetchLooperCD(name: looper.name)?.toLooper() else {
+        guard try fetchLooperCD(name: looper.name)?.toLooper() != nil else {
             throw LooperPersistenceError.updateError
         }
-        
-        return result
     }
     
     func looperEntityName() -> String {
