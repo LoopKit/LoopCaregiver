@@ -31,6 +31,7 @@
 		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
 		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
 		A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */; };
+		A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
@@ -85,6 +86,7 @@
 		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
 		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
 		A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NightscoutService+Extensions.swift"; sourceTree = "<group>"; };
+		A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccountService.swift; sourceTree = "<group>"; };
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9EC1978291FEF940022D39F /* LoopCaregiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				A96929902927FFBA00B8BF43 /* AccountService.swift */,
+				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
 				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
 				A969293C2926EFEC00B8BF43 /* Looper.swift */,
 				A969293D2926EFEC00B8BF43 /* LooperService.swift */,
@@ -354,6 +357,7 @@
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
+				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
 				A96929402926EFEC00B8BF43 /* LooperService.swift in Sources */,
 				A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */,
 				A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */,

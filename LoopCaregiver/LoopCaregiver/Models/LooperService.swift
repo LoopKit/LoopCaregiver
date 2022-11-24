@@ -9,7 +9,7 @@ import Foundation
 import NightscoutClient
 import LoopKit
 
-class LooperService: ObservableObject, PersistenceControllerDelegate {
+class LooperService: ObservableObject, AccountServiceDelegate {
     
     @Published var loopers: [Looper] = []
     @Published var selectedLooper: Looper? = nil
@@ -19,7 +19,8 @@ class LooperService: ObservableObject, PersistenceControllerDelegate {
     init(accountService: AccountService){
         self.accountService = accountService
         refreshSync()
-        AccountService.shared.delegate = self
+        //TODO: Get rid of singleton
+        CoreDataAccountService.shared.delegate = self
     }
         
     func addLooper(_ looper: Looper) throws {
@@ -62,7 +63,7 @@ class LooperService: ObservableObject, PersistenceControllerDelegate {
     
     //MARK: PersistenceControllerDelegate
     
-    func persistentServiceDataUpdated(_ service: AccountService) {
+    func accountServiceDataUpdated(_ service: AccountService) {
         self.refresh()
     }
     

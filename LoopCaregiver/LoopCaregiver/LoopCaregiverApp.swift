@@ -10,7 +10,8 @@ import SwiftUI
 @main
 struct LoopCaregiverApp: App {
     
-    let persistenceController = AccountService.shared
+    //TODO: Remove singleton
+    let persistenceController = CoreDataAccountService.shared
     
     var body: some Scene {
         WindowGroup {
