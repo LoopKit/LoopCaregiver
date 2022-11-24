@@ -68,7 +68,7 @@ struct CarbInputView: View {
                         buttonDisabled = true
                         Task {
                             if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration) {
-                                let _ = try await looperService.nightscoutDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
+                                let _ = try await looperService.remoteDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
                                 buttonDisabled = true
                                 showSheetView = false
                             }

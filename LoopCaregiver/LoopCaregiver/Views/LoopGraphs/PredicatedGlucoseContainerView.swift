@@ -15,16 +15,16 @@ import NightscoutClient
 
 struct PredicatedGlucoseContainerView: View {
     
-    @ObservedObject var nightscoutDataSource: RemoteDataServiceManager
+    @ObservedObject var remoteDataSource: RemoteDataServiceManager
     
     private let chartManager: ChartsManager
     @State private var isInteractingWithChart: Bool = false
     
     let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: Self.glucoseUnits())
     
-    init(nightscoutDataSource: RemoteDataServiceManager){
+    init(remoteDataSource: RemoteDataServiceManager){
         self.chartManager = Self.createChartManager()
-        self.nightscoutDataSource = nightscoutDataSource
+        self.remoteDataSource = remoteDataSource
     }
     
     var body: some View {
@@ -34,7 +34,7 @@ struct PredicatedGlucoseContainerView: View {
                     .bold()
                     .font(.subheadline)
                 Spacer()
-                if let eventualValue = nightscoutDataSource.predictedEGVs.last?.value {
+                if let eventualValue = remoteDataSource.predictedEGVs.last?.value {
                     Text("Eventually \(eventualValue) \(Self.glucoseUnits().unitString)")
                         .bold()
                         .font(.subheadline)
@@ -53,11 +53,11 @@ struct PredicatedGlucoseContainerView: View {
         let hoursLookback = 1.0
         let hoursLookahead = 5.0
         
-        if nightscoutDataSource.egvs.count > 0, nightscoutDataSource.predictedEGVs.count > 0 {
+        if remoteDataSource.egvs.count > 0, remoteDataSource.predictedEGVs.count > 0 {
             PredictedGlucoseChartView(chartManager: self.chartManager,
                                                   glucoseUnit: Self.glucoseUnits(),
-                                      glucoseValues: nightscoutDataSource.egvs,
-                                      predictedGlucoseValues: nightscoutDataSource.predictedEGVs,
+                                      glucoseValues: remoteDataSource.egvs,
+                                      predictedGlucoseValues: remoteDataSource.predictedEGVs,
                                       targetGlucoseSchedule: nil,
                                       preMealOverride: nil,
                                       scheduleOverride: nil,

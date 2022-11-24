@@ -56,7 +56,7 @@ struct BolusInputView: View {
                         buttonDisabled = true
                         Task {
                             if let bolusAmountInUnits = Double(bolusAmount) {
-                                let _ = try await looperService.nightscoutDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
+                                let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
                                 buttonDisabled = false
                                 showSheetView = false
                             }

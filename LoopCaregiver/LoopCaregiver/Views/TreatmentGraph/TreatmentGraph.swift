@@ -15,8 +15,8 @@ struct TreatmentGraphScrollView: View {
     private let graphTag = 1000
     private let configuration = TreatmentGraphConfiguration()
     
-    init(nightscoutDataSource: RemoteDataServiceManager) {
-        self.dataSource = TreatmentGraphDataSource(nightscoutDataSource: nightscoutDataSource)
+    init(remoteDataSource: RemoteDataServiceManager) {
+        self.dataSource = TreatmentGraphDataSource(remoteDataSource: remoteDataSource)
     }
     
     var body: some View {

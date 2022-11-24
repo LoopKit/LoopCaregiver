@@ -21,34 +21,34 @@ class TreatmentGraphDataSource: ObservableObject {
     @Published var bolusEntryGraphItems: [GraphItem] = []
     @Published var carbEntryGraphItems: [GraphItem] = []
 
-    private let nightscoutDataSource: RemoteDataServiceManager
+    private let remoteDataSource: RemoteDataServiceManager
     private let configuration = TreatmentGraphConfiguration()
   
     private var subscribers: Set<AnyCancellable> = []
 
     
-    init(nightscoutDataSource: RemoteDataServiceManager) {
-        self.nightscoutDataSource = nightscoutDataSource
+    init(remoteDataSource: RemoteDataServiceManager) {
+        self.remoteDataSource = remoteDataSource
         self.startMonitoring()
     }
     
     func startMonitoring() {
         
-        nightscoutDataSource.$egvs.sink(receiveValue: { [weak self] egvs in
+        remoteDataSource.$egvs.sink(receiveValue: { [weak self] egvs in
             guard let self else {return}
             self.graphItems = egvs.map({$0.graphItem()})
         })
         .store(in: &subscribers)
         
-        nightscoutDataSource.$bolusEntries.sink(receiveValue: { [weak self] bolusEntries in
+        remoteDataSource.$bolusEntries.sink(receiveValue: { [weak self] bolusEntries in
             guard let self else {return}
-            self.bolusEntryGraphItems = bolusEntries.map({$0.graphItem(egvValues: self.nightscoutDataSource.egvs)})
+            self.bolusEntryGraphItems = bolusEntries.map({$0.graphItem(egvValues: self.remoteDataSource.egvs)})
         })
         .store(in: &subscribers)
         
-        nightscoutDataSource.$carbEntries.sink(receiveValue: { [weak self] carbEntries in
+        remoteDataSource.$carbEntries.sink(receiveValue: { [weak self] carbEntries in
             guard let self else {return}
-            self.carbEntryGraphItems = carbEntries.map({$0.graphItem(egvValues: self.nightscoutDataSource.egvs)})
+            self.carbEntryGraphItems = carbEntries.map({$0.graphItem(egvValues: self.remoteDataSource.egvs)})
         })
         .store(in: &subscribers)
     }

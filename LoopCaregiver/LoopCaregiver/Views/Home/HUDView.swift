@@ -18,7 +18,7 @@ struct HUDView: View {
     
     init(looperService: LooperService){
         self.hudViewModel = HUDViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService)
-        self.nightscoutDateSource = looperService.nightscoutDataSource
+        self.nightscoutDateSource = looperService.remoteDataSource
     }
     
     var body: some View {

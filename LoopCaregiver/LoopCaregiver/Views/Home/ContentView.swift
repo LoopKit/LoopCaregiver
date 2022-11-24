@@ -23,7 +23,7 @@ struct ContentView: View {
         if let looper = accountService.selectedLooper {
             HomeView(looperService: LooperService(looper: looper,
                                                   accountService: accountService,
-                                                  nightscoutDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper))))
+                                                  remoteDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper))))
         } else {
             FirstRunView(accountService: accountService, showSheetView: true)
         }
@@ -43,7 +43,7 @@ struct FirstRunView: View {
 struct HomeView: View {
     
     @ObservedObject var accountService: AccountServiceManager
-    @ObservedObject var nightscoutDataSource: RemoteDataServiceManager
+    @ObservedObject var remoteDataSource: RemoteDataServiceManager
     let looperService: LooperService
     
     @State private var showCarbView = false
@@ -54,13 +54,13 @@ struct HomeView: View {
     init(looperService: LooperService){
         self.looperService = looperService
         self.accountService = looperService.accountService
-        self.nightscoutDataSource = looperService.nightscoutDataSource
+        self.remoteDataSource = looperService.remoteDataSource
     }
     
     var body: some View {
         VStack {
             HUDView(looperService: looperService)
-            PredicatedGlucoseContainerView(nightscoutDataSource: nightscoutDataSource)
+            PredicatedGlucoseContainerView(remoteDataSource: remoteDataSource)
             HStack {
                 Text("Active Insulin")
                     .bold()
@@ -90,7 +90,7 @@ struct HomeView: View {
                 Spacer()
             }
             .padding(.leading)
-            TreatmentGraphScrollView(nightscoutDataSource: nightscoutDataSource)
+            TreatmentGraphScrollView(remoteDataSource: remoteDataSource)
             Spacer()
             BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
@@ -110,14 +110,14 @@ struct HomeView: View {
     }
     
     func formattedCOB() -> String {
-        guard let cob = nightscoutDataSource.currentCOB?.cob else {
+        guard let cob = remoteDataSource.currentCOB?.cob else {
             return ""
         }
         return String(format: "%.0f g", cob)
     }
     
     func formattedIOB() -> String {
-        guard let iob = nightscoutDataSource.currentIOB?.iob else {
+        guard let iob = remoteDataSource.currentIOB?.iob else {
             return ""
         }
         return String(format: "%.1f U Total", iob)

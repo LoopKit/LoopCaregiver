@@ -11,17 +11,17 @@ class LooperService: ObservableObject {
     
     let looper: Looper
     let accountService: AccountServiceManager
-    var nightscoutDataSource: RemoteDataServiceManager
+    var remoteDataSource: RemoteDataServiceManager
     
-    init(looper: Looper, accountService: AccountServiceManager, nightscoutDataSource: RemoteDataServiceManager) {
+    init(looper: Looper, accountService: AccountServiceManager, remoteDataSource: RemoteDataServiceManager) {
         self.looper = looper
         self.accountService = accountService
-        self.nightscoutDataSource = nightscoutDataSource
+        self.remoteDataSource = remoteDataSource
     }
     
     deinit {
         do {
-            try self.nightscoutDataSource.shutdown()
+            try self.remoteDataSource.shutdown()
         } catch {
             print("Shutdown error: \(error)")
         }
