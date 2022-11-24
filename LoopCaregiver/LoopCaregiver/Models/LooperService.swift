@@ -14,24 +14,24 @@ class LooperService: ObservableObject, PersistenceControllerDelegate {
     @Published var loopers: [Looper] = []
     @Published var selectedLooper: Looper? = nil
     
-    private var coreDataService: LooperCoreDataService
+    private var accountService: AccountService
     
-    init(coreDataService: LooperCoreDataService){
-        self.coreDataService = coreDataService
+    init(accountService: AccountService){
+        self.accountService = accountService
         refreshSync()
-        LooperCoreDataService.shared.delegate = self
+        AccountService.shared.delegate = self
     }
         
     func addLooper(_ looper: Looper) throws {
-        try coreDataService.addLooper(looper)
+        try accountService.addLooper(looper)
     }
     
     func removeLooper(_ looper: Looper) throws {
-        try coreDataService.removeLooper(looper)
+        try accountService.removeLooper(looper)
     }
     
     func updateActiveLoopUser(_ looper: Looper) throws {
-        let _ = try coreDataService.updateLooperLastSelectedDate(looper: looper, Date())
+        let _ = try accountService.updateLooperLastSelectedDate(looper: looper, Date())
     }
     
     func removeAllLoopers() throws {
@@ -49,7 +49,7 @@ class LooperService: ObservableObject, PersistenceControllerDelegate {
     
     func refreshSync(){
         do {
-            self.loopers = try coreDataService.getLoopers()
+            self.loopers = try accountService.getLoopers()
                 .sorted(by: {$0.name < $1.name})
             self.selectedLooper = self.loopers.sorted(by: {$0.lastSelectedDate < $1.lastSelectedDate}).last
         } catch {
@@ -62,7 +62,7 @@ class LooperService: ObservableObject, PersistenceControllerDelegate {
     
     //MARK: PersistenceControllerDelegate
     
-    func persistentServiceDataUpdated(_ service: LooperCoreDataService) {
+    func persistentServiceDataUpdated(_ service: AccountService) {
         self.refresh()
     }
     

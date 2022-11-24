@@ -1,5 +1,5 @@
 //
-//  LooperCoreDataService.swift
+//  AccountService.swift
 //  Test
 //
 //  Created by Bill Gestrich on 11/18/22.
@@ -7,9 +7,9 @@
 
 import CoreData
 
-class LooperCoreDataService {
+class AccountService {
     
-    static let shared = LooperCoreDataService()
+    static let shared = AccountService()
     
     let container: NSPersistentContainer
     weak var delegate: PersistenceControllerDelegate?
@@ -130,8 +130,8 @@ class LooperCoreDataService {
     
     //MARK: Previews
     
-    static var preview: LooperCoreDataService = {
-        let result = LooperCoreDataService(inMemory: true)
+    static var preview: AccountService = {
+        let result = AccountService(inMemory: true)
         let viewContext = result.container.viewContext
         for _ in 0..<10 {
             let newItem = Item(context: viewContext)
@@ -150,7 +150,7 @@ class LooperCoreDataService {
 
 
 protocol PersistenceControllerDelegate: AnyObject {
-    func persistentServiceDataUpdated(_ service:LooperCoreDataService)
+    func persistentServiceDataUpdated(_ service:AccountService)
 }
 
 extension LooperCD {
