@@ -12,7 +12,7 @@ import HealthKit
 
 extension NightscoutEGV {
     func toGlucoseSample() -> NewGlucoseSample {
-        return NewGlucoseSample(date: self.startDate,
+        return NewGlucoseSample(date: self.systemTime,
                                 quantity: valueHKQuantity(),
                                 condition: nil,
                                 trend: glucoseTrend(),

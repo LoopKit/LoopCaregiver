@@ -31,6 +31,7 @@
 		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
 		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
 		A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */; };
+		A98F5E112930F18A00A03580 /* LoopKit+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* LoopKit+Extensions.swift */; };
 		A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
 		A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
 		A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
@@ -88,6 +89,7 @@
 		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
 		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
 		A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NightscoutService+Extensions.swift"; sourceTree = "<group>"; };
+		A98F5E102930F18A00A03580 /* LoopKit+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LoopKit+Extensions.swift"; sourceTree = "<group>"; };
 		A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccountService.swift; sourceTree = "<group>"; };
 		A9972775292FCE6A006C8C74 /* LooperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
 		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
@@ -252,6 +254,7 @@
 		A9EC199F292128BC0022D39F /* TreatmentGraph */ = {
 			isa = PBXGroup;
 			children = (
+				A98F5E102930F18A00A03580 /* LoopKit+Extensions.swift */,
 				A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */,
 				A9EC199D292101550022D39F /* TreatmentGraph.swift */,
 				A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */,
@@ -350,6 +353,7 @@
 				A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */,
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
+				A98F5E112930F18A00A03580 /* LoopKit+Extensions.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
 				A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */,
 				A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */,

@@ -95,12 +95,12 @@ struct HUDView: View {
             return nil
         }
         
-        return egvs[egvs.count - 1].value - egvs[egvs.count - 2].value
+        return egvs[egvs.count - 1].intValue() - egvs[egvs.count - 2].intValue()
     }
     
     func egvValueColor() -> Color {
         if let currentEGV = nightscoutDateSource.currentEGV {
-            let quantity = Int(currentEGV.quantity.doubleValue(for: .milligramsPerDeciliter)) //TODO: Crash potential
+            let quantity = Int(currentEGV.intValue())
             return ColorType(egvValue: quantity).color
         } else {
             return .white
@@ -109,7 +109,7 @@ struct HUDView: View {
     
     func formatEGV(_ egv: NewGlucoseSample?) -> String {
         if let egv {
-            return String(Int(egv.quantity.doubleValue(for: .milligramsPerDeciliter))) //TODO: Crash potential
+            return String(egv.intValue())
         } else {
             return " " //Using spaces, rather than a characterless String, to avoid view elements from jumping during load.
         }

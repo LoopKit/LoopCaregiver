@@ -34,7 +34,7 @@ struct PredicatedGlucoseContainerView: View {
                     .bold()
                     .font(.subheadline)
                 Spacer()
-                if let eventualValue = remoteDataSource.predictedEGVs.last?.value {
+                if let eventualValue = remoteDataSource.predictedEGVs.last?.quantity {
                     Text("Eventually \(eventualValue) \(Self.glucoseUnits().unitString)")
                         .bold()
                         .font(.subheadline)
@@ -101,16 +101,16 @@ extension ChartColorPalette {
     }
 }
 
-extension NightscoutEGV: GlucoseValue {
+extension NewGlucoseSample: GlucoseValue {
     public var startDate: Date {
-        return systemTime
+        return date
     }
 
-    public var quantity: HKQuantity {
-        let minimum = 40
-        let maximum = 400
-        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(min(max(value, minimum), maximum)))
-    }
+//    public var quantity: HKQuantity {
+//        let minimum = 40
+//        let maximum = 400
+//        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(min(max(value, minimum), maximum)))
+//    }
     
     
 }

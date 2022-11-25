@@ -8,6 +8,7 @@
 import SwiftUI
 import Charts
 import NightscoutClient
+import LoopKit
 
 struct TreatmentGraphScrollView: View {
     
@@ -349,75 +350,67 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
     
 }
 
-
-
-extension NightscoutEGV {
-    func graphItem() -> GraphItem {
-        return GraphItem(type: .egv, value: value, displayTime: displayTime)
-    }
-}
-
 extension WGCarbEntry {
     
-    func graphItem(egvValues: [NightscoutEGV]) -> GraphItem {
+    func graphItem(egvValues: [NewGlucoseSample]) -> GraphItem {
         let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? 390
         return GraphItem(type: .carb(self), value: relativeEgvValue, displayTime: date)
     }
     
-    func interpolateEGVValue(egvs: [NightscoutEGV], atDate date: Date ) -> Int? {
+    func interpolateEGVValue(egvs: [NewGlucoseSample], atDate date: Date ) -> Int? {
         
         guard egvs.count >= 2 else {
-            return egvs.first?.value
+            return egvs.first?.intValue()
         }
         
-        let priorEGVs = egvs.filter({$0.displayTime < date})
+        let priorEGVs = egvs.filter({$0.date < date})
         guard let greatestPriorEGV = priorEGVs.last else {
             //All after, use first
-            return egvs.first?.value
+            return egvs.first?.intValue()
         }
         
-        let laterEGVs = egvs.filter({$0.displayTime > date})
+        let laterEGVs = egvs.filter({$0.date > date})
         guard let leastFollowingEGV = laterEGVs.first else {
             //All prior, use last
-            return egvs.last?.value
+            return egvs.last?.intValue()
         }
         
-        return interpolateRange(range: (first: greatestPriorEGV.value, second: leastFollowingEGV.value), referenceRange: (first: greatestPriorEGV.displayTime, second: leastFollowingEGV.displayTime), refereceValue: date)
+        return interpolateRange(range: (first: greatestPriorEGV.intValue(), second: leastFollowingEGV.intValue()), referenceRange: (first: greatestPriorEGV.date, second: leastFollowingEGV.date), referenceValue: date)
     }
 }
 
 extension WGBolusEntry {
     
-    func graphItem(egvValues: [NightscoutEGV]) -> GraphItem {
+    func graphItem(egvValues: [NewGlucoseSample]) -> GraphItem {
         let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? 390
         return GraphItem(type: .bolus(self), value: relativeEgvValue, displayTime: date)
     }
 }
 
-func interpolateEGVValue(egvs: [NightscoutEGV], atDate date: Date ) -> Int? {
+func interpolateEGVValue(egvs: [NewGlucoseSample], atDate date: Date ) -> Int? {
     
     guard egvs.count >= 2 else {
-        return egvs.first?.value
+        return egvs.first?.intValue()
     }
     
-    let priorEGVs = egvs.filter({$0.displayTime < date})
+    let priorEGVs = egvs.filter({$0.date < date})
     guard let greatestPriorEGV = priorEGVs.last else {
         //All after, use first
-        return egvs.first?.value
+        return egvs.first?.intValue()
     }
     
-    let laterEGVs = egvs.filter({$0.displayTime > date})
+    let laterEGVs = egvs.filter({$0.date > date})
     guard let leastFollowingEGV = laterEGVs.first else {
         //All prior, use last
-        return egvs.last?.value
+        return egvs.last?.intValue()
     }
     
-    return interpolateRange(range: (first: greatestPriorEGV.value, second: leastFollowingEGV.value), referenceRange: (first: greatestPriorEGV.displayTime, second: leastFollowingEGV.displayTime), refereceValue: date)
+    return interpolateRange(range: (first: greatestPriorEGV.intValue(), second: leastFollowingEGV.intValue()), referenceRange: (first: greatestPriorEGV.date, second: leastFollowingEGV.date), referenceValue: date)
 }
 
-func interpolateRange(range: (first: Int, second: Int), referenceRange: (first: Date, second: Date), refereceValue: Date) -> Int {
+func interpolateRange(range: (first: Int, second: Int), referenceRange: (first: Date, second: Date), referenceValue: Date) -> Int {
     let referenceRangeDistance = referenceRange.second.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
-    let lowerRangeToValueDifference = refereceValue.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
+    let lowerRangeToValueDifference = referenceValue.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
     let scaleFactor = lowerRangeToValueDifference / referenceRangeDistance
     
     let rangeDifference = range.first - range.second

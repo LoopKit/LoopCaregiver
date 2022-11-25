@@ -12,10 +12,10 @@ import LoopKit
 class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
     @Published var currentEGV: NewGlucoseSample? = nil
-    @Published var egvs: [NightscoutEGV] = []
+    @Published var egvs: [NewGlucoseSample] = []
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
-    @Published var predictedEGVs: [NightscoutEGV] = []
+    @Published var predictedEGVs: [NewGlucoseSample] = []
     @Published var currentIOB: WGLoopIOB? = nil
     @Published var currentCOB: WGLoopCOB? = nil
     @Published var updating: Bool = false
@@ -49,11 +49,12 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         updating = true
         let egvs = try await remoteDataProvider.fetchEGVs()
             .sorted(by: {$0.systemTime < $1.systemTime})
+            .map({$0.toGlucoseSample()})
         if egvs != self.egvs {
             self.egvs = egvs
         }
         
-        if let latestEGV = egvs.filter({$0.systemTime <= nowDate()}).last?.toGlucoseSample(), latestEGV != currentEGV {
+        if let latestEGV = egvs.filter({$0.date <= nowDate()}).last, latestEGV != currentEGV {
             currentEGV = latestEGV
         }
         
@@ -62,7 +63,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
         async let deviceStatusesAsync = remoteDataProvider.fetchDeviceStatuses()
         
-        let predictedEGVs = try await predictedEGVAsync
+        let predictedEGVs = try await predictedEGVAsync.map({$0.toGlucoseSample()})
         if predictedEGVs != self.predictedEGVs {
             self.predictedEGVs = predictedEGVs
         }
