@@ -20,7 +20,7 @@ struct PredicatedGlucoseContainerView: View {
     private let chartManager: ChartsManager
     @State private var isInteractingWithChart: Bool = false
     
-    let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: Self.glucoseUnits())
+    let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: CaregiverSetttings.glucoseUnits())
     
     init(remoteDataSource: RemoteDataServiceManager){
         self.chartManager = Self.createChartManager()
@@ -34,8 +34,8 @@ struct PredicatedGlucoseContainerView: View {
                     .bold()
                     .font(.subheadline)
                 Spacer()
-                if let eventualValue = remoteDataSource.predictedEGVs.last?.quantity {
-                    Text("Eventually \(eventualValue) \(Self.glucoseUnits().unitString)")
+                if let eventualGlucose = remoteDataSource.predictedEGVs.last {
+                    Text("Eventually \(eventualGlucose.presentableStringValueWithUnits())")
                         .bold()
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -55,7 +55,7 @@ struct PredicatedGlucoseContainerView: View {
         
         if remoteDataSource.egvs.count > 0, remoteDataSource.predictedEGVs.count > 0 {
             PredictedGlucoseChartView(chartManager: self.chartManager,
-                                                  glucoseUnit: Self.glucoseUnits(),
+                                                  glucoseUnit: CaregiverSetttings.glucoseUnits(),
                                       glucoseValues: remoteDataSource.egvs,
                                       predictedGlucoseValues: remoteDataSource.predictedEGVs,
                                       targetGlucoseSchedule: nil,
@@ -66,10 +66,6 @@ struct PredicatedGlucoseContainerView: View {
         } else {
             Text("")
         }
-    }
-    
-    static func glucoseUnits() -> HKUnit {
-        return .milligramsPerDeciliter
     }
     
     static func createChartManager() -> ChartsManager {

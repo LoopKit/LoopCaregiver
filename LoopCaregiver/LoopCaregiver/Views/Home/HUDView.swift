@@ -109,7 +109,7 @@ struct HUDView: View {
     
     func formatEGV(_ egv: NewGlucoseSample?) -> String {
         if let egv {
-            return String(egv.intValue())
+            return String(egv.presentableStringValue())
         } else {
             return " " //Using spaces, rather than a characterless String, to avoid view elements from jumping during load.
         }

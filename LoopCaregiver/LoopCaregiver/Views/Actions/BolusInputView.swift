@@ -40,7 +40,7 @@ struct BolusInputView: View {
                         Text("U")
                             .frame(width: unitFrameWidth)
                     } label: {
-                        Text("Amount Consumed")
+                        Text("Bolus")
                     }
                 }
                 Button("Deliver") {
