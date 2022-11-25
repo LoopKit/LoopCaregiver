@@ -26,11 +26,11 @@ struct HUDView: View {
     var body: some View {
         VStack {
             HStack (alignment: .center) {
-                Text(nightscoutDateSource.currentEGV?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
+                Text(nightscoutDateSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
                     .font(.largeTitle)
                     .foregroundColor(egvValueColor())
                     .padding([.leading])
-                if let egv = nightscoutDateSource.currentEGV {
+                if let egv = nightscoutDateSource.currentGlucoseSample {
                     Image(systemName: arrowImageName(egv: egv))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
@@ -91,7 +91,7 @@ struct HUDView: View {
     }
     
     func lastGlucoseChange() -> Double? {
-        let egvs = nightscoutDateSource.egvs
+        let egvs = nightscoutDateSource.glucoseSamples
         guard egvs.count > 1 else {
             return nil
         }
@@ -101,7 +101,7 @@ struct HUDView: View {
     }
     
     func egvValueColor() -> Color {
-        if let currentEGV = nightscoutDateSource.currentEGV {
+        if let currentEGV = nightscoutDateSource.currentGlucoseSample {
             return ColorType(quantity: currentEGV.quantity).color
         } else {
             return .white
@@ -109,7 +109,7 @@ struct HUDView: View {
     }
     
     func lastEGVTimeFormatted() -> String {
-        guard let currentEGV = self.nightscoutDateSource.currentEGV else {
+        guard let currentEGV = self.nightscoutDateSource.currentGlucoseSample else {
             return ""
         }
         

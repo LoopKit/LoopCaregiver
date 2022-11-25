@@ -32,7 +32,7 @@ struct PredicatedGlucoseContainerView: View {
                     .bold()
                     .font(.subheadline)
                 Spacer()
-                if let eventualGlucose = remoteDataSource.predictedEGVs.last {
+                if let eventualGlucose = remoteDataSource.predictedGlucose.last {
                     Text("Eventually \(eventualGlucose.presentableStringValueWithUnits(displayUnits: settings.glucoseDisplayUnits))")
                         .bold()
                         .font(.subheadline)
@@ -51,11 +51,11 @@ struct PredicatedGlucoseContainerView: View {
         let hoursLookback = 1.0
         let hoursLookahead = 5.0
         
-        if remoteDataSource.egvs.count > 0, remoteDataSource.predictedEGVs.count > 0 {
+        if remoteDataSource.glucoseSamples.count > 0, remoteDataSource.predictedGlucose.count > 0 {
             PredictedGlucoseChartView(chartManager: self.viewModel.chartManager,
                                                   glucoseUnit: settings.glucoseDisplayUnits,
-                                      glucoseValues: remoteDataSource.egvs,
-                                      predictedGlucoseValues: remoteDataSource.predictedEGVs,
+                                      glucoseValues: remoteDataSource.glucoseSamples,
+                                      predictedGlucoseValues: remoteDataSource.predictedGlucose,
                                       targetGlucoseSchedule: nil,
                                       preMealOverride: nil,
                                       scheduleOverride: nil,

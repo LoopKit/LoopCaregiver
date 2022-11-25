@@ -26,12 +26,12 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     
     //MARK: RemoteDataServiceProvider
     
-    func fetchEGVs() async throws -> [NewGlucoseSample] {
+    func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
         return try await nightscoutService.getEGVs(startDate: fetchStartDate(), endDate:fetchEndDate())
             .map({$0.toGlucoseSample()})
     }
     
-    func fetchPredictedEGVs() async throws -> [NewGlucoseSample] {
+    func fetchPredictedGlucose() async throws -> [NewGlucoseSample] {
         
         guard let latestDeviceStatus = try await nightscoutService.getDeviceStatuses(startDate: fetchStartDate(), endDate: fetchEndDate())
             .sorted(by: {$0.created_at < $1.created_at})

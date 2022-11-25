@@ -11,9 +11,9 @@ import LoopKit
 
 class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
-    @Published var currentEGV: NewGlucoseSample? = nil
-    @Published var egvs: [NewGlucoseSample] = []
-    @Published var predictedEGVs: [NewGlucoseSample] = []
+    @Published var currentGlucoseSample: NewGlucoseSample? = nil
+    @Published var glucoseSamples: [NewGlucoseSample] = []
+    @Published var predictedGlucose: [NewGlucoseSample] = []
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
     @Published var currentIOB: WGLoopIOB? = nil
@@ -43,26 +43,26 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     @MainActor
     func updateData() async throws {
         updating = true
-        let egvs = try await remoteDataProvider.fetchEGVs()
+        let glucoseSamplesAsync = try await remoteDataProvider.fetchGlucoseSamples()
             .sorted(by: {$0.date < $1.date})
             
-        if egvs != self.egvs {
-            self.egvs = egvs
+        if glucoseSamplesAsync != self.glucoseSamples {
+            self.glucoseSamples = glucoseSamplesAsync
         }
         
-        if let latestEGV = egvs.filter({$0.date <= nowDate()}).last, latestEGV != currentEGV {
-            currentEGV = latestEGV
+        if let latestGlucoseSample = glucoseSamplesAsync.filter({$0.date <= nowDate()}).last, latestGlucoseSample != currentGlucoseSample {
+            currentGlucoseSample = latestGlucoseSample
         }
         
-        async let predictedEGVAsync = remoteDataProvider.fetchPredictedEGVs()
+        async let predictedGlucoseAsync = remoteDataProvider.fetchPredictedGlucose()
         async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
         async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
         async let deviceStatusesAsync = remoteDataProvider.fetchDeviceStatuses()
         
-        let predictedEGVs = try await predictedEGVAsync
+        let predictedGlucoseSamples = try await predictedGlucoseAsync
             .sorted(by: {$0.date < $1.date})
-        if predictedEGVs != self.predictedEGVs {
-            self.predictedEGVs = predictedEGVs
+        if predictedGlucoseSamples != self.predictedGlucose {
+            self.predictedGlucose = predictedGlucoseSamples
         }
 
         let carbEntries = try await carbEntriesAsync
@@ -95,12 +95,12 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     //MARK: RemoteDataServiceProvider
     
-    func fetchEGVs() async throws -> [NewGlucoseSample] {
-        return try await remoteDataProvider.fetchEGVs()
+    func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
+        return try await remoteDataProvider.fetchGlucoseSamples()
     }
     
-    func fetchPredictedEGVs() async throws -> [NewGlucoseSample] {
-        return try await remoteDataProvider.fetchPredictedEGVs()
+    func fetchPredictedGlucose() async throws -> [NewGlucoseSample] {
+        return try await remoteDataProvider.fetchPredictedGlucose()
     }
     
     func fetchBolusEntries() async throws -> [NightscoutClient.WGBolusEntry] {
@@ -145,8 +145,8 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
 
 protocol RemoteDataServiceProvider {
-    func fetchEGVs() async throws -> [NewGlucoseSample]
-    func fetchPredictedEGVs() async throws -> [NewGlucoseSample]
+    func fetchGlucoseSamples() async throws -> [NewGlucoseSample]
+    func fetchPredictedGlucose() async throws -> [NewGlucoseSample]
     func fetchBolusEntries() async throws -> [WGBolusEntry]
     func fetchCarbEntries() async throws -> [WGCarbEntry]
     func fetchDeviceStatuses() async throws -> [NightscoutDeviceStatus]

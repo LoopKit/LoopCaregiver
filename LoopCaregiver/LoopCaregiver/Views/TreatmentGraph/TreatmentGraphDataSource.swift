@@ -46,7 +46,7 @@ class TreatmentGraphDataSource: ObservableObject {
         })
         .store(in: &subscribers)
 
-        remoteDataSource.$egvs.sink(receiveValue: { [weak self] glucoseSamples in
+        remoteDataSource.$glucoseSamples.sink(receiveValue: { [weak self] glucoseSamples in
             guard let self else {return}
             self.updateGraphItems(glucoseSamples: glucoseSamples)
         })
@@ -66,7 +66,7 @@ class TreatmentGraphDataSource: ObservableObject {
     }
     
     func updateAll() {
-        updateGraphItems(glucoseSamples: remoteDataSource.egvs)
+        updateGraphItems(glucoseSamples: remoteDataSource.glucoseSamples)
         updateBolusEntries(bolusEntries: remoteDataSource.bolusEntries)
         updateCarbEntries(carbEntries: remoteDataSource.carbEntries)
     }
