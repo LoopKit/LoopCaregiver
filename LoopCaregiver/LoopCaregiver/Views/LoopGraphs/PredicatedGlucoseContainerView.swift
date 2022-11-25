@@ -16,7 +16,7 @@ import NightscoutClient
 struct PredicatedGlucoseContainerView: View {
     
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
-    @ObservedObject var viewModel = PredicatedGlucoseContainerViewModel()
+    @StateObject var viewModel = PredicatedGlucoseContainerViewModel()
     @State private var isInteractingWithChart: Bool = false
     
     let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: CaregiverSetttings.glucoseUnits())
