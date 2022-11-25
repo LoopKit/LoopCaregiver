@@ -1,5 +1,5 @@
 //
-//  GraphContainerView.swift
+//  PredicatedGlucoseContainerView.swift
 //  LoopCaregiver
 //
 //  Created by Bill Gestrich on 11/20/22.
@@ -16,14 +16,12 @@ import NightscoutClient
 struct PredicatedGlucoseContainerView: View {
     
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
-    
-    private let chartManager: ChartsManager
+    @ObservedObject var viewModel = PredicatedGlucoseContainerViewModel()
     @State private var isInteractingWithChart: Bool = false
     
     let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: CaregiverSetttings.glucoseUnits())
     
     init(remoteDataSource: RemoteDataServiceManager){
-        self.chartManager = Self.createChartManager()
         self.remoteDataSource = remoteDataSource
     }
     
@@ -54,7 +52,7 @@ struct PredicatedGlucoseContainerView: View {
         let hoursLookahead = 5.0
         
         if remoteDataSource.egvs.count > 0, remoteDataSource.predictedEGVs.count > 0 {
-            PredictedGlucoseChartView(chartManager: self.chartManager,
+            PredictedGlucoseChartView(chartManager: self.viewModel.chartManager,
                                                   glucoseUnit: CaregiverSetttings.glucoseUnits(),
                                       glucoseValues: remoteDataSource.egvs,
                                       predictedGlucoseValues: remoteDataSource.predictedEGVs,
@@ -67,13 +65,7 @@ struct PredicatedGlucoseContainerView: View {
             Text("")
         }
     }
-    
-    static func createChartManager() -> ChartsManager {
-        let predictedGlucoseChart = PredictedGlucoseChart() //TODO: Will this get recreated too often?
-        return ChartsManager(colors: .primary, settings: .default, charts: [predictedGlucoseChart], traitCollection: UITraitCollection())
-    }
-    
-    
+
 }
 
 
@@ -101,12 +93,12 @@ extension NewGlucoseSample: GlucoseValue {
     public var startDate: Date {
         return date
     }
+}
 
-//    public var quantity: HKQuantity {
-//        let minimum = 40
-//        let maximum = 400
-//        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(min(max(value, minimum), maximum)))
-//    }
-    
-    
+
+class PredicatedGlucoseContainerViewModel: ObservableObject {
+    let chartManager: ChartsManager = {
+        let predictedGlucoseChart = PredictedGlucoseChart()
+        return ChartsManager(colors: .primary, settings: .default, charts: [predictedGlucoseChart], traitCollection: UITraitCollection())
+    }()
 }
