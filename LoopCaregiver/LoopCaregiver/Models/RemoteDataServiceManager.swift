@@ -7,10 +7,11 @@
 
 import Foundation
 import NightscoutClient
+import LoopKit
 
 class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
-    @Published var currentEGV: NightscoutEGV? = nil
+    @Published var currentEGV: NewGlucoseSample? = nil
     @Published var egvs: [NightscoutEGV] = []
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
@@ -52,7 +53,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             self.egvs = egvs
         }
         
-        if let latestEGV = egvs.filter({$0.systemTime <= nowDate()}).last, latestEGV != currentEGV {
+        if let latestEGV = egvs.filter({$0.systemTime <= nowDate()}).last?.toGlucoseSample(), latestEGV != currentEGV {
             currentEGV = latestEGV
         }
         

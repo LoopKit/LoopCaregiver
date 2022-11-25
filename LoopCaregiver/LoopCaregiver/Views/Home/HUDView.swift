@@ -8,6 +8,7 @@
 import SwiftUI
 import NightscoutClient
 import Combine
+import LoopKit
 
 struct HUDView: View {
     
@@ -55,13 +56,13 @@ struct HUDView: View {
         }
     }
     
-    func arrowImageName(egv: NightscoutEGV) -> String {
+    func arrowImageName(egv: NewGlucoseSample) -> String {
     
         guard let trendRate = egv.trendRate else {
             return "questionmark"
         }
         
-        guard let trend = EGVTrend(rawValue: Int(trendRate)) else { //TODO: Could crash on large values
+        guard let trend = EGVTrend(rawValue: Int(trendRate.doubleValue(for: .milligramsPerDeciliter))) else { //TODO: Could crash on large values
             return "questionmark"
         }
         
@@ -99,15 +100,16 @@ struct HUDView: View {
     
     func egvValueColor() -> Color {
         if let currentEGV = nightscoutDateSource.currentEGV {
-            return ColorType(egvValue: currentEGV.value).color
+            let quantity = Int(currentEGV.quantity.doubleValue(for: .milligramsPerDeciliter)) //TODO: Crash potential
+            return ColorType(egvValue: quantity).color
         } else {
             return .white
         }
     }
     
-    func formatEGV(_ egv: NightscoutEGV?) -> String {
+    func formatEGV(_ egv: NewGlucoseSample?) -> String {
         if let egv {
-            return String(egv.value)
+            return String(Int(egv.quantity.doubleValue(for: .milligramsPerDeciliter))) //TODO: Crash potential
         } else {
             return " " //Using spaces, rather than a characterless String, to avoid view elements from jumping during load.
         }
@@ -118,7 +120,7 @@ struct HUDView: View {
             return ""
         }
         
-        return currentEGV.systemTime.formatted(.dateTime.hour().minute())
+        return currentEGV.date.formatted(.dateTime.hour().minute())
     }
     
     func lastEGVDeltaFormatted() -> String {

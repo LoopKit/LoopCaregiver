@@ -121,7 +121,8 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         var predictedEGVs = [NightscoutEGV]()
         var currDate = loopPrediction.startDate
         for value in predictedValues {
-            let egv = NightscoutEGV(value: Int(value), systemTime: currDate, displayTime: currDate, realtimeValue: nil, smoothedValue: nil, trendRate: nil, trendDescription: "")
+            //TODO: Probably needs to be something unique from NS predicted data
+            let egv = NightscoutEGV(id:  UUID().uuidString, value: Int(value), systemTime: currDate, displayTime: currDate, realtimeValue: nil, smoothedValue: nil, trendRate: nil, trendDescription: "")
             
             predictedEGVs.append(egv)
             currDate = currDate.addingTimeInterval(60*5) //every 5 minutes
