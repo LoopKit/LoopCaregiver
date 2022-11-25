@@ -11,6 +11,8 @@ import NightscoutClient
 struct SettingsView: View {
 
     @ObservedObject var accountService: AccountServiceManager
+    @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
+    @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
     @State private var path = NavigationPath()
     
@@ -31,6 +33,13 @@ struct SettingsView: View {
                                 Text("Add New Looper")
                             }
                         }
+                    }
+                    Section("Units") {
+                        Picker("Glucose", selection: $glucosePreference, content: {
+                            ForEach(GlucoseUnitPrefererence.allCases, id: \.self, content: { item in
+                                Text(item.presentableDescription).tag(item)
+                            })
+                        })
                     }
                 }
             }

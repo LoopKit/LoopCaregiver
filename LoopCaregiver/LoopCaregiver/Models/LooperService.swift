@@ -12,6 +12,7 @@ class LooperService: ObservableObject {
     let looper: Looper
     let accountService: AccountServiceManager
     var remoteDataSource: RemoteDataServiceManager
+    let settings = CaregiverSettings()
     
     init(looper: Looper, accountService: AccountServiceManager, remoteDataSource: RemoteDataServiceManager) {
         self.looper = looper

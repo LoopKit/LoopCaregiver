@@ -7,32 +7,37 @@
 
 import Foundation
 import LoopKit
+import HealthKit
 
 extension NewGlucoseSample {
-    func graphItem() -> GraphItem {
-        return GraphItem(type: .egv, value: intValue(), displayTime: date)
+    func graphItem(displayUnit: HKUnit) -> GraphItem {
+        return GraphItem(type: .egv, displayTime: date, quantity: quantity, displayUnit: displayUnit)
     }
     
-    func intValue() -> Int {
-        return Int(quantity.doubleValue(for: .milligramsPerDeciliter)) //TODO: Crash Potential
+    func presentableValue(displayUnits: HKUnit) -> String {
+        return String(quantity.doubleValue(for: displayUnits))
     }
     
-    func presentableStringValue() -> String {
-        let unitInUserUnits = quantity.doubleValue(for: CaregiverSetttings.glucoseUnits())
-        if CaregiverSetttings.glucoseUnits() == .milligramsPerDeciliter {
+    func presentableUserValue(displayUnits: HKUnit) -> Double {
+        return quantity.doubleValue(for: displayUnits)
+    }
+    
+    func presentableStringValue(displayUnits: HKUnit) -> String {
+        let unitInUserUnits = quantity.doubleValue(for: displayUnits)
+        if displayUnits == .milligramsPerDeciliter {
             return String(format: "%.0f", unitInUserUnits)
-        } else if CaregiverSetttings.glucoseUnits() == .millimolesPerLiter {
+        } else if displayUnits == .millimolesPerLiter {
             return String(format: "%.1f", unitInUserUnits)
         } else {
             return "Error: Unknown units"
         }
     }
     
-    func presentableStringValueWithUnits() -> String {
-        if CaregiverSetttings.glucoseUnits() == .milligramsPerDeciliter {
-            return "\(presentableStringValue()) mg/dL"
-        } else if CaregiverSetttings.glucoseUnits() == .millimolesPerLiter {
-            return "\(presentableStringValue()) mmol/L"
+    func presentableStringValueWithUnits(displayUnits: HKUnit) -> String {
+        if displayUnits == .milligramsPerDeciliter {
+            return "\(presentableStringValue(displayUnits: displayUnits)) mg/dL"
+        } else if displayUnits == .millimolesPerLiter {
+            return "\(presentableStringValue(displayUnits: displayUnits)) mmol/L"
         } else {
             return "Error: Missing units"
         }

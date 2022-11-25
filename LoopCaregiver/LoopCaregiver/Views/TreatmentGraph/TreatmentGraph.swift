@@ -9,22 +9,25 @@ import SwiftUI
 import Charts
 import NightscoutClient
 import LoopKit
+import HealthKit
 
 struct TreatmentGraphScrollView: View {
     
     @ObservedObject var dataSource: TreatmentGraphDataSource
+    @ObservedObject var settings: CaregiverSettings
     private let graphTag = 1000
     private let configuration = TreatmentGraphConfiguration()
     
-    init(remoteDataSource: RemoteDataServiceManager) {
-        self.dataSource = TreatmentGraphDataSource(remoteDataSource: remoteDataSource)
+    init(remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings) {
+        self.dataSource = TreatmentGraphDataSource(remoteDataSource: remoteDataSource, settings: settings)
+        self.settings = settings
     }
     
     var body: some View {
         GeometryReader { proxy in
             ScrollViewReader { sp in
                 ScrollView (.horizontal) {
-                    TreatmentGraph(dataSource: dataSource)
+                    TreatmentGraph(dataSource: dataSource, settings: settings)
                         .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame)
                         .padding()
                         .id(graphTag)
@@ -43,6 +46,7 @@ struct TreatmentGraphScrollView: View {
 struct TreatmentGraph: View {
     
     @ObservedObject var dataSource: TreatmentGraphDataSource
+    @ObservedObject var settings: CaregiverSettings
     let timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
     
     var body: some View {
@@ -78,7 +82,7 @@ struct TreatmentGraph: View {
         }
         //Make sure the domain values line up with what is in foregroundStyle above.
         .chartForegroundStyleScale(domain: ColorType.membersAsRange(), range: ColorType.allCases.map({$0.color}), type: .none)
-        .chartYScale(domain: 40...400)
+        .chartYScale(domain: chartYRange())
         .chartXAxis{
             AxisMarks(position: .bottom, values: .stride(by: xAxisStride, count: xAxisStrideCount)) { date in
                 AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
@@ -97,6 +101,16 @@ struct TreatmentGraph: View {
                     }
             }
         }
+    }
+    
+    func chartYRange() -> ClosedRange<Double> {
+        let minimumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 40)
+        let maximumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400)
+        return minimumQuantity.doubleValue(for: settings.glucoseDisplayUnits)...maximumQuantity.doubleValue(for: settings.glucoseDisplayUnits)
+    }
+    
+    func formatGlucoseQuantity(_ quantity: HKQuantity) -> Double {
+        return quantity.doubleValue(for: settings.glucoseDisplayUnits)
     }
     
 
@@ -164,11 +178,23 @@ struct GraphItem: Identifiable, Equatable {
     
     var id = UUID()
     var type: GraphItemType
-    var value: Int
     var displayTime: Date
+    var displayUnit: HKUnit
+    private var quantity: HKQuantity
+    
+    var value: Double {
+        return quantity.doubleValue(for: displayUnit)
+    }
     
     var colorType: ColorType {
-        return ColorType(egvValue: value)
+        return ColorType(quantity: quantity)
+    }
+    
+    init(type: GraphItemType, displayTime: Date, quantity: HKQuantity, displayUnit: HKUnit) {
+        self.type = type
+        self.displayTime = displayTime
+        self.displayUnit = displayUnit
+        self.quantity = quantity
     }
     
     func annotationWidth() -> CGFloat {
@@ -232,6 +258,7 @@ struct GraphItem: Identifiable, Equatable {
             return .fullFill
         }
     }
+    
     func annotationFillColor() -> Color {
         switch self.type {
         case .bolus:
@@ -308,8 +335,9 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
         self.init(rawValue: primitivePlottable)
     }
     
-    init(egvValue: Int) {
-        switch egvValue {
+    init(quantity: HKQuantity) {
+        let glucose = quantity.doubleValue(for:.milligramsPerDeciliter)
+        switch glucose {
         case 0..<60:
             self = ColorType.red
         case 60..<80:
@@ -352,68 +380,47 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
 
 extension WGCarbEntry {
     
-    func graphItem(egvValues: [NewGlucoseSample]) -> GraphItem {
-        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? 390
-        return GraphItem(type: .carb(self), value: relativeEgvValue, displayTime: date)
-    }
-    
-    func interpolateEGVValue(egvs: [NewGlucoseSample], atDate date: Date ) -> Int? {
-        
-        guard egvs.count >= 2 else {
-            return egvs.first?.intValue()
-        }
-        
-        let priorEGVs = egvs.filter({$0.date < date})
-        guard let greatestPriorEGV = priorEGVs.last else {
-            //All after, use first
-            return egvs.first?.intValue()
-        }
-        
-        let laterEGVs = egvs.filter({$0.date > date})
-        guard let leastFollowingEGV = laterEGVs.first else {
-            //All prior, use last
-            return egvs.last?.intValue()
-        }
-        
-        return interpolateRange(range: (first: greatestPriorEGV.intValue(), second: leastFollowingEGV.intValue()), referenceRange: (first: greatestPriorEGV.date, second: leastFollowingEGV.date), referenceValue: date)
+    func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {
+        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 390).doubleValue(for: displayUnit)
+        return GraphItem(type: .carb(self), displayTime: date, quantity: HKQuantity(unit: displayUnit, doubleValue: relativeEgvValue), displayUnit: displayUnit)
     }
 }
 
 extension WGBolusEntry {
     
-    func graphItem(egvValues: [NewGlucoseSample]) -> GraphItem {
-        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? 390
-        return GraphItem(type: .bolus(self), value: relativeEgvValue, displayTime: date)
+    func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {
+        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 390).doubleValue(for: displayUnit)
+        return GraphItem(type: .bolus(self), displayTime: date, quantity: HKQuantity(unit: displayUnit, doubleValue: relativeEgvValue), displayUnit: displayUnit)
     }
 }
 
-func interpolateEGVValue(egvs: [NewGlucoseSample], atDate date: Date ) -> Int? {
+func interpolateEGVValue(egvs: [GraphItem], atDate date: Date ) -> Double? {
     
     guard egvs.count >= 2 else {
-        return egvs.first?.intValue()
+        return egvs.first?.value
     }
     
-    let priorEGVs = egvs.filter({$0.date < date})
+    let priorEGVs = egvs.filter({$0.displayTime < date})
     guard let greatestPriorEGV = priorEGVs.last else {
         //All after, use first
-        return egvs.first?.intValue()
+        return egvs.first?.value
     }
     
-    let laterEGVs = egvs.filter({$0.date > date})
+    let laterEGVs = egvs.filter({$0.displayTime > date})
     guard let leastFollowingEGV = laterEGVs.first else {
         //All prior, use last
-        return egvs.last?.intValue()
+        return egvs.last?.value
     }
     
-    return interpolateRange(range: (first: greatestPriorEGV.intValue(), second: leastFollowingEGV.intValue()), referenceRange: (first: greatestPriorEGV.date, second: leastFollowingEGV.date), referenceValue: date)
+    return interpolateRange(range: (first: greatestPriorEGV.value, second: leastFollowingEGV.value), referenceRange: (first: greatestPriorEGV.displayTime, second: leastFollowingEGV.displayTime), referenceValue: date)
 }
 
-func interpolateRange(range: (first: Int, second: Int), referenceRange: (first: Date, second: Date), referenceValue: Date) -> Int {
+func interpolateRange(range: (first: Double, second: Double), referenceRange: (first: Date, second: Date), referenceValue: Date) -> Double {
     let referenceRangeDistance = referenceRange.second.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
     let lowerRangeToValueDifference = referenceValue.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
     let scaleFactor = lowerRangeToValueDifference / referenceRangeDistance
     
     let rangeDifference = range.first - range.second
-    return range.first + (rangeDifference * Int(scaleFactor))
+    return range.first + (rangeDifference * scaleFactor)
     
 }

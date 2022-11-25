@@ -14,6 +14,7 @@ import LoopKit
 struct ContentView: View {
     
     @ObservedObject var accountService: AccountServiceManager
+    let settings: CaregiverSettings = CaregiverSettings()
     
     init(){
         self.accountService = AccountServiceManager(accountService: CoreDataAccountService(inMemory: false))
@@ -21,9 +22,9 @@ struct ContentView: View {
     
     var body: some View {
         if let looper = accountService.selectedLooper {
-            HomeView(looperService: accountService.createLooperService(looper: looper))
+            HomeView(looperService: accountService.createLooperService(looper: looper), settings: settings)
         } else {
-            FirstRunView(accountService: accountService, showSheetView: true)
+            FirstRunView(accountService: accountService, settings: settings, showSheetView: true)
         }
     }
 }
@@ -31,10 +32,11 @@ struct ContentView: View {
 struct FirstRunView: View {
     
     @ObservedObject var accountService: AccountServiceManager
+    let settings: CaregiverSettings
     @State var showSheetView: Bool = false
     
     var body: some View {
-        SettingsView(accountService: accountService, showSheetView: $showSheetView)
+        SettingsView(accountService: accountService, settings: settings, showSheetView: $showSheetView)
     }
 }
 
@@ -49,7 +51,7 @@ struct HomeView: View {
     @State private var showOverrideView = false
     @State private var showSettingsView = false
     
-    init(looperService: LooperService){
+    init(looperService: LooperService, settings: CaregiverSettings){
         self.looperService = looperService
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource
@@ -57,8 +59,8 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            HUDView(looperService: looperService)
-            PredicatedGlucoseContainerView(remoteDataSource: remoteDataSource)
+            HUDView(looperService: looperService, settings: looperService.settings)
+            PredicatedGlucoseContainerView(remoteDataSource: remoteDataSource, settings: looperService.settings)
             HStack {
                 Text("Active Insulin")
                     .bold()
@@ -88,7 +90,7 @@ struct HomeView: View {
                 Spacer()
             }
             .padding(.leading)
-            TreatmentGraphScrollView(remoteDataSource: remoteDataSource)
+            TreatmentGraphScrollView(remoteDataSource: remoteDataSource, settings: looperService.settings)
             Spacer()
             BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
@@ -103,7 +105,7 @@ struct HomeView: View {
             OverrideView(looperService: looperService, showSheetView: $showOverrideView)
         }
         .sheet(isPresented: $showSettingsView) {
-            SettingsView(accountService: accountService, showSheetView: $showSettingsView)
+            SettingsView(accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
         }
     }
     

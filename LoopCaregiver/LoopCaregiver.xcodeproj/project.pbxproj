@@ -152,12 +152,12 @@
 			children = (
 				A96929902927FFBA00B8BF43 /* AccountService.swift */,
 				A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */,
+				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
 				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
 				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
 				A969293C2926EFEC00B8BF43 /* Looper.swift */,
 				A9972775292FCE6A006C8C74 /* LooperService.swift */,
 				A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */,
-				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";

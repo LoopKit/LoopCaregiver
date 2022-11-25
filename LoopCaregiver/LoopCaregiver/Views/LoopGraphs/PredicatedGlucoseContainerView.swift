@@ -16,13 +16,13 @@ import NightscoutClient
 struct PredicatedGlucoseContainerView: View {
     
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
+    @ObservedObject var settings: CaregiverSettings
     @StateObject var viewModel = PredicatedGlucoseContainerViewModel()
     @State private var isInteractingWithChart: Bool = false
     
-    let displayGlucoseUnit = DisplayGlucoseUnitObservable(displayGlucoseUnit: CaregiverSetttings.glucoseUnits())
-    
-    init(remoteDataSource: RemoteDataServiceManager){
+    init(remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings){
         self.remoteDataSource = remoteDataSource
+        self.settings = settings
     }
     
     var body: some View {
@@ -33,7 +33,7 @@ struct PredicatedGlucoseContainerView: View {
                     .font(.subheadline)
                 Spacer()
                 if let eventualGlucose = remoteDataSource.predictedEGVs.last {
-                    Text("Eventually \(eventualGlucose.presentableStringValueWithUnits())")
+                    Text("Eventually \(eventualGlucose.presentableStringValueWithUnits(displayUnits: settings.glucoseDisplayUnits))")
                         .bold()
                         .font(.subheadline)
                         .foregroundColor(.gray)
@@ -53,7 +53,7 @@ struct PredicatedGlucoseContainerView: View {
         
         if remoteDataSource.egvs.count > 0, remoteDataSource.predictedEGVs.count > 0 {
             PredictedGlucoseChartView(chartManager: self.viewModel.chartManager,
-                                                  glucoseUnit: CaregiverSetttings.glucoseUnits(),
+                                                  glucoseUnit: settings.glucoseDisplayUnits,
                                       glucoseValues: remoteDataSource.egvs,
                                       predictedGlucoseValues: remoteDataSource.predictedEGVs,
                                       targetGlucoseSchedule: nil,
