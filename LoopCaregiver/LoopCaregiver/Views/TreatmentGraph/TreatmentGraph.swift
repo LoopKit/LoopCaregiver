@@ -104,7 +104,7 @@ struct TreatmentGraph: View {
     }
     
     func chartYRange() -> ClosedRange<Double> {
-        let minimumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 40)
+        let minimumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 0)
         let maximumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400)
         return minimumQuantity.doubleValue(for: settings.glucoseDisplayUnits)...maximumQuantity.doubleValue(for: settings.glucoseDisplayUnits)
     }
