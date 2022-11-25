@@ -13,9 +13,9 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
     @Published var currentEGV: NewGlucoseSample? = nil
     @Published var egvs: [NewGlucoseSample] = []
+    @Published var predictedEGVs: [NewGlucoseSample] = []
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
-    @Published var predictedEGVs: [NewGlucoseSample] = []
     @Published var currentIOB: WGLoopIOB? = nil
     @Published var currentCOB: WGLoopCOB? = nil
     @Published var updating: Bool = false
@@ -40,16 +40,12 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         }
     }
     
-    func shutdown() throws {
-        try remoteDataProvider.shutdown()
-    }
-    
     @MainActor
     func updateData() async throws {
         updating = true
         let egvs = try await remoteDataProvider.fetchEGVs()
-            .sorted(by: {$0.systemTime < $1.systemTime})
-            .map({$0.toGlucoseSample()})
+            .sorted(by: {$0.date < $1.date})
+            
         if egvs != self.egvs {
             self.egvs = egvs
         }
@@ -63,7 +59,8 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
         async let deviceStatusesAsync = remoteDataProvider.fetchDeviceStatuses()
         
-        let predictedEGVs = try await predictedEGVAsync.map({$0.toGlucoseSample()})
+        let predictedEGVs = try await predictedEGVAsync
+            .sorted(by: {$0.date < $1.date})
         if predictedEGVs != self.predictedEGVs {
             self.predictedEGVs = predictedEGVs
         }
@@ -98,11 +95,11 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     //MARK: RemoteDataServiceProvider
     
-    func fetchEGVs() async throws -> [NightscoutClient.NightscoutEGV] {
+    func fetchEGVs() async throws -> [NewGlucoseSample] {
         return try await remoteDataProvider.fetchEGVs()
     }
     
-    func fetchPredictedEGVs() async throws -> [NightscoutClient.NightscoutEGV] {
+    func fetchPredictedEGVs() async throws -> [NewGlucoseSample] {
         return try await remoteDataProvider.fetchPredictedEGVs()
     }
     
@@ -137,12 +134,19 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     func getProfiles() async throws -> [NightscoutClient.NightscoutProfile] {
         return try await remoteDataProvider.getProfiles()
     }
+    
+    
+    //MARK: Lifecycle
+    
+    func shutdown() throws {
+        try remoteDataProvider.shutdown()
+    }
 }
 
 
 protocol RemoteDataServiceProvider {
-    func fetchEGVs() async throws -> [NightscoutEGV]
-    func fetchPredictedEGVs() async throws -> [NightscoutEGV]
+    func fetchEGVs() async throws -> [NewGlucoseSample]
+    func fetchPredictedEGVs() async throws -> [NewGlucoseSample]
     func fetchBolusEntries() async throws -> [WGBolusEntry]
     func fetchCarbEntries() async throws -> [WGCarbEntry]
     func fetchDeviceStatuses() async throws -> [NightscoutDeviceStatus]

@@ -7,22 +7,12 @@
 
 import Foundation
 import NightscoutClient
+import LoopKit
 
 class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     
-    @Published var currentEGV: NightscoutEGV? = nil
-    @Published var egvs: [NightscoutEGV] = []
-    @Published var carbEntries: [WGCarbEntry] = []
-    @Published var bolusEntries: [WGBolusEntry] = []
-    @Published var predictedEGVs: [NightscoutEGV] = []
-    @Published var currentIOB: WGLoopIOB? = nil
-    @Published var currentCOB: WGLoopCOB? = nil
-    @Published var updating: Bool = false
-    
-    var credentialService: NightscoutCredentialService
-    
+    private var credentialService: NightscoutCredentialService
     private let nightscoutService: NightscoutService
-    private var timer: Timer?
     
     enum NightscoutDataSourceError: LocalizedError {
         case badOTP
@@ -31,78 +21,17 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     init(looper: Looper){
         self.nightscoutService = NightscoutService(baseURL: looper.nightscoutCredentials.url, secret: looper.nightscoutCredentials.secretKey, nowDateProvider: {Date()})
         self.credentialService = NightscoutCredentialService(credentials: looper.nightscoutCredentials)
-        monitorForUpdates(updateInterval: 30)
     }
     
-    func monitorForUpdates(updateInterval: TimeInterval) {
-        self.timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { timer in
-            Task {
-                try await self.updateData()
-            }
-        })
-        
-        Task {
-            try await self.updateData()
-        }
-    }
-    
-    func shutdown() throws {
-        try nightscoutService.syncShutdown()
-    }
-    
-    @MainActor
-    func updateData() async throws {
-        updating = true
-        let egvs = try await fetchEGVs()
-            .sorted(by: {$0.systemTime < $1.systemTime})
-        if egvs != self.egvs {
-            self.egvs = egvs
-        }
-        
-        if let latestEGV = egvs.filter({$0.systemTime <= nowDate()}).last, latestEGV != currentEGV {
-            currentEGV = latestEGV
-        }
-        
-        async let predictedEGVAsync = fetchPredictedEGVs()
-        async let carbEntriesAsync = fetchCarbEntries()
-        async let bolusEntriesAsync = fetchBolusEntries()
-        async let deviceStatusesAsync = fetchDeviceStatuses()
-        
-        let predictedEGVs = try await predictedEGVAsync
-        if predictedEGVs != self.predictedEGVs {
-            self.predictedEGVs = predictedEGVs
-        }
-
-        let carbEntries = try await carbEntriesAsync
-        if carbEntries != self.carbEntries {
-            self.carbEntries = carbEntries
-        }
-        
-        let bolusEntries = try await bolusEntriesAsync
-        if bolusEntries != self.bolusEntries {
-            self.bolusEntries = bolusEntries
-        }
-        
-        let deviceStatuses = try await deviceStatusesAsync
-            .sorted(by: {$0.created_at < $1.created_at})
-        if let iob = deviceStatuses.last?.loop?.iob,
-           iob != self.currentIOB {
-            self.currentIOB = iob
-        }
-        if let cob = deviceStatuses.last?.loop?.cob,
-           cob != self.currentCOB {
-            self.currentCOB = cob
-        }
-        updating = false
-    }
     
     //MARK: RemoteDataServiceProvider
-    func fetchEGVs() async throws -> [NightscoutEGV] {
+    
+    func fetchEGVs() async throws -> [NewGlucoseSample] {
         return try await nightscoutService.getEGVs(startDate: fetchStartDate(), endDate:fetchEndDate())
-            .sorted(by: {$0.displayTime < $1.displayTime})
+            .map({$0.toGlucoseSample()})
     }
     
-    func fetchPredictedEGVs() async throws -> [NightscoutEGV] {
+    func fetchPredictedEGVs() async throws -> [NewGlucoseSample] {
         
         guard let latestDeviceStatus = try await nightscoutService.getDeviceStatuses(startDate: fetchStartDate(), endDate: fetchEndDate())
             .sorted(by: {$0.created_at < $1.created_at})
@@ -128,7 +57,7 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
             currDate = currDate.addingTimeInterval(60*5) //every 5 minutes
         }
         
-        return predictedEGVs
+        return predictedEGVs.map({$0.toGlucoseSample()})
     }
     
     func fetchBolusEntries() async throws -> [WGBolusEntry] {
@@ -154,9 +83,6 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     func nowDate() -> Date {
         return Date()
     }
-    
-    
-    //MARK: Actions
     
     func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws {
         guard let otpCodeInt = Int(credentialService.otpCode) else {
@@ -184,6 +110,12 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return try await nightscoutService.getProfiles()
     }
 
+    
+    //MARK: Lifecycle
+    
+    func shutdown() throws {
+        try nightscoutService.syncShutdown()
+    }
 }
 
 
