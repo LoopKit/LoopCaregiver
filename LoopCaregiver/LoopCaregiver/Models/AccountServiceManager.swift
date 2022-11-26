@@ -52,10 +52,12 @@ class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountSe
     
     //MARK:
     
-    func createLooperService(looper: Looper) -> LooperService {
+    func createLooperService(looper: Looper, settings: CaregiverSettings) -> LooperService {
         return LooperService(looper: looper,
                                               accountService: self,
-                                              remoteDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper)))
+                             remoteDataSource: RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper)),
+                             settings: settings
+        )
     }
     
     func refresh(){

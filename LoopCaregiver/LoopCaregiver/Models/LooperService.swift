@@ -12,12 +12,13 @@ class LooperService: ObservableObject {
     let looper: Looper
     let accountService: AccountServiceManager
     var remoteDataSource: RemoteDataServiceManager
-    let settings = CaregiverSettings()
+    let settings: CaregiverSettings
     
-    init(looper: Looper, accountService: AccountServiceManager, remoteDataSource: RemoteDataServiceManager) {
+    init(looper: Looper, accountService: AccountServiceManager, remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings) {
         self.looper = looper
         self.accountService = accountService
         self.remoteDataSource = remoteDataSource
+        self.settings = settings
     }
     
     deinit {

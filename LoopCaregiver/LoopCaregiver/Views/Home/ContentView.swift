@@ -22,7 +22,7 @@ struct ContentView: View {
     
     var body: some View {
         if let looper = accountService.selectedLooper {
-            HomeView(looperService: accountService.createLooperService(looper: looper), settings: settings)
+            HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
         } else {
             FirstRunView(accountService: accountService, settings: settings, showSheetView: true)
         }
@@ -51,7 +51,7 @@ struct HomeView: View {
     @State private var showOverrideView = false
     @State private var showSettingsView = false
     
-    init(looperService: LooperService, settings: CaregiverSettings){
+    init(looperService: LooperService){
         self.looperService = looperService
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource

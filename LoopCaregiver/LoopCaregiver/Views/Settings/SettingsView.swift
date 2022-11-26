@@ -52,7 +52,7 @@ struct SettingsView: View {
             .navigationDestination(
                 for: Looper.self
             ) { looper in
-                LooperView(looperService: accountService.createLooperService(looper: looper),
+                LooperView(looperService: accountService.createLooperService(looper: looper, settings: settings),
                            nightscoutCredentialService: NightscoutCredentialService(credentials: looper.nightscoutCredentials),
                            looper: looper,
                            path: $path)

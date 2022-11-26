@@ -72,15 +72,15 @@ class TreatmentGraphDataSource: ObservableObject {
     }
     
     func updateGraphItems(glucoseSamples: [NewGlucoseSample]) {
-        self.graphItems = glucoseSamples.map({$0.graphItem(displayUnit: CaregiverSettings().glucoseDisplayUnits)})
+        self.graphItems = glucoseSamples.map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
     }
     
     func updateBolusEntries(bolusEntries: [WGBolusEntry]){
-        self.bolusEntryGraphItems = bolusEntries.map({$0.graphItem(egvValues: self.graphItems, displayUnit: CaregiverSettings().glucoseDisplayUnits)})
+        self.bolusEntryGraphItems = bolusEntries.map({$0.graphItem(egvValues: self.graphItems, displayUnit: settings.glucoseDisplayUnits)})
     }
     
     func updateCarbEntries(carbEntries: [WGCarbEntry]){
-        self.carbEntryGraphItems = carbEntries.map({$0.graphItem(egvValues: self.graphItems, displayUnit: CaregiverSettings().glucoseDisplayUnits)})
+        self.carbEntryGraphItems = carbEntries.map({$0.graphItem(egvValues: self.graphItems, displayUnit: settings.glucoseDisplayUnits)})
     }
 }
 
