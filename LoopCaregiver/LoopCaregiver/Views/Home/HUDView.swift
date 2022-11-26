@@ -122,13 +122,18 @@ struct HUDView: View {
             return ""
         }
         
-        if lastEGVChange > 0 {
-            return String(format: "%+.1f", lastEGVChange)
-        } else if lastEGVChange < 0 {
-            return String(format: "%.1f", lastEGVChange)
-        } else {
+        let formatter = NumberFormatter()
+        formatter.positivePrefix = "+"
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
+        formatter.numberStyle = .decimal
+        
+        guard let formattedEGV = formatter.string(from: lastEGVChange as NSNumber) else {
             return ""
         }
+        
+        return formattedEGV
+
     }
     
     enum EGVTrend: Int {
