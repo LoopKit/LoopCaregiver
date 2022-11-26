@@ -60,37 +60,9 @@ struct HomeView: View {
     var body: some View {
         VStack {
             HUDView(looperService: looperService, settings: looperService.settings)
-            PredicatedGlucoseContainerView(remoteDataSource: remoteDataSource, settings: looperService.settings)
-            HStack {
-                Text("Active Insulin")
-                    .bold()
-                    .font(.subheadline)
-                Spacer()
-                Text(formattedIOB())
-                    .foregroundColor(.gray)
-                    .bold()
-                    .font(.subheadline)
-            }
-            .padding([.leading, .bottom])
-            HStack {
-                Text("Active Carbohydrates")
-                    .bold()
-                    .font(.subheadline)
-                Spacer()
-                Text(formattedCOB())
-                    .foregroundColor(.gray)
-                    .bold()
-                    .font(.subheadline)
-            }
-            .padding([.leading, .bottom])
-            HStack {
-                Text("Nightscout")
-                    .bold()
-                    .font(.subheadline)
-                Spacer()
-            }
-            .padding(.leading)
-            TreatmentGraphScrollView(remoteDataSource: remoteDataSource, settings: looperService.settings)
+                .padding([.leading, .trailing])
+            ChartsListView(looperService: looperService, remoteDataSource: remoteDataSource, settings: looperService.settings)
+                .padding([.leading, .trailing, .bottom])
             Spacer()
             BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
@@ -108,20 +80,5 @@ struct HomeView: View {
             SettingsView(accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
         }
     }
-    
-    func formattedCOB() -> String {
-        guard let cob = remoteDataSource.currentCOB?.cob else {
-            return ""
-        }
-        return String(format: "%.0f g", cob)
-    }
-    
-    func formattedIOB() -> String {
-        guard let iob = remoteDataSource.currentIOB?.iob else {
-            return ""
-        }
-        return String(format: "%.1f U Total", iob)
-    }
-    
 }
 

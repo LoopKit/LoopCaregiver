@@ -1,5 +1,5 @@
 //
-//  TreatmentGraph.swift
+//  NightscoutChartView.swift
 //  LoopCaregiver
 //
 //  Created by Bill Gestrich on 11/13/22.
@@ -11,12 +11,12 @@ import NightscoutClient
 import LoopKit
 import HealthKit
 
-struct TreatmentGraphScrollView: View {
+struct NightscoutChartScrollView: View {
 
     @ObservedObject var settings: CaregiverSettings
     private var remoteDataSource: RemoteDataServiceManager
     private let graphTag = 1000
-    private let configuration = TreatmentGraphConfiguration()
+    private let configuration = NightscoutChartConfiguration()
     
     init(remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings) {
         self.settings = settings
@@ -27,9 +27,9 @@ struct TreatmentGraphScrollView: View {
         GeometryReader { proxy in
             ScrollViewReader { sp in
                 ScrollView (.horizontal) {
-                    TreatmentGraph(settings: settings, remoteDataSource: remoteDataSource)
+                    NightscoutChartView(settings: settings, remoteDataSource: remoteDataSource)
                         .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame)
-                        .padding()
+                        .padding(.top) //Prevent top Y label from clipping
                         .id(graphTag)
                 }
                 .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
@@ -43,7 +43,7 @@ struct TreatmentGraphScrollView: View {
     }
 }
 
-struct TreatmentGraph: View {
+struct NightscoutChartView: View {
     
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
@@ -102,7 +102,6 @@ struct TreatmentGraph: View {
                 AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
             }
         }
-        .frame(height: 200)
         .chartOverlay { proxy in
             GeometryReader { geometry in
                 Rectangle().fill(.clear).contentShape(Rectangle()) //For taps
@@ -287,11 +286,20 @@ struct GraphItem: Identifiable, Equatable {
     func formattedValue() -> String {
         switch self.type {
         case .bolus(let bolusEntry):
-            if bolusEntry.amount - Float(Int(bolusEntry.amount)) >= 0.1 { //TODO: Crash risk
-                return String(format:"%.1fu", bolusEntry.amount)
+            
+            var maxFractionalDigits = 0
+            if bolusEntry.amount > 1 {
+                maxFractionalDigits = 1
             } else {
-                return String(format:"%.0fu", bolusEntry.amount)
+                maxFractionalDigits = 2
             }
+            
+            let formatter = NumberFormatter()
+            formatter.minimumFractionDigits = 0
+            formatter.maximumFractionDigits = maxFractionalDigits
+            formatter.numberStyle = .decimal
+            let bolusQuantityString = formatter.string(from: bolusEntry.amount as NSNumber) ?? ""
+            return bolusQuantityString + "u"
         case .carb(let carbEntry):
             return "\(carbEntry.amount)g"
         case .egv:
@@ -439,7 +447,7 @@ func interpolateRange(range: (first: Double, second: Double), referenceRange: (f
     
 }
 
-struct TreatmentGraphConfiguration {
+struct NightscoutChartConfiguration {
     let graphTotalDays = 3
     let daysPerVisbleScrollFrame = 0.3
     let graphTag = 1000

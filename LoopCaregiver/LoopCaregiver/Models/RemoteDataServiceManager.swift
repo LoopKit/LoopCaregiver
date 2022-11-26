@@ -16,12 +16,15 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     @Published var predictedGlucose: [NewGlucoseSample] = []
     @Published var carbEntries: [WGCarbEntry] = []
     @Published var bolusEntries: [WGBolusEntry] = []
+    @Published var basalEntries: [WGBasalEntry] = []
     @Published var currentIOB: WGLoopIOB? = nil
     @Published var currentCOB: WGLoopCOB? = nil
+    @Published var profiles: [NightscoutProfile] = []
     @Published var updating: Bool = false
     
     private let remoteDataProvider: RemoteDataServiceProvider
-    private var timer: Timer?
+    private var dateUpdateTimer: Timer?
+    private var infrequentDataUpdateTimer: Timer?
     
     init(remoteDataProvider: RemoteDataServiceProvider){
         self.remoteDataProvider = remoteDataProvider
@@ -29,14 +32,21 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     }
     
     func monitorForUpdates(updateInterval: TimeInterval) {
-        self.timer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { timer in
+        self.dateUpdateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { timer in
             Task {
                 try await self.updateData()
             }
         })
         
+        self.infrequentDataUpdateTimer = Timer.scheduledTimer(withTimeInterval: 60 * 30, repeats: true, block: { timer in
+            Task {
+                try await self.updateInfrequentData()
+            }
+        })
+        
         Task {
             try await self.updateData()
+            try await self.updateInfrequentData()
         }
     }
     
@@ -57,6 +67,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         async let predictedGlucoseAsync = remoteDataProvider.fetchPredictedGlucose()
         async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
         async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
+        async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
         async let deviceStatusesAsync = remoteDataProvider.fetchDeviceStatuses()
         
         let predictedGlucoseSamples = try await predictedGlucoseAsync
@@ -75,6 +86,11 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             self.bolusEntries = bolusEntries
         }
         
+        let basalEntries = try await basalEntriesAsync
+        if basalEntries != self.basalEntries {
+            self.basalEntries = basalEntries
+        }
+        
         let deviceStatuses = try await deviceStatusesAsync
             .sorted(by: {$0.created_at < $1.created_at})
         if let iob = deviceStatuses.last?.loop?.iob,
@@ -85,7 +101,19 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
            cob != self.currentCOB {
             self.currentCOB = cob
         }
+        
         updating = false
+    }
+    
+    @MainActor
+    func updateInfrequentData() async throws {
+
+        async let profilesAsync = remoteDataProvider.getProfiles()
+        
+        let profiles = try await profilesAsync
+        if profiles != self.profiles {
+            self.profiles = profiles
+        }
     }
     
     func nowDate() -> Date {
@@ -105,6 +133,10 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     func fetchBolusEntries() async throws -> [NightscoutClient.WGBolusEntry] {
         return try await remoteDataProvider.fetchBolusEntries()
+    }
+    
+    func fetchBasalEntries() async throws -> [NightscoutClient.WGBasalEntry] {
+        return try await remoteDataProvider.fetchBasalEntries()
     }
     
     func fetchCarbEntries() async throws -> [NightscoutClient.WGCarbEntry] {
@@ -148,6 +180,7 @@ protocol RemoteDataServiceProvider {
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample]
     func fetchPredictedGlucose() async throws -> [NewGlucoseSample]
     func fetchBolusEntries() async throws -> [WGBolusEntry]
+    func fetchBasalEntries() async throws -> [WGBasalEntry]
     func fetchCarbEntries() async throws -> [WGCarbEntry]
     func fetchDeviceStatuses() async throws -> [NightscoutDeviceStatus]
     func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws

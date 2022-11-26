@@ -60,6 +60,10 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return predictedEGVs.map({$0.toGlucoseSample()})
     }
     
+    func fetchBasalEntries() async throws -> [NightscoutClient.WGBasalEntry] {
+        return try await nightscoutService.getBasalTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
+    }
+    
     func fetchBolusEntries() async throws -> [WGBolusEntry] {
         return try await nightscoutService.getBolusTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
     }

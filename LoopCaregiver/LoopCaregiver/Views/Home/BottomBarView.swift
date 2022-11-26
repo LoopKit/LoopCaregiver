@@ -59,10 +59,9 @@ struct BottomBarView: View {
         }
         .background(Color(red: 0.1, green: 0.1, blue: 0.1))
         .frame(height: 20, alignment: .center)
-        .offset(.init(width: 0, height: -10))
     }
     
     func iconSize() -> Double {
-        return 90.0
+        return 50.0
     }
 }

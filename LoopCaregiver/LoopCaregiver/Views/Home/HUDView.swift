@@ -29,7 +29,6 @@ struct HUDView: View {
                 Text(nightscoutDateSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
                     .font(.largeTitle)
                     .foregroundColor(egvValueColor())
-                    .padding([.leading])
                 if let egv = nightscoutDateSource.currentGlucoseSample {
                     Image(systemName: arrowImageName(egv: egv))
                         .resizable()

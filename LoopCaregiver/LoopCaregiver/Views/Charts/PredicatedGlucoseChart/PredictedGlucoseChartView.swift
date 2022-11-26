@@ -14,49 +14,48 @@ import LoopUI
 
 
 struct PredictedGlucoseChartView: UIViewRepresentable {
-    let chartManager: ChartsManager
-    var glucoseUnit: HKUnit
-    var glucoseValues: [GlucoseValue]
-    var predictedGlucoseValues: [GlucoseValue]
+    
+    @ObservedObject var remoteDataSource: RemoteDataServiceManager
+    @ObservedObject var settings: CaregiverSettings
+    @StateObject var viewModel = PredictedGlucoseContainerViewModel()
     var targetGlucoseSchedule: GlucoseRangeSchedule?
     var preMealOverride: TemporaryScheduleOverride?
     var scheduleOverride: TemporaryScheduleOverride?
     var dateInterval: DateInterval
-
     @Binding var isInteractingWithChart: Bool
 
     func makeUIView(context: Context) -> ChartContainerView {
         let view = ChartContainerView()
-        view.chartGenerator = { [chartManager] frame in
-            chartManager.chart(atIndex: 0, frame: frame)?.view
+        view.chartGenerator = { frame in
+            viewModel.chartManager.chart(atIndex: 0, frame: frame)?.view
         }
 
         let gestureRecognizer = UILongPressGestureRecognizer()
         gestureRecognizer.minimumPressDuration = 0.1
         gestureRecognizer.addTarget(context.coordinator, action: #selector(Coordinator.handlePan(_:)))
-        chartManager.gestureRecognizer = gestureRecognizer
+        viewModel.chartManager.gestureRecognizer = gestureRecognizer
         view.addGestureRecognizer(gestureRecognizer)
 
         return view
     }
 
     func updateUIView(_ chartContainerView: ChartContainerView, context: Context) {
-        chartManager.invalidateChart(atIndex: 0)
-        chartManager.startDate = dateInterval.start
-        chartManager.maxEndDate = dateInterval.end
-        chartManager.updateEndDate(dateInterval.end)
-        predictedGlucoseChart.glucoseUnit = glucoseUnit
+        viewModel.chartManager.invalidateChart(atIndex: 0)
+        viewModel.chartManager.startDate = dateInterval.start
+        viewModel.chartManager.maxEndDate = dateInterval.end
+        viewModel.chartManager.updateEndDate(dateInterval.end)
+        predictedGlucoseChart.glucoseUnit = settings.glucoseDisplayUnits
         predictedGlucoseChart.targetGlucoseSchedule = targetGlucoseSchedule
         predictedGlucoseChart.preMealOverride = preMealOverride
         predictedGlucoseChart.scheduleOverride = scheduleOverride
-        predictedGlucoseChart.setGlucoseValues(glucoseValues)
-        predictedGlucoseChart.setPredictedGlucoseValues(predictedGlucoseValues)
-        chartManager.prerender()
+        predictedGlucoseChart.setGlucoseValues(remoteDataSource.glucoseSamples)
+        predictedGlucoseChart.setPredictedGlucoseValues(remoteDataSource.predictedGlucose)
+        viewModel.chartManager.prerender()
         chartContainerView.reloadChart()
     }
 
     var predictedGlucoseChart: PredictedGlucoseChart {
-        guard chartManager.charts.count == 1, let predictedGlucoseChart = chartManager.charts.first as? PredictedGlucoseChart else {
+        guard viewModel.chartManager.charts.count == 1, let predictedGlucoseChart = viewModel.chartManager.charts.first as? PredictedGlucoseChart else {
             fatalError("Expected exactly one predicted glucose chart in ChartsManager")
         }
 
@@ -93,4 +92,11 @@ struct PredictedGlucoseChartView: UIViewRepresentable {
             }
         }
     }
+}
+
+class PredictedGlucoseContainerViewModel: ObservableObject {
+    let chartManager: ChartsManager = {
+        let predictedGlucoseChart = PredictedGlucoseChart()
+        return ChartsManager(colors: .primary, settings: .default, charts: [predictedGlucoseChart], traitCollection: UITraitCollection())
+    }()
 }

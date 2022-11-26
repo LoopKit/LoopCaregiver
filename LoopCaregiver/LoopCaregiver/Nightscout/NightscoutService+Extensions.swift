@@ -76,6 +76,14 @@ extension WGBolusEntry: Equatable {
     }
 }
 
+extension WGBasalEntry: Equatable {
+    public static func == (lhs: WGBasalEntry, rhs: WGBasalEntry) -> Bool {
+        return lhs.amount == rhs.amount &&
+        lhs.date == rhs.date &&
+        lhs.duration == rhs.duration
+    }
+}
+
 extension WGLoopCOB: Equatable {
     public static func == (lhs: WGLoopCOB, rhs: WGLoopCOB) -> Bool {
         return lhs.timestamp == rhs.timestamp &&
@@ -87,5 +95,11 @@ extension WGLoopIOB: Equatable {
     public static func == (lhs: WGLoopIOB, rhs: WGLoopIOB) -> Bool {
         return lhs.timestamp == rhs.timestamp &&
         lhs.iob == rhs.iob
+    }
+}
+
+extension NightscoutProfile: Equatable {
+    public static func == (lhs: NightscoutProfile, rhs: NightscoutProfile) -> Bool {
+        return lhs.startDate == rhs.startDate //TODO: Assumes these are immutable
     }
 }
