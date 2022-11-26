@@ -20,7 +20,6 @@
 		A95F50D2292A68E800079AAF /* LoopCore.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50D0292A68E800079AAF /* LoopCore.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A95F50D4292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50D3292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift */; };
 		A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929342926E5CE00B8BF43 /* HUDView.swift */; };
-		A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */; };
 		A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293A2926ECF500B8BF43 /* BottomBarView.swift */; };
 		A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
 		A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */; };
@@ -79,7 +78,6 @@
 		A95F50D0292A68E800079AAF /* LoopCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50D3292A6A7D00079AAF /* PredicatedGlucoseContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredicatedGlucoseContainerView.swift; sourceTree = "<group>"; };
 		A96929342926E5CE00B8BF43 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
-		A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TreatmentGraphDataSource.swift; sourceTree = "<group>"; };
 		A969293A2926ECF500B8BF43 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		A969293C2926EFEC00B8BF43 /* Looper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Looper.swift; sourceTree = "<group>"; };
 		A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountServiceManager.swift; sourceTree = "<group>"; };
@@ -260,7 +258,6 @@
 				A98F5E102930F18A00A03580 /* LoopKit+Extensions.swift */,
 				A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */,
 				A9EC199D292101550022D39F /* TreatmentGraph.swift */,
-				A96929382926E99B00B8BF43 /* TreatmentGraphDataSource.swift */,
 			);
 			path = TreatmentGraph;
 			sourceTree = "<group>";
@@ -375,7 +372,6 @@
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
 				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
 				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
-				A96929392926E99B00B8BF43 /* TreatmentGraphDataSource.swift in Sources */,
 				A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -12,27 +12,27 @@ import LoopKit
 import HealthKit
 
 struct TreatmentGraphScrollView: View {
-    
-    @ObservedObject var dataSource: TreatmentGraphDataSource
+
     @ObservedObject var settings: CaregiverSettings
+    private var remoteDataSource: RemoteDataServiceManager
     private let graphTag = 1000
     private let configuration = TreatmentGraphConfiguration()
     
     init(remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings) {
-        self.dataSource = TreatmentGraphDataSource(remoteDataSource: remoteDataSource, settings: settings)
         self.settings = settings
+        self.remoteDataSource = remoteDataSource
     }
     
     var body: some View {
         GeometryReader { proxy in
             ScrollViewReader { sp in
                 ScrollView (.horizontal) {
-                    TreatmentGraph(dataSource: dataSource, settings: settings)
+                    TreatmentGraph(settings: settings, remoteDataSource: remoteDataSource)
                         .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame)
                         .padding()
                         .id(graphTag)
                 }
-                .onChange(of: dataSource.graphItems, perform: { newValue in
+                .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
                     sp.scrollTo(graphTag, anchor: .trailing)
                 })
                 .onAppear(perform: {
@@ -45,21 +45,35 @@ struct TreatmentGraphScrollView: View {
 
 struct TreatmentGraph: View {
     
-    @ObservedObject var dataSource: TreatmentGraphDataSource
     @ObservedObject var settings: CaregiverSettings
+    @ObservedObject var remoteDataSource: RemoteDataServiceManager
     let timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
+    
+    func glucoseGraphItems() -> [GraphItem] {
+        return remoteDataSource.glucoseSamples.map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
+    }
+    
+    func bolusGraphItems() -> [GraphItem] {
+        return remoteDataSource.bolusEntries
+            .map({$0.graphItem(egvValues: glucoseGraphItems(), displayUnit: settings.glucoseDisplayUnits)})
+    }
+    
+    func carbEntryGraphItems() -> [GraphItem] {
+        return remoteDataSource.carbEntries
+            .map({$0.graphItem(egvValues: glucoseGraphItems(), displayUnit: settings.glucoseDisplayUnits)})
+    }
     
     var body: some View {
         
         Chart() {
-            ForEach(dataSource.graphItems){
+            ForEach(glucoseGraphItems()){
                 PointMark(
                     x: .value("Time", $0.displayTime),
                     y: .value("Reading", $0.value)
                 )
                 .foregroundStyle(by: .value("Reading", $0.colorType))
             }
-            ForEach(dataSource.bolusEntryGraphItems) { graphItem in
+            ForEach(bolusGraphItems()) { graphItem in
                 PointMark(
                     x: .value("Time", graphItem.displayTime),
                     y: .value("Reading", graphItem.value)
@@ -69,7 +83,7 @@ struct TreatmentGraph: View {
                     return TreatmentAnnotationView(graphItem: graphItem)
                 }
             }
-            ForEach(dataSource.carbEntryGraphItems) { graphItem in
+            ForEach(carbEntryGraphItems()) { graphItem in
                 PointMark(
                     x: .value("Time", graphItem.displayTime),
                     y: .value("Reading", graphItem.value)
@@ -158,7 +172,7 @@ struct TreatmentGraph: View {
         case .today:
             return .dateTime.hour()
         case .thisWeek, .thisMonth:
-            if date == dataSource.graphItems.first?.displayTime {
+            if date == glucoseGraphItems().first?.displayTime {
                 return .dateTime.month(.abbreviated).day(.twoDigits)
             }
             return .dateTime.day(.twoDigits)
@@ -423,4 +437,10 @@ func interpolateRange(range: (first: Double, second: Double), referenceRange: (f
     let rangeDifference = range.first - range.second
     return range.first + (rangeDifference * scaleFactor)
     
+}
+
+struct TreatmentGraphConfiguration {
+    let graphTotalDays = 3
+    let daysPerVisbleScrollFrame = 0.3
+    let graphTag = 1000
 }
