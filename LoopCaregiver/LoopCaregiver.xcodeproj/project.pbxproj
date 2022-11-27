@@ -31,6 +31,7 @@
 		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
 		A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
 		A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
+		A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DE92933B0FE000A3D6A /* SwiftUIExtensions.swift */; };
 		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
 		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
 		A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */; };
@@ -93,6 +94,7 @@
 		A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoopCaregiver.xcdatamodel; sourceTree = "<group>"; };
 		A96929902927FFBA00B8BF43 /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		A96929922929908100B8BF43 /* NightscoutDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSource.swift; sourceTree = "<group>"; };
+		A9744DE92933B0FE000A3D6A /* SwiftUIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExtensions.swift; sourceTree = "<group>"; };
 		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
 		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
 		A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NightscoutService+Extensions.swift"; sourceTree = "<group>"; };
@@ -228,6 +230,7 @@
 				A95F50C3292A641C00079AAF /* Charts */,
 				A969296A29279DCB00B8BF43 /* Home */,
 				A969296929279D9F00B8BF43 /* Settings */,
+				A9744DE72933B0DC000A3D6A /* SwiftUI */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -260,6 +263,14 @@
 				A9EC19A8292144040022D39F /* OverrideView.swift */,
 			);
 			path = Actions;
+			sourceTree = "<group>";
+		};
+		A9744DE72933B0DC000A3D6A /* SwiftUI */ = {
+			isa = PBXGroup;
+			children = (
+				A9744DE92933B0FE000A3D6A /* SwiftUIExtensions.swift */,
+			);
+			path = SwiftUI;
 			sourceTree = "<group>";
 		};
 		A98D4CB0292C38D100EFF5C6 /* Nightscout */ = {
@@ -409,6 +420,7 @@
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
 				A98F5E112930F18A00A03580 /* NewGlucoseSample+Extensions.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
+				A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */,
 				A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */,
 				A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,

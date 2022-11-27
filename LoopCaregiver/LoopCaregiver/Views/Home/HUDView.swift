@@ -40,7 +40,9 @@ struct HUDView: View {
                 VStack {
                     Text(lastEGVTimeFormatted())
                         .font(.footnote)
-                        .foregroundColor(egvIsOutdated() ? Color.red : Color.white)
+                        .if(egvIsOutdated(), transform: { view in
+                            view.foregroundColor(.red)
+                        })
                     Text(lastEGVDeltaFormatted())
                         .font(.footnote)
                 }
