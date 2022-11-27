@@ -117,9 +117,15 @@ struct NightscoutChartView: View {
     }
     
     func chartYRange() -> ClosedRange<Double> {
-        let minimumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 0)
-        let maximumQuantity = HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400)
-        return minimumQuantity.doubleValue(for: settings.glucoseDisplayUnits)...maximumQuantity.doubleValue(for: settings.glucoseDisplayUnits)
+        return minYValue()...maxYValue()
+    }
+    
+    func minYValue() -> Double {
+        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 0).doubleValue(for: settings.glucoseDisplayUnits)
+    }
+    
+    func maxYValue() -> Double {
+        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400).doubleValue(for: settings.glucoseDisplayUnits)
     }
     
     func formatGlucoseQuantity(_ quantity: HKQuantity) -> Double {
@@ -403,7 +409,7 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
 extension WGCarbEntry {
     
     func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {
-        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 390).doubleValue(for: displayUnit)
+        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date)
         return GraphItem(type: .carb(self), displayTime: date, quantity: HKQuantity(unit: displayUnit, doubleValue: relativeEgvValue), displayUnit: displayUnit)
     }
 }
@@ -411,39 +417,43 @@ extension WGCarbEntry {
 extension WGBolusEntry {
     
     func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {
-        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date) ?? HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 390).doubleValue(for: displayUnit)
+        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date)
         return GraphItem(type: .bolus(self), displayTime: date, quantity: HKQuantity(unit: displayUnit, doubleValue: relativeEgvValue), displayUnit: displayUnit)
     }
 }
 
-func interpolateEGVValue(egvs: [GraphItem], atDate date: Date ) -> Double? {
+func interpolateEGVValue(egvs: [GraphItem], atDate date: Date ) -> Double {
     
-    guard egvs.count >= 2 else {
-        return egvs.first?.value
+    switch egvs.count {
+    case 0:
+        return 0
+    case 1:
+        return egvs[0].value
+    default:
+        let priorEGVs = egvs.filter({$0.displayTime < date})
+        guard let greatestPriorEGV = priorEGVs.last else {
+            //All after, use first
+            return egvs.first!.value
+        }
+        
+        let laterEGVs = egvs.filter({$0.displayTime > date})
+        guard let leastFollowingEGV = laterEGVs.first else {
+            //All prior, use last
+            return egvs.last!.value
+        }
+        
+        return interpolateYValueInRange(yRange: (y1: greatestPriorEGV.value, y2: leastFollowingEGV.value), referenceXRange: (x1: greatestPriorEGV.displayTime, x2: leastFollowingEGV.displayTime), referenceXValue: date)
     }
-    
-    let priorEGVs = egvs.filter({$0.displayTime < date})
-    guard let greatestPriorEGV = priorEGVs.last else {
-        //All after, use first
-        return egvs.first?.value
-    }
-    
-    let laterEGVs = egvs.filter({$0.displayTime > date})
-    guard let leastFollowingEGV = laterEGVs.first else {
-        //All prior, use last
-        return egvs.last?.value
-    }
-    
-    return interpolateRange(range: (first: greatestPriorEGV.value, second: leastFollowingEGV.value), referenceRange: (first: greatestPriorEGV.displayTime, second: leastFollowingEGV.displayTime), referenceValue: date)
 }
 
-func interpolateRange(range: (first: Double, second: Double), referenceRange: (first: Date, second: Date), referenceValue: Date) -> Double {
-    let referenceRangeDistance = referenceRange.second.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
-    let lowerRangeToValueDifference = referenceValue.timeIntervalSince1970 - referenceRange.first.timeIntervalSince1970
+//Given a known value x in a range (x1, x2), interpolate value y, in range (y1, y2)
+func interpolateYValueInRange(yRange: (y1: Double, y2: Double), referenceXRange: (x1: Date, x2: Date), referenceXValue: Date) -> Double {
+    let referenceRangeDistance = referenceXRange.x2.timeIntervalSince1970 - referenceXRange.x1.timeIntervalSince1970
+    let lowerRangeToValueDifference = referenceXValue.timeIntervalSince1970 - referenceXRange.x1.timeIntervalSince1970
     let scaleFactor = lowerRangeToValueDifference / referenceRangeDistance
     
-    let rangeDifference = range.first - range.second
-    return range.first + (rangeDifference * scaleFactor)
+    let rangeDifference = abs(yRange.y1 - yRange.y2)
+    return yRange.y1 + (rangeDifference * scaleFactor)
     
 }
 
