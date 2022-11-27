@@ -29,7 +29,8 @@ struct OverrideView: View {
                         Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
                             Text("None").tag(nil as NightscoutOverridePreset?)
                             ForEach(overidePresets, id: \.self) { overrideValue in
-                                Text("\(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
+                                //Auggie - adding the override symbol in the selector list
+                                Text("\(overrideValue.symbol) \(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
                             }
                         }.pickerStyle(.wheel)
                             .labelsHidden()
@@ -62,7 +63,8 @@ struct OverrideView: View {
                         
                         do {
                             //TODO: Set appropriate display symbol
-                            let _ = try await looperService.remoteDataSource.startOverride(overrideName: selectedOverride.name, overrideDisplay: "A", durationInMinutes: 60)
+                            //Auggie - respecting the override duration define in Loop
+                            let _ = try await looperService.remoteDataSource.startOverride(overrideName: selectedOverride.name, overrideDisplay: "A", durationInMinutes: selectedOverride.durationInMinutes)
                             showSheetView = false
                         } catch {
                             //TODO: Show user error
