@@ -366,11 +366,11 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
     init(quantity: HKQuantity) {
         let glucose = quantity.doubleValue(for:.milligramsPerDeciliter)
         switch glucose {
-        case 0..<60:
+        case 0..<55:
             self = ColorType.red
-        case 60..<80:
+        case 55..<70:
             self = ColorType.yellow
-        case 80..<180:
+        case 70..<180:
             self = ColorType.green
         case 180...249:
             self = ColorType.yellow
