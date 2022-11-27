@@ -16,6 +16,8 @@ struct CarbInputView: View {
     @State var duration: String = "3"
     @State private var buttonDisabled = false
     @State private var isPresentingConfirm: Bool = false
+    @State private var usePickerConsumedDate: Bool = false
+    @State private var pickerConsumedDate: Date = Date()
     @FocusState private var carbInputViewIsFocused: Bool
     
     var unitFrameWidth: CGFloat {
@@ -41,6 +43,18 @@ struct CarbInputView: View {
                             .frame(width: unitFrameWidth)
                     } label: {
                         Text("Amount Consumed")
+                    }
+                    if usePickerConsumedDate {
+                        DatePicker("Time", selection: $pickerConsumedDate, displayedComponents: [.date, .hourAndMinute])
+                            .datePickerStyle(.compact)
+                    } else {
+                        LabeledContent {
+                            Button("Now") {
+                                usePickerConsumedDate = true
+                            }
+                        } label: {
+                            Text("Time")
+                        }
                     }
                     LabeledContent {
                         TextField(
@@ -68,7 +82,9 @@ struct CarbInputView: View {
                         buttonDisabled = true
                         Task {
                             if let carbAmountInGrams = Int(carbInput), let durationInHours = Float(duration) {
-                                let _ = try await looperService.remoteDataSource.deliverCarbs(amountInGrams: carbAmountInGrams, durationInHours: durationInHours)
+                                let _ = try await looperService.remoteDataSource.deliverCarbs(amountInGrams: carbAmountInGrams,
+                                                                                              durationInHours: durationInHours,
+                                                                                              consumedDate: self.usePickerConsumedDate ? pickerConsumedDate : Date())
                                 buttonDisabled = true
                                 showSheetView = false
                             }

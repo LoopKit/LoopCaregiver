@@ -91,7 +91,7 @@ class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountSe
 extension AccountServiceManager {
     func simulatorCredentials() -> NightscoutCredentials? {
         
-        let fileURL = URL(filePath: "/Users/bill/Desktop/Loop/loopcaregiver-prod.json")
+        let fileURL = URL(filePath: "/Users/bill/Desktop/Loop/loopcaregiver-test.json")
         
         guard FileManager.default.fileExists(atPath: fileURL.path) else {
             return nil

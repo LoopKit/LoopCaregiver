@@ -65,11 +65,11 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return Date()
     }
     
-    func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws {
+    func deliverCarbs(amountInGrams: Int, durationInHours: Float, consumedDate: Date) async throws {
         guard let otpCodeInt = Int(credentialService.otpCode) else {
             throw NightscoutDataSourceError.badOTP
         }
-        let _ = try await nightscoutService.deliverCarbs(amountInGrams: amountInGrams, amountInHours: durationInHours, otp: otpCodeInt)
+        let _ = try await nightscoutService.deliverCarbs(amountInGrams: amountInGrams, amountInHours: durationInHours, consumedDate: consumedDate, otp: otpCodeInt)
     }
     
     func deliverBolus(amountInUnits: Double) async throws {
