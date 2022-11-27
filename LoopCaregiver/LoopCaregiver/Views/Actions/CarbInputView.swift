@@ -18,7 +18,15 @@ struct CarbInputView: View {
     @State private var isPresentingConfirm: Bool = false
     @State private var usePickerConsumedDate: Bool = false
     @State private var pickerConsumedDate: Date = Date()
+    @State private var showDatePickerSheet: Bool = false
     @FocusState private var carbInputViewIsFocused: Bool
+    
+    var dateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        return dateFormatter
+    }
     
     var unitFrameWidth: CGFloat {
         return 20.0
@@ -44,18 +52,19 @@ struct CarbInputView: View {
                     } label: {
                         Text("Amount Consumed")
                     }
-                    if usePickerConsumedDate {
-                        DatePicker("Time", selection: $pickerConsumedDate, displayedComponents: [.date, .hourAndMinute])
-                            .datePickerStyle(.compact)
-                    } else {
-                        LabeledContent {
-                            Button("Now") {
-                                usePickerConsumedDate = true
-                                pickerConsumedDate = Date()
-                            }
+                    
+                    LabeledContent {
+                        Button {
+                            showDatePickerSheet = true
                         } label: {
-                            Text("Time")
+                            if usePickerConsumedDate {
+                                Text(dateFormatter.string(from: pickerConsumedDate))
+                            } else {
+                                Text("Now")
+                            }
                         }
+                    } label: {
+                        Text("Time")
                     }
                     LabeledContent {
                         TextField(
@@ -104,6 +113,20 @@ struct CarbInputView: View {
             }) {
                 Text("Cancel")
             })
+            .sheet(isPresented: $showDatePickerSheet) {
+                VStack {
+                    Text("Consumption Date")
+                        .font(.headline)
+                        .padding()
+                    Form {
+                        DatePicker("Time", selection: $pickerConsumedDate, displayedComponents: [.date, .hourAndMinute])
+                            .datePickerStyle(.compact)
+                    }
+                }
+            }
+            .onChange(of: pickerConsumedDate) { newValue in
+                usePickerConsumedDate = true
+            }
         }
         
     }
