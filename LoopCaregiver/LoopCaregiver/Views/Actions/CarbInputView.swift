@@ -51,6 +51,7 @@ struct CarbInputView: View {
                         LabeledContent {
                             Button("Now") {
                                 usePickerConsumedDate = true
+                                pickerConsumedDate = Date()
                             }
                         } label: {
                             Text("Time")
