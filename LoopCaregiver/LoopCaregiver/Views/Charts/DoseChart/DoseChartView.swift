@@ -50,13 +50,16 @@ struct DoseChartView: UIViewRepresentable {
     func bolusDoseEntries() -> [DoseEntry] {
         let bolusEntries = remoteDataSource.bolusEntries
             .filter({$0.date >= dateInterval.start})
+            .sorted(by: {$0.date < $1.date})
+        
         let bolusDoseEntries = bolusEntries.map({DoseEntry(type: .bolus, startDate: $0.date, value: Double($0.amount), unit: .units)})
         return bolusDoseEntries
     }
     
     func basalDoseEntries() -> [DoseEntry] {
         
-        let basalEntries = remoteDataSource.basalEntries.filter({$0.date.addingTimeInterval(Double($0.duration * 60)) > dateInterval.start})
+        let basalEntries = remoteDataSource.basalEntries
+            .filter({$0.date.addingTimeInterval(Double($0.duration * 60)) > dateInterval.start})
             .sorted(by: {$0.date < $1.date})
 
         let basalDoseEntries = basalEntries.map({DoseEntry(type: .tempBasal, startDate: $0.date, endDate: $0.date.addingTimeInterval(Double($0.duration * 60)), value: Double($0.rate), unit: .unitsPerHour, scheduledBasalRate: scheduledBasalRate(date: $0.date))})
