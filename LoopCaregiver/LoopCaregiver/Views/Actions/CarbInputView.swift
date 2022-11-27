@@ -119,16 +119,15 @@ struct CarbInputView: View {
                         .font(.headline)
                         .padding()
                     Form {
-                        DatePicker("Time", selection: $pickerConsumedDate, displayedComponents: [.date, .hourAndMinute])
-                            .datePickerStyle(.compact)
+                        DatePicker("Time", selection: $pickerConsumedDate, displayedComponents: [.hourAndMinute, .date])
+                            .datePickerStyle(.automatic)
                     }
-                }
+                }.presentationDetents([.fraction(1/4)])
             }
             .onChange(of: pickerConsumedDate) { newValue in
                 usePickerConsumedDate = true
             }
         }
-        
     }
 }
 
