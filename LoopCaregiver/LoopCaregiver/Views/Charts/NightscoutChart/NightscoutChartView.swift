@@ -18,26 +18,52 @@ struct NightscoutChartScrollView: View {
     private let graphTag = 1000
     private let configuration = NightscoutChartConfiguration()
     
+    private var minScale: CGFloat = 0.10
+    private var maxScale: CGFloat = 3.0
+    @State var currentScale: CGFloat = 1.0
+    
     init(remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings) {
         self.settings = settings
         self.remoteDataSource = remoteDataSource
     }
     
+    var doubleTapGesture: some Gesture {
+           TapGesture(count: 2).onEnded {
+               currentScale = 1.0
+           }
+       }
+    
+    var pinchGesture: some Gesture {
+           TapGesture(count: 2).onEnded {
+               if currentScale <= minScale { currentScale = maxScale } else
+               if currentScale >= maxScale { currentScale = minScale } else {
+                   currentScale = ((maxScale - minScale) * 0.5 + minScale) < currentScale ? maxScale : minScale
+               }
+           }
+       }
+    
     var body: some View {
         GeometryReader { proxy in
             ScrollViewReader { sp in
-                ScrollView (.horizontal) {
+                ScrollView ([.horizontal]) {
                     NightscoutChartView(settings: settings, remoteDataSource: remoteDataSource)
-                        .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame)
-                        .padding(.top) //Prevent top Y label from clipping
+                        .tag(1000)
+                        .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame * currentScale, height: proxy.size.height, alignment: .center)
+                        .padding([.top, .bottom]) //Prevent top Y label from clipping
                         .id(graphTag)
+                        .modifier(PinchToZoom(minScale: minScale, maxScale: maxScale, scale: $currentScale))
+                        .onChange(of: currentScale) { newValue in
+                            sp.scrollTo(1000, anchor: .trailing)
+                        }
+                        .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
+                            sp.scrollTo(graphTag, anchor: .trailing)
+                        })
+                        .onAppear(perform: {
+                            sp.scrollTo(graphTag, anchor: .trailing)
+                        })
                 }
-                .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
-                    sp.scrollTo(graphTag, anchor: .trailing)
-                })
-                .onAppear(perform: {
-                    sp.scrollTo(graphTag, anchor: .trailing)
-                })
+                .gesture(doubleTapGesture)
+                
             }
         }
     }
