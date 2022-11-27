@@ -27,18 +27,20 @@ struct HUDView: View {
         VStack {
             HStack (alignment: .center) {
                 Text(nightscoutDateSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
+                    .strikethrough(egvIsOutdated())
                     .font(.largeTitle)
                     .foregroundColor(egvValueColor())
                 if let egv = nightscoutDateSource.currentGlucoseSample {
                     Image(systemName: arrowImageName(egv: egv))
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 20.0)
+                        .frame(width: 15.0)
                         .foregroundColor(egvValueColor())
                 }
                 VStack {
                     Text(lastEGVTimeFormatted())
                         .font(.footnote)
+                        .foregroundColor(egvIsOutdated() ? Color.red : Color.white)
                     Text(lastEGVDeltaFormatted())
                         .font(.footnote)
                 }
@@ -107,6 +109,13 @@ struct HUDView: View {
         }
     }
     
+    func egvIsOutdated() -> Bool {
+        guard let currentEGV = nightscoutDateSource.currentGlucoseSample else {
+            return true
+        }
+        return Date().timeIntervalSince(currentEGV.date) > 60 * 10
+    }
+    
     func lastEGVTimeFormatted() -> String {
         guard let currentEGV = self.nightscoutDateSource.currentGlucoseSample else {
             return ""
@@ -145,19 +154,6 @@ struct HUDView: View {
         case doubleDown = 7
         case nonComputable = 8
         case outOfRange = 9
-    }
-    
-    func arrowForTrend(rawValue: Int?) -> String {
-        guard let rawValue, let egvTrend = EGVTrend(rawValue: rawValue) else {
-            return "?"
-        }
-        
-        switch egvTrend {
-        case .doubleUp:
-            return ""
-        default:
-            return ""
-        }
     }
 }
 
