@@ -31,35 +31,6 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
             .map({$0.toGlucoseSample()})
     }
     
-    func fetchPredictedGlucose() async throws -> [NewGlucoseSample] {
-        
-        guard let latestDeviceStatus = try await nightscoutService.getDeviceStatuses(startDate: fetchStartDate(), endDate: fetchEndDate())
-            .sorted(by: {$0.created_at < $1.created_at})
-            .last else {
-            return []
-        }
-        
-        guard let loopPrediction = latestDeviceStatus.loop?.predicted else {
-            return []
-        }
-        
-        guard let predictedValues = loopPrediction.values else {
-            return []
-        }
-        
-        var predictedEGVs = [NightscoutEGV]()
-        var currDate = loopPrediction.startDate
-        for value in predictedValues {
-            //TODO: Probably needs to be something unique from NS predicted data
-            let egv = NightscoutEGV(id:  UUID().uuidString, value: Int(value), systemTime: currDate, displayTime: currDate, realtimeValue: nil, smoothedValue: nil, trendRate: nil, trendDescription: "")
-            
-            predictedEGVs.append(egv)
-            currDate = currDate.addingTimeInterval(60*5) //every 5 minutes
-        }
-        
-        return predictedEGVs.map({$0.toGlucoseSample()})
-    }
-    
     func fetchBasalEntries() async throws -> [NightscoutClient.WGBasalEntry] {
         return try await nightscoutService.getBasalTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
     }
@@ -72,8 +43,14 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return try await nightscoutService.getCarbTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
     }
     
-    func fetchDeviceStatuses() async throws -> [NightscoutDeviceStatus] {
-        return try await nightscoutService.getDeviceStatuses(startDate: fetchStartDate(), endDate: fetchEndDate())
+    func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus? {
+        guard let latestDeviceStatus = try await nightscoutService.getDeviceStatuses(startDate: fetchEndDate().addingTimeInterval(-60*60*2), endDate: fetchEndDate())
+            .sorted(by: {$0.created_at < $1.created_at})
+            .last else {
+            return nil
+        }
+        
+        return latestDeviceStatus
     }
     
     func fetchStartDate() -> Date {

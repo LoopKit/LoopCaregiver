@@ -52,7 +52,9 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     @MainActor
     func updateData() async throws {
+        
         updating = true
+        
         let glucoseSamplesAsync = try await remoteDataProvider.fetchGlucoseSamples()
             .sorted(by: {$0.date < $1.date})
             
@@ -64,11 +66,10 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             currentGlucoseSample = latestGlucoseSample
         }
         
-        async let predictedGlucoseAsync = remoteDataProvider.fetchPredictedGlucose()
         async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
         async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
         async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
-        async let deviceStatusesAsync = remoteDataProvider.fetchDeviceStatuses()
+        async let deviceStatusAsync = remoteDataProvider.fetchLatestDeviceStatus()
 
         let carbEntries = try await carbEntriesAsync
         if carbEntries != self.carbEntries {
@@ -85,24 +86,48 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             self.basalEntries = basalEntries
         }
         
-        let deviceStatuses = try await deviceStatusesAsync
-            .sorted(by: {$0.created_at < $1.created_at})
-        if let iob = deviceStatuses.last?.loop?.iob,
-           iob != self.currentIOB {
-            self.currentIOB = iob
-        }
-        if let cob = deviceStatuses.last?.loop?.cob,
-           cob != self.currentCOB {
-            self.currentCOB = cob
-        }
-        
-        let predictedGlucoseSamples = try await predictedGlucoseAsync
-            .sorted(by: {$0.date < $1.date})
-        if predictedGlucoseSamples != self.predictedGlucose {
-            self.predictedGlucose = predictedGlucoseSamples
+        if let deviceStatus = try await deviceStatusAsync {
+            
+            if let iob = deviceStatus.loop?.iob,
+               iob != self.currentIOB {
+                self.currentIOB = iob
+            }
+            
+            if let cob = deviceStatus.loop?.cob,
+               cob != self.currentCOB {
+                self.currentCOB = cob
+            }
+            
+            let predictedGlucoseSamples = predictedGlucoseSamples(latestDeviceStatus: deviceStatus)
+            if predictedGlucoseSamples != self.predictedGlucose {
+                self.predictedGlucose = predictedGlucoseSamples
+            }
         }
         
         updating = false
+    }
+    
+    func predictedGlucoseSamples(latestDeviceStatus: NightscoutDeviceStatus) -> [NewGlucoseSample] {
+        guard let loopPrediction = latestDeviceStatus.loop?.predicted else {
+            return []
+        }
+        
+        guard let predictedValues = loopPrediction.values else {
+            return []
+        }
+        
+        var predictedEGVs = [NightscoutEGV]()
+        var currDate = loopPrediction.startDate
+        for value in predictedValues {
+            //TODO: Probably needs to be something unique from NS predicted data
+            let egv = NightscoutEGV(id:  UUID().uuidString, value: Int(value), systemTime: currDate, displayTime: currDate, realtimeValue: nil, smoothedValue: nil, trendRate: nil, trendDescription: "")
+            
+            predictedEGVs.append(egv)
+            currDate = currDate.addingTimeInterval(60*5) //every 5 minutes
+        }
+        
+        return predictedEGVs.map({$0.toGlucoseSample()})
+            .sorted(by: {$0.date < $1.date})
     }
     
     @MainActor
@@ -127,10 +152,6 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchGlucoseSamples()
     }
     
-    func fetchPredictedGlucose() async throws -> [NewGlucoseSample] {
-        return try await remoteDataProvider.fetchPredictedGlucose()
-    }
-    
     func fetchBolusEntries() async throws -> [NightscoutClient.WGBolusEntry] {
         return try await remoteDataProvider.fetchBolusEntries()
     }
@@ -143,8 +164,8 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchCarbEntries()
     }
     
-    func fetchDeviceStatuses() async throws -> [NightscoutClient.NightscoutDeviceStatus] {
-        return try await remoteDataProvider.fetchDeviceStatuses()
+    func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus? {
+        return try await remoteDataProvider.fetchLatestDeviceStatus()
     }
     
     func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws {
@@ -178,11 +199,10 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
 protocol RemoteDataServiceProvider {
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample]
-    func fetchPredictedGlucose() async throws -> [NewGlucoseSample]
     func fetchBolusEntries() async throws -> [WGBolusEntry]
     func fetchBasalEntries() async throws -> [WGBasalEntry]
     func fetchCarbEntries() async throws -> [WGCarbEntry]
-    func fetchDeviceStatuses() async throws -> [NightscoutDeviceStatus]
+    func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus?
     func deliverCarbs(amountInGrams: Int, durationInHours: Float) async throws
     func deliverBolus(amountInUnits: Double) async throws
     func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws
