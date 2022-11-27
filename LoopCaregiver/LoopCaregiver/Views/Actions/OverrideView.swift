@@ -29,7 +29,7 @@ struct OverrideView: View {
                         Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
                             Text("None").tag(nil as NightscoutOverridePreset?)
                             ForEach(overidePresets, id: \.self) { overrideValue in
-                                Text("\(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
+                                Text("\(overrideValue.symbol) \(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
                             }
                         }.pickerStyle(.wheel)
                             .labelsHidden()
