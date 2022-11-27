@@ -366,16 +366,15 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
     init(quantity: HKQuantity) {
         let glucose = quantity.doubleValue(for:.milligramsPerDeciliter)
         switch glucose {
-        //Auggie - using commonly used ranges of <55, 70-180, >250
-        case 0..<55:
+        case 0..<60:
             self = ColorType.red
-        case 55..<70:
+        case 60..<80:
             self = ColorType.yellow
-        case 70..<180:
+        case 80..<180:
             self = ColorType.green
-        case 180...250:
+        case 180...249:
             self = ColorType.yellow
-        case 251...:
+        case 250...:
             self = ColorType.red
         default:
             assertionFailure("Uexpected range")

@@ -28,6 +28,15 @@
       }
     },
     {
+      "identity" : "cryptoswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzyzanowskim/CryptoSwift",
+      "state" : {
+        "revision" : "19b3c3ceed117c5cc883517c4e658548315ba70b",
+        "version" : "1.6.0"
+      }
+    },
+    {
       "identity" : "nightscoutclient",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gestrich/NightscoutClient.git",
@@ -39,7 +48,7 @@
     {
       "identity" : "onetimepassword",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/mattrubin/OneTimePassword.git",
+      "location" : "https://github.com/mattrubin/OneTimePassword",
       "state" : {
         "branch" : "develop",
         "revision" : "c3d8989f09a72ad7b00be7a45f1a5446e5f9e19b"
