@@ -14,7 +14,7 @@ struct BolusInputView: View {
     @Binding var showSheetView: Bool
     @State var bolusAmount: String = ""
     @State var duration: String = ""
-    @State private var buttonDisabled = false
+    @State private var submissionInProgress = false
     @State private var isPresentingConfirm: Bool = false
     @FocusState private var bolusInputViewIsFocused: Bool
     
@@ -46,27 +46,25 @@ struct BolusInputView: View {
                 Button("Deliver") {
                     isPresentingConfirm = true
                 }
-                .disabled(buttonDisabled)
+                .disabled(disableForm())
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity)
                 .padding()
                 .confirmationDialog("Are you sure?",
                                     isPresented: $isPresentingConfirm) {
                     Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
-                        buttonDisabled = true
+                        submissionInProgress = true
                         Task {
                             if let bolusAmountInUnits = Double(bolusAmount) {
                                 let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
-                                buttonDisabled = false
+                                submissionInProgress = false
                                 showSheetView = false
                             }
                         }
                         //TODO: Remove this when errors are presented to the user
                         showSheetView = false
                     }
-                    Button("Cancel", role: .cancel) {
-                        buttonDisabled = false
-                    }
+                    Button("Cancel", role: .cancel) {}
                 }
             }
             .navigationBarTitle(Text("Bolus"), displayMode: .inline)
@@ -76,5 +74,13 @@ struct BolusInputView: View {
                 Text("Cancel")
             })
         }
+    }
+    
+    private func disableForm() -> Bool {
+        return !bolusInputFieldIsValid()
+    }
+    
+    private func bolusInputFieldIsValid() -> Bool {
+        return !bolusAmount.isEmpty
     }
 }
