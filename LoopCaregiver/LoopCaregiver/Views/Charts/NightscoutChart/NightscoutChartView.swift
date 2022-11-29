@@ -15,7 +15,6 @@ struct NightscoutChartScrollView: View {
 
     @ObservedObject var settings: CaregiverSettings
     private var remoteDataSource: RemoteDataServiceManager
-    private let graphTag = 1000
     private let configuration = NightscoutChartConfiguration()
     
     private var minScale: CGFloat = 0.10
@@ -32,19 +31,19 @@ struct NightscoutChartScrollView: View {
             ScrollViewReader { sp in
                 ScrollView ([.horizontal]) {
                     NightscoutChartView(settings: settings, remoteDataSource: remoteDataSource)
-                        .tag(1000)
+                        .tag(configuration.graphTag)
                         .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame * currentScale, height: proxy.size.height, alignment: .center)
                         .padding([.top, .bottom]) //Prevent top Y label from clipping
-                        .id(graphTag)
+                        .id(configuration.graphTag)
                         .modifier(PinchToZoom(minScale: minScale, maxScale: maxScale, scale: $currentScale))
                         .onChange(of: currentScale) { newValue in
-                            sp.scrollTo(graphTag, anchor: .trailing)
+                            sp.scrollTo(configuration.graphTag, anchor: .trailing)
                         }
                         .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
-                            sp.scrollTo(graphTag, anchor: .trailing)
+                            sp.scrollTo(configuration.graphTag, anchor: .trailing)
                         })
                         .onAppear(perform: {
-                            sp.scrollTo(graphTag, anchor: .trailing)
+                            sp.scrollTo(configuration.graphTag, anchor: .trailing)
                         })
                 }
                 
@@ -468,7 +467,7 @@ func interpolateYValueInRange(yRange: (y1: Double, y2: Double), referenceXRange:
 }
 
 struct NightscoutChartConfiguration {
-    let graphTotalDays = 3
+    let graphTotalDays = 1
     let daysPerVisbleScrollFrame = 0.3
     let graphTag = 1000
 }

@@ -43,12 +43,12 @@ class PinchZoomView: UIView {
             isPinching = true
             
         case .changed, .ended:
-            print("gesture.scale: \(gesture.scale)")
+            //print("gesture.scale: \(gesture.scale)")
             var cumulativeScale = gesture.scale
             if previousScale != 0 {
                 cumulativeScale = previousScale * gesture.scale
             }
-            print("cumulative scale: \(cumulativeScale)")
+            //print("cumulative scale: \(cumulativeScale)")
             if cumulativeScale <= minScale {
                 scale = minScale
             } else if gesture.scale >= maxScale {
