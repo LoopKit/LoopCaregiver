@@ -63,7 +63,7 @@ struct ChartsListView: View {
              }
              */
         }
-        ChartWrapperView(title:"Nightscout", subtitle: "", hideLabels: $isInteractingWithNightscoutChart) {
+        ChartWrapperView(title:"Timeline", subtitle: "", hideLabels: $isInteractingWithNightscoutChart) {
             NightscoutChartScrollView(remoteDataSource: remoteDataSource, settings: looperService.settings)
         }
     }
