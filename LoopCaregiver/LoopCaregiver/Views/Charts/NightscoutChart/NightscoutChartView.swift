@@ -38,7 +38,7 @@ struct NightscoutChartScrollView: View {
                         .id(graphTag)
                         .modifier(PinchToZoom(minScale: minScale, maxScale: maxScale, scale: $currentScale))
                         .onChange(of: currentScale) { newValue in
-                            sp.scrollTo(1000, anchor: .trailing)
+                            sp.scrollTo(graphTag, anchor: .trailing)
                         }
                         .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
                             sp.scrollTo(graphTag, anchor: .trailing)
