@@ -27,21 +27,6 @@ struct NightscoutChartScrollView: View {
         self.remoteDataSource = remoteDataSource
     }
     
-    var doubleTapGesture: some Gesture {
-           TapGesture(count: 2).onEnded {
-               currentScale = 1.0
-           }
-       }
-    
-    var pinchGesture: some Gesture {
-           TapGesture(count: 2).onEnded {
-               if currentScale <= minScale { currentScale = maxScale } else
-               if currentScale >= maxScale { currentScale = minScale } else {
-                   currentScale = ((maxScale - minScale) * 0.5 + minScale) < currentScale ? maxScale : minScale
-               }
-           }
-       }
-    
     var body: some View {
         GeometryReader { proxy in
             ScrollViewReader { sp in
@@ -62,7 +47,6 @@ struct NightscoutChartScrollView: View {
                             sp.scrollTo(graphTag, anchor: .trailing)
                         })
                 }
-                .gesture(doubleTapGesture)
                 
             }
         }

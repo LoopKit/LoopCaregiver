@@ -28,6 +28,9 @@ class PinchZoomView: UIView {
         let pinchGesture = UIPinchGestureRecognizer(target: self, action: #selector(pinch(gesture:)))
         pinchGesture.cancelsTouchesInView = false
         addGestureRecognizer(pinchGesture)
+        let doubleTapGesture = UITapGestureRecognizer(target: self, action: #selector(doubleTap(gesture:)))
+        doubleTapGesture.numberOfTapsRequired = 2
+        addGestureRecognizer(doubleTapGesture)
     }
     
     required init?(coder: NSCoder) {
@@ -65,6 +68,12 @@ class PinchZoomView: UIView {
         default:
             break
         }
+    }
+    
+    @objc private func doubleTap(gesture: UIPinchGestureRecognizer) {
+        previousScale = 0.0
+        scale = 1.0
+        scaleChange(scale)
     }
 }
 
