@@ -12,59 +12,44 @@ struct BolusInputView: View {
 
     let looperService: LooperService
     @Binding var showSheetView: Bool
-    @State var bolusAmount: String = ""
-    @State var duration: String = ""
+    
+    @State private var bolusAmount: String = ""
+    @State private var duration: String = ""
     @State private var submissionInProgress = false
     @State private var isPresentingConfirm: Bool = false
+    @State private var errorText: String? = nil
     @FocusState private var bolusInputViewIsFocused: Bool
     
-    var unitFrameWidth: CGFloat {
-        return 20.0
-    }
+    private let maxBolusAmount = 10.0 //TODO: Check Looper's max bolus amount
+    private let unitFrameWidth: CGFloat = 20.0
     
     var body: some View {
         NavigationStack {
-            VStack {
-                Form {
-                    LabeledContent {
-                        TextField(
-                            "0",
-                            text: $bolusAmount
-                        )
-                        .multilineTextAlignment(.trailing)
-                        .keyboardType(.decimalPad)
-                        .focused($bolusInputViewIsFocused)
-                        .onAppear(perform: {
-                            bolusInputViewIsFocused = true
-                        })
-                        Text("U")
-                            .frame(width: unitFrameWidth)
-                    } label: {
-                        Text("Bolus")
+            ZStack {
+                VStack {
+                    bolusEntryForm
+                    if let errorText {
+                        Text(errorText)
+                            .foregroundColor(.critical)
                     }
-                }
-                Button("Deliver") {
-                    isPresentingConfirm = true
-                }
-                .disabled(disableForm())
-                .buttonStyle(.borderedProminent)
-                .frame(maxWidth: .infinity)
-                .padding()
-                .confirmationDialog("Are you sure?",
-                                    isPresented: $isPresentingConfirm) {
-                    Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
-                        submissionInProgress = true
-                        Task {
-                            if let bolusAmountInUnits = Double(bolusAmount) {
-                                let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
-                                submissionInProgress = false
-                                showSheetView = false
-                            }
+                    Button("Deliver") {
+                        deliverButtonTapped()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    .frame(maxWidth: .infinity)
+                    .disabled(disableForm())
+                    .padding()
+                    .confirmationDialog("Are you sure?",
+                                        isPresented: $isPresentingConfirm) {
+                        Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
+                            deliverConfirmationButtonTapped()
                         }
-                        //TODO: Remove this when errors are presented to the user
-                        showSheetView = false
+                        Button("Cancel", role: .cancel) {}
                     }
-                    Button("Cancel", role: .cancel) {}
+                }
+                .disabled(submissionInProgress)
+                if submissionInProgress {
+                    ProgressView()
                 }
             }
             .navigationBarTitle(Text("Bolus"), displayMode: .inline)
@@ -76,11 +61,104 @@ struct BolusInputView: View {
         }
     }
     
-    private func disableForm() -> Bool {
-        return !bolusInputFieldIsValid()
+    var bolusEntryForm: some View {
+        Form {
+            LabeledContent {
+                TextField(
+                    "0",
+                    text: $bolusAmount
+                )
+                .multilineTextAlignment(.trailing)
+                .keyboardType(.decimalPad)
+                .focused($bolusInputViewIsFocused)
+                .onAppear(perform: {
+                    bolusInputViewIsFocused = true
+                })
+                Text("U")
+                    .frame(width: unitFrameWidth)
+            } label: {
+                Text("Bolus")
+            }
+        }
     }
     
-    private func bolusInputFieldIsValid() -> Bool {
+    @MainActor
+    private func deliverButtonTapped(){
+        Task {
+            submissionInProgress = true
+            do {
+                try await deliverBolus()
+                showSheetView = false
+            } catch {
+                errorText = error.localizedDescription
+            }
+            
+            submissionInProgress = false
+        }
+    }
+    
+    private func deliverBolus() async throws {
+        let fieldValues = try getBolusFieldValues()
+        let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: fieldValues.bolusAmount)
+    }
+    
+    @MainActor
+    private func deliverConfirmationButtonTapped() {
+        submissionInProgress = true
+        Task {
+            if let bolusAmountInUnits = Double(bolusAmount) {
+                let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
+                submissionInProgress = false
+                showSheetView = false
+            }
+        }
+        //TODO: Remove this when errors are presented to the user
+        showSheetView = false
+    }
+    
+    private func validateForm() throws {
+        let _ = try getBolusFieldValues()
+    }
+    
+    private func getBolusFieldValues() throws -> BolusInputViewFormValues {
+        
+        guard let bolusAmountInUnits = Double(bolusAmount), bolusAmountInUnits > 0, bolusAmountInUnits <= maxBolusAmount else {
+            throw BolusInputViewError.invalidBolusAmount(maxBolusAmount: maxBolusAmount)
+        }
+    
+        return BolusInputViewFormValues(bolusAmount: bolusAmountInUnits)
+    }
+    
+    private func disableForm() -> Bool {
+        return submissionInProgress || !bolusInputFieldHasNumberValues()
+    }
+    
+    private func bolusInputFieldHasNumberValues() -> Bool {
         return !bolusAmount.isEmpty
     }
 }
+
+struct BolusInputViewFormValues {
+    let bolusAmount: Double
+}
+
+
+enum BolusInputViewError: LocalizedError {
+    case invalidBolusAmount(maxBolusAmount: Double)
+    
+    var errorDescription: String? {
+        switch self {
+        case .invalidBolusAmount(let maxBolusAmount):
+            return "Enter a valid bolus amount up to \(maxBolusAmount) units"
+        }
+    }
+    
+    func pluralizeHour(count: Int) -> String {
+        if count > 1 {
+            return "hours"
+        } else {
+            return "hour"
+        }
+    }
+}
+

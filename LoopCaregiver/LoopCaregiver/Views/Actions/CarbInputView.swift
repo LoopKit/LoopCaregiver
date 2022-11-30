@@ -27,17 +27,7 @@ struct CarbInputView: View {
     private let maxAbsorptionTimeInHours = 8.0
     private let maxPastCarbEntryHours = 12
     private let maxFutureCarbEntryHours = 1
-    
-    var dateFormatter: DateFormatter {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateStyle = .short
-        dateFormatter.timeStyle = .short
-        return dateFormatter
-    }
-    
-    var unitFrameWidth: CGFloat {
-        return 20.0
-    }
+    private let unitFrameWidth: CGFloat = 20.0
     
     var body: some View {
         NavigationStack {
@@ -49,7 +39,6 @@ struct CarbInputView: View {
                             .foregroundColor(.critical)
                     }
                     Button("Deliver") {
-                        carbInputViewIsFocused = false
                         deliverButtonTapped()
                     }
                     .buttonStyle(.borderedProminent)
@@ -63,7 +52,8 @@ struct CarbInputView: View {
                         }
                         Button("Cancel", role: .cancel) {}
                     }
-                }.disabled(submissionInProgress)
+                }
+                .disabled(submissionInProgress)
                 if submissionInProgress {
                     ProgressView()
                 }
@@ -139,6 +129,7 @@ struct CarbInputView: View {
     }
     
     private func deliverButtonTapped() {
+        carbInputViewIsFocused = false
         do {
             errorText = nil
             try validateForm()
@@ -163,10 +154,6 @@ struct CarbInputView: View {
         }
     }
     
-    private func validateForm() throws {
-        let _ = try getCarbFieldValues()
-    }
-    
     private func deliverCarbs() async throws {
         let fieldValues = try getCarbFieldValues()
         let _ = try await looperService.remoteDataSource.deliverCarbs(amountInGrams: fieldValues.amountInGrams,
@@ -174,7 +161,11 @@ struct CarbInputView: View {
                                                                       consumedDate: fieldValues.consumedDate)
     }
     
-    func getCarbFieldValues() throws -> CarbInputViewFormValues {
+    private func validateForm() throws {
+        let _ = try getCarbFieldValues()
+    }
+    
+    private func getCarbFieldValues() throws -> CarbInputViewFormValues {
         
         guard let carbAmountInGrams = Int(carbInput), carbAmountInGrams > 0, carbAmountInGrams <= 250 else { //TODO: Check Looper's max carb amount
             throw CarbInputViewError.invalidCarbAmount
@@ -202,15 +193,22 @@ struct CarbInputView: View {
     }
     
     private func disableForm() -> Bool {
-        return submissionInProgress || !carbInputFieldIsValid() || !durationFieldIsValid()
+        return submissionInProgress || !carbInputFieldHasNumberValues() || !durationFieldHasNumberValues()
     }
     
-    private func carbInputFieldIsValid() -> Bool {
+    private func carbInputFieldHasNumberValues() -> Bool {
         return !carbInput.isEmpty && Int(carbInput) != nil
     }
     
-    private func durationFieldIsValid() -> Bool {
+    private func durationFieldHasNumberValues() -> Bool {
         return !duration.isEmpty && Float(duration) != nil
+    }
+    
+    private var dateFormatter: DateFormatter {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .short
+        dateFormatter.timeStyle = .short
+        return dateFormatter
     }
     
 }
