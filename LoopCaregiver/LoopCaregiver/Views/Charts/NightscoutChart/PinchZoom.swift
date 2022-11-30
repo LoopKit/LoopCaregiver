@@ -12,7 +12,11 @@ class PinchZoomView: UIView {
     let minScale: CGFloat
     let maxScale: CGFloat
     var isPinching: Bool = false
-    var scale: CGFloat = 1.0
+    var scale: CGFloat = 1.0 {
+        didSet {
+            scaleChange(scale)
+        }
+    }
     var previousScale: CGFloat = 0.0
     let scaleChange: (CGFloat) -> Void
     
@@ -43,38 +47,57 @@ class PinchZoomView: UIView {
             isPinching = true
             
         case .changed, .ended:
-            //print("gesture.scale: \(gesture.scale)")
-            var cumulativeScale = gesture.scale
+            
+            var updatedScale = gesture.scale
             if previousScale != 0 {
-                cumulativeScale = previousScale * gesture.scale
+                updatedScale = previousScale * gesture.scale
             }
-            //print("cumulative scale: \(cumulativeScale)")
-            if cumulativeScale <= minScale {
-                scale = minScale
+
+            if updatedScale <= minScale {
+                updatedScale = minScale
             } else if gesture.scale >= maxScale {
-                scale = maxScale
-            } else {
-                scale = cumulativeScale
+                updatedScale = maxScale
             }
-            scaleChange(scale)
             
             if gesture.state == .ended {
-                previousScale = scale
+                isPinching = false
+                updateScale(updatedScale: updatedScale, scrollState: .final)
+            } else {
+                updateScale(updatedScale: updatedScale, scrollState: .inProgress)
             }
             
         case .cancelled, .failed:
-            isPinching = false
-            scale = 1.0
+            updateScale(updatedScale: 1.0, scrollState: .final)
         default:
             break
         }
     }
     
     @objc private func doubleTap(gesture: UIPinchGestureRecognizer) {
-        previousScale = 0.0
-        scale = 1.0
-        scaleChange(scale)
+        var updatedScale = 0.0
+        if scale > 1.0 {
+            updatedScale = 1.0
+        } else if scale < 1.0 {
+            updatedScale = 1.0
+        } else { //1.0
+            updatedScale = 2.0
+        }
+        updateScale(updatedScale: updatedScale, scrollState: .final)
     }
+    
+    func updateScale(updatedScale: Double, scrollState: ScrollState) {
+        if scrollState == .final {
+            previousScale = updatedScale
+        }
+
+        scale = updatedScale
+    }
+    
+    enum ScrollState {
+        case inProgress
+        case final
+    }
+    
 }
 
 struct PinchZoom: UIViewRepresentable {
