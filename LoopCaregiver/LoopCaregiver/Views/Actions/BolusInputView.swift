@@ -84,6 +84,20 @@ struct BolusInputView: View {
     
     @MainActor
     private func deliverButtonTapped(){
+        
+        bolusInputViewIsFocused = false
+        do {
+            errorText = nil
+            try validateForm()
+            isPresentingConfirm = true
+        } catch {
+            errorText = error.localizedDescription
+        }
+        
+    }
+    
+    @MainActor
+    private func deliverConfirmationButtonTapped() {
         Task {
             submissionInProgress = true
             do {
@@ -100,20 +114,6 @@ struct BolusInputView: View {
     private func deliverBolus() async throws {
         let fieldValues = try getBolusFieldValues()
         let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: fieldValues.bolusAmount)
-    }
-    
-    @MainActor
-    private func deliverConfirmationButtonTapped() {
-        submissionInProgress = true
-        Task {
-            if let bolusAmountInUnits = Double(bolusAmount) {
-                let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: bolusAmountInUnits)
-                submissionInProgress = false
-                showSheetView = false
-            }
-        }
-        //TODO: Remove this when errors are presented to the user
-        showSheetView = false
     }
     
     private func validateForm() throws {
