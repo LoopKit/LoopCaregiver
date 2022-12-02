@@ -27,25 +27,26 @@ struct NightscoutChartScrollView: View {
     }
     
     var body: some View {
-        GeometryReader { proxy in
-            ScrollViewReader { sp in
+        GeometryReader { containerReaderProxy in
+            ScrollViewReader { scrollReaderProxy in
                 ScrollView ([.horizontal]) {
                     NightscoutChartView(settings: settings, remoteDataSource: remoteDataSource)
                         .tag(configuration.graphTag)
-                        .frame(width: proxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame * currentScale, height: proxy.size.height, alignment: .center)
+                        .frame(width: containerReaderProxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame * currentScale, height: containerReaderProxy.size.height, alignment: .center)
+                        .animation(.none, value: currentScale)
                         .padding([.top, .bottom]) //Prevent top Y label from clipping
                         .id(configuration.graphTag)
                         .modifier(PinchToZoom(minScale: minScale, maxScale: maxScale, scale: $currentScale))
                         .onChange(of: currentScale) { newValue in
-                            sp.scrollTo(configuration.graphTag, anchor: .trailing)
+                            scrollReaderProxy.scrollTo(configuration.graphTag, anchor: .trailing)
                         }
                         //TODO clean up scrolling to land at a nice place so you see mostly real BGs and ~1h of predicted BGs
                         .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
-                            sp.scrollTo(configuration.graphTag, anchor: .trailing)
+                            scrollReaderProxy.scrollTo(configuration.graphTag, anchor: .trailing)
                         })
                         //TODO clean up scrolling to land at a nice place so you see mostly real BGs and ~1h of predicted BGs
                         .onAppear(perform: {
-                            sp.scrollTo(configuration.graphTag, anchor: .trailing)
+                            scrollReaderProxy.scrollTo(configuration.graphTag, anchor: .trailing)
                         })
                 }
                 
