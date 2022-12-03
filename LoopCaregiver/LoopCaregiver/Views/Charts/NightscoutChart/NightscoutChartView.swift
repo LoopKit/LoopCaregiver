@@ -39,9 +39,11 @@ struct NightscoutChartScrollView: View {
                         .onChange(of: currentScale) { newValue in
                             sp.scrollTo(configuration.graphTag, anchor: .trailing)
                         }
+                        //TODO clean up scrolling to land at a nice place so you see mostly real BGs and ~1h of predicted BGs
                         .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
                             sp.scrollTo(configuration.graphTag, anchor: .trailing)
                         })
+                        //TODO clean up scrolling to land at a nice place so you see mostly real BGs and ~1h of predicted BGs
                         .onAppear(perform: {
                             sp.scrollTo(configuration.graphTag, anchor: .trailing)
                         })
@@ -60,6 +62,12 @@ struct NightscoutChartView: View {
     
     func glucoseGraphItems() -> [GraphItem] {
         return remoteDataSource.glucoseSamples.map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
+    }
+    
+    //Auggie - grabbing prediction BGs and showing on the NS graph
+    func predictionGraphItems() -> [GraphItem] {
+        return remoteDataSource.predictedGlucose
+            .map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
     }
     
     func bolusGraphItems() -> [GraphItem] {
@@ -81,6 +89,15 @@ struct NightscoutChartView: View {
                     y: .value("Reading", $0.value)
                 )
                 .foregroundStyle(by: .value("Reading", $0.colorType))
+            }
+            ForEach(predictionGraphItems()){
+                PointMark(
+                    x: .value("Time", $0.displayTime),
+                    y: .value("Reading", $0.value)
+                )
+                //TODO clean up coloring - these predicted BGs should match the standard pink/purple color in NS that the community is used to
+                //TODO clean this up - displayTime is being used to force a bad value to get gray color so we can clearly see these are not actual BGs, this is not right
+                .foregroundStyle(by: .value("Reading", $0.displayTime))
             }
             ForEach(bolusGraphItems()) { graphItem in
                 PointMark(
