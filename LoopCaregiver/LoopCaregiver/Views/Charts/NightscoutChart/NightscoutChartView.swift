@@ -401,12 +401,12 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
             self = ColorType.yellow
         case 70..<180:
             self = ColorType.green
-        case 180...249:
+        case 180..<250:
             self = ColorType.yellow
         case 250...:
             self = ColorType.red
         default:
-            assertionFailure("Uexpected range")
+            assertionFailure("Unexpected quantity: \(quantity)")
             self = ColorType.gray
         }
     }
