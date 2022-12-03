@@ -14,10 +14,6 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     private var credentialService: NightscoutCredentialService
     private let nightscoutService: NightscoutService
     
-    enum NightscoutDataSourceError: LocalizedError {
-        case badOTP
-    }
-    
     init(looper: Looper){
         self.nightscoutService = NightscoutService(baseURL: looper.nightscoutCredentials.url, secret: looper.nightscoutCredentials.secretKey, nowDateProvider: {Date()})
         self.credentialService = NightscoutCredentialService(credentials: looper.nightscoutCredentials)
@@ -66,17 +62,13 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     }
     
     func deliverCarbs(amountInGrams: Double, durationInHours: Float, consumedDate: Date) async throws {
-        guard let otpCodeInt = Int(credentialService.otpCode) else {
-            throw NightscoutDataSourceError.badOTP
-        }
-        let _ = try await nightscoutService.deliverCarbs(amountInGrams: amountInGrams, amountInHours: durationInHours, consumedDate: consumedDate, otp: otpCodeInt)
+        //TODO: Ensure you get a valid OTP (non-empty String)
+        let _ = try await nightscoutService.deliverCarbs(amountInGrams: amountInGrams, amountInHours: durationInHours, consumedDate: consumedDate, otp: credentialService.otpCode)
     }
     
     func deliverBolus(amountInUnits: Double) async throws {
-        guard let otpCodeInt = Int(credentialService.otpCode) else {
-            throw NightscoutDataSourceError.badOTP
-        }
-        let _ = try await nightscoutService.deliverBolus(amountInUnits: amountInUnits, otp: otpCodeInt)
+        //TODO: Ensure you get a valid OTP (non-empty String)
+        let _ = try await nightscoutService.deliverBolus(amountInUnits: amountInUnits, otp: credentialService.otpCode)
     }
     
     func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws {
