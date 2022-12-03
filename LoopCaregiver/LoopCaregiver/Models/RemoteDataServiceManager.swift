@@ -168,7 +168,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchLatestDeviceStatus()
     }
     
-    func deliverCarbs(amountInGrams: Int, durationInHours: Float, consumedDate: Date) async throws {
+    func deliverCarbs(amountInGrams: Double, durationInHours: Float, consumedDate: Date) async throws {
         return try await remoteDataProvider.deliverCarbs(amountInGrams: amountInGrams, durationInHours: durationInHours, consumedDate: consumedDate)
     }
     
@@ -203,7 +203,7 @@ protocol RemoteDataServiceProvider {
     func fetchBasalEntries() async throws -> [WGBasalEntry]
     func fetchCarbEntries() async throws -> [WGCarbEntry]
     func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus?
-    func deliverCarbs(amountInGrams: Int, durationInHours: Float, consumedDate: Date) async throws
+    func deliverCarbs(amountInGrams: Double, durationInHours: Float, consumedDate: Date) async throws
     func deliverBolus(amountInUnits: Double) async throws
     func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws
     func cancelOverride() async throws

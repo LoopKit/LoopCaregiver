@@ -167,7 +167,7 @@ struct CarbInputView: View {
     
     private func getCarbFieldValues() throws -> CarbInputViewFormValues {
         
-        guard let carbAmountInGrams = Int(carbInput), carbAmountInGrams > 0, carbAmountInGrams <= 250 else { //TODO: Check Looper's max carb amount
+        guard let carbAmountInGrams = Double(carbInput), carbAmountInGrams > 0, carbAmountInGrams <= 250 else { //TODO: Check Looper's max carb amount
             throw CarbInputViewError.invalidCarbAmount
         }
         
@@ -197,7 +197,7 @@ struct CarbInputView: View {
     }
     
     private func carbInputFieldHasNumberValues() -> Bool {
-        return !carbInput.isEmpty && Int(carbInput) != nil
+        return !carbInput.isEmpty && Double(carbInput) != nil
     }
     
     private func durationFieldHasNumberValues() -> Bool {
@@ -214,7 +214,7 @@ struct CarbInputView: View {
 }
 
 struct CarbInputViewFormValues {
-    let amountInGrams: Int
+    let amountInGrams: Double
     let durationInHours: Double
     let consumedDate: Date
 }
