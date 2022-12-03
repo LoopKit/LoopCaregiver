@@ -26,33 +26,37 @@ struct HUDView: View {
     var body: some View {
         VStack {
             HStack (alignment: .center) {
-                Text(nightscoutDateSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
-                    .strikethrough(egvIsOutdated())
-                    .font(.largeTitle)
-                    .foregroundColor(egvValueColor())
-                if let egv = nightscoutDateSource.currentGlucoseSample {
-                    Image(systemName: arrowImageName(egv: egv))
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .frame(width: 15.0)
+                HStack {
+                    Text(nightscoutDateSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
+                        .strikethrough(egvIsOutdated())
+                        .font(.largeTitle)
                         .foregroundColor(egvValueColor())
-                }
-                VStack {
-                    Text(lastEGVTimeFormatted())
-                        .font(.footnote)
-                        .if(egvIsOutdated(), transform: { view in
-                            view.foregroundColor(.red)
-                        })
-                    Text(lastEGVDeltaFormatted())
-                        .font(.footnote)
+                    if let egv = nightscoutDateSource.currentGlucoseSample {
+                        Image(systemName: arrowImageName(egv: egv))
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .frame(width: 15.0)
+                            .foregroundColor(egvValueColor())
+                    }
+                    VStack {
+                        Text(lastEGVTimeFormatted())
+                            .font(.footnote)
+                            .if(egvIsOutdated(), transform: { view in
+                                view.foregroundColor(.red)
+                            })
+                                Text(lastEGVDeltaFormatted())
+                                .font(.footnote)
+                    }
                 }
                 Spacer()
-                if nightscoutDateSource.updating {
-                    ProgressView()
-                }
-                Picker("Looper", selection: $hudViewModel.selectedLooper) {
-                    ForEach(hudViewModel.loopers()) { looper in
-                        Text(looper.name).tag(looper)
+                HStack {
+                    if nightscoutDateSource.updating {
+                        ProgressView()
+                    }
+                    Picker("Looper", selection: $hudViewModel.selectedLooper) {
+                        ForEach(hudViewModel.loopers()) { looper in
+                            Text(looper.name).tag(looper)
+                        }
                     }
                 }
             }
