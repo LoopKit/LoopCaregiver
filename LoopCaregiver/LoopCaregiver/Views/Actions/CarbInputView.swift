@@ -17,7 +17,6 @@ struct CarbInputView: View {
     @State private var duration: String = "3" //TODO: Get Looper's default medium duration
     @State private var submissionInProgress = false
     @State private var isPresentingConfirm: Bool = false
-    @State private var usePickerConsumedDate: Bool = false
     @State private var pickerConsumedDate: Date = Date()
     @State private var showDatePickerSheet: Bool = false
     @State private var errorText: String? = nil
@@ -75,9 +74,6 @@ struct CarbInputView: View {
                     }
                 }.presentationDetents([.fraction(1/4)])
             }
-            .onChange(of: pickerConsumedDate) { newValue in
-                usePickerConsumedDate = true
-            }
         }
     }
     
@@ -104,11 +100,7 @@ struct CarbInputView: View {
                 Button {
                     showDatePickerSheet = true
                 } label: {
-                    if usePickerConsumedDate {
-                        Text(dateFormatter.string(from: pickerConsumedDate))
-                    } else {
-                        Text("Now")
-                    }
+                    Text(dateFormatter.string(from: pickerConsumedDate))
                 }
             } label: {
                 Text("Time")
@@ -176,7 +168,7 @@ struct CarbInputView: View {
         }
         
         let now = Date()
-        let consumedDate = self.usePickerConsumedDate ? pickerConsumedDate : now
+        let consumedDate = pickerConsumedDate
         
         let oldestAcceptedDate = now.addingTimeInterval(-60 * 60 * Double(maxPastCarbEntryHours))
         let latestAcceptedDate = now.addingTimeInterval(60 * 60 * Double(maxFutureCarbEntryHours))
