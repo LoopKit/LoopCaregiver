@@ -11,9 +11,11 @@ import HealthKit
 class CaregiverSettings: ObservableObject {
     
     @Published var glucoseDisplayUnits: HKUnit
+    @Published var timelinePredictionEnabled: Bool
     
     init(){
         self.glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
+        self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
@@ -21,6 +23,10 @@ class CaregiverSettings: ObservableObject {
         let glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
         if self.glucoseDisplayUnits != glucoseDisplayUnits {
             self.glucoseDisplayUnits = glucoseDisplayUnits
+        }
+        
+        if self.timelinePredictionEnabled != UserDefaults.standard.timelinePredictionEnabled {
+            self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
         }
     }
     
@@ -57,8 +63,16 @@ extension UserDefaults {
         return "glucoseUnit"
     }
     
+    var timelinePredictionEnabledKey: String {
+        return "timelinePredictionEnabled"
+    }
+    
     @objc dynamic var glucosePreference: GlucoseUnitPrefererence {
         return GlucoseUnitPrefererence(rawValue: integer(forKey: glucoseUnitKey)) ?? .milligramsPerDeciliter
+    }
+    
+    @objc dynamic var timelinePredictionEnabled: Bool {
+        return UserDefaults.standard.bool(forKey: timelinePredictionEnabledKey)
     }
 }
 

@@ -65,7 +65,6 @@ struct NightscoutChartView: View {
         return remoteDataSource.glucoseSamples.map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
     }
     
-    //Auggie - grabbing prediction BGs and showing on the NS graph
     func predictionGraphItems() -> [GraphItem] {
         return remoteDataSource.predictedGlucose
             .map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
@@ -91,14 +90,14 @@ struct NightscoutChartView: View {
                 )
                 .foregroundStyle(by: .value("Reading", $0.colorType))
             }
-            ForEach(predictionGraphItems()){
-                PointMark(
-                    x: .value("Time", $0.displayTime),
-                    y: .value("Reading", $0.value)
-                )
-                //TODO clean up coloring - these predicted BGs should match the standard pink/purple color in NS that the community is used to
-                //TODO clean this up - displayTime is being used to force a bad value to get gray color so we can clearly see these are not actual BGs, this is not right
-                .foregroundStyle(by: .value("Reading", $0.displayTime))
+            if settings.timelinePredictionEnabled {
+                ForEach(predictionGraphItems()){
+                    PointMark(
+                        x: .value("Time", $0.displayTime),
+                        y: .value("Reading", $0.value)
+                    )
+                    .foregroundStyle(Color(uiColor: .magenta.withAlphaComponent(0.5)))
+                }
             }
             ForEach(bolusGraphItems()) { graphItem in
                 PointMark(
@@ -216,6 +215,7 @@ struct NightscoutChartView: View {
 
 enum GraphItemType {
     case egv
+    case predictedBG
     case bolus(WGBolusEntry)
     case carb(WGCarbEntry)
 }
@@ -336,6 +336,8 @@ struct GraphItem: Identifiable, Equatable {
         case .carb(let carbEntry):
             return "\(carbEntry.amount)g"
         case .egv:
+            return "\(self.value)"
+        case .predictedBG:
             return "\(self.value)"
         }
     }

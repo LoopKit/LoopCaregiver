@@ -12,6 +12,8 @@ struct SettingsView: View {
 
     @ObservedObject var accountService: AccountServiceManager
     @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
+    @AppStorage(UserDefaults.standard.timelinePredictionEnabledKey) private var timelinePredictionEnabled = false
+    
     @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
     @State private var path = NavigationPath()
@@ -40,6 +42,9 @@ struct SettingsView: View {
                                 Text(item.presentableDescription).tag(item)
                             })
                         })
+                    }
+                    Section("Timeline") {
+                        Toggle("Show Prediction", isOn: $timelinePredictionEnabled)
                     }
                 }
             }

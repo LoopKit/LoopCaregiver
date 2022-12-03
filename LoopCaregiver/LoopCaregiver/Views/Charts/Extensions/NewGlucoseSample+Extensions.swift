@@ -24,6 +24,10 @@ extension NewGlucoseSample {
         return GraphItem(type: .egv, displayTime: date, quantity: quantity, displayUnit: displayUnit)
     }
     
+    func predictedBGGraphItem(displayUnit: HKUnit) -> GraphItem {
+        return GraphItem(type: .predictedBG, displayTime: date, quantity: quantity, displayUnit: displayUnit)
+    }
+    
     func presentableValue(displayUnits: HKUnit) -> String {
         return String(quantity.doubleValue(for: displayUnits))
     }
