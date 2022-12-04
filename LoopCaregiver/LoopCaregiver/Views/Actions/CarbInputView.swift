@@ -14,13 +14,17 @@ struct CarbInputView: View {
     @Binding var showSheetView: Bool
     
     @State private var carbInput: String = ""
+    @State private var foodType: String = "" //TODO: Pass This back to Loop for descriptive entries
     @State private var duration: String = "3" //TODO: Get Looper's default medium duration
     @State private var submissionInProgress = false
     @State private var isPresentingConfirm: Bool = false
     @State private var pickerConsumedDate: Date = Date()
     @State private var showDatePickerSheet: Bool = false
+    @State private var showFoodEmojis: Bool = true
     @State private var errorText: String? = nil
+    @State var foodTypeWidth = 160.0
     @FocusState private var carbInputViewIsFocused: Bool
+    @FocusState private var durationInputFieldIsFocused: Bool
     
     private let minAbsorptionTimeInHours = 0.5
     private let maxAbsorptionTimeInHours = 8.0
@@ -105,6 +109,70 @@ struct CarbInputView: View {
             } label: {
                 Text("Time")
             }
+
+            //Auggie - absorption duration shortcuts per Loop timelines (0.5, 3, 5 hours)
+            //TODO: can we get durations from Loop directly via .slow, .medium, .fast?
+            //Create the "Food Type" row to hold emojis/typed description
+            HStack {
+                LabeledContent{
+                    TextField("", text: $foodType)
+                        .multilineTextAlignment(.trailing)
+                        //Capture the user's tap to override emoji shortcut entries
+                        //User can type in their own description (or go back to selecting emoji)
+                        .onTapGesture {
+                            showFoodEmojis = false
+                            foodTypeWidth = .infinity
+                        }
+                        .frame(maxWidth: .infinity, alignment: .trailing)
+                } label: {
+                    Text("Food Type")
+                }
+                .frame(width: foodTypeWidth, height: 30, alignment: .trailing)
+                Spacer()
+
+                //Fast carb entry emoji
+                if (showFoodEmojis) {
+                    Button(action: {}) {
+                        Text("🍭")
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .onTapGesture {
+                        duration = "0.5"
+                    }
+                    Spacer()
+                    
+                    //Medium carb entry emoji
+                    Button(action: {}) {
+                        Text("🌮")
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .onTapGesture {
+                        duration = "3"
+                    }
+                    Spacer()
+                    
+                    //Slow carb entry emoji
+                    Button(action: {}) {
+                        Text("🍕")
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .onTapGesture {
+                        duration = "5"
+                    }
+                    Spacer()
+                    
+                    //Custom carb entry emoji, move focus to the duration input field
+                    Button(action: {}) {
+                        Text("🍽️")
+                    }
+                    .frame(minWidth: 0, maxWidth: .infinity)
+                    .onTapGesture {
+                        duration = ""
+                        durationInputFieldIsFocused = true
+                    }
+                }
+            }
+            
             LabeledContent {
                 TextField(
                     "",
@@ -112,6 +180,7 @@ struct CarbInputView: View {
                 )
                 .multilineTextAlignment(.trailing)
                 .keyboardType(.decimalPad)
+                .focused($durationInputFieldIsFocused)
                 Text("hr")
                     .frame(width: unitFrameWidth)
             } label: {
