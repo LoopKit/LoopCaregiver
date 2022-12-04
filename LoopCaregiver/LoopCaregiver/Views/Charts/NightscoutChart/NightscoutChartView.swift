@@ -143,15 +143,45 @@ struct NightscoutChartView: View {
     }
     
     func chartYRange() -> ClosedRange<Double> {
-        return minYValue()...maxYValue()
+        return chartYBase()...chartYTop()
     }
     
-    func minYValue() -> Double {
+    func chartYBase() -> Double {
         return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 0).doubleValue(for: settings.glucoseDisplayUnits)
     }
     
-    func maxYValue() -> Double {
-        return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400).doubleValue(for: settings.glucoseDisplayUnits)
+    func chartYTop() -> Double {
+        
+        guard let maxGraphYValue = maxValueOfAllGraphItems() else {
+            return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400).doubleValue(for: settings.glucoseDisplayUnits)
+        }
+
+        if maxGraphYValue >= 300 {
+            return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 400).doubleValue(for: settings.glucoseDisplayUnits)
+        } else if maxGraphYValue >= 200 {
+            return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 300).doubleValue(for: settings.glucoseDisplayUnits)
+        } else {
+            return HKQuantity(unit: .milligramsPerDeciliter, doubleValue: 200).doubleValue(for: settings.glucoseDisplayUnits)
+        }
+    }
+    
+    func maxValueOfAllGraphItems() -> Double? {
+        
+        let maxBGY = self.glucoseGraphItems().max(by: {$0.value < $1.value})?.quantity.doubleValue(for: .milligramsPerDeciliter)
+        var maxPredictedY: Double? = nil
+        if settings.timelinePredictionEnabled {
+            maxPredictedY = self.predictionGraphItems().max(by: {$0.value < $1.value})?.quantity.doubleValue(for: .milligramsPerDeciliter)
+        }
+        
+        if let maxBGY = maxBGY, let maxPredictedY = maxPredictedY {
+            return max(maxBGY, maxPredictedY)
+        } else if let maxBGY = maxBGY {
+            return maxBGY
+        } else if let maxPredictedY = maxPredictedY {
+            return maxPredictedY
+        } else {
+            return nil
+        }
     }
     
     func formatGlucoseQuantity(_ quantity: HKQuantity) -> Double {
@@ -226,7 +256,7 @@ struct GraphItem: Identifiable, Equatable {
     var type: GraphItemType
     var displayTime: Date
     var displayUnit: HKUnit
-    private var quantity: HKQuantity
+    var quantity: HKQuantity
     
     var value: Double {
         return quantity.doubleValue(for: displayUnit)
