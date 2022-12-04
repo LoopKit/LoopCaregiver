@@ -22,7 +22,7 @@ struct CarbInputView: View {
     @State private var showDatePickerSheet: Bool = false
     @State private var showFoodEmojis: Bool = true
     @State private var errorText: String? = nil
-    @State var foodTypeWidth = 160.0
+    @State var foodTypeWidth = 180.0
     @FocusState private var carbInputViewIsFocused: Bool
     @FocusState private var durationInputFieldIsFocused: Bool
     
