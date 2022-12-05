@@ -79,21 +79,21 @@ struct HUDView: View {
         case .doubleUp:
             return "arrow.up"
         case .singleUp:
-            return  "arrow.up"
+            return "arrow.up"
         case .fortyFiveUp:
-            return  "arrow.up.forward"
+            return "arrow.up.forward"
         case .flat:
-            return  "arrow.right"
+            return "arrow.right"
         case .fortyFiveDown:
-            return  "arrow.down.forward"
+            return "arrow.down.forward"
         case .singleDown:
-            return  "arrow.down"
+            return "arrow.down"
         case .doubleDown:
-            return  "arrow.down"
+            return "arrow.down"
         case .nonComputable:
-            return  "questionmark"
+            return "questionmark"
         case .outOfRange:
-            return  "questionmark"
+            return "questionmark"
         }
     }
     

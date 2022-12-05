@@ -28,23 +28,13 @@ extension NewGlucoseSample {
         return GraphItem(type: .predictedBG, displayTime: date, quantity: quantity, displayUnit: displayUnit)
     }
     
-    func presentableValue(displayUnits: HKUnit) -> String {
-        return String(quantity.doubleValue(for: displayUnits))
-    }
-    
     func presentableUserValue(displayUnits: HKUnit) -> Double {
         return quantity.doubleValue(for: displayUnits)
     }
     
     func presentableStringValue(displayUnits: HKUnit) -> String {
         let unitInUserUnits = quantity.doubleValue(for: displayUnits)
-        if displayUnits == .milligramsPerDeciliter {
-            return String(format: "%.0f", unitInUserUnits)
-        } else if displayUnits == .millimolesPerLiter {
-            return String(format: "%.1f", unitInUserUnits)
-        } else {
-            return "Error: Unknown units"
-        }
+        return LocalizationUtils.localizedNumberString(input: unitInUserUnits, maxFractionalDigits: 1)
     }
     
     func presentableStringValueWithUnits(displayUnits: HKUnit) -> String {

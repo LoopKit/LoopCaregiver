@@ -228,11 +228,11 @@ struct CarbInputView: View {
     
     private func getCarbFieldValues() throws -> CarbInputViewFormValues {
         
-        guard let carbAmountInGrams = Double(carbInput), carbAmountInGrams > 0, carbAmountInGrams <= 250 else { //TODO: Check Looper's max carb amount
+        guard let carbAmountInGrams = LocalizationUtils.doubleFromUserInput(carbInput), carbAmountInGrams > 0, carbAmountInGrams <= 250 else { //TODO: Check Looper's max carb amount
             throw CarbInputViewError.invalidCarbAmount
         }
         
-        guard let durationInHours = Double(duration), durationInHours >= minAbsorptionTimeInHours, durationInHours <= maxAbsorptionTimeInHours else {
+        guard let durationInHours = LocalizationUtils.doubleFromUserInput(duration), durationInHours >= minAbsorptionTimeInHours, durationInHours <= maxAbsorptionTimeInHours else {
             throw CarbInputViewError.invalidAbsorptionTime(minAbsorptionTimeInHours: minAbsorptionTimeInHours, maxAbsorptionTimeInHours: maxAbsorptionTimeInHours)
         }
         
@@ -254,15 +254,7 @@ struct CarbInputView: View {
     }
     
     private func disableForm() -> Bool {
-        return submissionInProgress || !carbInputFieldHasNumberValues() || !durationFieldHasNumberValues()
-    }
-    
-    private func carbInputFieldHasNumberValues() -> Bool {
-        return !carbInput.isEmpty && Double(carbInput) != nil
-    }
-    
-    private func durationFieldHasNumberValues() -> Bool {
-        return !duration.isEmpty && Float(duration) != nil
+        return submissionInProgress || carbInput.isEmpty || duration.isEmpty
     }
     
     private var dateFormatter: DateFormatter {

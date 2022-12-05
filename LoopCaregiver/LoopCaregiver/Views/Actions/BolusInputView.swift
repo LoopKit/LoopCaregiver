@@ -122,7 +122,9 @@ struct BolusInputView: View {
     
     private func getBolusFieldValues() throws -> BolusInputViewFormValues {
         
-        guard let bolusAmountInUnits = Double(bolusAmount), bolusAmountInUnits > 0, bolusAmountInUnits <= maxBolusAmount else {
+        guard let bolusAmountInUnits = LocalizationUtils.doubleFromUserInput(bolusAmount),
+                bolusAmountInUnits > 0,
+                bolusAmountInUnits <= maxBolusAmount else {
             throw BolusInputViewError.invalidBolusAmount(maxBolusAmount: maxBolusAmount)
         }
     
@@ -130,12 +132,9 @@ struct BolusInputView: View {
     }
     
     private func disableForm() -> Bool {
-        return submissionInProgress || !bolusInputFieldHasNumberValues()
+        return submissionInProgress || bolusAmount.isEmpty
     }
     
-    private func bolusInputFieldHasNumberValues() -> Bool {
-        return !bolusAmount.isEmpty
-    }
 }
 
 struct BolusInputViewFormValues {
@@ -149,7 +148,8 @@ enum BolusInputViewError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidBolusAmount(let maxBolusAmount):
-            return "Enter a valid bolus amount up to \(maxBolusAmount) units"
+            let localizedAmount = LocalizationUtils.localizedNumberString(input: maxBolusAmount)
+            return "Enter a valid bolus amount up to \(localizedAmount) units"
         }
     }
     

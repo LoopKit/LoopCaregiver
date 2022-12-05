@@ -97,7 +97,7 @@ struct NightscoutChartView: View {
                         y: .value("Reading", $0.value)
                     )
                     .foregroundStyle(Color(uiColor: .magenta.withAlphaComponent(0.5)))
-                }
+                }   
             }
             ForEach(bolusGraphItems()) { graphItem in
                 PointMark(
