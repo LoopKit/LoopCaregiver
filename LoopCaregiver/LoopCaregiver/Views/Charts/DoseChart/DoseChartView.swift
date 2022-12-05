@@ -61,8 +61,21 @@ struct DoseChartView: UIViewRepresentable {
         let basalEntries = remoteDataSource.basalEntries
             .filter({$0.date.addingTimeInterval(Double($0.duration * 60)) > dateInterval.start})
             .sorted(by: {$0.date < $1.date})
+        
+        var basalDoseEntries = [DoseEntry]()
+        for (index, basalEntry) in basalEntries.enumerated() {
+            var endDate = basalEntry.date.addingTimeInterval(Double(basalEntry.duration * 60))
+            let nextBasalIndex = index + 1
+            if nextBasalIndex < basalEntries.count {
+                let nextBasalEntry = basalEntries[nextBasalIndex]
+                if nextBasalEntry.date < endDate {
+                    endDate = nextBasalEntry.date
+                }
+            }
 
-        let basalDoseEntries = basalEntries.map({DoseEntry(type: .tempBasal, startDate: $0.date, endDate: $0.date.addingTimeInterval(Double($0.duration * 60)), value: Double($0.rate), unit: .unitsPerHour, scheduledBasalRate: scheduledBasalRate(date: $0.date))})
+            let doseEntry = DoseEntry(type: .tempBasal, startDate: basalEntry.date, endDate: endDate, value: Double(basalEntry.rate), unit: .unitsPerHour, scheduledBasalRate: scheduledBasalRate(date: basalEntry.date))
+            basalDoseEntries.append(doseEntry)
+        }
             
         return basalDoseEntries
     }
