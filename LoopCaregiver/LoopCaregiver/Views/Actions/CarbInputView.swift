@@ -7,6 +7,8 @@
 
 import SwiftUI
 import NightscoutClient
+import LoopKitUI
+import LocalAuthentication
 
 struct CarbInputView: View {
     
@@ -203,6 +205,14 @@ struct CarbInputView: View {
     @MainActor
     private func deliverConfirmationButtonTapped() {
         Task {
+            
+            let message = String(format: NSLocalizedString("Authenticate to Deliver Carbs", comment: "The message displayed during a device authentication prompt for carb specification"))
+            
+            guard (await authenticationHandler(message)) else {
+                errorText = "Authentication required"
+                return
+            }
+            
             submissionInProgress = true
             do {
                 try await deliverCarbs()
@@ -255,6 +265,19 @@ struct CarbInputView: View {
     
     private func disableForm() -> Bool {
         return submissionInProgress || carbInput.isEmpty || duration.isEmpty
+    }
+    
+    var authenticationHandler: (String) async -> Bool = { message in
+        return await withCheckedContinuation { continuation in
+            LocalAuthentication.deviceOwnerCheck(message) { result in
+                switch result {
+                case .success:
+                    continuation.resume(returning: true)
+                case .failure:
+                    continuation.resume(returning: false)
+                }
+            }
+        }
     }
     
     private var dateFormatter: DateFormatter {

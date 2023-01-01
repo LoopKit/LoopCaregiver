@@ -7,6 +7,8 @@
 
 import SwiftUI
 import NightscoutClient
+import LoopKitUI
+import LocalAuthentication
 
 struct BolusInputView: View {
 
@@ -98,7 +100,16 @@ struct BolusInputView: View {
     
     @MainActor
     private func deliverConfirmationButtonTapped() {
+
         Task {
+
+            let message = String(format: NSLocalizedString("Authenticate to Bolus", comment: "The message displayed during a device authentication prompt for bolus specification"))
+            
+            guard (await authenticationHandler(message)) else {
+                errorText = "Authentication required"
+                return
+            }
+            
             submissionInProgress = true
             do {
                 try await deliverBolus()
@@ -133,6 +144,19 @@ struct BolusInputView: View {
     
     private func disableForm() -> Bool {
         return submissionInProgress || bolusAmount.isEmpty
+    }
+    
+    var authenticationHandler: (String) async -> Bool = { message in
+        return await withCheckedContinuation { continuation in
+            LocalAuthentication.deviceOwnerCheck(message) { result in
+                switch result {
+                case .success:
+                    continuation.resume(returning: true)
+                case .failure:
+                    continuation.resume(returning: false)
+                }
+            }
+        }
     }
     
 }
