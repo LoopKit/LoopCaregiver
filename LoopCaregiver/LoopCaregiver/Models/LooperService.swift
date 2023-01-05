@@ -20,13 +20,4 @@ class LooperService: ObservableObject {
         self.remoteDataSource = remoteDataSource
         self.settings = settings
     }
-    
-    deinit {
-        do {
-            try self.remoteDataSource.shutdown()
-        } catch {
-            print("Shutdown error: \(error)")
-        }
-
-    }
 }

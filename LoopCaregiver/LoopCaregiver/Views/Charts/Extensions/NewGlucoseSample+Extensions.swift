@@ -34,7 +34,8 @@ extension NewGlucoseSample {
     
     func presentableStringValue(displayUnits: HKUnit) -> String {
         let unitInUserUnits = quantity.doubleValue(for: displayUnits)
-        return LocalizationUtils.localizedNumberString(input: unitInUserUnits, maxFractionalDigits: 1)
+        let maxFractionalUnits = displayUnits == .millimolesPerLiter ? 1 : 0
+        return LocalizationUtils.localizedNumberString(input: unitInUserUnits, maxFractionalDigits: maxFractionalUnits)
     }
     
     func presentableStringValueWithUnits(displayUnits: HKUnit) -> String {

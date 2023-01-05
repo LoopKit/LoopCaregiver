@@ -49,33 +49,43 @@ struct DoseChartView: UIViewRepresentable {
     
     func bolusDoseEntries() -> [DoseEntry] {
         let bolusEntries = remoteDataSource.bolusEntries
-            .filter({$0.date >= dateInterval.start})
-            .sorted(by: {$0.date < $1.date})
+            .filter({$0.timestamp >= dateInterval.start})
+            .sorted(by: {$0.timestamp < $1.timestamp})
         
-        let bolusDoseEntries = bolusEntries.map({DoseEntry(type: .bolus, startDate: $0.date, value: Double($0.amount), unit: .units)})
+        let bolusDoseEntries = bolusEntries.map({DoseEntry(type: .bolus, startDate: $0.timestamp, value: $0.amount, unit: .units)})
         return bolusDoseEntries
     }
     
     func basalDoseEntries() -> [DoseEntry] {
         
         let basalEntries = remoteDataSource.basalEntries
-            .filter({$0.date.addingTimeInterval(Double($0.duration * 60)) > dateInterval.start})
-            .sorted(by: {$0.date < $1.date})
+            .sorted(by: {$0.timestamp < $1.timestamp})
         
         var basalDoseEntries = [DoseEntry]()
         for (index, basalEntry) in basalEntries.enumerated() {
-            var endDate = basalEntry.date.addingTimeInterval(Double(basalEntry.duration * 60))
+
+            var endDate = basalEntry.timestamp.addingTimeInterval(basalEntry.duration)
+            
+            if endDate > dateInterval.end {
+                endDate = dateInterval.end
+            }
+            
+            //Avoid overlapping basals
             let nextBasalIndex = index + 1
             if nextBasalIndex < basalEntries.count {
                 let nextBasalEntry = basalEntries[nextBasalIndex]
-                if nextBasalEntry.date < endDate {
-                    endDate = nextBasalEntry.date
+                if nextBasalEntry.timestamp < endDate {
+                    endDate = nextBasalEntry.timestamp
                 }
             }
 
-            let doseEntry = DoseEntry(type: .tempBasal, startDate: basalEntry.date, endDate: endDate, value: Double(basalEntry.rate), unit: .unitsPerHour, scheduledBasalRate: scheduledBasalRate(date: basalEntry.date))
+            let doseEntry = DoseEntry(type: .tempBasal, startDate: basalEntry.timestamp, endDate: endDate, value: basalEntry.rate, unit: .unitsPerHour, scheduledBasalRate: scheduledBasalRate(date: basalEntry.timestamp))
             basalDoseEntries.append(doseEntry)
         }
+        
+        basalDoseEntries = basalDoseEntries.filter({ dose in
+            dose.endDate >= dateInterval.start
+        })
             
         return basalDoseEntries
     }
@@ -88,10 +98,8 @@ struct DoseChartView: UIViewRepresentable {
     }
     
     func getBasalRatePeriods() -> [BasalRatePeriod] {
-        let profiles = remoteDataSource.profiles
-        let latestProfile = profiles.sorted(by: {$0.startDate < $1.startDate}).last
         
-        guard let basals = latestProfile?.store?.Default.basal else {
+        guard let basals = remoteDataSource.currentProfile?.getDefaultProfile()?.basal else {
             return []
         }
         
@@ -104,12 +112,12 @@ struct DoseChartView: UIViewRepresentable {
             }
             
             let lastBasal = basals[index - 1]
-            basalPeriods.append(BasalRatePeriod(startSeconds: lastBasal.timeAsSeconds, durationSeconds: basal.timeAsSeconds - lastBasal.timeAsSeconds, rate: lastBasal.value))
+            basalPeriods.append(BasalRatePeriod(startSeconds: lastBasal.offset, durationSeconds: basal.offset - lastBasal.offset, rate: lastBasal.value))
         }
         
         if basalPeriods.count > 0 {
             let lastBasal = basals.last!
-            basalPeriods.append(BasalRatePeriod(startSeconds: lastBasal.timeAsSeconds, durationSeconds: 86400 - lastBasal.timeAsSeconds, rate: lastBasal.value))
+            basalPeriods.append(BasalRatePeriod(startSeconds: lastBasal.offset, durationSeconds: 86400 - lastBasal.offset, rate: lastBasal.value))
         }
         
         return basalPeriods
@@ -163,22 +171,22 @@ class IOBContainerViewModel: ObservableObject {
 }
 
 struct BasalRatePeriod {
-    let startSeconds: Int
-    let durationSeconds: Int
+    let startSeconds: TimeInterval
+    let durationSeconds: TimeInterval
     let rate: Double
     
     func includesDate(_ date: Date) -> Bool {
         let midnight = Calendar.current.startOfDay(for: date)
-        let startDate = midnight.addingTimeInterval(Double(startSeconds))
-        let endDate = startDate.addingTimeInterval(Double(durationSeconds))
+        let startDate = midnight.addingTimeInterval(startSeconds)
+        let endDate = startDate.addingTimeInterval(durationSeconds)
         return date >= startDate && date <= endDate
     }
     
     func description() -> String {
         return """
         -----
-        Start: \(Double(startSeconds) / 60.0 / 60.0)
-        End: \((Double(startSeconds) + Double(durationSeconds)) / 60.0 / 60.0)
+        Start: \(startSeconds / 60.0 / 60.0)
+        End: \(startSeconds + durationSeconds / 60.0 / 60.0)
         Rate: \(rate)
         -----
         """

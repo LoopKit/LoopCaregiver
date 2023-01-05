@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
+		A933181C2969FC17006CC3A2 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933181B2969FC17006CC3A2 /* Crypto.framework */; };
+		A933181D2969FC17006CC3A2 /* Crypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A933181B2969FC17006CC3A2 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
 		A947026C293254B500FB3E59 /* COBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026B293254B500FB3E59 /* COBChartView.swift */; };
@@ -31,12 +33,13 @@
 		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
 		A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
 		A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
+		A973364329678EA400DFE395 /* NightscoutUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A973364229678EA300DFE395 /* NightscoutUploadKit.framework */; };
+		A973364429678EA400DFE395 /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A973364229678EA300DFE395 /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DE92933B0FE000A3D6A /* SwiftUIExtensions.swift */; };
 		A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DEB293405A4000A3D6A /* PinchZoom.swift */; };
 		A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
 		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
 		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
-		A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */; };
 		A98F5E112930F18A00A03580 /* NewGlucoseSample+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* NewGlucoseSample+Extensions.swift */; };
 		A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
 		A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
@@ -44,11 +47,19 @@
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
+		A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E52969A69F00D3875F /* IOBStatus.swift */; };
+		A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E72969A6A900D3875F /* COBStatus.swift */; };
+		A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E92969A6B600D3875F /* ProfileSet.swift */; };
+		A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */; };
+		A9C4D7EE2969B70000D3875F /* NightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */; };
+		A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */; };
+		A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */; };
+		A9C4D7F42969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */; };
+		A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */; };
 		A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */; };
 		A9EC197E291FEF940022D39F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197D291FEF940022D39F /* ContentView.swift */; };
 		A9EC1980291FEF950022D39F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9EC197F291FEF950022D39F /* Assets.xcassets */; };
 		A9EC1983291FEF950022D39F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9EC1982291FEF950022D39F /* Preview Assets.xcassets */; };
-		A9EC199C2920467E0022D39F /* NightscoutClient in Frameworks */ = {isa = PBXBuildFile; productRef = A9EC199B2920467E0022D39F /* NightscoutClient */; };
 		A9EC199E292101550022D39F /* NightscoutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC199D292101550022D39F /* NightscoutChartView.swift */; };
 		A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */; };
 		A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A9EC19A3292141980022D39F /* OneTimePassword */; };
@@ -64,6 +75,8 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				A933181D2969FC17006CC3A2 /* Crypto.framework in Embed Frameworks */,
+				A973364429678EA400DFE395 /* NightscoutUploadKit.framework in Embed Frameworks */,
 				A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */,
 				A948D1A7292AB765003C5683 /* LoopUI.framework in Embed Frameworks */,
 				A95F50CF292A671300079AAF /* SwiftCharts in Embed Frameworks */,
@@ -77,6 +90,7 @@
 
 /* Begin PBXFileReference section */
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
+		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
 		A94702682932429F00FB3E59 /* DoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseChartView.swift; sourceTree = "<group>"; };
 		A947026B293254B500FB3E59 /* COBChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBChartView.swift; sourceTree = "<group>"; };
@@ -96,18 +110,27 @@
 		A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoopCaregiver.xcdatamodel; sourceTree = "<group>"; };
 		A96929902927FFBA00B8BF43 /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		A96929922929908100B8BF43 /* NightscoutDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSource.swift; sourceTree = "<group>"; };
+		A973364229678EA300DFE395 /* NightscoutUploadKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NightscoutUploadKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9744DE92933B0FE000A3D6A /* SwiftUIExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIExtensions.swift; sourceTree = "<group>"; };
 		A9744DEB293405A4000A3D6A /* PinchZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoom.swift; sourceTree = "<group>"; };
 		A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtils.swift; sourceTree = "<group>"; };
 		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
 		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
-		A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NightscoutService+Extensions.swift"; sourceTree = "<group>"; };
 		A98F5E102930F18A00A03580 /* NewGlucoseSample+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Extensions.swift"; sourceTree = "<group>"; };
 		A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccountService.swift; sourceTree = "<group>"; };
 		A9972775292FCE6A006C8C74 /* LooperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
 		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A9C4D7E52969A69F00D3875F /* IOBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBStatus.swift; sourceTree = "<group>"; };
+		A9C4D7E72969A6A900D3875F /* COBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBStatus.swift; sourceTree = "<group>"; };
+		A9C4D7E92969A6B600D3875F /* ProfileSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSet.swift; sourceTree = "<group>"; };
+		A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseEntry.swift; sourceTree = "<group>"; };
+		A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutTreatment.swift; sourceTree = "<group>"; };
+		A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempBasalNightscoutTreatment.swift; sourceTree = "<group>"; };
+		A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusNightscoutTreatment.swift; sourceTree = "<group>"; };
+		A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbCorrectionNightscoutTreatment.swift; sourceTree = "<group>"; };
+		A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryScheduleOverride.swift; sourceTree = "<group>"; };
 		A9EC1978291FEF940022D39F /* LoopCaregiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverApp.swift; sourceTree = "<group>"; };
 		A9EC197D291FEF940022D39F /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -125,12 +148,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9EC199C2920467E0022D39F /* NightscoutClient in Frameworks */,
 				A95F50D1292A68E800079AAF /* LoopCore.framework in Frameworks */,
 				A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */,
 				A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */,
 				A948D1A6292AB765003C5683 /* LoopUI.framework in Frameworks */,
 				A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */,
+				A933181C2969FC17006CC3A2 /* Crypto.framework in Frameworks */,
+				A973364329678EA400DFE395 /* NightscoutUploadKit.framework in Frameworks */,
 				A95F50CE292A66F200079AAF /* SwiftCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -191,6 +215,8 @@
 		A95F50BE292A602E00079AAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A933181B2969FC17006CC3A2 /* Crypto.framework */,
+				A973364229678EA300DFE395 /* NightscoutUploadKit.framework */,
 				A95F50D0292A68E800079AAF /* LoopCore.framework */,
 				A95F50C9292A65E400079AAF /* LoopUI.framework */,
 				A95F50C6292A657F00079AAF /* LoopKitUI.framework */,
@@ -290,13 +316,29 @@
 		A98D4CB0292C38D100EFF5C6 /* Nightscout */ = {
 			isa = PBXGroup;
 			children = (
+				A9C4D7E42969A68800D3875F /* Extensions */,
 				A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */,
 				A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */,
 				A96929922929908100B8BF43 /* NightscoutDataSource.swift */,
-				A98D4CB3292C396200EFF5C6 /* NightscoutService+Extensions.swift */,
 				A9B033E529230FF20052AA9E /* OTPManager.swift */,
 			);
 			path = Nightscout;
+			sourceTree = "<group>";
+		};
+		A9C4D7E42969A68800D3875F /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */,
+				A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */,
+				A9C4D7E72969A6A900D3875F /* COBStatus.swift */,
+				A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */,
+				A9C4D7E52969A69F00D3875F /* IOBStatus.swift */,
+				A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */,
+				A9C4D7E92969A6B600D3875F /* ProfileSet.swift */,
+				A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */,
+				A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A9EC196F291FEF940022D39F = {
@@ -356,7 +398,6 @@
 			);
 			name = LoopCaregiver;
 			packageProductDependencies = (
-				A9EC199B2920467E0022D39F /* NightscoutClient */,
 				A9EC19A3292141980022D39F /* OneTimePassword */,
 				A9B033E3292306A90052AA9E /* CodeScanner */,
 				A95F50CD292A66F200079AAF /* SwiftCharts */,
@@ -390,7 +431,6 @@
 			);
 			mainGroup = A9EC196F291FEF940022D39F;
 			packageReferences = (
-				A9EC199A2920467E0022D39F /* XCRemoteSwiftPackageReference "NightscoutClient" */,
 				A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */,
 				A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				A95F50CC292A66F200079AAF /* XCRemoteSwiftPackageReference "SwiftCharts" */,
@@ -422,21 +462,24 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */,
+				A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */,
 				A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */,
 				A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */,
+				A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */,
 				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
 				A94702702932C21E00FB3E59 /* IOBChartView.swift in Sources */,
 				A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */,
 				A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */,
 				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
+				A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */,
 				A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */,
 				A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */,
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
+				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
 				A98F5E112930F18A00A03580 /* NewGlucoseSample+Extensions.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
 				A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */,
-				A98D4CB4292C396200EFF5C6 /* NightscoutService+Extensions.swift in Sources */,
 				A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,
 				A9EC199E292101550022D39F /* NightscoutChartView.swift in Sources */,
@@ -444,16 +487,21 @@
 				A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */,
 				A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */,
 				A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */,
+				A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */,
 				A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */,
+				A9C4D7F42969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift in Sources */,
 				A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */,
 				A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */,
+				A9C4D7EE2969B70000D3875F /* NightscoutTreatment.swift in Sources */,
 				A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */,
 				A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */,
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
+				A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */,
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
 				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
 				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
+				A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */,
 				A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -679,14 +727,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		A9EC199A2920467E0022D39F /* XCRemoteSwiftPackageReference "NightscoutClient" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gestrich/NightscoutClient.git";
-			requirement = {
-				branch = main;
-				kind = branch;
-			};
-		};
 		A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mattrubin/OneTimePassword.git";
@@ -707,11 +747,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
-		};
-		A9EC199B2920467E0022D39F /* NightscoutClient */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A9EC199A2920467E0022D39F /* XCRemoteSwiftPackageReference "NightscoutClient" */;
-			productName = NightscoutClient;
 		};
 		A9EC19A3292141980022D39F /* OneTimePassword */ = {
 			isa = XCSwiftPackageProductDependency;

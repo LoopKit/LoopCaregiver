@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NightscoutClient
 import LoopKitUI
 import LocalAuthentication
 

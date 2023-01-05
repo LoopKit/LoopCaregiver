@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NightscoutClient
 import LoopKit
 
 class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountService {

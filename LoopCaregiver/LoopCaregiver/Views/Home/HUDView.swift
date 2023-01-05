@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NightscoutClient
 import Combine
 import LoopKit
 import HealthKit
@@ -66,34 +65,26 @@ struct HUDView: View {
     
     func arrowImageName(egv: NewGlucoseSample) -> String {
     
-        guard let trendRate = egv.trendRate else {
-            return "questionmark"
-        }
-        
-        guard let trend = EGVTrend(rawValue: Int(trendRate.doubleValue(for: .milligramsPerDeciliter))) else { //TODO: Could crash on large values
+        guard let trend = egv.trend else {
             return "questionmark"
         }
         
         switch trend {
-            
-        case .doubleUp:
-            return "arrow.up"
-        case .singleUp:
-            return "arrow.up"
-        case .fortyFiveUp:
+
+        case .up:
             return "arrow.up.forward"
+        case .upUp:
+            return "arrow.up"
+        case .upUpUp:
+            return "arrow.up"
         case .flat:
             return "arrow.right"
-        case .fortyFiveDown:
+        case .down:
             return "arrow.down.forward"
-        case .singleDown:
+        case .downDown:
             return "arrow.down"
-        case .doubleDown:
+        case .downDownDown:
             return "arrow.down"
-        case .nonComputable:
-            return "questionmark"
-        case .outOfRange:
-            return "questionmark"
         }
     }
     

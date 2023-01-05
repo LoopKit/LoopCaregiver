@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import NightscoutClient
 import SwiftUI
 
 class Looper: ObservableObject, Hashable {

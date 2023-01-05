@@ -6,17 +6,18 @@
 //
 
 import SwiftUI
-import NightscoutClient
+import NightscoutUploadKit
 
 struct OverrideView: View {
     
     let looperService: LooperService
     @Binding var showSheetView: Bool
     
-    @State private var overidePresets: [NightscoutOverridePreset] = []
-    @State private var overrideFromNightscout: NightscoutOverridePreset?
-    @State private var pickerCurrentlySelectedOverride: NightscoutOverridePreset?
+    @State private var overidePresets: [TemporaryScheduleOverride] = []
+    @State private var overrideFromNightscout: TemporaryScheduleOverride?
+    @State private var pickerCurrentlySelectedOverride: TemporaryScheduleOverride?
     @State private var loadingOverrides = true
+    @State private var errorText: String? = nil
     
     var body: some View {
         
@@ -25,51 +26,30 @@ struct OverrideView: View {
                 Spacer()
                 HStack {
                     Spacer()
-                    if !loadingOverrides {
+                    if loadingOverrides {
+                        ProgressView("Loading Overrides...")
+                    } else {
+                        //TODO: Only show picker if overrides successfully loaded
                         Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
-                            Text("None").tag(nil as NightscoutOverridePreset?)
+                            Text("None").tag(nil as TemporaryScheduleOverride?)
                             ForEach(overidePresets, id: \.self) { overrideValue in
-                                Text("\(overrideValue.symbol) \(overrideValue.name)").tag(overrideValue as NightscoutOverridePreset?)
+                                Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
                             }
                         }.pickerStyle(.wheel)
                             .labelsHidden()
-                    } else {
-                        ProgressView("Loading Overrides...")
                     }
                     Spacer()
-                        .onAppear(perform: {
-                            Task {
-                                let profiles = try await looperService.remoteDataSource.getProfiles()
-                                if let activeProfile = profiles.first, let loopSettings = activeProfile.loopSettings {
-                                    overidePresets = loopSettings.overridePresets
-                                    if let activeOverride = loopSettings.scheduleOverride {
-                                        self.overrideFromNightscout = activeOverride
-                                        self.pickerCurrentlySelectedOverride = activeOverride
-                                    }
-                                }
-                                loadingOverrides = false
-                            }
-                        })
+                }
+                if let errorText {
+                    Text(errorText)
+                        .foregroundColor(.critical)
                 }
                 Spacer()
+                //TODO: Disable button when overrides not successfully loaded
+                //and show a reload button
                 Button("Update") {
                     Task {
-                        guard let selectedOverride = pickerCurrentlySelectedOverride else {
-                            let _ = try await looperService.remoteDataSource.cancelOverride()
-                            showSheetView = false
-                            return
-                        }
-                        
-                        do {
-                            //TODO: Set appropriate display symbol
-                            //Auggie - respect the override's duration (in minutes) as defined on Looping phone
-                            let _ = try await looperService.remoteDataSource.startOverride(overrideName: selectedOverride.name, overrideDisplay: "A", durationInMinutes: selectedOverride.durationInMinutes)
-                            showSheetView = false
-                        } catch {
-                            //TODO: Show user error
-                            print(error)
-                        }
-                        
+                        await activateSelectedOverride()
                     }
                 }
                 .buttonStyle(.borderedProminent)
@@ -82,19 +62,44 @@ struct OverrideView: View {
                 Text("Cancel")
             })
         }
-    }
-}
-
-extension NightscoutOverridePreset: Hashable {
-    
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
+        .onAppear(perform: {
+            Task {
+                await loadOverrides()
+            }
+        })
     }
     
-    public static func == (lhs: NightscoutOverridePreset, rhs: NightscoutOverridePreset) -> Bool {
-        lhs.name == rhs.name
+    func loadOverrides() async {
+        do {
+            let activeProfile = try await looperService.remoteDataSource.fetchCurrentProfile()
+            let loopSettings = activeProfile.settings
+            overidePresets = loopSettings.overridePresets
+            if let activeOverride = loopSettings.scheduleOverride {
+                self.overrideFromNightscout = activeOverride
+                self.pickerCurrentlySelectedOverride = activeOverride
+            }
+        } catch {
+            errorText = error.localizedDescription
+        }
+        
+        loadingOverrides = false
     }
     
-    
+    func activateSelectedOverride() async {
+        
+        errorText = nil
+        
+        do {
+            if let selectedOverride = pickerCurrentlySelectedOverride {
+                try await looperService.remoteDataSource.startOverride(overrideName: selectedOverride.name ?? "",
+                                                                               durationInMinutes: selectedOverride.durationInMinutes())
+            } else {
+                try await looperService.remoteDataSource.cancelOverride()
+            }
+            
+            showSheetView = false
+        } catch {
+            errorText = error.localizedDescription
+        }
+    }
 }

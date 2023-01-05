@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NightscoutClient
 
 struct SettingsView: View {
 

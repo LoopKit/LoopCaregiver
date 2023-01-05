@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NightscoutClient
 import LoopKitUI
 import LocalAuthentication
 
@@ -17,7 +16,7 @@ struct CarbInputView: View {
     
     @State private var carbInput: String = ""
     @State private var foodType: String = "" //TODO: Pass This back to Loop for descriptive entries
-    @State private var duration: String = "3" //TODO: Get Looper's default medium duration
+    @State private var absorption: String = "3" //TODO: Get Looper's default medium absorption
     @State private var submissionInProgress = false
     @State private var isPresentingConfirm: Bool = false
     @State private var pickerConsumedDate: Date = Date()
@@ -26,7 +25,7 @@ struct CarbInputView: View {
     @State private var errorText: String? = nil
     @State var foodTypeWidth = 180.0
     @FocusState private var carbInputViewIsFocused: Bool
-    @FocusState private var durationInputFieldIsFocused: Bool
+    @FocusState private var absorptionInputFieldIsFocused: Bool
     
     private let minAbsorptionTimeInHours = 0.5
     private let maxAbsorptionTimeInHours = 8.0
@@ -114,8 +113,8 @@ struct CarbInputView: View {
                 Text("Time")
             }
 
-            //Auggie - absorption duration shortcuts per Loop timelines (0.5, 3, 5 hours)
-            //TODO: can we get durations from Loop directly via .slow, .medium, .fast?
+            //Auggie - absorption shortcuts per Loop timelines (0.5, 3, 5 hours)
+            //TODO: can we get absorption from Loop directly via .slow, .medium, .fast?
             //Create the "Food Type" row to hold emojis/typed description
             HStack {
                 LabeledContent{
@@ -141,7 +140,7 @@ struct CarbInputView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        duration = "0.5"
+                        absorption = "0.5"
                     }
                     Spacer()
                     
@@ -151,7 +150,7 @@ struct CarbInputView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        duration = "3"
+                        absorption = "3"
                     }
                     Spacer()
                     
@@ -161,18 +160,18 @@ struct CarbInputView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        duration = "5"
+                        absorption = "5"
                     }
                     Spacer()
                     
-                    //Custom carb entry emoji, move focus to the duration input field
+                    //Custom carb entry emoji, move focus to the absorption input field
                     Button(action: {}) {
                         Text("🍽️")
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        duration = ""
-                        durationInputFieldIsFocused = true
+                        absorption = ""
+                        absorptionInputFieldIsFocused = true
                     }
                 }
             }
@@ -180,11 +179,11 @@ struct CarbInputView: View {
             LabeledContent {
                 TextField(
                     "",
-                    text: $duration
+                    text: $absorption
                 )
                 .multilineTextAlignment(.trailing)
                 .keyboardType(.decimalPad)
-                .focused($durationInputFieldIsFocused)
+                .focused($absorptionInputFieldIsFocused)
                 Text("hr")
                     .frame(width: unitFrameWidth)
             } label: {
@@ -230,7 +229,7 @@ struct CarbInputView: View {
     private func deliverCarbs() async throws {
         let fieldValues = try getCarbFieldValues()
         let _ = try await looperService.remoteDataSource.deliverCarbs(amountInGrams: fieldValues.amountInGrams,
-                                                                      durationInHours: Float(fieldValues.durationInHours), //TODO: Use double value in NS service
+                                                                      absorptionInHours: fieldValues.absorptionInHours,
                                                                       consumedDate: fieldValues.consumedDate)
     }
     
@@ -244,7 +243,7 @@ struct CarbInputView: View {
             throw CarbInputViewError.invalidCarbAmount
         }
         
-        guard let durationInHours = LocalizationUtils.doubleFromUserInput(duration), durationInHours >= minAbsorptionTimeInHours, durationInHours <= maxAbsorptionTimeInHours else {
+        guard let absorptionInHours = LocalizationUtils.doubleFromUserInput(absorption), absorptionInHours >= minAbsorptionTimeInHours, absorptionInHours <= maxAbsorptionTimeInHours else {
             throw CarbInputViewError.invalidAbsorptionTime(minAbsorptionTimeInHours: minAbsorptionTimeInHours, maxAbsorptionTimeInHours: maxAbsorptionTimeInHours)
         }
         
@@ -262,11 +261,11 @@ struct CarbInputView: View {
             throw CarbInputViewError.exceedsMaxFutureHours(maxFutureHours: maxFutureCarbEntryHours)
         }
         
-        return CarbInputViewFormValues(amountInGrams: carbAmountInGrams, durationInHours: durationInHours, consumedDate: consumedDate)
+        return CarbInputViewFormValues(amountInGrams: carbAmountInGrams, absorptionInHours: absorptionInHours, consumedDate: consumedDate)
     }
     
     private func disableForm() -> Bool {
-        return submissionInProgress || carbInput.isEmpty || duration.isEmpty
+        return submissionInProgress || carbInput.isEmpty || absorption.isEmpty
     }
     
     var authenticationHandler: (String) async -> Bool = { message in
@@ -293,7 +292,7 @@ struct CarbInputView: View {
 
 struct CarbInputViewFormValues {
     let amountInGrams: Double
-    let durationInHours: Double
+    let absorptionInHours: Double
     let consumedDate: Date
 }
 

@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-import NightscoutClient
 import Charts
 import CoreData
 import LoopKit

@@ -6,16 +6,16 @@
 //
 
 import Foundation
-import NightscoutClient
 import LoopKit
+import NightscoutUploadKit
 
 class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     
     private var credentialService: NightscoutCredentialService
-    private let nightscoutService: NightscoutService
+    private let nightscoutUploader: NightscoutUploader
     
     init(looper: Looper){
-        self.nightscoutService = NightscoutService(baseURL: looper.nightscoutCredentials.url, secret: looper.nightscoutCredentials.secretKey, nowDateProvider: {Date()})
+        self.nightscoutUploader = NightscoutUploader(siteURL: looper.nightscoutCredentials.url, APISecret: looper.nightscoutCredentials.secretKey)
         self.credentialService = NightscoutCredentialService(credentials: looper.nightscoutCredentials)
     }
     
@@ -23,30 +23,51 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     //MARK: RemoteDataServiceProvider
     
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
-        return try await nightscoutService.getEGVs(startDate: fetchStartDate(), endDate:fetchEndDate())
-            .map({$0.toGlucoseSample()})
+        let result = try await withCheckedThrowingContinuation({ continuation in
+            nightscoutUploader.fetchGlucose(dateInterval: fetchInterval(), maxCount: maxFetchCount()) { result in
+                continuation.resume(with: result)
+            }
+        })
+        .map({$0.toGlucoseSample()})
+        assert(result.count < maxFetchCount(), "Hit max count: Consider increasing")
+        return result
     }
     
-    func fetchBasalEntries() async throws -> [NightscoutClient.WGBasalEntry] {
-        return try await nightscoutService.getBasalTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
+    func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment] {
+        return try await fetchTreatments()
+            .basalTreatments()
     }
     
-    func fetchBolusEntries() async throws -> [WGBolusEntry] {
-        return try await nightscoutService.getBolusTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
+    func fetchBolusEntries() async throws -> [BolusNightscoutTreatment] {
+        return try await fetchTreatments()
+            .bolusTreatments()
     }
     
-    func fetchCarbEntries() async throws -> [WGCarbEntry] {
-        return try await nightscoutService.getCarbTreatments(startDate: fetchStartDate(), endDate: fetchEndDate())
+    func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment] {
+        return try await fetchTreatments()
+            .carbTreatments()
     }
     
-    func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus? {
-        guard let latestDeviceStatus = try await nightscoutService.getDeviceStatuses(startDate: fetchEndDate().addingTimeInterval(-60*60*2), endDate: fetchEndDate())
-            .sorted(by: {$0.created_at < $1.created_at})
-            .last else {
-            return nil
-        }
-        
-        return latestDeviceStatus
+    func fetchLatestDeviceStatus() async throws -> DeviceStatus? {
+        let result = try await withCheckedThrowingContinuation({ continuation in
+            let fetchInterval = DateInterval(start: fetchEndDate().addingTimeInterval(-60*60*2), end: fetchEndDate())
+            nightscoutUploader.fetchDeviceStatus(dateInterval: fetchInterval) { result in
+                continuation.resume(with: result)
+            }
+        })
+        .sorted(by: {$0.timestamp < $1.timestamp})
+        return result.last
+    }
+    
+    func fetchTreatments() async throws -> [NightscoutTreatment] {
+        let maxCount = maxFetchCount()
+        let result = try await withCheckedThrowingContinuation({ continuation in
+            nightscoutUploader.fetchTreatments(dateInterval: fetchInterval(), maxCount: maxCount) { result in
+                continuation.resume(with: result)
+            }
+        })
+        assert(result.count < maxCount, "Hit max count: Consider increasing")
+        return result
     }
     
     func fetchStartDate() -> Date {
@@ -57,40 +78,43 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return nowDate().addingTimeInterval(60 * 60)
     }
     
+    func fetchInterval() -> DateInterval {
+        return DateInterval(start: fetchStartDate(), end: fetchEndDate())
+    }
+    
+    func maxFetchCount() -> Int {
+        let seconds = fetchEndDate().timeIntervalSince(fetchStartDate())
+        let minutes = seconds / 60
+        return Int(minutes / 5 * 2) // Assume 1 entry every 5 minutes for bgs. Multiply by 2 in case double entries uploaded
+    }
+    
     func nowDate() -> Date {
         return Date()
     }
     
-    func deliverCarbs(amountInGrams: Double, durationInHours: Float, consumedDate: Date) async throws {
+    func deliverCarbs(amountInGrams: Double, absorptionInHours: Double, consumedDate: Date) async throws {
         //TODO: Ensure you get a valid OTP (non-empty String)
-        let _ = try await nightscoutService.deliverCarbs(amountInGrams: amountInGrams, amountInHours: durationInHours, consumedDate: consumedDate, otp: credentialService.otpCode)
+        try await nightscoutUploader.deliverCarbs(amountInGrams: amountInGrams, absorptionInHours: absorptionInHours, consumedDate: consumedDate, otp: credentialService.otpCode)
     }
     
     func deliverBolus(amountInUnits: Double) async throws {
         //TODO: Ensure you get a valid OTP (non-empty String)
-        let _ = try await nightscoutService.deliverBolus(amountInUnits: amountInUnits, otp: credentialService.otpCode)
+        try await nightscoutUploader.deliverBolus(amountInUnits: amountInUnits, otp: credentialService.otpCode)
     }
     
-    func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws {
-        let _ = try await nightscoutService.startOverride(overrideName: overrideName, overrideDisplay: overrideDisplay, durationInMinutes: durationInMinutes)
+    func startOverride(overrideName: String, durationInMinutes: Int) async throws {
+        try await nightscoutUploader.startOverride(overrideName: overrideName, reasonDisplay: "Caregiver Update", durationInMinutes: durationInMinutes)
     }
     
     func cancelOverride() async throws {
-        let _ = try await nightscoutService.cancelOverride()
+        try await nightscoutUploader.cancelOverride()
     }
     
-    func getProfiles() async throws -> [NightscoutProfile] {
-        return try await nightscoutService.getProfiles()
-    }
-
-    
-    //MARK: Lifecycle
-    
-    func shutdown() throws {
-        try nightscoutService.syncShutdown()
+    func fetchCurrentProfile() async throws -> ProfileSet {
+        return try await withCheckedThrowingContinuation { continuation in
+            nightscoutUploader.fetchCurrentProfile{ result in
+                continuation.resume(with: result)
+            }
+        }
     }
 }
-
-
-
-

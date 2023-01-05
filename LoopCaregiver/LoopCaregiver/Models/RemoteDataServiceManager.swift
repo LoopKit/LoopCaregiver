@@ -6,20 +6,21 @@
 //
 
 import Foundation
-import NightscoutClient
 import LoopKit
+import NightscoutUploadKit
+import HealthKit
 
 class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
     @Published var currentGlucoseSample: NewGlucoseSample? = nil
     @Published var glucoseSamples: [NewGlucoseSample] = []
     @Published var predictedGlucose: [NewGlucoseSample] = []
-    @Published var carbEntries: [WGCarbEntry] = []
-    @Published var bolusEntries: [WGBolusEntry] = []
-    @Published var basalEntries: [WGBasalEntry] = []
-    @Published var currentIOB: WGLoopIOB? = nil
-    @Published var currentCOB: WGLoopCOB? = nil
-    @Published var profiles: [NightscoutProfile] = []
+    @Published var carbEntries: [CarbCorrectionNightscoutTreatment] = []
+    @Published var bolusEntries: [BolusNightscoutTreatment] = []
+    @Published var basalEntries: [TempBasalNightscoutTreatment] = []
+    @Published var currentIOB: IOBStatus? = nil
+    @Published var currentCOB: COBStatus? = nil
+    @Published var currentProfile: ProfileSet?
     @Published var updating: Bool = false
     
     private let remoteDataProvider: RemoteDataServiceProvider
@@ -87,13 +88,12 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         }
         
         if let deviceStatus = try await deviceStatusAsync {
-            
-            if let iob = deviceStatus.loop?.iob,
+            if let iob = deviceStatus.loopStatus?.iob,
                iob != self.currentIOB {
                 self.currentIOB = iob
             }
             
-            if let cob = deviceStatus.loop?.cob,
+            if let cob = deviceStatus.loopStatus?.cob,
                cob != self.currentCOB {
                 self.currentCOB = cob
             }
@@ -107,37 +107,43 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         updating = false
     }
     
-    func predictedGlucoseSamples(latestDeviceStatus: NightscoutDeviceStatus) -> [NewGlucoseSample] {
-        guard let loopPrediction = latestDeviceStatus.loop?.predicted else {
+    func predictedGlucoseSamples(latestDeviceStatus: DeviceStatus) -> [NewGlucoseSample] {
+        guard let loopPrediction = latestDeviceStatus.loopStatus?.predicted else {
             return []
         }
         
-        guard let predictedValues = loopPrediction.values else {
-            return []
-        }
+        let predictedValues = loopPrediction.values
         
-        var predictedEGVs = [NightscoutEGV]()
+        var predictedSamples = [NewGlucoseSample]()
         var currDate = loopPrediction.startDate
+        let intervalBetweenPredictedValues = 60.0 * 5.0
         for value in predictedValues {
-            //TODO: Probably needs to be something unique from NS predicted data
-            let egv = NightscoutEGV(id:  UUID().uuidString, value: Int(value), systemTime: currDate, displayTime: currDate, realtimeValue: nil, smoothedValue: nil, trendRate: nil, trendDescription: "")
             
-            predictedEGVs.append(egv)
-            currDate = currDate.addingTimeInterval(60*5) //every 5 minutes
+            let predictedSample = NewGlucoseSample(date: currDate,
+                                          quantity: HKQuantity(unit: .milligramsPerDeciliter, doubleValue: Double(value)),
+                                          condition: nil,
+                                          trend: nil,
+                                          trendRate: nil,
+                                          isDisplayOnly: false,
+                                          wasUserEntered: false,
+                                          //TODO: Probably needs to be something unique from NS predicted data
+                                          syncIdentifier:  UUID().uuidString)
+            
+            predictedSamples.append(predictedSample)
+            currDate = currDate.addingTimeInterval(intervalBetweenPredictedValues)
         }
         
-        return predictedEGVs.map({$0.toGlucoseSample()})
-            .sorted(by: {$0.date < $1.date})
+        return predictedSamples
     }
-    
+
     @MainActor
     func updateInfrequentData() async throws {
 
-        async let profilesAsync = remoteDataProvider.getProfiles()
+        async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
         
-        let profiles = try await profilesAsync
-        if profiles != self.profiles {
-            self.profiles = profiles
+        let currentProfile = try await curentProfileAsync
+        if currentProfile != self.currentProfile {
+            self.currentProfile = currentProfile
         }
     }
     
@@ -152,61 +158,53 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchGlucoseSamples()
     }
     
-    func fetchBolusEntries() async throws -> [NightscoutClient.WGBolusEntry] {
+    func fetchBolusEntries() async throws -> [BolusNightscoutTreatment] {
         return try await remoteDataProvider.fetchBolusEntries()
     }
     
-    func fetchBasalEntries() async throws -> [NightscoutClient.WGBasalEntry] {
+    func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment] {
         return try await remoteDataProvider.fetchBasalEntries()
     }
     
-    func fetchCarbEntries() async throws -> [NightscoutClient.WGCarbEntry] {
+    func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment] {
         return try await remoteDataProvider.fetchCarbEntries()
     }
     
-    func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus? {
+    func fetchLatestDeviceStatus() async throws -> DeviceStatus? {
         return try await remoteDataProvider.fetchLatestDeviceStatus()
     }
     
-    func deliverCarbs(amountInGrams: Double, durationInHours: Float, consumedDate: Date) async throws {
-        return try await remoteDataProvider.deliverCarbs(amountInGrams: amountInGrams, durationInHours: durationInHours, consumedDate: consumedDate)
+    func deliverCarbs(amountInGrams: Double, absorptionInHours: Double, consumedDate: Date) async throws {
+        return try await remoteDataProvider.deliverCarbs(amountInGrams: amountInGrams, absorptionInHours: absorptionInHours, consumedDate: consumedDate)
     }
     
     func deliverBolus(amountInUnits: Double) async throws {
         return try await remoteDataProvider.deliverBolus(amountInUnits: amountInUnits)
     }
     
-    func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws {
-        return try await remoteDataProvider.startOverride(overrideName: overrideName, overrideDisplay: overrideDisplay, durationInMinutes: durationInMinutes)
+    func startOverride(overrideName: String, durationInMinutes: Int) async throws {
+        return try await remoteDataProvider.startOverride(overrideName: overrideName, durationInMinutes: durationInMinutes)
     }
     
     func cancelOverride() async throws {
         return try await remoteDataProvider.cancelOverride()
     }
     
-    func getProfiles() async throws -> [NightscoutClient.NightscoutProfile] {
-        return try await remoteDataProvider.getProfiles()
-    }
-    
-    
-    //MARK: Lifecycle
-    
-    func shutdown() throws {
-        try remoteDataProvider.shutdown()
+    func fetchCurrentProfile() async throws -> ProfileSet {
+        return try await remoteDataProvider.fetchCurrentProfile()
     }
 }
 
 
 protocol RemoteDataServiceProvider {
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample]
-    func fetchBolusEntries() async throws -> [WGBolusEntry]
-    func fetchBasalEntries() async throws -> [WGBasalEntry]
-    func fetchCarbEntries() async throws -> [WGCarbEntry]
-    func fetchLatestDeviceStatus() async throws -> NightscoutDeviceStatus?
-    func deliverCarbs(amountInGrams: Double, durationInHours: Float, consumedDate: Date) async throws
+    func fetchBolusEntries() async throws -> [BolusNightscoutTreatment]
+    func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment]
+    func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment]
+    func fetchLatestDeviceStatus() async throws -> DeviceStatus?
+    func deliverCarbs(amountInGrams: Double, absorptionInHours: Double, consumedDate: Date) async throws
     func deliverBolus(amountInUnits: Double) async throws
-    func startOverride(overrideName: String, overrideDisplay: String, durationInMinutes: Int) async throws
+    func startOverride(overrideName: String, durationInMinutes: Int) async throws
     func cancelOverride() async throws
-    func getProfiles() async throws -> [NightscoutProfile]
-    func shutdown() throws
+    func fetchCurrentProfile() async throws -> ProfileSet
 }

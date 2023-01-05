@@ -7,9 +7,9 @@
 
 import SwiftUI
 import Charts
-import NightscoutClient
 import LoopKit
 import HealthKit
+import NightscoutUploadKit
 
 struct NightscoutChartScrollView: View {
 
@@ -246,8 +246,8 @@ struct NightscoutChartView: View {
 enum GraphItemType {
     case egv
     case predictedBG
-    case bolus(WGBolusEntry)
-    case carb(WGCarbEntry)
+    case bolus(BolusNightscoutTreatment)
+    case carb(CarbCorrectionNightscoutTreatment)
 }
 
 struct GraphItem: Identifiable, Equatable {
@@ -279,7 +279,7 @@ struct GraphItem: Identifiable, Equatable {
         case .bolus(let bolusEntry):
             width = CGFloat(bolusEntry.amount) * 5.0
         case .carb(let carbEntry):
-            width = CGFloat(carbEntry.amount) * 0.5
+            width = CGFloat(carbEntry.carbs) * 0.5
         default:
             width = 0.5
         }
@@ -307,7 +307,7 @@ struct GraphItem: Identifiable, Equatable {
         case .bolus(let bolusEntry):
             size = Double(3 * bolusEntry.amount)
         case .carb(let carbEntry):
-            size = Double(carbEntry.amount / 2)
+            size = Double(carbEntry.carbs / 2)
         default:
             size = 10
         }
@@ -364,7 +364,7 @@ struct GraphItem: Identifiable, Equatable {
             let bolusQuantityString = formatter.string(from: bolusEntry.amount as NSNumber) ?? ""
             return bolusQuantityString + "u"
         case .carb(let carbEntry):
-            return "\(carbEntry.amount)g"
+            return "\(carbEntry.carbs)g"
         case .egv:
             return "\(self.value)"
         case .predictedBG:
@@ -463,22 +463,6 @@ enum ColorType: Int, Plottable, CaseIterable, Comparable {
         return lhs.rawValue < rhs.rawValue
     }
     
-}
-
-extension WGCarbEntry {
-    
-    func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {
-        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date)
-        return GraphItem(type: .carb(self), displayTime: date, quantity: HKQuantity(unit: displayUnit, doubleValue: relativeEgvValue), displayUnit: displayUnit)
-    }
-}
-
-extension WGBolusEntry {
-    
-    func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {
-        let relativeEgvValue = interpolateEGVValue(egvs: egvValues, atDate: date)
-        return GraphItem(type: .bolus(self), displayTime: date, quantity: HKQuantity(unit: displayUnit, doubleValue: relativeEgvValue), displayUnit: displayUnit)
-    }
 }
 
 func interpolateEGVValue(egvs: [GraphItem], atDate date: Date ) -> Double {
