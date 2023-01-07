@@ -43,7 +43,9 @@ struct CarbInputView: View {
                         Text(errorText)
                             .foregroundColor(.critical)
                     }
-                    Button("Deliver") {
+                    Text("Carbs will be stored without accepting any recommended bolus. Storing carbs may increase automatic insulin delivery per your Loop Settings.")
+                        .padding()
+                    Button("Save without Bolusing") {
                         deliverButtonTapped()
                     }
                     .buttonStyle(.borderedProminent)
@@ -52,7 +54,7 @@ struct CarbInputView: View {
                     .padding()
                     .confirmationDialog("Are you sure?",
                                         isPresented: $isPresentingConfirm) {
-                        Button("Deliver \(carbInput)g of carbs to \(looperService.looper.name)?", role: .none) {
+                        Button("Save \(carbInput)g of carbs for \(looperService.looper.name)?", role: .none) {
                             deliverConfirmationButtonTapped()
                         }
                         Button("Cancel", role: .cancel) {}
@@ -206,7 +208,7 @@ struct CarbInputView: View {
     private func deliverConfirmationButtonTapped() {
         Task {
             
-            let message = String(format: NSLocalizedString("Authenticate to Deliver Carbs", comment: "The message displayed during a device authentication prompt for carb specification"))
+            let message = String(format: NSLocalizedString("Authenticate to Save Carbs", comment: "The message displayed during a device authentication prompt for carb specification"))
             
             guard (await authenticationHandler(message)) else {
                 errorText = "Authentication required"
