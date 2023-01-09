@@ -19,7 +19,7 @@ struct LocalizationUtils {
         if let maxFractionalDigits {
             numberFormatter.maximumFractionDigits = maxFractionalDigits
         }
-        numberFormatter.roundingMode = .down
+        numberFormatter.roundingMode = .halfUp
         return numberFormatter.string(from: input as NSNumber) ?? "\(input)"
     }
 }
