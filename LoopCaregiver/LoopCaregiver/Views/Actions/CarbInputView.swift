@@ -229,7 +229,7 @@ struct CarbInputView: View {
     private func deliverCarbs() async throws {
         let fieldValues = try getCarbFieldValues()
         let _ = try await looperService.remoteDataSource.deliverCarbs(amountInGrams: fieldValues.amountInGrams,
-                                                                      absorptionInHours: fieldValues.absorptionInHours,
+                                                                      absorptionTime: fieldValues.absorptionTime,
                                                                       consumedDate: fieldValues.consumedDate)
     }
     
@@ -294,6 +294,10 @@ struct CarbInputViewFormValues {
     let amountInGrams: Double
     let absorptionInHours: Double
     let consumedDate: Date
+    
+    var absorptionTime: TimeInterval {
+        return absorptionInHours * 60 * 60
+    }
 }
 
 enum CarbInputViewError: LocalizedError {

@@ -92,7 +92,7 @@ struct OverrideView: View {
         do {
             if let selectedOverride = pickerCurrentlySelectedOverride {
                 try await looperService.remoteDataSource.startOverride(overrideName: selectedOverride.name ?? "",
-                                                                               durationInMinutes: selectedOverride.durationInMinutes())
+                                                                       durationTime: selectedOverride.duration)
             } else {
                 try await looperService.remoteDataSource.cancelOverride()
             }

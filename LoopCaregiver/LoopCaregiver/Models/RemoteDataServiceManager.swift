@@ -174,16 +174,16 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchLatestDeviceStatus()
     }
     
-    func deliverCarbs(amountInGrams: Double, absorptionInHours: Double, consumedDate: Date) async throws {
-        return try await remoteDataProvider.deliverCarbs(amountInGrams: amountInGrams, absorptionInHours: absorptionInHours, consumedDate: consumedDate)
+    func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date) async throws {
+        return try await remoteDataProvider.deliverCarbs(amountInGrams: amountInGrams, absorptionTime: absorptionTime, consumedDate: consumedDate)
     }
     
     func deliverBolus(amountInUnits: Double) async throws {
         return try await remoteDataProvider.deliverBolus(amountInUnits: amountInUnits)
     }
     
-    func startOverride(overrideName: String, durationInMinutes: Int) async throws {
-        return try await remoteDataProvider.startOverride(overrideName: overrideName, durationInMinutes: durationInMinutes)
+    func startOverride(overrideName: String, durationTime: TimeInterval) async throws {
+        return try await remoteDataProvider.startOverride(overrideName: overrideName, durationTime: durationTime)
     }
     
     func cancelOverride() async throws {
@@ -202,9 +202,9 @@ protocol RemoteDataServiceProvider {
     func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment]
     func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment]
     func fetchLatestDeviceStatus() async throws -> DeviceStatus?
-    func deliverCarbs(amountInGrams: Double, absorptionInHours: Double, consumedDate: Date) async throws
+    func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date) async throws
     func deliverBolus(amountInUnits: Double) async throws
-    func startOverride(overrideName: String, durationInMinutes: Int) async throws
+    func startOverride(overrideName: String, durationTime: TimeInterval) async throws
     func cancelOverride() async throws
     func fetchCurrentProfile() async throws -> ProfileSet
 }

@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
-		A933181C2969FC17006CC3A2 /* Crypto.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A933181B2969FC17006CC3A2 /* Crypto.framework */; };
-		A933181D2969FC17006CC3A2 /* Crypto.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A933181B2969FC17006CC3A2 /* Crypto.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
 		A947026C293254B500FB3E59 /* COBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026B293254B500FB3E59 /* COBChartView.swift */; };
@@ -75,7 +73,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A933181D2969FC17006CC3A2 /* Crypto.framework in Embed Frameworks */,
 				A973364429678EA400DFE395 /* NightscoutUploadKit.framework in Embed Frameworks */,
 				A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */,
 				A948D1A7292AB765003C5683 /* LoopUI.framework in Embed Frameworks */,
@@ -90,7 +87,7 @@
 
 /* Begin PBXFileReference section */
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
-		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Crypto.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
 		A94702682932429F00FB3E59 /* DoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseChartView.swift; sourceTree = "<group>"; };
 		A947026B293254B500FB3E59 /* COBChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBChartView.swift; sourceTree = "<group>"; };
@@ -153,7 +150,6 @@
 				A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */,
 				A948D1A6292AB765003C5683 /* LoopUI.framework in Frameworks */,
 				A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */,
-				A933181C2969FC17006CC3A2 /* Crypto.framework in Frameworks */,
 				A973364329678EA400DFE395 /* NightscoutUploadKit.framework in Frameworks */,
 				A95F50CE292A66F200079AAF /* SwiftCharts in Frameworks */,
 			);
@@ -731,8 +727,8 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/mattrubin/OneTimePassword.git";
 			requirement = {
-				branch = develop;
-				kind = branch;
+				kind = revision;
+				revision = 8e4022f2852d77240d0a17482cbfe325354aac70;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */

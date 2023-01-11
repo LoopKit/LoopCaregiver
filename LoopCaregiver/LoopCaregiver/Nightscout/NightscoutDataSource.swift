@@ -92,9 +92,9 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return Date()
     }
     
-    func deliverCarbs(amountInGrams: Double, absorptionInHours: Double, consumedDate: Date) async throws {
+    func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date) async throws {
         //TODO: Ensure you get a valid OTP (non-empty String)
-        try await nightscoutUploader.deliverCarbs(amountInGrams: amountInGrams, absorptionInHours: absorptionInHours, consumedDate: consumedDate, otp: credentialService.otpCode)
+        try await nightscoutUploader.deliverCarbs(amountInGrams: amountInGrams, absorptionTime: absorptionTime, consumedDate: consumedDate, otp: credentialService.otpCode)
     }
     
     func deliverBolus(amountInUnits: Double) async throws {
@@ -102,8 +102,8 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         try await nightscoutUploader.deliverBolus(amountInUnits: amountInUnits, otp: credentialService.otpCode)
     }
     
-    func startOverride(overrideName: String, durationInMinutes: Int) async throws {
-        try await nightscoutUploader.startOverride(overrideName: overrideName, reasonDisplay: "Caregiver Update", durationInMinutes: durationInMinutes)
+    func startOverride(overrideName: String, durationTime: TimeInterval) async throws {
+        try await nightscoutUploader.startOverride(overrideName: overrideName, reasonDisplay: "Caregiver Update", durationTime: durationTime)
     }
     
     func cancelOverride() async throws {
