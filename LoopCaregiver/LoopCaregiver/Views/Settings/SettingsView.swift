@@ -12,6 +12,7 @@ struct SettingsView: View {
     @ObservedObject var accountService: AccountServiceManager
     @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     @AppStorage(UserDefaults.standard.timelinePredictionEnabledKey) private var timelinePredictionEnabled = false
+    @AppStorage(UserDefaults.standard.remoteCommands2EnabledKey) private var remoteCommands2Enabled = false
     
     @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
@@ -23,7 +24,7 @@ struct SettingsView: View {
                 Form {
                     Section("Loopers"){
                         List(accountService.loopers) { looper in
-                            NavigationLink(value: looper) {
+                            NavigationLink(value: accountService.createLooperService(looper: looper, settings: settings)) {
                                 Text(looper.name)
                             }
                         }
@@ -45,6 +46,11 @@ struct SettingsView: View {
                     Section("Timeline") {
                         Toggle("Show Prediction", isOn: $timelinePredictionEnabled)
                     }
+                    Section("Experimental") {
+                        Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
+                        Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
+                            .font(.footnote)
+                    }
                 }
             }
             .navigationBarTitle(Text("Settings"), displayMode: .inline)
@@ -54,11 +60,12 @@ struct SettingsView: View {
                 Text("Done").bold()
             })
             .navigationDestination(
-                for: Looper.self
-            ) { looper in
-                LooperView(looperService: accountService.createLooperService(looper: looper, settings: settings),
-                           nightscoutCredentialService: NightscoutCredentialService(credentials: looper.nightscoutCredentials),
-                           looper: looper,
+                for: LooperService.self
+            ) { looperService in
+                LooperView(looperService: looperService,
+                           nightscoutCredentialService: NightscoutCredentialService(credentials: looperService.looper.nightscoutCredentials),
+                           remoteDataSource: looperService.remoteDataSource,
+                           looper: looperService.looper,
                            path: $path)
             }
             .navigationDestination(

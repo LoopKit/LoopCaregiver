@@ -149,7 +149,7 @@ struct BolusInputView: View {
     
     private func deliverBolus() async throws {
         let fieldValues = try getBolusFieldValues()
-        let _ = try await looperService.remoteDataSource.deliverBolus(amountInUnits: fieldValues.bolusAmount)
+        let _ = try await remoteDataSource.deliverBolus(amountInUnits: fieldValues.bolusAmount)
     }
     
     private func validateForm() throws {

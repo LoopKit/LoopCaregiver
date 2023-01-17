@@ -12,10 +12,12 @@ class CaregiverSettings: ObservableObject {
     
     @Published var glucoseDisplayUnits: HKUnit
     @Published var timelinePredictionEnabled: Bool
+    @Published var remoteCommands2Enabled: Bool
     
     init(){
         self.glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
         self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
+        self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
@@ -27,6 +29,10 @@ class CaregiverSettings: ObservableObject {
         
         if self.timelinePredictionEnabled != UserDefaults.standard.timelinePredictionEnabled {
             self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
+        }
+        
+        if self.remoteCommands2Enabled != UserDefaults.standard.remoteCommands2Enabled {
+            self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
         }
     }
     
@@ -67,12 +73,20 @@ extension UserDefaults {
         return "timelinePredictionEnabled"
     }
     
+    var remoteCommands2EnabledKey: String {
+        return "remoteCommands2Enabled"
+    }
+    
     @objc dynamic var glucosePreference: GlucoseUnitPrefererence {
         return GlucoseUnitPrefererence(rawValue: integer(forKey: glucoseUnitKey)) ?? .milligramsPerDeciliter
     }
     
     @objc dynamic var timelinePredictionEnabled: Bool {
         return UserDefaults.standard.bool(forKey: timelinePredictionEnabledKey)
+    }
+    
+    @objc dynamic var remoteCommands2Enabled: Bool {
+        return UserDefaults.standard.bool(forKey: remoteCommands2EnabledKey)
     }
 }
 

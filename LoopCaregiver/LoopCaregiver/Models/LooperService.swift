@@ -7,7 +7,7 @@
 
 import Foundation
 
-class LooperService: ObservableObject {
+class LooperService: ObservableObject, Hashable {
     
     let looper: Looper
     let accountService: AccountServiceManager
@@ -19,5 +19,15 @@ class LooperService: ObservableObject {
         self.accountService = accountService
         self.remoteDataSource = remoteDataSource
         self.settings = settings
+    }
+    
+    //Hashable
+    
+    static func == (lhs: LooperService, rhs: LooperService) -> Bool {
+        lhs.looper.id == rhs.looper.id
+    }
+    
+    func hash(into hasher: inout Hasher) {
+        hasher.combine(looper.id)
     }
 }
