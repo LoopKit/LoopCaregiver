@@ -12,6 +12,8 @@ import LocalAuthentication
 struct BolusInputView: View {
 
     let looperService: LooperService
+    let timer = Timer.publish(every: 1, on: .main, in: .common).autoconnect()
+    @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @Binding var showSheetView: Bool
     
     @State private var bolusAmount: String = ""
@@ -19,6 +21,7 @@ struct BolusInputView: View {
     @State private var submissionInProgress = false
     @State private var isPresentingConfirm: Bool = false
     @State private var errorText: String? = nil
+    @State private var nowDate: Date = Date()
     @FocusState private var bolusInputViewIsFocused: Bool
     
     private let maxBolusAmount = 10.0 //TODO: Check Looper's max bolus amount
@@ -32,6 +35,14 @@ struct BolusInputView: View {
                     if let errorText {
                         Text(errorText)
                             .foregroundColor(.critical)
+                    }
+                    if let deviceDate = remoteDataSource.latestDeviceStatus?.timestamp, remoteDataSource.recommendedBolus != nil {
+                        let interval = nowDate.timeIntervalSince(deviceDate)
+                        Text("WARNING: New treatments may have occurred since the last recommended bolus was calculated \(LocalizationUtils.presentableMinutesFormat(timeInterval: interval)) ago.")
+                            .font(.callout)
+                            .foregroundColor(.red)
+                            .padding()
+                        Spacer()
                     }
                     Button("Deliver") {
                         deliverButtonTapped()
@@ -49,6 +60,9 @@ struct BolusInputView: View {
                     }
                 }
                 .disabled(submissionInProgress)
+                .onReceive(timer) { input in
+                    nowDate = Date()
+                }
                 if submissionInProgress {
                     ProgressView()
                 }
@@ -64,6 +78,15 @@ struct BolusInputView: View {
     
     var bolusEntryForm: some View {
         Form {
+            if let recommendedBolus = remoteDataSource.recommendedBolus {
+                LabeledContent {
+                    Text(LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus))
+                    Text("U")
+                        .frame(width: unitFrameWidth)
+                } label: {
+                    Text("Recommended Bolus")
+                }
+            }
             LabeledContent {
                 TextField(
                     "0",
@@ -74,6 +97,9 @@ struct BolusInputView: View {
                 .focused($bolusInputViewIsFocused)
                 .onAppear(perform: {
                     bolusInputViewIsFocused = true
+                    if let recommendedBolus = remoteDataSource.recommendedBolus {
+                        bolusAmount = LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus)
+                    }
                 })
                 Text("U")
                     .frame(width: unitFrameWidth)

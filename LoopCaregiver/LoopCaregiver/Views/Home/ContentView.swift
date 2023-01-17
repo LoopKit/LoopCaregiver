@@ -60,9 +60,13 @@ struct HomeView: View {
         VStack {
             HUDView(looperService: looperService, settings: looperService.settings)
                 .padding([.leading, .trailing])
+            if let recommendedBolus = remoteDataSource.recommendedBolus {
+                TitleSubtitleRowView(title: "Recommended Bolus", subtitle: LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus) + " U")
+                    .padding([.leading, .trailing, .bottom])
+            }
             ChartsListView(looperService: looperService, remoteDataSource: remoteDataSource, settings: looperService.settings)
                 .padding([.leading, .trailing, .bottom])
-            Spacer()
+            Spacer()    
             BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
         }
         .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
@@ -70,7 +74,7 @@ struct HomeView: View {
             CarbInputView(looperService: looperService, showSheetView: $showCarbView)
         }
         .sheet(isPresented: $showBolusView) {
-            BolusInputView(looperService: looperService, showSheetView: $showBolusView)
+            BolusInputView(looperService: looperService, remoteDataSource: looperService.remoteDataSource, showSheetView: $showBolusView)
         }
         .sheet(isPresented: $showOverrideView) {
             OverrideView(looperService: looperService, showSheetView: $showOverrideView)

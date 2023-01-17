@@ -133,18 +133,27 @@ struct ChartWrapperView<ChartContent:View>: View {
     
     var body: some View {
         VStack {
-            HStack {
-                Text(title)
-                    .bold()
-                    .font(.subheadline)
-                Spacer()
-                Text(subtitle)
-                    .foregroundColor(.gray)
-                    .bold()
-                    .font(.subheadline)
-            }
+            TitleSubtitleRowView(title: title, subtitle: subtitle)
             .opacity(hideLabels ? 0.0 : 1.0)
             chartContent
+        }
+    }
+}
+
+struct TitleSubtitleRowView: View {
+    let title: String
+    let subtitle: String
+    
+    var body: some View {
+        HStack {
+            Text(title)
+                .bold()
+                .font(.subheadline)
+            Spacer()
+            Text(subtitle)
+                .foregroundColor(.gray)
+                .bold()
+                .font(.subheadline)
         }
     }
 }

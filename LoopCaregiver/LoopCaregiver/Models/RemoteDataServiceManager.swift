@@ -18,6 +18,8 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     @Published var carbEntries: [CarbCorrectionNightscoutTreatment] = []
     @Published var bolusEntries: [BolusNightscoutTreatment] = []
     @Published var basalEntries: [TempBasalNightscoutTreatment] = []
+    @Published var latestDeviceStatus: DeviceStatus? = nil
+    @Published var recommendedBolus: Double? = nil
     @Published var currentIOB: IOBStatus? = nil
     @Published var currentCOB: COBStatus? = nil
     @Published var currentProfile: ProfileSet?
@@ -35,76 +37,122 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     func monitorForUpdates(updateInterval: TimeInterval) {
         self.dateUpdateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { timer in
             Task {
-                try await self.updateData()
+                await self.updateData()
             }
         })
         
         self.infrequentDataUpdateTimer = Timer.scheduledTimer(withTimeInterval: 60 * 30, repeats: true, block: { timer in
             Task {
-                try await self.updateInfrequentData()
+                await self.updateInfrequentData()
             }
         })
         
         Task {
-            try await self.updateData()
-            try await self.updateInfrequentData()
+            await self.updateData()
+            await self.updateInfrequentData()
         }
     }
     
     @MainActor
-    func updateData() async throws {
+    func updateData() async {
         
         updating = true
         
-        let glucoseSamplesAsync = try await remoteDataProvider.fetchGlucoseSamples()
-            .sorted(by: {$0.date < $1.date})
+        do {
+            let glucoseSamplesAsync = try await remoteDataProvider.fetchGlucoseSamples()
+                .sorted(by: {$0.date < $1.date})
+                
+            if glucoseSamplesAsync != self.glucoseSamples {
+                self.glucoseSamples = glucoseSamplesAsync
+            }
             
-        if glucoseSamplesAsync != self.glucoseSamples {
-            self.glucoseSamples = glucoseSamplesAsync
-        }
-        
-        if let latestGlucoseSample = glucoseSamplesAsync.filter({$0.date <= nowDate()}).last, latestGlucoseSample != currentGlucoseSample {
-            currentGlucoseSample = latestGlucoseSample
-        }
-        
-        async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
-        async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
-        async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
-        async let deviceStatusAsync = remoteDataProvider.fetchLatestDeviceStatus()
+            if let latestGlucoseSample = glucoseSamplesAsync.filter({$0.date <= nowDate()}).last, latestGlucoseSample != currentGlucoseSample {
+                currentGlucoseSample = latestGlucoseSample
+            }
+            
+            async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
+            async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
+            async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
+            async let deviceStatusAsync = remoteDataProvider.fetchLatestDeviceStatus()
 
-        let carbEntries = try await carbEntriesAsync
-        if carbEntries != self.carbEntries {
-            self.carbEntries = carbEntries
-        }
-        
-        let bolusEntries = try await bolusEntriesAsync
-        if bolusEntries != self.bolusEntries {
-            self.bolusEntries = bolusEntries
-        }
-        
-        let basalEntries = try await basalEntriesAsync
-        if basalEntries != self.basalEntries {
-            self.basalEntries = basalEntries
-        }
-        
-        if let deviceStatus = try await deviceStatusAsync {
-            if let iob = deviceStatus.loopStatus?.iob,
-               iob != self.currentIOB {
-                self.currentIOB = iob
+            let carbEntries = try await carbEntriesAsync
+            if carbEntries != self.carbEntries {
+                self.carbEntries = carbEntries
             }
             
-            if let cob = deviceStatus.loopStatus?.cob,
-               cob != self.currentCOB {
-                self.currentCOB = cob
+            let bolusEntries = try await bolusEntriesAsync
+            if bolusEntries != self.bolusEntries {
+                self.bolusEntries = bolusEntries
             }
             
-            let predictedGlucoseSamples = predictedGlucoseSamples(latestDeviceStatus: deviceStatus)
-            if predictedGlucoseSamples != self.predictedGlucose {
-                self.predictedGlucose = predictedGlucoseSamples
+            let basalEntries = try await basalEntriesAsync
+            if basalEntries != self.basalEntries {
+                self.basalEntries = basalEntries
             }
+            
+            if let deviceStatus = try await deviceStatusAsync {
+                
+                if latestDeviceStatus?.timestamp != deviceStatus.timestamp {
+                    self.latestDeviceStatus = deviceStatus
+                }
+                
+                if let iob = deviceStatus.loopStatus?.iob,
+                   iob != self.currentIOB {
+                    self.currentIOB = iob
+                }
+                
+                if let cob = deviceStatus.loopStatus?.cob,
+                   cob != self.currentCOB {
+                    self.currentCOB = cob
+                }
+                
+                let predictedGlucoseSamples = predictedGlucoseSamples(latestDeviceStatus: deviceStatus)
+                if predictedGlucoseSamples != self.predictedGlucose {
+                    self.predictedGlucose = predictedGlucoseSamples
+                }
+            }
+            
+        } catch {
+            
         }
         
         updating = false
+        self.refreshCalculatedData()
+    }
+    
+    @MainActor
+    func refreshCalculatedData() {
+        guard let updatedRecomendedBolus = calculateValidRecommendedBolus() else {
+            self.recommendedBolus = nil
+            return
+        }
+        
+        guard self.recommendedBolus != updatedRecomendedBolus else {
+            return
+        }
+        
+        self.recommendedBolus = updatedRecomendedBolus
+    }
+  
+    func calculateValidRecommendedBolus() -> Double? {
+        guard let latestDeviceStatus = self.latestDeviceStatus else {
+            return nil
+        }
+        
+        guard let recommendedBolus = latestDeviceStatus.loopStatus?.recommendedBolus else {
+            return nil
+        }
+        
+        guard recommendedBolus > 0.0 else {
+            return nil
+        }
+        
+        let expired = Date().timeIntervalSince(latestDeviceStatus.timestamp) > 60 * 7
+        guard !expired  else {
+            return nil
+        }
+        
+        return recommendedBolus
     }
     
     func predictedGlucoseSamples(latestDeviceStatus: DeviceStatus) -> [NewGlucoseSample] {
@@ -137,14 +185,19 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     }
 
     @MainActor
-    func updateInfrequentData() async throws {
+    func updateInfrequentData() async {
 
-        async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
-        
-        let currentProfile = try await curentProfileAsync
-        if currentProfile != self.currentProfile {
-            self.currentProfile = currentProfile
+        do {
+            async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
+            
+            let currentProfile = try await curentProfileAsync
+            if currentProfile != self.currentProfile {
+                self.currentProfile = currentProfile
+            }
+        } catch {
+            print("Error: \(error)")
         }
+
     }
     
     func nowDate() -> Date {
