@@ -86,6 +86,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LoopCaregiver.xcconfig; sourceTree = "<group>"; };
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
 		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
@@ -344,6 +345,7 @@
 				A9EC197A291FEF940022D39F /* LoopCaregiver */,
 				A9EC1979291FEF940022D39F /* Products */,
 				A95F50BE292A602E00079AAF /* Frameworks */,
+				3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */,
 			);
 			sourceTree = "<group>";
 		};
@@ -507,6 +509,7 @@
 /* Begin XCBuildConfiguration section */
 		A9EC1984291FEF950022D39F /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -567,6 +570,7 @@
 		};
 		A9EC1985291FEF950022D39F /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_NONNULL = YES;
@@ -627,7 +631,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiver/Preview Content\"";
-				DEVELOPMENT_TEAM = 5K844XFC6W;
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used for scanning QR codes from Looper's device";
@@ -659,7 +663,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiver/Preview Content\"";
-				DEVELOPMENT_TEAM = 5K844XFC6W;
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_NSCameraUsageDescription = "Used for scanning QR codes from Looper's device";
