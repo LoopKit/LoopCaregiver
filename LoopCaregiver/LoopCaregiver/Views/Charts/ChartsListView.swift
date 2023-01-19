@@ -25,7 +25,7 @@ struct ChartsListView: View {
     
     var body: some View {
         ChartWrapperView(title:"Glucose", subtitle: eventualGlucose(), hideLabels: $isInteractingWithPredictedChart) {
-            if remoteDataSource.glucoseSamples.count > 0, remoteDataSource.predictedGlucose.count > 0 {
+            if remoteDataSource.glucoseSamples.count > 0 {
                 PredictedGlucoseChartView(remoteDataSource: remoteDataSource,
                                           settings: settings,
                                           targetGlucoseSchedule: nil,
