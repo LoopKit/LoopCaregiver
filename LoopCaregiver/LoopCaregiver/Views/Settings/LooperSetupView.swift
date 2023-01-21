@@ -11,7 +11,8 @@ import CodeScanner
 
 struct LooperSetupView: View {
     
-    @ObservedObject var looperService: AccountServiceManager
+    @ObservedObject var accountService: AccountServiceManager
+    @ObservedObject var settings: CaregiverSettings
     @State private var nightscoutURLFieldText: String = ""
     @State private var nameFieldText: String = ""
     @State private var apiSecretFieldText: String = ""
@@ -19,57 +20,16 @@ struct LooperSetupView: View {
     @State private var errorText: String?
     @State private var showingSignoutAlert = false
     @State private var isShowingScanner = false
+    @State private var authenticating = false
     @Binding var path: NavigationPath
     
     var body: some View {
         
         VStack {
-            Form {
-                Section {
-                    TextField(
-                        "Name",
-                        text: $nameFieldText, onCommit:
-                            {
-                                self.save()
-                            })
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    TextField(
-                        "Nightscout URL",
-                        text: $nightscoutURLFieldText, onCommit:
-                            {
-                                self.save()
-                            })
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    TextField(
-                        "API Secret",
-                        text: $apiSecretFieldText
-                    ) {
-                        self.save()
-                    }
-                    .autocapitalization(.none)
-                    .disableAutocorrection(true)
-                    if qrURLFieldText == "" {
-                        Button {
-                            isShowingScanner = true
-                        } label: {
-                            Text("Scan QR")
-                        }
-                    } else {
-                        TextField(
-                            "QR Scan",
-                            text: $qrURLFieldText, onCommit:
-                                {
-                                    self.save()
-                                }
-                        )
-                        .autocapitalization(.none)
-                        .disableAutocorrection(true)
-                    }
-                }
+            inputFormView
+            if authenticating {
+                ProgressView("Checking credentials...")
             }
-            
             Spacer()
             Button("Add Looper") {
                 self.save()
@@ -77,7 +37,7 @@ struct LooperSetupView: View {
             .buttonStyle(.borderedProminent)
             .frame(maxWidth: .infinity)
             .padding()
-            .disabled(disableForm())
+            .disabled(disableFormSubmission())
             if let errorText = errorText {
                 Text("\(errorText)").foregroundColor(.red)
             }
@@ -87,7 +47,7 @@ struct LooperSetupView: View {
         }
         .navigationTitle("Add Looper")
         .onAppear(perform: {
-            if let simCredentials = looperService.simulatorCredentials() {
+            if let simCredentials = accountService.simulatorCredentials() {
                 nightscoutURLFieldText = simCredentials.url.absoluteString
                 nameFieldText = "Jill-\(Int.random(in: 0...100))"
                 apiSecretFieldText = simCredentials.secretKey
@@ -97,8 +57,56 @@ struct LooperSetupView: View {
         
     }
     
-    private func disableForm() -> Bool {
-        return !nameFieldValid() || !nightscoutURLFieldValid() || !apiSecretFieldValid() || !qrURLFieldValid()
+    private var inputFormView: some View {
+        Form {
+            Section {
+                TextField(
+                    "Name",
+                    text: $nameFieldText, onCommit:
+                        {
+                            self.save()
+                        })
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                TextField(
+                    "Nightscout URL",
+                    text: $nightscoutURLFieldText, onCommit:
+                        {
+                            self.save()
+                        })
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                TextField(
+                    "API Secret",
+                    text: $apiSecretFieldText
+                ) {
+                    self.save()
+                }
+                .autocapitalization(.none)
+                .disableAutocorrection(true)
+                if qrURLFieldText == "" {
+                    Button {
+                        isShowingScanner = true
+                    } label: {
+                        Text("Scan QR")
+                    }
+                } else {
+                    TextField(
+                        "QR Scan",
+                        text: $qrURLFieldText, onCommit:
+                            {
+                                self.save()
+                            }
+                    )
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
+                }
+            }
+        }
+    }
+    
+    private func disableFormSubmission() -> Bool {
+        return !nameFieldValid() || !nightscoutURLFieldValid() || !apiSecretFieldValid() || !qrURLFieldValid() || authenticating
     }
     
     //TODO: This should just check if empty... And have separate methods if valid that can throw errors.
@@ -126,29 +134,34 @@ struct LooperSetupView: View {
             qrURLFieldText = result.string
         case .failure(let error):
             //TODO: Show error message
+            errorText = "\(error.localizedDescription)"
             print("Scanning failed: \(error.localizedDescription)")
         }
     }
     
     private func save(){
-        do {
-            errorText = ""
-            //TODO: Validate URL and show error
-            try save(nightscoutURL: nightscoutURLFieldText, name: nameFieldText, apiSecret: apiSecretFieldText, otpURL: qrURLFieldText)
-            path.removeLast()
-        } catch {
-            errorText = "\(error.localizedDescription)"
+        Task {
+            do {
+                errorText = ""
+                authenticating = true
+                try await save(nightscoutURLText: nightscoutURLFieldText, name: nameFieldText, apiSecret: apiSecretFieldText, otpURL: qrURLFieldText)
+                path.removeLast()
+            } catch {
+                errorText = "\(error.localizedDescription)"
+            }
+            
+            authenticating = false
         }
     }
     
-    func save(nightscoutURL: String?, name: String?, apiSecret: String?, otpURL: String?) throws {
+    func save(nightscoutURLText: String?, name: String?, apiSecret: String?, otpURL: String?) async throws {
         
         guard let name = name, name.count > 0 else {
             throw AccountViewModelError.genericError(message: "Must enter Looper Name")
         }
         
-        guard let nightscoutURL = nightscoutURL, nightscoutURL.count > 0 else {
-            throw AccountViewModelError.genericError(message: "Must enter Nightscout URL")
+        guard let nightscoutURLString = nightscoutURLText, let nightscoutURL = URL(string: nightscoutURLString) else {
+            throw AccountViewModelError.genericError(message: "Must enter valid Nightscout URL")
         }
         
         guard let apiSecret = apiSecret, apiSecret.count > 0 else {
@@ -156,18 +169,19 @@ struct LooperSetupView: View {
         }
         
         guard let otpURL = otpURL, otpURL.count > 0 else {
-            throw AccountViewModelError.genericError(message: "Must enter OTPURL")
+            throw AccountViewModelError.genericError(message: "Must enter OTP URL")
         }
 
-        //TODO: Remove force cast
-        let looper = Looper(name: name, nightscoutCredentials: NightscoutCredentials(url: URL(string: nightscoutURL)!, secretKey: apiSecret, otpURL: otpURL), lastSelectedDate: Date())
+        let looper = Looper(name: name, nightscoutCredentials: NightscoutCredentials(url: nightscoutURL, secretKey: apiSecret, otpURL: otpURL), lastSelectedDate: Date())
+        let service = accountService.createLooperService(looper: looper, settings: settings)
+        try await service.remoteDataSource.checkAuth()
         
-        try looperService.addLooper(looper)
-        try looperService.updateActiveLoopUser(looper)
+        try accountService.addLooper(looper)
+        try accountService.updateActiveLoopUser(looper)
     }
     
     func simulatedOTP() -> String {
-        if let url = looperService.simulatorCredentials()?.otpURL {
+        if let url = accountService.simulatorCredentials()?.otpURL {
             return url
         } else {
             return ""

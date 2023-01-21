@@ -92,6 +92,18 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return Date()
     }
     
+    func checkAuth() async throws {
+        try await withCheckedThrowingContinuation({ (continuation: CheckedContinuation<Void, Error>) -> Void in
+            nightscoutUploader.checkAuth { error in
+                if let error = error {
+                    continuation.resume(throwing: error)
+                } else {
+                    continuation.resume(returning: Void())
+                }
+            }
+        })
+    }
+    
     func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date) async throws {
         //TODO: Ensure you get a valid OTP (non-empty String)
         try await nightscoutUploader.deliverCarbs(amountInGrams: amountInGrams, absorptionTime: absorptionTime, consumedDate: consumedDate, otp: credentialService.otpCode)

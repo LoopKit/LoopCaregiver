@@ -64,7 +64,7 @@ struct SettingsView: View {
             .navigationDestination(
                 for: String.self
             ) { val in
-                LooperSetupView(looperService: accountService, path: $path)
+                LooperSetupView(accountService: accountService, settings: settings, path: $path)
             }
         }
     }

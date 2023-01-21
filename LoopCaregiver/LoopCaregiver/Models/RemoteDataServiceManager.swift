@@ -207,6 +207,10 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     //MARK: RemoteDataServiceProvider
     
+    func checkAuth() async throws {
+        try await remoteDataProvider.checkAuth()
+    }
+    
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
         return try await remoteDataProvider.fetchGlucoseSamples()
     }
@@ -250,6 +254,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
 
 protocol RemoteDataServiceProvider {
+    func checkAuth() async throws
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample]
     func fetchBolusEntries() async throws -> [BolusNightscoutTreatment]
     func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment]
