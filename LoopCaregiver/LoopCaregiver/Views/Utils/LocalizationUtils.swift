@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import HealthKit
 
 struct LocalizationUtils {
     
@@ -13,13 +14,26 @@ struct LocalizationUtils {
         return localizedNumberString(input: amount, maxFractionalDigits: 2)
     }
     
+    static func presentableStringFromGlucoseAmount(_ amount: Double, displayUnits: HKUnit) -> String {
+        var minFractionalDigits = 0
+        var maxFractionalDigits = 0
+        if displayUnits == .millimolesPerLiter {
+            minFractionalDigits = 1
+            maxFractionalDigits = 1
+        }
+        return LocalizationUtils.localizedNumberString(input: amount, minFractionalDigits: minFractionalDigits, maxFractionalDigits: maxFractionalDigits)
+    }
+    
     static func doubleFromUserInput(_ string: String) -> Double? {
         let numFormatter = NumberFormatter()
         return numFormatter.number(from: string) as? Double
     }
     
-    static func localizedNumberString(input: Double, maxFractionalDigits: Int? = nil) -> String {
+    private static func localizedNumberString(input: Double, minFractionalDigits: Int? = nil, maxFractionalDigits: Int? = nil) -> String {
         let numberFormatter = NumberFormatter()
+        if let minFractionalDigits {
+            numberFormatter.minimumFractionDigits = minFractionalDigits
+        }
         if let maxFractionalDigits {
             numberFormatter.maximumFractionDigits = maxFractionalDigits
         }

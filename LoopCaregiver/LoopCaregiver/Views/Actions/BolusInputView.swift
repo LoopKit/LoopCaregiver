@@ -197,7 +197,7 @@ enum BolusInputViewError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .invalidBolusAmount(let maxBolusAmount):
-            let localizedAmount = LocalizationUtils.localizedNumberString(input: maxBolusAmount)
+            let localizedAmount = LocalizationUtils.presentableStringFromBolusAmount(maxBolusAmount)
             return "Enter a valid bolus amount up to \(localizedAmount) units"
         }
     }
