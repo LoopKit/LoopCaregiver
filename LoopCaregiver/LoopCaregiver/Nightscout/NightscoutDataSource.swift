@@ -85,7 +85,10 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     func maxFetchCount() -> Int {
         let seconds = fetchEndDate().timeIntervalSince(fetchStartDate())
         let minutes = seconds / 60
-        return Int(minutes / 5 * 2) // Assume 1 entry every 5 minutes for bgs. Multiply by 2 in case double entries uploaded
+        // Assume up to 2 entries every 1 minute.
+        // We tried 1 entry per 5 minutes for bg, mulitplied by a factor for 2,
+        // but this was not enoughf for some users.
+        return Int(minutes * 2)
     }
     
     func nowDate() -> Date {
