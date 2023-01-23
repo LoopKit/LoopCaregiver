@@ -152,6 +152,13 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             return nil
         }
         
+        if let latestBolusEntry = bolusEntries.filter({$0.timestamp < nowDate()}).sorted(by: {$0.timestamp < $1.timestamp}).last {
+            if latestBolusEntry.timestamp >= latestDeviceStatus.timestamp {
+                //Reject recommended bolus if a bolus occurred afterward.
+                return nil
+            }
+        }
+        
         return recommendedBolus
     }
     
