@@ -1,6 +1,6 @@
 # Using Github Actions + FastLane to deploy to TestFlight
 
-These instructions allow you to build Loop without having access to a Mac. They also allow you to easily install Loop on phones that are not connected to your computer. So you can send builds and updates to those you care for easily, or have an easy to access backup if you run Loop for yourself. You do not need to worry about correct Xcode/Mac versions either. An app built using this method can easily be deployed to newer versions of iOS, as soon as they are available.
+These instructions allow you to build Loop (and optionally, LoopCaregiver) without having access to a Mac. They also allow you to easily install Loop on phones that are not connected to your computer. So you can send builds and updates to those you care for easily, or have an easy to access backup if you run Loop for yourself. You do not need to worry about correct Xcode/Mac versions either. An app built using this method can easily be deployed to newer versions of iOS, as soon as they are available.
 
 The setup steps are somewhat involved, but nearly all are one time steps. Subsequent builds are trivial.  Note that TestFlight requires apple id accounts 13 years or older. Your app must be updated once every 90 days, but it's a simple click to make a new build and can be done from anywhere.
 
@@ -93,6 +93,21 @@ If you have created a Loop app in App Store Connect before, you can skip this se
 
 You do not need to fill out the next form. That is for submitting to the app store.
 
+## Create LoopCaregiver App in App Store Connect (Optional)
+
+If you have created a LoopCaregiver app in App Store Connect before with a bundle ID that matches `com.TEAMID.loopkit.LoopCaregiver`, with TEAMID matching your team id, you can skip this section as well.
+
+1. Go to the [apps list](https://appstoreconnect.apple.com/apps) on App Store Connect and click the blue "plus" icon to create a New App.
+    * Select "iOS".
+    * Select a name: this will have to be unique, so you may have to try a few different names here, but it will not be the name you see on your phone, so it's not that important.
+    * Select your primary language.
+    * Choose the bundle ID that matches `com.TEAMID.loopkit.LoopCaregiver`, with TEAMID matching your team id.
+    * SKU can be anything; e.g. "123".
+    * Select "Full Access".
+1. Click Create
+
+You do not need to fill out the next form. That is for submitting to the app store.
+
 ## Create Building Certficates
 
 1. Go back to the "Actions" tab of your LoopWorkspace repository in github.
@@ -106,6 +121,17 @@ You do not need to fill out the next form. That is for submitting to the app sto
 1. Select "Build Loop".
 1. Click "Run Workflow", select your branch, and tap the green button.
 1. You have some time now. Go enjoy a coffee. The build should take about 20-30 minutes.
+1. Your app should eventually appear on [App Store Connect](https://appstoreconnect.apple.com/apps).
+1. For each phone/person you would like to support Loop on:
+    * Add them in [Users and Access](https://appstoreconnect.apple.com/access/users) on App Store Connect.
+    * Add them to your TestFlight Internal Testing group.
+
+## Build LoopCaregiver (Optional)
+
+1. Click on the "Actions" tab of your LoopWorkspace repository.
+1. Select "Build LoopCaregiver".
+1. Click "Run Workflow", select your branch, and tap the green button.
+1. You have some time now. Go enjoy a coffee. The build should take about 10-15 minutes.
 1. Your app should eventually appear on [App Store Connect](https://appstoreconnect.apple.com/apps).
 1. For each phone/person you would like to support Loop on:
     * Add them in [Users and Access](https://appstoreconnect.apple.com/access/users) on App Store Connect.
