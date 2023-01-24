@@ -205,7 +205,7 @@ platform :ios do
     
   end
 
-  desc "Provision Certificates"
+  desc "Provision Loop Certificates"
   lane :loop_certs do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
@@ -231,7 +231,7 @@ platform :ios do
     )
   end
 
-  desc "Build LoopCaregiver"
+  desc "Build Caregiver"
   lane :caregiver_build do
     setup_ci if ENV['CI']
     
@@ -304,7 +304,7 @@ platform :ios do
     )
   end
 
-  desc "Push LoopCaregiver to TestFlight"
+  desc "Push Caregiver to TestFlight"
   lane :caregiver_release do
     api_key = app_store_connect_api_key(
       key_id: "#{FASTLANE_KEY_ID}",
@@ -320,11 +320,11 @@ platform :ios do
     )
   end
 
-  desc "Provision LoopCaregiver Identifiers"
-  lane :caregiver_identifiers do
+  desc "Provision LoopCaregiver Identifier"
+  lane :caregiver_identifier do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
-    
+
     app_store_connect_api_key(
       key_id: "#{FASTLANE_KEY_ID}",
       issuer_id: "#{FASTLANE_ISSUER_ID}",
@@ -339,16 +339,12 @@ platform :ios do
     end
 
     configure_bundle_id("LoopCaregiver", "com.#{TEAMID}.loopkit.LoopCaregiver", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::HEALTHKIT,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::PUSH_NOTIFICATIONS,
-      Spaceship::ConnectAPI::BundleIdCapability::Type::SIRIKIT
     ])
-    
+
   end
 
-  desc "Provision LoopCaregiver Certificates"
-  lane :caregiver_certs do
+  desc "Provision Caregiver Certificate"
+  lane :caregiver_cert do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
     
