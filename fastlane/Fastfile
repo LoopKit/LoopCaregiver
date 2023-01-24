@@ -320,7 +320,7 @@ platform :ios do
     )
   end
 
-  desc "Provision LoopCaregiver Identifier"
+  desc "Provision Caregiver Identifier"
   lane :caregiver_identifier do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
