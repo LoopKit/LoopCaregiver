@@ -25,7 +25,7 @@ ENV["FASTLANE_XCODEBUILD_SETTINGS_TIMEOUT"] = "120"
 
 platform :ios do
   desc "Build Loop"
-  lane :build_loop do
+  lane :loop_build do
     setup_ci if ENV['CI']
     
     update_project_team(
@@ -143,8 +143,8 @@ platform :ios do
     )
   end
 
-  desc "Push to TestFlight"
-  lane :release do
+  desc "Push Loop to TestFlight"
+  lane :loop_release do
     api_key = app_store_connect_api_key(
       key_id: "#{FASTLANE_KEY_ID}",
       issuer_id: "#{FASTLANE_ISSUER_ID}",
@@ -159,8 +159,8 @@ platform :ios do
     )
   end
 
-  desc "Provision Identifiers and Certificates"
-  lane :identifiers do
+  desc "Provision Loop Identifiers"
+  lane :loop_identifiers do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
     
@@ -205,8 +205,8 @@ platform :ios do
     
   end
 
-  desc "Provision Certificates"
-  lane :certs do
+  desc "Provision Loop Certificates"
+  lane :loop_certs do
     setup_ci if ENV['CI']
     ENV["MATCH_READONLY"] = false.to_s
     
@@ -227,6 +227,139 @@ platform :ios do
         "com.#{TEAMID}.loopkit.Loop.LoopWatch", 
         "com.#{TEAMID}.loopkit.Loop.Loop-Intent-Extension",
         "com.#{TEAMID}.loopkit.Loop.SmallStatusWidget",
+      ]
+    )
+  end
+
+  desc "Build Caregiver"
+  lane :caregiver_build do
+    setup_ci if ENV['CI']
+    
+    update_project_team(
+      path: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
+      teamid: "#{TEAMID}"
+    )
+
+    api_key = app_store_connect_api_key(
+      key_id: "#{FASTLANE_KEY_ID}",
+      issuer_id: "#{FASTLANE_ISSUER_ID}",
+      key_content: "#{FASTLANE_KEY}"
+    )
+
+    previous_build_number = latest_testflight_build_number(
+      app_identifier: "com.#{TEAMID}.loopkit.LoopCaregiver",
+      api_key: api_key,
+    )
+
+    current_build_number = previous_build_number + 1
+
+    increment_build_number(
+      xcodeproj: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
+      build_number: current_build_number
+    )      
+    
+    match(
+      type: "appstore",
+      git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
+      app_identifier: [
+        "com.#{TEAMID}.loopkit.LoopCaregiver"
+      ]
+    )
+
+    previous_build_number = latest_testflight_build_number(
+      app_identifier: "com.#{TEAMID}.loopkit.LoopCaregiver",
+      api_key: api_key,
+    )
+
+    current_build_number = previous_build_number + 1
+
+    increment_build_number(
+      xcodeproj: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
+      build_number: current_build_number
+    )
+    
+    mapping = Actions.lane_context[
+      SharedValues::MATCH_PROVISIONING_PROFILE_MAPPING
+    ]
+
+    update_code_signing_settings(
+      path: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
+      profile_name: mapping["com.#{TEAMID}.loopkit.LoopCaregiver"],
+      code_sign_identity: "iPhone Distribution",
+      targets: ["LoopCaregiver"]
+    )
+
+    gym(
+      export_method: "app-store",
+      scheme: "LoopCaregiver",
+      output_name: "LoopCaregiver.ipa",
+      configuration: "Release",
+      destination: 'generic/platform=iOS',
+      buildlog_path: 'buildlog'
+    )
+
+    copy_artifacts(
+      target_path: "artifacts",
+      artifacts: ["*.mobileprovision", "*.ipa", "*.dSYM.zip"]
+    )
+  end
+
+  desc "Push Caregiver to TestFlight"
+  lane :caregiver_release do
+    api_key = app_store_connect_api_key(
+      key_id: "#{FASTLANE_KEY_ID}",
+      issuer_id: "#{FASTLANE_ISSUER_ID}",
+      key_content: "#{FASTLANE_KEY}"
+    )
+    
+    upload_to_testflight(
+      api_key: api_key,
+      skip_submission: false,
+      ipa: "LoopCaregiver.ipa",
+      skip_waiting_for_build_processing: true,
+    )
+  end
+
+  desc "Provision Caregiver Identifier"
+  lane :caregiver_identifier do
+    setup_ci if ENV['CI']
+    ENV["MATCH_READONLY"] = false.to_s
+
+    app_store_connect_api_key(
+      key_id: "#{FASTLANE_KEY_ID}",
+      issuer_id: "#{FASTLANE_ISSUER_ID}",
+      key_content: "#{FASTLANE_KEY}"
+    )
+
+    def configure_bundle_id(name, identifier, capabilities)
+      bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier) || Spaceship::ConnectAPI::BundleId.create(name: name, identifier: identifier)
+      capabilities.each { |capability|
+        bundle_id.create_capability(capability)
+      }
+    end
+
+    configure_bundle_id("LoopCaregiver", "com.#{TEAMID}.loopkit.LoopCaregiver", [
+    ])
+
+  end
+
+  desc "Provision Caregiver Certificate"
+  lane :caregiver_cert do
+    setup_ci if ENV['CI']
+    ENV["MATCH_READONLY"] = false.to_s
+    
+    app_store_connect_api_key(
+      key_id: "#{FASTLANE_KEY_ID}",
+      issuer_id: "#{FASTLANE_ISSUER_ID}",
+      key_content: "#{FASTLANE_KEY}"
+    )
+    
+    match(
+      type: "appstore",
+      force: true,
+      git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
+      app_identifier: [
+        "com.#{TEAMID}.loopkit.LoopCaregiver",
       ]
     )
   end
