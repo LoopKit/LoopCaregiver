@@ -1,35 +1,72 @@
-# LoopWorkspace
+#  Caregiver App
 
-## Clone
+## Clone Repo
 
-This repository uses git submodules to pull in the various workspace dependencies.
-
-To clone this repo:
+* Xcode version 14 or greater required
+* Run the following command to clone the repo to a new directory named "LoopCaregiver" (The directory will be created for you)
+```
+git clone --branch=dev --recurse-submodules https://github.com/LoopKit/LoopCaregiver LoopCaregiver
 
 ```
-git clone --branch=<branch> --recurse-submodules https://github.com/LoopKit/LoopWorkspace
+* Open the workspace in Xcode
+   * Continue in your current terminal with these commands
 ```
-
-Replace `<branch>` with the initial LoopWorkspace repository branch you wish to checkout.
-
-## Open
-
-Change to the cloned directory and open the workspace in Xcode:
-
-```
-cd LoopWorkspace
+cd LoopCaregiver
 xed .
+
+```
+* Select the "LoopCaregiver" project on the left
+* Select Signing and Capabilities and select your "team", like you would for Loop
+* Select the LoopCaregiver target up top instead of Loop (Workspace) and select your iPhone
+* Make sure dependencies have finished
+* Build + Run
+
+## Update Repo
+
+* You need to update the repo to get the last bug fixes and features.
+* You need to be in a terminal in the LoopCaregiver folder you created earlier and use these commands
+
+```
+git stash
+git pull --recurse-submodules
+
 ```
 
-## Input your development team
+This may show some `Fetching` lines and end in a message that includes:
 
-You should be able to build to a simulator without changing anything. But if you wish to build to a real device, you'll need a developer account, and you'll need to tell Xcode about your team id, which you can find at https://developer.apple.com/.
 
-Select the LoopConfigOverride file in Xcode's project navigator, uncomment the `LOOP_DEVELOPMENT_TEAM`, and replace the existing team id with your own id.
+`Fast-forward`
 
-## Build
+` # files changed, # insertions(+), # deletions(-)`
 
-Select the "Loop (Workspace)" scheme (not the "Loop" scheme) and Build, Run, or Test.
+or
 
-<a href="/docs/scheme-selection.png"><img src="/docs/scheme-selection.png?raw=true" alt="Image showing how to select the Loop (Workspace) scheme in Xcode" width="400"></a>
+`
+Already up to date.
+`
 
+In either case, to build:
+
+```
+git stash pop
+xed .
+
+```
+
+If the `git stash pop` gives an error, you'll have to sign the targets again. If it succeeds, you can just build.
+
+
+## Add Looper
+
+* On first run, you will be prompted to link your Looper's device.
+* Follow the steps to input your Looper's data and scan the QR code from the Looper's Loop app: Settings -> Services -> Nightscout
+
+
+## Features
+
+* Multiple Looper Profiles
+* Remote Bolus 
+* Remote Carbs
+* Overrides
+* OTP codes automatically sent with remote commands
+* Loop Graphs
