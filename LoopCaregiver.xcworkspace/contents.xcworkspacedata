@@ -11,6 +11,9 @@
       location = "container:OverrideAssetsWatchApp.xcassets">
    </FileRef>
    <FileRef
+      location = "group:LoopCaregiver/LoopCaregiver.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:Loop/Loop.xcodeproj">
    </FileRef>
    <FileRef
@@ -57,8 +60,5 @@
    </FileRef>
    <FileRef
       location = "group:LoopOnboarding/LoopOnboarding.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:LoopOnboarding/../LoopCaregiver/LoopCaregiver.xcodeproj">
    </FileRef>
 </Workspace>
