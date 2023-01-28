@@ -13,6 +13,7 @@ struct SettingsView: View {
     @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     @AppStorage(UserDefaults.standard.timelinePredictionEnabledKey) private var timelinePredictionEnabled = false
     @AppStorage(UserDefaults.standard.remoteCommands2EnabledKey) private var remoteCommands2Enabled = false
+    @AppStorage(UserDefaults.standard.experimentalFeaturesUnlockedKey) private var experimentalFeaturesUnlocked = false
     
     @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
@@ -46,10 +47,17 @@ struct SettingsView: View {
                     Section("Timeline") {
                         Toggle("Show Prediction", isOn: $timelinePredictionEnabled)
                     }
-                    Section("Experimental") {
-                        Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
-                        Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
-                            .font(.footnote)
+                    Section("Experimental Features") {
+                        if experimentalFeaturesUnlocked || remoteCommands2Enabled {
+                            Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
+                            Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
+                                .font(.footnote)
+                        } else {
+                            Text("Disabled                             ")
+                                .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
+                                    experimentalFeaturesUnlocked = true
+                                })
+                        }
                     }
                 }
             }

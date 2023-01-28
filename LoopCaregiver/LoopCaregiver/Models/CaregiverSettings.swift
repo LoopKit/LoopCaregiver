@@ -12,12 +12,14 @@ class CaregiverSettings: ObservableObject {
     
     @Published var glucoseDisplayUnits: HKUnit
     @Published var timelinePredictionEnabled: Bool
+    @Published var experimentalFeaturesUnlocked: Bool
     @Published var remoteCommands2Enabled: Bool
     
     init(){
         self.glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
         self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
         self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
+        self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
@@ -33,6 +35,10 @@ class CaregiverSettings: ObservableObject {
         
         if self.remoteCommands2Enabled != UserDefaults.standard.remoteCommands2Enabled {
             self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
+        }
+        
+        if self.experimentalFeaturesUnlocked != UserDefaults.standard.experimentalFeaturesUnlocked {
+            self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
         }
     }
     
@@ -77,6 +83,10 @@ extension UserDefaults {
         return "remoteCommands2Enabled"
     }
     
+    var experimentalFeaturesUnlockedKey: String {
+        return "experimentalFeaturesUnlocked"
+    }
+    
     @objc dynamic var glucosePreference: GlucoseUnitPrefererence {
         return GlucoseUnitPrefererence(rawValue: integer(forKey: glucoseUnitKey)) ?? .milligramsPerDeciliter
     }
@@ -87,6 +97,10 @@ extension UserDefaults {
     
     @objc dynamic var remoteCommands2Enabled: Bool {
         return UserDefaults.standard.bool(forKey: remoteCommands2EnabledKey)
+    }
+    
+    @objc dynamic var experimentalFeaturesUnlocked: Bool {
+        return UserDefaults.standard.bool(forKey: experimentalFeaturesUnlockedKey)
     }
 }
 

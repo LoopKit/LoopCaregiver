@@ -82,6 +82,9 @@ Setting up these features is only suggested for advanced Loop builders that are 
 * Build special caregiver branch of LoopWorkspace which is based https://github.com/gestrich/LoopWorkspace/tree/caregiver
   * This branch is based on the Loop 3.0 branch (not Loop dev) + remote command additions.
   * Make sure to build the "caregiver" branch
-* Activate Remote Commands 2 switch in Caregiver -> Settings 
+* Activate Remote Commands 2 in Caregiver
+  * Caregiver -> Settings
+  * Tap and hold the "Disabled" text under the "Experimental Features" section to reveal the secret experimental features options.
+  * Toggle the "Remote Commands 2" switch to ON
 * After delivering carbs/bolus/override, the command status will show at the bottom of Caregiver Settings -> Select Loopers name.
 * Additional commands such as autobolus activation, closed loop activation are available in aforementioned view.
