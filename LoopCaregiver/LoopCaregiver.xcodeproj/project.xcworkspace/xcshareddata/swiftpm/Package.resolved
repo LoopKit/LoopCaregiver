@@ -1,0 +1,41 @@
+{
+  "pins" : [
+    {
+      "identity" : "base32",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattrubin/Base32.git",
+      "state" : {
+        "branch" : "1.1.2+spm",
+        "revision" : "d185e44c8b355d34d5c6c6ad502c60cba4599f69"
+      }
+    },
+    {
+      "identity" : "codescanner",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/twostraws/CodeScanner",
+      "state" : {
+        "revision" : "c7859712034a08bb5a018fbe8751c1f1edc4b248",
+        "version" : "2.2.1"
+      }
+    },
+    {
+      "identity" : "onetimepassword",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/mattrubin/OneTimePassword.git",
+      "state" : {
+        "branch" : "develop",
+        "revision" : "c3d8989f09a72ad7b00be7a45f1a5446e5f9e19b"
+      }
+    },
+    {
+      "identity" : "swiftcharts",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ivanschuetz/SwiftCharts.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "c354c1945bb35a1f01b665b22474f6db28cba4a2"
+      }
+    }
+  ],
+  "version" : 2
+}

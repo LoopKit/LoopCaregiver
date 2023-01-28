@@ -1,0 +1,15 @@
+//
+//  LoopCaregiver.xcconfig
+//  LoopCaregiver
+//
+
+// This is automatically disambiguated by development team, but you may choose to change this to
+// support running multiple apps simultaneously.
+CAREGIVER_APP_BUNDLE_IDENTIFIER = com.${DEVELOPMENT_TEAM}.loopkit.LoopCaregiver
+
+// Code signing and provisioning [DEFAULT]
+LOOP_DEVELOPMENT_TEAM =
+
+// Optional overrides
+#include? "LoopOverride.xcconfig"
+#include? "../LoopConfigOverride.xcconfig"
