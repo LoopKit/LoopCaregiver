@@ -73,15 +73,14 @@ If the `git stash pop` gives an error, you'll have to sign the targets again. If
 
 ## Remote Commands 2
 
-Remote Commands 2 is a set of features that supports remote command status and helps with the limitations of push notifications. This feature is very early in development and subject to change quickly.
+Remote Commands 2 is a set of features that supports remote command status and helps with the limitations of push notifications. This feature is very early in development.
 
 Setting up these features is only suggested for advanced Loop builders that are comfortable troubleshooting git and Xcode issues and deploying to Nightscout. 
 
 * Deploy special caregiver instance of Nightscout: https://github.com/gestrich/cgm-remote-monitor/tree/caregiver 
   * Make sure to deploy the "caregiver" branch
-* Build special caregiver branch of LoopWorkspace which is based https://github.com/gestrich/LoopWorkspace/tree/caregiver
-  * This branch is based on the Loop 3.0 branch (not Loop dev) + remote command additions.
-  * Make sure to build the "caregiver" branch
+* Build special branch of LoopWorkspace: feature/2022-12/bg/remote-commands
+  * This branch is based on Loop dev.
 * Activate Remote Commands 2 in Caregiver
   * Caregiver -> Settings
   * Tap and hold the "Disabled" text under the "Experimental Features" section to reveal the secret experimental features options.
