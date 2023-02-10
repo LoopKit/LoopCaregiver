@@ -28,7 +28,6 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     private let remoteDataProvider: RemoteDataServiceProvider
     private var dateUpdateTimer: Timer?
-    private var infrequentDataUpdateTimer: Timer?
     
     init(remoteDataProvider: RemoteDataServiceProvider){
         self.remoteDataProvider = remoteDataProvider
@@ -42,15 +41,8 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             }
         })
         
-        self.infrequentDataUpdateTimer = Timer.scheduledTimer(withTimeInterval: 60 * 30, repeats: true, block: { timer in
-            Task {
-                await self.updateInfrequentData()
-            }
-        })
-        
         Task {
             await self.updateData()
-            await self.updateInfrequentData()
         }
     }
     
@@ -76,6 +68,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
             async let deviceStatusAsync = remoteDataProvider.fetchLatestDeviceStatus()
             async let recentCommandsAsync = remoteDataProvider.fetchRecentCommands()
+            async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
             
             let carbEntries = try await carbEntriesAsync
             if carbEntries != self.carbEntries {
@@ -117,6 +110,11 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             let recentCommands = try await recentCommandsAsync
             if recentCommands != self.recentCommands {
                 self.recentCommands = recentCommands
+            }
+            
+            let currentProfile = try await curentProfileAsync
+            if currentProfile != self.currentProfile {
+                self.currentProfile = currentProfile
             }
             
         } catch {
@@ -196,22 +194,6 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         }
         
         return predictedSamples
-    }
-
-    @MainActor
-    func updateInfrequentData() async {
-
-        do {
-            async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
-            
-            let currentProfile = try await curentProfileAsync
-            if currentProfile != self.currentProfile {
-                self.currentProfile = currentProfile
-            }
-        } catch {
-            print("Error: \(error)")
-        }
-
     }
     
     func nowDate() -> Date {

@@ -15,6 +15,7 @@ struct BottomBarView: View {
     @Binding var showBolusView: Bool
     @Binding var showOverrideView: Bool
     @Binding var showSettingsView: Bool
+    @ObservedObject var remoteDataSource: RemoteDataServiceManager
     
     var body: some View {
         HStack (alignment: .center) {
@@ -40,7 +41,7 @@ struct BottomBarView: View {
             Button {
                 showOverrideView = true
             } label: {
-                Image("workout")
+                Image(overrideIsActive() ? "workout-selected" : "workout")
                     .renderingMode(.template)
                     .foregroundColor(.blue)
                     .frame(width: iconSize(), height: iconSize())
@@ -62,5 +63,13 @@ struct BottomBarView: View {
     
     func iconSize() -> Double {
         return 40.0
+    }
+    
+    func overrideIsActive() -> Bool {
+        let activeProfile = remoteDataSource.currentProfile
+        guard let loopSettings = activeProfile?.settings else {
+            return false
+        }
+        return loopSettings.scheduleOverride != nil
     }
 }

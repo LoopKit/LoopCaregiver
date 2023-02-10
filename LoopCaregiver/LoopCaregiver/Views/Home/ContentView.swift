@@ -67,7 +67,7 @@ struct HomeView: View {
             ChartsListView(looperService: looperService, remoteDataSource: remoteDataSource, settings: looperService.settings)
                 .padding([.leading, .trailing, .bottom])
             Spacer()    
-            BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView)
+            BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView, remoteDataSource: remoteDataSource)
         }
         .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
         .sheet(isPresented: $showCarbView) {
