@@ -99,6 +99,7 @@
 		A95F50C6292A657F00079AAF /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50C9292A65E400079AAF /* LoopUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50D0292A68E800079AAF /* LoopCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9688E2D299730C500CDD4D6 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A96929342926E5CE00B8BF43 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		A969293A2926ECF500B8BF43 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
 		A969293C2926EFEC00B8BF43 /* Looper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Looper.swift; sourceTree = "<group>"; };
@@ -341,6 +342,7 @@
 		A9EC196F291FEF940022D39F = {
 			isa = PBXGroup;
 			children = (
+				A9688E2D299730C500CDD4D6 /* LICENSE */,
 				A9EC197A291FEF940022D39F /* LoopCaregiver */,
 				A9EC1979291FEF940022D39F /* Products */,
 				A95F50BE292A602E00079AAF /* Frameworks */,
