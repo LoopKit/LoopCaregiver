@@ -43,6 +43,7 @@ struct HomeView: View {
     
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
+    @ObservedObject var settings: CaregiverSettings
     let looperService: LooperService
     
     @State private var showCarbView = false
@@ -52,6 +53,7 @@ struct HomeView: View {
     
     init(looperService: LooperService){
         self.looperService = looperService
+        self.settings = looperService.settings
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource
     }
@@ -69,6 +71,11 @@ struct HomeView: View {
             Spacer()    
             BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView, remoteDataSource: remoteDataSource)
         }
+        .overlay {
+            if !disclaimerValid(){
+                disclaimerOverlay()
+            }
+        }
         .ignoresSafeArea(.keyboard) //Avoid keyboard bounce when popping back from sheets
         .sheet(isPresented: $showCarbView) {
             CarbInputView(looperService: looperService, showSheetView: $showCarbView)
@@ -82,6 +89,21 @@ struct HomeView: View {
         .sheet(isPresented: $showSettingsView) {
             SettingsView(accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
         }
+    }
+    
+    func disclaimerOverlay() -> some View {
+        return ZStack {
+            Color.cellBackgroundColor
+            DisclaimerView()
+        }
+    }
+    
+    func disclaimerValid() -> Bool {
+        guard let disclaimerAcceptedDate = settings.disclaimerAcceptedDate else {
+            return false
+        }
+        
+        return disclaimerAcceptedDate > Date().addingTimeInterval(-60*60*24*7)
     }
 }
 

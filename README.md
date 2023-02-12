@@ -1,5 +1,17 @@
 #  Caregiver App
 
+
+## Warning
+
+* Loop Remote code, such as this Caregiver app, are highly experimental and may be subject to issues that could cause serious risks to one's health/life.
+* The developers make no claims regarding its safety and do not recommend anyone use experimental code. You take full responsibility for running this code and do so at your own risk.
+* The Loop community's forums should be closely monitored for app updates, if available.
+* Bugs could cause information in the app to be incorrect or out-of-date.
+* This app and Nightscout may not reflect all delivered treatments (i.e. Due to network delays or bugs). You must be aware of this to avoid delivering dangerous, duplicate treatments to Loop.
+* The Nightscout QR code and API Key should be secured. Anyone with this information can remotely send treatments (bolus, carbs, etc).
+* The phone with Caregiver installed should have a locking mechanism. Anyone with access to the Caregiver app can remotely send treatments (bolus, carbs, etc). If a phone is lost or stolen, the QR code in Loop's Settings should be reset.
+* There may be other risks not known or mentioned here.
+
 ## Clone Repo
 
 * Xcode version 14 or greater required
@@ -70,20 +82,3 @@ If the `git stash pop` gives an error, you'll have to sign the targets again. If
 * Overrides
 * OTP codes automatically sent with remote commands
 * Loop Graphs
-
-## Remote Commands 2
-
-Remote Commands 2 is a set of features that supports remote command status and helps with the limitations of push notifications. This feature is very early in development.
-
-Setting up these features is only suggested for advanced Loop builders that are comfortable troubleshooting git and Xcode issues and deploying to Nightscout. 
-
-* Deploy special caregiver instance of Nightscout: https://github.com/gestrich/cgm-remote-monitor/tree/caregiver 
-  * Make sure to deploy the "caregiver" branch
-* Build special branch of LoopWorkspace: feature/2022-12/bg/remote-commands
-  * This branch is based on Loop dev.
-* Activate Remote Commands 2 in Caregiver
-  * Caregiver -> Settings
-  * Tap and hold the "Disabled" text under the "Experimental Features" section to reveal the secret experimental features options.
-  * Toggle the "Remote Commands 2" switch to ON
-* After delivering carbs/bolus/override, the command status will show at the bottom of Caregiver Settings -> Select Loopers name.
-* Additional commands such as autobolus activation, closed loop activation are available in aforementioned view.

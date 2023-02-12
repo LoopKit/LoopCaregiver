@@ -42,6 +42,8 @@
 		A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
 		A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
 		A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
+		A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC86429992DD20058EBA5 /* DisclaimerView.swift */; };
+		A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
@@ -119,6 +121,8 @@
 		A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccountService.swift; sourceTree = "<group>"; };
 		A9972775292FCE6A006C8C74 /* LooperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
 		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
+		A99DC86429992DD20058EBA5 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
+		A99DC866299984430058EBA5 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9C4D7E52969A69F00D3875F /* IOBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBStatus.swift; sourceTree = "<group>"; };
@@ -280,6 +284,7 @@
 			children = (
 				A969293A2926ECF500B8BF43 /* BottomBarView.swift */,
 				A9EC197D291FEF940022D39F /* ContentView.swift */,
+				A99DC86429992DD20058EBA5 /* DisclaimerView.swift */,
 				A96929342926E5CE00B8BF43 /* HUDView.swift */,
 			);
 			path = Home;
@@ -307,6 +312,7 @@
 			isa = PBXGroup;
 			children = (
 				A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */,
+				A99DC866299984430058EBA5 /* Date+Utils.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -498,7 +504,9 @@
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
 				A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */,
+				A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */,
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
+				A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */,
 				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
 				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
 				A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */,

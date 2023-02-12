@@ -14,12 +14,15 @@ class CaregiverSettings: ObservableObject {
     @Published var timelinePredictionEnabled: Bool
     @Published var experimentalFeaturesUnlocked: Bool
     @Published var remoteCommands2Enabled: Bool
+    @Published var disclaimerAcceptedDate: Date?
     
     init(){
         self.glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
         self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
         self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
         self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
+        self.disclaimerAcceptedDate = UserDefaults.standard.disclaimerAcceptedDate
+        
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
@@ -39,6 +42,10 @@ class CaregiverSettings: ObservableObject {
         
         if self.experimentalFeaturesUnlocked != UserDefaults.standard.experimentalFeaturesUnlocked {
             self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
+        }
+        
+        if self.disclaimerAcceptedDate != UserDefaults.standard.disclaimerAcceptedDate {
+            self.disclaimerAcceptedDate = UserDefaults.standard.disclaimerAcceptedDate
         }
     }
     
@@ -87,6 +94,10 @@ extension UserDefaults {
         return "experimentalFeaturesUnlocked"
     }
     
+    var disclaimerAcceptedDateKey: String {
+        return "disclaimerAcceptedDate"
+    }
+    
     @objc dynamic var glucosePreference: GlucoseUnitPrefererence {
         return GlucoseUnitPrefererence(rawValue: integer(forKey: glucoseUnitKey)) ?? .milligramsPerDeciliter
     }
@@ -101,6 +112,13 @@ extension UserDefaults {
     
     @objc dynamic var experimentalFeaturesUnlocked: Bool {
         return UserDefaults.standard.bool(forKey: experimentalFeaturesUnlockedKey)
+    }
+    
+    @objc dynamic var disclaimerAcceptedDate: Date? {
+        guard let rawString = UserDefaults.standard.string(forKey: disclaimerAcceptedDateKey) else {
+            return nil
+        }
+        return Date(rawValue: rawString)
     }
 }
 
