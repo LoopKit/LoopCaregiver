@@ -103,7 +103,7 @@ struct HomeView: View {
             return false
         }
         
-        return disclaimerAcceptedDate > Date().addingTimeInterval(-60*60*24*7)
+        return disclaimerAcceptedDate > Date().addingTimeInterval(-60*60*24*365)
     }
 }
 
