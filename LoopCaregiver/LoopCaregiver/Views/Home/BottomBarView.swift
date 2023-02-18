@@ -66,10 +66,6 @@ struct BottomBarView: View {
     }
     
     func overrideIsActive() -> Bool {
-        let activeProfile = remoteDataSource.currentProfile
-        guard let loopSettings = activeProfile?.settings else {
-            return false
-        }
-        return loopSettings.scheduleOverride != nil
+        remoteDataSource.activeOverride() != nil
     }
 }

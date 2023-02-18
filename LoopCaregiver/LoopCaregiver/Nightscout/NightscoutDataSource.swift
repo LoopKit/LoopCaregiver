@@ -50,6 +50,11 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
             .carbTreatments()
     }
     
+    func fetchOverrideEntries() async throws -> [OverrideTreatment] {
+        return try await fetchTreatments()
+            .overrideTreatments()
+    }
+    
     func fetchLatestDeviceStatus() async throws -> DeviceStatus? {
         let result = try await withCheckedThrowingContinuation({ continuation in
             let fetchInterval = DateInterval(start: fetchEndDate().addingTimeInterval(-60*60*2), end: fetchEndDate())

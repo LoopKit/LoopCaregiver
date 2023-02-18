@@ -70,16 +70,10 @@ struct OverrideView: View {
     }
     
     func loadOverrides() async {
-        do {
-            let activeProfile = try await looperService.remoteDataSource.fetchCurrentProfile()
-            let loopSettings = activeProfile.settings
-            overidePresets = loopSettings.overridePresets
-            if let activeOverride = loopSettings.scheduleOverride {
-                self.overrideFromNightscout = activeOverride
-                self.pickerCurrentlySelectedOverride = activeOverride
-            }
-        } catch {
-            errorText = error.localizedDescription
+        overidePresets = looperService.remoteDataSource.currentProfile?.settings.overridePresets ?? []
+        if let activeOverride = looperService.remoteDataSource.activeOverride() {
+            self.overrideFromNightscout = activeOverride
+            self.pickerCurrentlySelectedOverride = activeOverride
         }
         
         loadingOverrides = false

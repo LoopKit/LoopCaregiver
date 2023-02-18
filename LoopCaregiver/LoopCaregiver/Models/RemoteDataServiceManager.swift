@@ -18,6 +18,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     @Published var carbEntries: [CarbCorrectionNightscoutTreatment] = []
     @Published var bolusEntries: [BolusNightscoutTreatment] = []
     @Published var basalEntries: [TempBasalNightscoutTreatment] = []
+    @Published var overrideEntries: [OverrideTreatment] = []
     @Published var latestDeviceStatus: DeviceStatus? = nil
     @Published var recommendedBolus: Double? = nil
     @Published var currentIOB: IOBStatus? = nil
@@ -44,6 +45,12 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         Task {
             await self.updateData()
         }
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
+            Task {
+                await self.updateData()
+            }
+        }
     }
     
     @MainActor
@@ -66,6 +73,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
             async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
             async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
+            async let overrideEntriesAsync = remoteDataProvider.fetchOverrideEntries()
             async let deviceStatusAsync = remoteDataProvider.fetchLatestDeviceStatus()
             async let recentCommandsAsync = remoteDataProvider.fetchRecentCommands()
             async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
@@ -83,6 +91,11 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             let basalEntries = try await basalEntriesAsync
             if basalEntries != self.basalEntries {
                 self.basalEntries = basalEntries
+            }
+            
+            let overrideEntries = try await overrideEntriesAsync
+            if overrideEntries != self.overrideEntries {
+                self.overrideEntries = overrideEntries
             }
             
             if let deviceStatus = try await deviceStatusAsync {
@@ -223,6 +236,10 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchCarbEntries()
     }
     
+    func fetchOverrideEntries() async throws -> [NightscoutUploadKit.OverrideTreatment] {
+        return try await remoteDataProvider.fetchOverrideEntries()
+    }
+    
     func fetchLatestDeviceStatus() async throws -> DeviceStatus? {
         return try await remoteDataProvider.fetchLatestDeviceStatus()
     }
@@ -254,6 +271,50 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchCurrentProfile()
     }
     
+    func activeOverride() -> NightscoutUploadKit.TemporaryScheduleOverride? {
+        
+        /*
+         There are 3 sources of the current override from Nightscout
+         1. Devicestatus.overrideStatus: Used by NS Plugin (bubble view)
+         2. Profile.settings.scheduleOverride: Not sure what used by
+         3. Override Entries: Used by NS Ticker Tape
+
+         */
+        
+        //1. Devicestatus.overrideStatus
+        //We would use this except it is not up-to-date when Loop events occur in the background.
+//        guard let overrideStatus = latestDeviceStatus?.overrideStatus, overrideStatus.active else {
+//            return nil
+//        }
+  
+//        if let duration = overrideStatus.duration {
+//            if overrideStatus.timestamp.addingTimeInterval(duration) <= self.nowDate() {
+//                return nil
+//            }
+//        }
+        
+        
+        //2.  Profile.settings.scheduleOverride
+        //The override is not correct when its duration runs out so we have to check Override Entries too
+        guard let override = currentProfile?.settings.scheduleOverride else {
+            return nil
+        }
+        
+        //3. Override Entries
+        //We could exclusively use this, except a really old override may
+        //fall outside our lookback period (i.e. indefinite override)
+        if let mostRecentOverrideEntry = overrideEntries.filter({$0.timestamp <= nowDate()})
+            .sorted(by: {$0.timestamp < $1.timestamp})
+            .last {
+            if let endDate = mostRecentOverrideEntry.endDate, endDate <= nowDate() {
+                //Entry expired - This happens when the OverrideStatus above is out of sync with the uploaded entries.
+                return nil
+            }
+        }
+        
+        return override
+    }
+    
     func fetchRecentCommands() async throws -> [NSRemoteCommandPayload] {
         return try await remoteDataProvider.fetchRecentCommands()
     }
@@ -270,6 +331,7 @@ protocol RemoteDataServiceProvider {
     func fetchBolusEntries() async throws -> [BolusNightscoutTreatment]
     func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment]
     func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment]
+    func fetchOverrideEntries() async throws -> [OverrideTreatment]
     func fetchLatestDeviceStatus() async throws -> DeviceStatus?
     func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date) async throws
     func deliverBolus(amountInUnits: Double) async throws

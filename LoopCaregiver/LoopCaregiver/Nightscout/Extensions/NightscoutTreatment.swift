@@ -39,6 +39,16 @@ extension [NightscoutTreatment] {
         }
     }
     
+    func overrideTreatments() -> [OverrideTreatment] {
+        return self.compactMap { treatment in
+            if let override = treatment as? OverrideTreatment {
+                return override
+            } else {
+                return nil
+            }
+        }
+    }
+    
     func pumpSuspendTreatments() -> [PumpSuspendTreatment] {
         return self.compactMap { treatment in
             if let suspend = treatment as? PumpSuspendTreatment {
