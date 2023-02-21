@@ -283,16 +283,15 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         
         //1. Devicestatus.overrideStatus
         //We would use this except it is not up-to-date when Loop events occur in the background.
-//        guard let overrideStatus = latestDeviceStatus?.overrideStatus, overrideStatus.active else {
-//            return nil
-//        }
+        guard let overrideStatus = latestDeviceStatus?.overrideStatus, overrideStatus.active else {
+            return nil
+        }
   
-//        if let duration = overrideStatus.duration {
-//            if overrideStatus.timestamp.addingTimeInterval(duration) <= self.nowDate() {
-//                return nil
-//            }
-//        }
-        
+        if let duration = overrideStatus.duration {
+            if overrideStatus.timestamp.addingTimeInterval(duration) <= self.nowDate() {
+                return nil
+            }
+        }
         
         //2.  Profile.settings.scheduleOverride
         //The override is not correct when its duration runs out so we have to check Override Entries too
@@ -303,14 +302,14 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         //3. Override Entries
         //We could exclusively use this, except a really old override may
         //fall outside our lookback period (i.e. indefinite override)
-        if let mostRecentOverrideEntry = overrideEntries.filter({$0.timestamp <= nowDate()})
-            .sorted(by: {$0.timestamp < $1.timestamp})
-            .last {
-            if let endDate = mostRecentOverrideEntry.endDate, endDate <= nowDate() {
-                //Entry expired - This happens when the OverrideStatus above is out of sync with the uploaded entries.
-                return nil
-            }
-        }
+//        if let mostRecentOverrideEntry = overrideEntries.filter({$0.timestamp <= nowDate()})
+//            .sorted(by: {$0.timestamp < $1.timestamp})
+//            .last {
+//            if let endDate = mostRecentOverrideEntry.endDate, endDate <= nowDate() {
+//                //Entry expired - This happens when the OverrideStatus above is out of sync with the uploaded entries.
+//                return nil
+//            }
+//        }
         
         return override
     }
