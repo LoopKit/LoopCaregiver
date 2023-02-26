@@ -24,9 +24,16 @@ struct LocalizationUtils {
         return LocalizationUtils.localizedNumberString(input: amount, minFractionalDigits: minFractionalDigits, maxFractionalDigits: maxFractionalDigits)
     }
     
-    static func doubleFromUserInput(_ string: String) -> Double? {
+    static func presentableStringFromHoursAmount(_ amount: Double) -> String {
+        return localizedNumberString(input: amount, maxFractionalDigits: 2)
+    }
+    
+    static func doubleFromUserInput(_ unverifiedInput: String) -> Double? {
+        guard let normalizedInput = normalizeDecimalInput(unverifiedInput) else {
+            return nil
+        }
         let numFormatter = NumberFormatter()
-        return numFormatter.number(from: string) as? Double
+        return numFormatter.number(from: normalizedInput) as? Double
     }
     
     private static func localizedNumberString(input: Double, minFractionalDigits: Int? = nil, maxFractionalDigits: Int? = nil) -> String {
@@ -46,6 +53,33 @@ struct LocalizationUtils {
         var result = "\(minutes) minute"
         if minutes == 0 || minutes > 1 {
             result += "s"
+        }
+        
+        return result
+    }
+    
+    private static func normalizeDecimalInput(_ input: String) -> String? {
+        
+        var result = input
+        
+        result = result.trimmingCharacters(in: .whitespaces)
+  
+        //Considered this but it seems risky to adjust decimal parts.
+        //Need to also consider entries like 1,000.2 which inlude a
+        //command decimal
+//        if result.contains(".") && Locale.current.decimalSeparator == "," {
+//            result = result.replacingOccurrences(of: ".", with: ",")
+//        }
+//
+//        if result.contains(",") && Locale.current.decimalSeparator == "." {
+//            result = result.replacingOccurrences(of: ",", with: ".")
+//        }
+        
+        let containsDecimalSeparator = result.contains(",") || result.contains(".")
+        if !containsDecimalSeparator && result.starts(with: "0") {
+            //Don't allow inputs like "01"
+            //as they likely meant 0.1
+            return nil
         }
         
         return result

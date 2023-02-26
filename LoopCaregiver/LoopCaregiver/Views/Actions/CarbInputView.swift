@@ -113,7 +113,6 @@ struct CarbInputView: View {
                 Text("Time")
             }
 
-            //Auggie - absorption shortcuts per Loop timelines (0.5, 3, 5 hours)
             //TODO: can we get absorption from Loop directly via .slow, .medium, .fast?
             //Create the "Food Type" row to hold emojis/typed description
             HStack {
@@ -311,7 +310,9 @@ enum CarbInputViewError: LocalizedError {
         case .invalidCarbAmount:
             return "Enter a carb amount between 1 and the max allowed in Loop Settings"
         case .invalidAbsorptionTime(let minAbsorptionTimeInHours, let maxAbsorptionTimeInHours):
-            return "Enter a an absorption time between \(minAbsorptionTimeInHours) and \(maxAbsorptionTimeInHours) hours"
+            let presentableMinAbsorptionInHours = LocalizationUtils.presentableStringFromHoursAmount(minAbsorptionTimeInHours)
+            let presentableMaxAbsorptionInHours = LocalizationUtils.presentableStringFromHoursAmount(maxAbsorptionTimeInHours)
+            return "Enter an absorption time between \(presentableMinAbsorptionInHours) and \(presentableMaxAbsorptionInHours) hours"
         case .exceedsMaxPastHours(let maxPastHours):
             return "Time must be within the prior \(maxPastHours) \(pluralizeHour(count: maxPastHours))"
         case .exceedsMaxFutureHours(let maxFutureHours):
