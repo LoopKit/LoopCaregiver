@@ -55,30 +55,30 @@ struct LooperView: View {
                         Button("Autobolus Activate") {
                             Task {
                                 try await looperService.remoteDataSource.activateAutobolus(activate: true)
-                                try await looperService.remoteDataSource.updateData()
+                                await looperService.remoteDataSource.updateData()
                             }
                         }
                         Button("Autobolus Deactivate") {
                             Task {
                                 try await looperService.remoteDataSource.activateAutobolus(activate: false)
-                                try await looperService.remoteDataSource.updateData()
+                                await looperService.remoteDataSource.updateData()
                             }
                         }
                         Button("Closed Loop Activate") {
                             Task {
                                 try await looperService.remoteDataSource.activateClosedLoop(activate: true)
-                                try await looperService.remoteDataSource.updateData()
+                                await looperService.remoteDataSource.updateData()
                             }
                         }
                         Button("Closed Loop Deactivate") {
                             Task {
                                 try await looperService.remoteDataSource.activateClosedLoop(activate: false)
-                                try await looperService.remoteDataSource.updateData()
+                                await looperService.remoteDataSource.updateData()
                             }
                         }
                         Button("Reload") {
                             Task {
-                                try await looperService.remoteDataSource.updateData()
+                                await looperService.remoteDataSource.updateData()
                             }
                         }
                         Button("Delete All Commands", role: .destructive) {
@@ -87,7 +87,7 @@ struct LooperView: View {
                             Button("Delete", role: .destructive) {
                                 Task {
                                     try await looperService.remoteDataSource.deleteAllCommands()
-                                    try await looperService.remoteDataSource.updateData()
+                                    await looperService.remoteDataSource.updateData()
                                 }
                             }
                             Button("Nevermind", role: .cancel) {
