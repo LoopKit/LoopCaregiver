@@ -21,59 +21,11 @@ struct SettingsView: View {
     
     var body: some View {
         NavigationStack (path: $path) {
-            VStack {
-                Form {
-                    Section("Loopers"){
-                        List(accountService.loopers) { looper in
-                            HStack {
-                                Button {
-                                    accountService.selectedLooper = looper
-                                } label: {
-                                    if looper == accountService.selectedLooper {
-                                        Image(systemName: "circle.fill")
-                                            .opacity(0.75)
-                                    } else {
-                                        Image(systemName: "circle")
-                                            .opacity(0.75)
-                                    }
-                                }
-                                .buttonStyle(PlainButtonStyle())
-                                NavigationLink(value: accountService.createLooperService(looper: looper, settings: settings)) {
-                                        Text(looper.name)
-                                }
-                            }
-                        }
-                        NavigationLink(value: "AddLooper") {
-                            HStack {
-                                Image(systemName: "plus")
-                                    .foregroundColor(.green)
-                                Text("Add New Looper")
-                            }
-                        }
-                    }
-                    Section("Units") {
-                        Picker("Glucose", selection: $glucosePreference, content: {
-                            ForEach(GlucoseUnitPrefererence.allCases, id: \.self, content: { item in
-                                Text(item.presentableDescription).tag(item)
-                            })
-                        })
-                    }
-                    Section("Timeline") {
-                        Toggle("Show Prediction", isOn: $timelinePredictionEnabled)
-                    }
-                    Section("Experimental Features") {
-                        if experimentalFeaturesUnlocked || remoteCommands2Enabled {
-                            Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
-                            Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
-                                .font(.footnote)
-                        } else {
-                            Text("Disabled                             ")
-                                .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
-                                    experimentalFeaturesUnlocked = true
-                                })
-                        }
-                    }
-                }
+            Form {
+                loopersSection
+                unitsSection
+                timelineSection
+                experimentalSection
             }
             .navigationBarTitle(Text("Settings"), displayMode: .inline)
             .navigationBarItems(trailing: Button(action: {
@@ -94,6 +46,72 @@ struct SettingsView: View {
                 for: String.self
             ) { val in
                 LooperSetupView(accountService: accountService, settings: settings, path: $path)
+            }
+        }
+    }
+    
+    var loopersSection: some View {
+        Section("Loopers"){
+            List(accountService.loopers) { looper in
+                looperRowView(looper: looper)
+            }
+            NavigationLink(value: "AddLooper") {
+                HStack {
+                    Image(systemName: "plus")
+                        .foregroundColor(.green)
+                    Text("Add New Looper")
+                }
+            }
+        }
+    }
+    
+    var unitsSection: some View {
+        Section("Units") {
+            Picker("Glucose", selection: $glucosePreference, content: {
+                ForEach(GlucoseUnitPrefererence.allCases, id: \.self, content: { item in
+                    Text(item.presentableDescription).tag(item)
+                })
+            })
+        }
+    }
+    
+    var timelineSection: some View {
+        Section("Timeline") {
+            Toggle("Show Prediction", isOn: $timelinePredictionEnabled)
+        }
+    }
+    
+    var experimentalSection: some View {
+        Section("Experimental Features") {
+            if experimentalFeaturesUnlocked || remoteCommands2Enabled {
+                Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
+                Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
+                    .font(.footnote)
+            } else {
+                Text("Disabled                             ")
+                    .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
+                        experimentalFeaturesUnlocked = true
+                    })
+            }
+        }
+    }
+    
+    func looperRowView(looper: Looper) -> some View {
+        HStack {
+            Button {
+                accountService.selectedLooper = looper
+            } label: {
+                if looper == accountService.selectedLooper {
+                    Image(systemName: "circle.fill")
+                        .opacity(0.75)
+                } else {
+                    Image(systemName: "circle")
+                        .opacity(0.75)
+                }
+            }
+            .buttonStyle(PlainButtonStyle())
+            NavigationLink(value: accountService.createLooperService(looper: looper, settings: settings)) {
+                    Text(looper.name)
             }
         }
     }
