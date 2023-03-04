@@ -15,6 +15,7 @@ struct HUDView: View {
     @ObservedObject var hudViewModel: HUDViewModel
     @ObservedObject var nightscoutDateSource: RemoteDataServiceManager
     @ObservedObject private var settings: CaregiverSettings
+    @State private var looperPopoverShowing: Bool = false
     
     init(looperService: LooperService, settings: CaregiverSettings){
         self.hudViewModel = HUDViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
@@ -52,25 +53,54 @@ struct HUDView: View {
                     if nightscoutDateSource.updating {
                         ProgressView()
                     }
-                    Picker("Looper", selection: $hudViewModel.selectedLooper) {
+                    pickerButton
+                }
+            }
+            
+        }
+    }
+    
+   var pickerButton: some View {
+        Button {
+            looperPopoverShowing = true
+        } label: {
+            HStack {
+                Text(hudViewModel.selectedLooper.name)
+                Image(systemName: "person.crop.circle")
+            }
+        }
+        .popover(isPresented: $looperPopoverShowing) {
+            NavigationStack {
+                Form {
+                    Picker("", selection: $hudViewModel.selectedLooper) {
                         ForEach(hudViewModel.loopers()) { looper in
                             Text(looper.name).tag(looper)
                         }
                     }
+                    .pickerStyle(.inline)
                 }
+                .toolbar(content: {
+                    ToolbarItem {
+                        Button {
+                            looperPopoverShowing = false
+                        } label: {
+                            Text("Done")
+                        }
+                    }
+                })
             }
-
+            .presentationDetents([.medium])
         }
     }
     
     func arrowImageName(egv: NewGlucoseSample) -> String {
-    
+        
         guard let trend = egv.trend else {
             return "questionmark"
         }
         
         switch trend {
-
+            
         case .up:
             return "arrow.up.forward"
         case .upUp:
@@ -138,7 +168,7 @@ struct HUDView: View {
         }
         
         return formattedEGV
-
+        
     }
     
     enum EGVTrend: Int {

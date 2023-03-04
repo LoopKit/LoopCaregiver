@@ -25,8 +25,22 @@ struct SettingsView: View {
                 Form {
                     Section("Loopers"){
                         List(accountService.loopers) { looper in
-                            NavigationLink(value: accountService.createLooperService(looper: looper, settings: settings)) {
-                                Text(looper.name)
+                            HStack {
+                                Button {
+                                    accountService.selectedLooper = looper
+                                } label: {
+                                    if looper == accountService.selectedLooper {
+                                        Image(systemName: "circle.fill")
+                                            .opacity(0.75)
+                                    } else {
+                                        Image(systemName: "circle")
+                                            .opacity(0.75)
+                                    }
+                                }
+                                .buttonStyle(PlainButtonStyle())
+                                NavigationLink(value: accountService.createLooperService(looper: looper, settings: settings)) {
+                                        Text(looper.name)
+                                }
                             }
                         }
                         NavigationLink(value: "AddLooper") {
