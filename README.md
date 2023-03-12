@@ -82,3 +82,22 @@ If the `git stash pop` gives an error, you'll have to sign the targets again. If
 * Overrides
 * OTP codes automatically sent with remote commands
 * Loop Graphs
+
+## Remote Commands 2.0
+
+Remote Commands 2.0 is a set of experimental features that supports command status and helps with the limitations of push notifications. This feature is very early in development. Like all remote features in Loop and Caregiver, you are assuming the risks of using open-source DIY code.
+
+Setting up these features may be difficult except for advanced Loop builders that are comfortable troubleshooting git and Xcode issues and deploying to Nightscout.
+
+* Deploy special caregiver instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
+  * Make sure to deploy the "caregiver" branch
+* Build special branch of LoopWorkspace: caregiver-main or caregiver-dev
+  * caregiver-main is based on Loop 3.0 (main branch)
+  * caregiver-dev is based on the Loop dev branch. This branch is not being actively updated with the latest dev changes.
+* Activate Remote Commands 2 in Caregiver
+  * Caregiver -> Settings
+  * Tap and hold the "Disabled" text under the "Experimental Features" section to reveal the secret experimental features options.
+  * Toggle the "Remote Commands 2" switch to ON
+* After delivering carbs/bolus/override, the command status will show at the bottom of Caregiver Settings -> Select Loopers name.
+* Additional commands such as autobolus activation, closed loop activation are available in aforementioned view.
+* Note that occasionally (every few weeks) you should clear old commands in Settings -> Select Loopers name -> Delete All Commands. This is to avoid a performance issue when too many commands build up.

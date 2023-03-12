@@ -11,6 +11,9 @@
       location = "container:OverrideAssetsWatchApp.xcassets">
    </FileRef>
    <FileRef
+      location = "group:README.md">
+   </FileRef>
+   <FileRef
       location = "group:LoopCaregiver/LoopCaregiver.xcodeproj">
    </FileRef>
    <FileRef
