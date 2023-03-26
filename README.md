@@ -91,7 +91,8 @@ Setting up these features may be difficult except for advanced Loop builders tha
 
 * Deploy special caregiver instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
   * Make sure to deploy the "caregiver" branch
-* Build special branch of LoopWorkspace: feature/2023-03/bg/remote-commands
+* Build special branch of LoopWorkspace
+  * Clone with command `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-03/bg/remote-commands --recurse-submodules`
   * This is based on Loop 3.2.1 (main branch)
 * Activate Remote Commands 2 in Caregiver
   * Caregiver -> Settings
