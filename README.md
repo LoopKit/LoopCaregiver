@@ -91,13 +91,12 @@ Setting up these features may be difficult except for advanced Loop builders tha
 
 * Deploy special caregiver instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
   * Make sure to deploy the "caregiver" branch
-* Build special branch of LoopWorkspace: caregiver-main or caregiver-dev
-  * caregiver-main is based on Loop 3.0 (main branch)
-  * caregiver-dev is based on the Loop dev branch. This branch is not being actively updated with the latest dev changes.
+* Build special branch of LoopWorkspace: feature/2023-03/bg/remote-commands
+  * This is based on Loop 3.2.1 (main branch)
 * Activate Remote Commands 2 in Caregiver
   * Caregiver -> Settings
   * Tap and hold the "Disabled" text under the "Experimental Features" section to reveal the secret experimental features options.
   * Toggle the "Remote Commands 2" switch to ON
 * After delivering carbs/bolus/override, the command status will show at the bottom of Caregiver Settings -> Select Loopers name.
 * Additional commands such as autobolus activation, closed loop activation are available in aforementioned view.
-* Note that occasionally (every few weeks) you should clear old commands in Settings -> Select Loopers name -> Delete All Commands. This is to avoid a performance issue when too many commands build up.
+* Note that occasionally (every few weeks) you should clear old commands in Settings -> Select Loopers name -> Delete All Commands. This is to avoid a performance issue when too many commands build up that will be fixed later.
