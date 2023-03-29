@@ -46,6 +46,15 @@
       }
     },
     {
+      "identity" : "nightscoutkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/gestrich/NightscoutKit.git",
+      "state" : {
+        "branch" : "feature/2023-03/bg/remote-commands",
+        "revision" : "6bf4358cff951c6fa6b3d97b21a27150648338ca"
+      }
+    },
+    {
       "identity" : "onetimepassword",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/mattrubin/OneTimePassword.git",
@@ -56,7 +65,7 @@
     {
       "identity" : "swiftcharts",
       "kind" : "remoteSourceControl",
-      "location" : "https://github.com/ivanschuetz/SwiftCharts",
+      "location" : "https://github.com/ivanschuetz/SwiftCharts.git",
       "state" : {
         "branch" : "master",
         "revision" : "c354c1945bb35a1f01b665b22474f6db28cba4a2"
