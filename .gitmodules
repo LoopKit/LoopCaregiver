@@ -4,15 +4,6 @@
 [submodule "LoopKit"]
 	path = LoopKit
 	url = https://github.com/gestrich/LoopKit.git
-[submodule "CGMBLEKit"]
-	path = CGMBLEKit
-	url = https://github.com/LoopKit/CGMBLEKit.git
-[submodule "dexcom-share-client-swift"]
-	path = dexcom-share-client-swift
-	url = https://github.com/LoopKit/dexcom-share-client-swift.git
-[submodule "rileylink_ios"]
-	path = rileylink_ios
-	url = https://github.com/gestrich/rileylink_ios.git
 [submodule "MKRingProgressView"]
 	path = MKRingProgressView
 	url = https://github.com/LoopKit/MKRingProgressView.git
@@ -22,21 +13,3 @@
 [submodule "TrueTime.swift"]
 	path = TrueTime.swift
 	url = https://github.com/LoopKit/TrueTime.swift.git
-[submodule "LoopOnboarding"]
-	path = LoopOnboarding
-	url = https://github.com/LoopKit/LoopOnboarding.git
-[submodule "AmplitudeService"]
-	path = AmplitudeService
-	url = https://github.com/LoopKit/AmplitudeService.git
-[submodule "LogglyService"]
-	path = LogglyService
-	url = https://github.com/LoopKit/LogglyService.git
-[submodule "OmniBLE"]
-	path = OmniBLE
-	url = https://github.com/LoopKit/OmniBLE.git
-[submodule "LoopSupport"]
-	path = LoopSupport
-	url = https://github.com/LoopKit/LoopSupport
-[submodule "G7SensorKit"]
-	path = G7SensorKit
-	url = https://github.com/LoopKit/G7SensorKit.git
