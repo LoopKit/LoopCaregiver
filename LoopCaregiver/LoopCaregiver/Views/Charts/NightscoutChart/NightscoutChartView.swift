@@ -9,7 +9,7 @@ import SwiftUI
 import Charts
 import LoopKit
 import HealthKit
-import NightscoutUploadKit
+import NightscoutKit
 
 struct NightscoutChartScrollView: View {
 

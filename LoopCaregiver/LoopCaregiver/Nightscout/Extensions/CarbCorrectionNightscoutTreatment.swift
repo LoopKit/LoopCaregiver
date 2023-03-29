@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 import HealthKit
 
 extension CarbCorrectionNightscoutTreatment {
@@ -17,7 +17,7 @@ extension CarbCorrectionNightscoutTreatment {
 }
 
 extension CarbCorrectionNightscoutTreatment: Equatable {
-    public static func == (lhs: NightscoutUploadKit.CarbCorrectionNightscoutTreatment, rhs: NightscoutUploadKit.CarbCorrectionNightscoutTreatment) -> Bool {
+    public static func == (lhs: NightscoutKit.CarbCorrectionNightscoutTreatment, rhs: NightscoutKit.CarbCorrectionNightscoutTreatment) -> Bool {
         return lhs.timestamp == rhs.timestamp &&
         lhs.carbs == rhs.carbs
     }

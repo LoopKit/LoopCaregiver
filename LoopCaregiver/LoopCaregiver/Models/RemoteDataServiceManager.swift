@@ -7,8 +7,9 @@
 
 import Foundation
 import LoopKit
-import NightscoutUploadKit
+import NightscoutKit
 import HealthKit
+import UIKit //For willEnterForegroundNotification
 
 class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
@@ -236,7 +237,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchCarbEntries()
     }
     
-    func fetchOverrideEntries() async throws -> [NightscoutUploadKit.OverrideTreatment] {
+    func fetchOverrideEntries() async throws -> [NightscoutKit.OverrideTreatment] {
         return try await remoteDataProvider.fetchOverrideEntries()
     }
     
@@ -271,7 +272,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchCurrentProfile()
     }
     
-    func activeOverride() -> NightscoutUploadKit.TemporaryScheduleOverride? {
+    func activeOverride() -> NightscoutKit.TemporaryScheduleOverride? {
         
         /*
          There are 3 sources of the current override from Nightscout

@@ -7,16 +7,16 @@
 
 import Foundation
 import LoopKit
-import NightscoutUploadKit
+import NightscoutKit
 
 class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     
     private var credentialService: NightscoutCredentialService
-    private let nightscoutUploader: NightscoutUploader
+    private let nightscoutUploader: NightscoutClient
     private let settings: CaregiverSettings
     
     init(looper: Looper, settings: CaregiverSettings){
-        self.nightscoutUploader = NightscoutUploader(siteURL: looper.nightscoutCredentials.url, APISecret: looper.nightscoutCredentials.secretKey)
+        self.nightscoutUploader = NightscoutClient(siteURL: looper.nightscoutCredentials.url, apiSecret: looper.nightscoutCredentials.secretKey)
         self.credentialService = NightscoutCredentialService(credentials: looper.nightscoutCredentials)
         self.settings = settings
     }

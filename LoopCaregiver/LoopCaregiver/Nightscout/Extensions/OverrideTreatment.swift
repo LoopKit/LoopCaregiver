@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 extension OverrideTreatment: Equatable {
-    public static func == (lhs: NightscoutUploadKit.OverrideTreatment, rhs: NightscoutUploadKit.OverrideTreatment) -> Bool {
+    public static func == (lhs: NightscoutKit.OverrideTreatment, rhs: NightscoutKit.OverrideTreatment) -> Bool {
         return lhs.timestamp == rhs.timestamp &&
         lhs.endDate == rhs.endDate &&
         lhs.correctionRange == rhs.correctionRange &&

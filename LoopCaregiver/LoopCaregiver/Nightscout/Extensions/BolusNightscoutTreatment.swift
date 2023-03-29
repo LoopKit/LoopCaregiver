@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 import HealthKit
 
 extension BolusNightscoutTreatment {
@@ -17,7 +17,7 @@ extension BolusNightscoutTreatment {
 }
 
 extension BolusNightscoutTreatment: Equatable {
-    public static func == (lhs: NightscoutUploadKit.BolusNightscoutTreatment, rhs: NightscoutUploadKit.BolusNightscoutTreatment) -> Bool {
+    public static func == (lhs: NightscoutKit.BolusNightscoutTreatment, rhs: NightscoutKit.BolusNightscoutTreatment) -> Bool {
         return lhs.timestamp == rhs.timestamp &&
         lhs.duration == rhs.duration &&
         lhs.amount == rhs.amount

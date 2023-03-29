@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 extension IOBStatus: Equatable {
     public static func == (lhs: IOBStatus, rhs: IOBStatus) -> Bool {

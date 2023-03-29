@@ -6,7 +6,7 @@
 //
 
 import SwiftUI
-import NightscoutUploadKit
+import NightscoutKit
 
 struct LooperView: View {
     

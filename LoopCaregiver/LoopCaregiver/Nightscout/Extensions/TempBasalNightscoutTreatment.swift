@@ -6,10 +6,10 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 extension TempBasalNightscoutTreatment: Equatable {
-    public static func == (lhs: NightscoutUploadKit.TempBasalNightscoutTreatment, rhs: NightscoutUploadKit.TempBasalNightscoutTreatment) -> Bool {
+    public static func == (lhs: NightscoutKit.TempBasalNightscoutTreatment, rhs: NightscoutKit.TempBasalNightscoutTreatment) -> Bool {
         return lhs.timestamp == rhs.timestamp &&
         lhs.amount == rhs.amount &&
         lhs.duration == rhs.duration &&

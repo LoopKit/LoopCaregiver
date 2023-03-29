@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 extension [NightscoutTreatment] {
     func bolusTreatments() -> [BolusNightscoutTreatment] {

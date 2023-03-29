@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 extension ProfileSet {
     func getDefaultProfile() -> Profile? { //get* prefixed because `defaultProfile` already defined as a String on ProfileSet

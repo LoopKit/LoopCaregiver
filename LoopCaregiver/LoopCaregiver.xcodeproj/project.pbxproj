@@ -31,8 +31,6 @@
 		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
 		A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
 		A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
-		A973364329678EA400DFE395 /* NightscoutUploadKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A973364229678EA300DFE395 /* NightscoutUploadKit.framework */; };
-		A973364429678EA400DFE395 /* NightscoutUploadKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A973364229678EA300DFE395 /* NightscoutUploadKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DE92933B0FE000A3D6A /* SwiftUIExtensions.swift */; };
 		A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DEB293405A4000A3D6A /* PinchZoom.swift */; };
 		A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
@@ -67,6 +65,7 @@
 		A9EC19A9292144040022D39F /* OverrideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A8292144040022D39F /* OverrideView.swift */; };
 		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
 		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
+		A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -76,7 +75,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A973364429678EA400DFE395 /* NightscoutUploadKit.framework in Embed Frameworks */,
 				A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */,
 				A948D1A7292AB765003C5683 /* LoopUI.framework in Embed Frameworks */,
 				A95F50CF292A671300079AAF /* SwiftCharts in Embed Frameworks */,
@@ -158,7 +156,7 @@
 				A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */,
 				A948D1A6292AB765003C5683 /* LoopUI.framework in Frameworks */,
 				A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */,
-				A973364329678EA400DFE395 /* NightscoutUploadKit.framework in Frameworks */,
+				A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */,
 				A95F50CE292A66F200079AAF /* SwiftCharts in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -410,6 +408,7 @@
 				A9EC19A3292141980022D39F /* OneTimePassword */,
 				A9B033E3292306A90052AA9E /* CodeScanner */,
 				A95F50CD292A66F200079AAF /* SwiftCharts */,
+				A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */,
 			);
 			productName = LoopCaregiver;
 			productReference = A9EC1978291FEF940022D39F /* LoopCaregiver.app */;
@@ -443,6 +442,7 @@
 				A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */,
 				A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */,
 				A95F50CC292A66F200079AAF /* XCRemoteSwiftPackageReference "SwiftCharts" */,
+				A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */,
 			);
 			productRefGroup = A9EC1979291FEF940022D39F /* Products */;
 			projectDirPath = "";
@@ -737,6 +737,14 @@
 				revision = 8e4022f2852d77240d0a17482cbfe325354aac70;
 			};
 		};
+		A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gestrich/NightscoutKit.git";
+			requirement = {
+				branch = "feature/2023-03/bg/remote-commands";
+				kind = branch;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -754,6 +762,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
 			productName = OneTimePassword;
+		};
+		A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */;
+			productName = NightscoutKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 

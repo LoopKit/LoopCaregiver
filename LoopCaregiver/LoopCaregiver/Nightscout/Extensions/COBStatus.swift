@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import NightscoutUploadKit
+import NightscoutKit
 
 extension COBStatus: Equatable {
     public static func == (lhs: COBStatus, rhs: COBStatus) -> Bool {
