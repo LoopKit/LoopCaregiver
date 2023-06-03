@@ -12,6 +12,7 @@
 		A930C6C22A8F99AA004BB459 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C12A8F99AA004BB459 /* CGRect.swift */; };
 		A930C6C52A9364BD004BB459 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C42A9364BC004BB459 /* DemoView.swift */; };
 		A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */; };
+		A92AB6C62A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
 		A947026C293254B500FB3E59 /* COBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026B293254B500FB3E59 /* COBChartView.swift */; };
@@ -53,6 +54,7 @@
 		A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
 		A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC86429992DD20058EBA5 /* DisclaimerView.swift */; };
 		A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
+		A99F2F522A2A92D100F7DE2D /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
 		A99F2F742A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */; };
 		A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */; };
 		A9A362DB2A80EEFE007B017C /* OverrideCancelRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */; };
@@ -128,6 +130,7 @@
 		3DF4E0882980736C00E91E16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
 		A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Presentable.swift"; sourceTree = "<group>"; };
+		A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPersistentStoreCoordinator+Migration.swift"; sourceTree = "<group>"; };
 		A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LoopCaregiver 2.xcdatamodel"; sourceTree = "<group>"; };
 		A930C6C12A8F99AA004BB459 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		A930C6C42A9364BC004BB459 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
@@ -178,6 +181,8 @@
 		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
 		A99DC86429992DD20058EBA5 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		A99DC866299984430058EBA5 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		A99F2F502A29398F00F7DE2D /* LoopCaregiver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiver.entitlements; sourceTree = "<group>"; };
+		A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarbCorrectionNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
 		A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BolusNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
 		A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideCancelRemoteNotification.swift; sourceTree = "<group>"; };
@@ -246,6 +251,8 @@
 			isa = PBXGroup;
 			children = (
 				A9D3FF232A6C3C54000C891D /* HKUnit.swift */,
+				A92AB6C42A3153DD00977536 /* Foundation */,
+				A92AB6BF2A3151E900977536 /* LoopKit */,
 				A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */,
 			);
 			path = Extensions;
@@ -258,6 +265,14 @@
 				A930C6C42A9364BC004BB459 /* DemoView.swift */,
 			);
 			path = ZommableScrollView;
+			sourceTree = "<group>";
+		};
+		A92AB6C42A3153DD00977536 /* Foundation */ = {
+			isa = PBXGroup;
+			children = (
+				A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */,
+			);
+			path = Foundation;
 			sourceTree = "<group>";
 		};
 		A9346F842AC9820500C15F70 /* LoopCaregiverTests */ = {
@@ -383,6 +398,7 @@
 				A92AB6BE2A3151E900977536 /* Extensions */,
 				A96929902927FFBA00B8BF43 /* AccountService.swift */,
 				A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */,
+				A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */,
 				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
 				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
 				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
@@ -529,6 +545,7 @@
 		A9EC197A291FEF940022D39F /* LoopCaregiver */ = {
 			isa = PBXGroup;
 			children = (
+				A99F2F502A29398F00F7DE2D /* LoopCaregiver.entitlements */,
 				3DF4E0882980736C00E91E16 /* Info.plist */,
 				A96929302926E2B700B8BF43 /* Models */,
 				A98D4CB0292C38D100EFF5C6 /* Nightscout */,
@@ -679,6 +696,7 @@
 				A9A362DC2A80EEFE007B017C /* CarbRemoteNotification.swift in Sources */,
 				A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */,
 				A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */,
+				A99F2F522A2A92D100F7DE2D /* Bundle+Extensions.swift in Sources */,
 				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
 				A95223762A7EDE660070FE13 /* AutobolusAction.swift in Sources */,
 				A94702702932C21E00FB3E59 /* IOBChartView.swift in Sources */,
@@ -703,6 +721,8 @@
 				A98FF28E29A11CC8005739A5 /* OverrideTreatment.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
 				A9744DEA2933B0FE000A3D6A /* View.swift in Sources */,
+				A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */,
+				A92AB6C62A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift in Sources */,
 				A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,
 				A9D3FF222A6C3B99000C891D /* Color.swift in Sources */,
@@ -810,6 +830,7 @@
 			baseConfigurationReference = 3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_IDENTIFIER = "group.$(CAREGIVER_APP_BUNDLE_IDENTIFIER)Group";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -871,6 +892,7 @@
 			baseConfigurationReference = 3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				APP_GROUP_IDENTIFIER = "group.$(CAREGIVER_APP_BUNDLE_IDENTIFIER)Group";
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -926,6 +948,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LoopCaregiver/LoopCaregiver.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiver/Preview Content\"";
@@ -952,6 +975,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LoopCaregiver/LoopCaregiver.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiver/Preview Content\"";
