@@ -10,10 +10,10 @@ import SwiftUI
 struct SettingsView: View {
 
     @ObservedObject var accountService: AccountServiceManager
-    @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
-    @AppStorage(UserDefaults.standard.timelinePredictionEnabledKey) private var timelinePredictionEnabled = false
-    @AppStorage(UserDefaults.standard.remoteCommands2EnabledKey) private var remoteCommands2Enabled = false
-    @AppStorage(UserDefaults.standard.experimentalFeaturesUnlockedKey) private var experimentalFeaturesUnlocked = false
+    @AppStorage(UserDefaults.appGroupDefaults.glucoseUnitKey, store: UserDefaults.appGroupDefaults) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
+    @AppStorage(UserDefaults.appGroupDefaults.timelinePredictionEnabledKey, store: UserDefaults.appGroupDefaults) private var timelinePredictionEnabled = false
+    @AppStorage(UserDefaults.appGroupDefaults.remoteCommands2EnabledKey, store: UserDefaults.appGroupDefaults) private var remoteCommands2Enabled = false
+    @AppStorage(UserDefaults.appGroupDefaults.experimentalFeaturesUnlockedKey, store: UserDefaults.appGroupDefaults) private var experimentalFeaturesUnlocked = false
     
     @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
