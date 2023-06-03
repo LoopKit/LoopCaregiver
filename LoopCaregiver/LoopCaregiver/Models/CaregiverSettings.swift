@@ -17,35 +17,36 @@ class CaregiverSettings: ObservableObject {
     @Published var disclaimerAcceptedDate: Date?
     
     init(){
-        self.glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
-        self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
-        self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
-        self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
-        self.disclaimerAcceptedDate = UserDefaults.standard.disclaimerAcceptedDate
+        Self.migrateUserDefaultsToAppGroup()
+        self.glucoseDisplayUnits = UserDefaults.appGroupDefaults.glucosePreference.unit
+        self.timelinePredictionEnabled = UserDefaults.appGroupDefaults.timelinePredictionEnabled
+        self.remoteCommands2Enabled = UserDefaults.appGroupDefaults.remoteCommands2Enabled
+        self.experimentalFeaturesUnlocked = UserDefaults.appGroupDefaults.experimentalFeaturesUnlocked
+        self.disclaimerAcceptedDate = UserDefaults.appGroupDefaults.disclaimerAcceptedDate
         
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
     @objc func defaultsChanged(notication: Notification){
-        let glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
+        let glucoseDisplayUnits = UserDefaults.appGroupDefaults.glucosePreference.unit
         if self.glucoseDisplayUnits != glucoseDisplayUnits {
             self.glucoseDisplayUnits = glucoseDisplayUnits
         }
         
-        if self.timelinePredictionEnabled != UserDefaults.standard.timelinePredictionEnabled {
-            self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
+        if self.timelinePredictionEnabled != UserDefaults.appGroupDefaults.timelinePredictionEnabled {
+            self.timelinePredictionEnabled = UserDefaults.appGroupDefaults.timelinePredictionEnabled
         }
         
-        if self.remoteCommands2Enabled != UserDefaults.standard.remoteCommands2Enabled {
-            self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
+        if self.remoteCommands2Enabled != UserDefaults.appGroupDefaults.remoteCommands2Enabled {
+            self.remoteCommands2Enabled = UserDefaults.appGroupDefaults.remoteCommands2Enabled
         }
         
-        if self.experimentalFeaturesUnlocked != UserDefaults.standard.experimentalFeaturesUnlocked {
-            self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
+        if self.experimentalFeaturesUnlocked != UserDefaults.appGroupDefaults.experimentalFeaturesUnlocked {
+            self.experimentalFeaturesUnlocked = UserDefaults.appGroupDefaults.experimentalFeaturesUnlocked
         }
         
-        if self.disclaimerAcceptedDate != UserDefaults.standard.disclaimerAcceptedDate {
-            self.disclaimerAcceptedDate = UserDefaults.standard.disclaimerAcceptedDate
+        if self.disclaimerAcceptedDate != UserDefaults.appGroupDefaults.disclaimerAcceptedDate {
+            self.disclaimerAcceptedDate = UserDefaults.appGroupDefaults.disclaimerAcceptedDate
         }
     }
     
@@ -73,10 +74,33 @@ class CaregiverSettings: ObservableObject {
             return "Error: Missing units"
         }
     }
+    
+    static func migrateUserDefaultsToAppGroup() {
+    
+        let defaultUserDefaults = UserDefaults.standard
+        let groupDefaults = UserDefaults.appGroupDefaults
+        let didMigrateToAppGroups = "DidMigrateToAppGroups"
+        
+        guard !groupDefaults.bool(forKey: didMigrateToAppGroups) else {
+            return
+        }
+        
+        for key in defaultUserDefaults.dictionaryRepresentation().keys {
+            groupDefaults.set(defaultUserDefaults.dictionaryRepresentation()[key], forKey: key)
+        }
+        
+        groupDefaults.set(true, forKey: didMigrateToAppGroups)
+        groupDefaults.synchronize()
+        print("Successfully migrated defaults")
+    }
 }
 
 
 extension UserDefaults {
+    
+    static var appGroupDefaults: UserDefaults {
+        UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
+    }
     
     var glucoseUnitKey: String {
         return "glucoseUnit"
@@ -103,19 +127,19 @@ extension UserDefaults {
     }
     
     @objc dynamic var timelinePredictionEnabled: Bool {
-        return UserDefaults.standard.bool(forKey: timelinePredictionEnabledKey)
+        return UserDefaults.appGroupDefaults.bool(forKey: timelinePredictionEnabledKey)
     }
     
     @objc dynamic var remoteCommands2Enabled: Bool {
-        return UserDefaults.standard.bool(forKey: remoteCommands2EnabledKey)
+        return UserDefaults.appGroupDefaults.bool(forKey: remoteCommands2EnabledKey)
     }
     
     @objc dynamic var experimentalFeaturesUnlocked: Bool {
-        return UserDefaults.standard.bool(forKey: experimentalFeaturesUnlockedKey)
+        return UserDefaults.appGroupDefaults.bool(forKey: experimentalFeaturesUnlockedKey)
     }
     
     @objc dynamic var disclaimerAcceptedDate: Date? {
-        guard let rawString = UserDefaults.standard.string(forKey: disclaimerAcceptedDateKey) else {
+        guard let rawString = UserDefaults.appGroupDefaults.string(forKey: disclaimerAcceptedDateKey) else {
             return nil
         }
         return Date(rawValue: rawString)

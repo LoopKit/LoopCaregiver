@@ -10,7 +10,7 @@ import SwiftUI
 struct DisclaimerView: View {
     
     @ObservedObject var viewModel = DisclaimerViewModel()
-    @AppStorage(UserDefaults.standard.disclaimerAcceptedDateKey) private var disclaimerAcceptedDateString = ""
+    @AppStorage(UserDefaults.standard.disclaimerAcceptedDateKey, store: UserDefaults(suiteName: Bundle.main.appGroupSuiteName)) private var disclaimerAcceptedDateString = ""
     
     var body: some View {
         NavigationStack {
