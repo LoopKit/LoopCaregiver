@@ -14,5 +14,6 @@ struct SimpleEntry: TimelineEntry {
     let currentGlucoseSample: NewGlucoseSample?
     let lastGlucoseChange: Double?
     let date: Date
+    let entryIndex: Int
     let configuration: ConfigurationIntent
 }

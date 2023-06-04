@@ -21,7 +21,7 @@ struct LoopCaregiverWidgetView : View {
         switch family {
         case .accessoryCircular:
             if let latestGlucoseSample = entry.currentGlucoseSample {
-                LatestGlucoseView(latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings())
+                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings())
             } else {
                 emptyLatestGlucoseView
             }
@@ -44,12 +44,12 @@ struct LoopCaregiverWidgetView : View {
                     .font(.headline)
             }
             if let latestGlucoseSample = entry.currentGlucoseSample {
-                LatestGlucoseView(latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings())
+                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings())
             } else {
                 emptyLatestGlucoseView
             }
-            Text("\(timeFormat.string(from: entry.date))")
-                .font(.footnote)
+//            Text("\(timeFormat.string(from: entry.date)) (\(entry.entryIndex))")
+//                .font(.footnote)
         }
     }
     

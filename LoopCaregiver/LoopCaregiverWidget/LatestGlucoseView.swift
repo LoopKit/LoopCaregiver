@@ -11,6 +11,7 @@ import HealthKit
 
 struct LatestGlucoseView: View {
     
+    let timelineEntryDate: Date
     let latestGlucose: NewGlucoseSample
     let lastGlucoseChange: Double?
     let settings: CaregiverSettings
@@ -36,7 +37,7 @@ struct LatestGlucoseView: View {
     }
     
     var isGlucoseStale: Bool {
-        return latestGlucose.date < Date().addingTimeInterval(-60*15)
+        return latestGlucose.date < timelineEntryDate.addingTimeInterval(-60*15)
     }
     
     var currentGlucoseText: String {
@@ -106,6 +107,6 @@ struct LatestGlucoseView: View {
 
 struct CurrentBGView_Previews: PreviewProvider {
     static var previews: some View {
-        LatestGlucoseView(latestGlucose: NewGlucoseSample(date: Date(), quantity: .init(unit: .internationalUnitsPerHour, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345"), lastGlucoseChange: 3, settings: CaregiverSettings())
+        LatestGlucoseView(timelineEntryDate: Date(), latestGlucose: NewGlucoseSample(date: Date(), quantity: .init(unit: .internationalUnitsPerHour, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345"), lastGlucoseChange: 3, settings: CaregiverSettings())
     }
 }

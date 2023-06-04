@@ -33,14 +33,14 @@ struct TimelineProvider: IntentTimelineProvider {
         Task {
             
             guard let nightscoutDataSource = remoteDataSource else {
-                completion(SimpleEntry(looper: nil, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), configuration: configuration))
+                completion(SimpleEntry(looper: nil, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, configuration: configuration))
                 return
             }
             
             let sortedSamples = try await nightscoutDataSource.fetchGlucoseSamples().sorted(by: {$0.date < $1.date})
             let latestGlucoseSample = sortedSamples.last
             let glucoseChange = getLastGlucoseChange(samples: sortedSamples)
-            completion(SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), configuration: configuration))
+            completion(SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), entryIndex: 0, configuration: configuration))
         }
     }
     
@@ -57,7 +57,7 @@ struct TimelineProvider: IntentTimelineProvider {
     //MARK: IntentTimelineProvider
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), configuration: ConfigurationIntent())
+        SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -68,7 +68,20 @@ struct TimelineProvider: IntentTimelineProvider {
 
     func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<SimpleEntry>) -> ()) {
         getEntry(configuration: configuration) { entry in
-            let timeline = Timeline(entries: [entry], policy: .atEnd)
+            
+            var entries = [SimpleEntry]()
+            let startDate = Date()
+            
+            for index in 0..<60 {
+                let futureEntry = SimpleEntry(looper: entry.looper,
+                                              currentGlucoseSample: entry.currentGlucoseSample,
+                                              lastGlucoseChange: entry.lastGlucoseChange,
+                                              date: startDate.addingTimeInterval(60 * TimeInterval(index)),
+                                              entryIndex: index,
+                                              configuration: configuration)
+                entries.append(futureEntry)
+            }
+            let timeline = Timeline(entries: entries, policy: .after(startDate.addingTimeInterval(60*5)))
             completion(timeline)
         }
     }
