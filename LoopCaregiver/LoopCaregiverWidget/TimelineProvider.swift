@@ -70,18 +70,23 @@ struct TimelineProvider: IntentTimelineProvider {
         getEntry(configuration: configuration) { entry in
             
             var entries = [SimpleEntry]()
-            let startDate = Date()
+            let nowDate = Date()
+            
+            var nextRequestDate: Date = nowDate.addingTimeInterval(60*5) //Default interval
+            if let nextExpectedGlucoseDate = entry.nextExpectedGlucoseDate(), nextExpectedGlucoseDate > nowDate {
+                nextRequestDate = nextExpectedGlucoseDate.addingTimeInterval(60*1) //Extra minute to allow time for upload.
+            }
             
             for index in 0..<60 {
                 let futureEntry = SimpleEntry(looper: entry.looper,
                                               currentGlucoseSample: entry.currentGlucoseSample,
                                               lastGlucoseChange: entry.lastGlucoseChange,
-                                              date: startDate.addingTimeInterval(60 * TimeInterval(index)),
+                                              date: nowDate.addingTimeInterval(60 * TimeInterval(index)),
                                               entryIndex: index,
                                               configuration: configuration)
                 entries.append(futureEntry)
             }
-            let timeline = Timeline(entries: entries, policy: .after(startDate.addingTimeInterval(60*5)))
+            let timeline = Timeline(entries: entries, policy: .after(nextRequestDate))
             completion(timeline)
         }
     }

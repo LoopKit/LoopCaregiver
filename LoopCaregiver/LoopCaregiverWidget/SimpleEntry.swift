@@ -16,4 +16,14 @@ struct SimpleEntry: TimelineEntry {
     let date: Date
     let entryIndex: Int
     let configuration: ConfigurationIntent
+    
+    func nextExpectedGlucoseDate() -> Date? {
+        let secondsBetweenSamples: TimeInterval = 60 * 5
+        
+        guard let glucoseDate = currentGlucoseSample?.date else {
+            return nil
+        }
+            
+        return glucoseDate.addingTimeInterval(secondsBetweenSamples)
+    }
 }
