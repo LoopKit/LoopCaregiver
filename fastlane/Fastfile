@@ -132,6 +132,7 @@ platform :ios do
     end
 
     configure_bundle_id("LoopCaregiver", "com.#{TEAMID}.loopkit.LoopCaregiver", [
+      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
     ])
 
   end
