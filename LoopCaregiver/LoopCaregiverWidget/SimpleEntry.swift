@@ -15,6 +15,7 @@ struct SimpleEntry: TimelineEntry {
     let lastGlucoseChange: Double?
     let date: Date
     let entryIndex: Int
+    let isLastEntry: Bool
     let configuration: ConfigurationIntent
     
     func nextExpectedGlucoseDate() -> Date? {

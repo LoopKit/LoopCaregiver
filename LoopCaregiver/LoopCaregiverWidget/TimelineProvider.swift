@@ -33,14 +33,14 @@ struct TimelineProvider: IntentTimelineProvider {
         Task {
             
             guard let nightscoutDataSource = remoteDataSource else {
-                completion(SimpleEntry(looper: nil, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, configuration: configuration))
+                completion(SimpleEntry(looper: nil, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, configuration: configuration))
                 return
             }
             
             let sortedSamples = try await nightscoutDataSource.fetchGlucoseSamples().sorted(by: {$0.date < $1.date})
             let latestGlucoseSample = sortedSamples.last
             let glucoseChange = getLastGlucoseChange(samples: sortedSamples)
-            completion(SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), entryIndex: 0, configuration: configuration))
+            completion(SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), entryIndex: 0, isLastEntry: true, configuration: configuration))
         }
     }
     
@@ -57,7 +57,7 @@ struct TimelineProvider: IntentTimelineProvider {
     //MARK: IntentTimelineProvider
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, configuration: ConfigurationIntent())
+        SimpleEntry(looper: accountServiceManager.selectedLooper, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, configuration: ConfigurationIntent())
     }
 
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> ()) {
@@ -77,12 +77,15 @@ struct TimelineProvider: IntentTimelineProvider {
                 nextRequestDate = nextExpectedGlucoseDate.addingTimeInterval(60*1) //Extra minute to allow time for upload.
             }
             
-            for index in 0..<60 {
+            let indexCount = 60
+            for index in 0..<indexCount {
+                let isLastEntry = index == (indexCount - 1)
                 let futureEntry = SimpleEntry(looper: entry.looper,
                                               currentGlucoseSample: entry.currentGlucoseSample,
                                               lastGlucoseChange: entry.lastGlucoseChange,
                                               date: nowDate.addingTimeInterval(60 * TimeInterval(index)),
                                               entryIndex: index,
+                                              isLastEntry: isLastEntry,
                                               configuration: configuration)
                 entries.append(futureEntry)
             }

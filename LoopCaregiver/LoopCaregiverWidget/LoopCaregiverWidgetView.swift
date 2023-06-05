@@ -12,6 +12,7 @@ struct LoopCaregiverWidgetView : View {
     
     var entry: SimpleEntry
     @Environment(\.widgetFamily) var family
+    @AppStorage(UserDefaults.standard.experimentalFeaturesUnlockedKey, store: UserDefaults(suiteName: Bundle.main.appGroupSuiteName)) private var experimentalFeaturesUnlocked = false
     
     init(entry: SimpleEntry){
         self.entry = entry
@@ -21,7 +22,7 @@ struct LoopCaregiverWidgetView : View {
         switch family {
         case .accessoryCircular:
             if let latestGlucoseSample = entry.currentGlucoseSample {
-                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings())
+                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings(), isLastEntry: entry.isLastEntry)
             } else {
                 emptyLatestGlucoseView
             }
@@ -44,12 +45,18 @@ struct LoopCaregiverWidgetView : View {
                     .font(.headline)
             }
             if let latestGlucoseSample = entry.currentGlucoseSample {
-                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings())
+                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: CaregiverSettings(), isLastEntry: entry.isLastEntry)
             } else {
                 emptyLatestGlucoseView
             }
-//            Text("\(timeFormat.string(from: entry.date)) (\(entry.entryIndex))")
-//                .font(.footnote)
+            if experimentalFeaturesUnlocked {
+                if let lastGlucoseDate = entry.currentGlucoseSample?.date {
+                    Text(timeFormat.string(from: lastGlucoseDate))
+                        .font(.footnote)
+                }
+                Text("\(timeFormat.string(from: entry.date)) (\(entry.entryIndex))")
+                    .font(.footnote)
+            }
         }
     }
     

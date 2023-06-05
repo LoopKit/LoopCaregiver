@@ -15,13 +15,17 @@ struct LatestGlucoseView: View {
     let latestGlucose: NewGlucoseSample
     let lastGlucoseChange: Double?
     let settings: CaregiverSettings
+    let isLastEntry: Bool
     
     var body: some View {
         VStack {
             Text(currentGlucoseDateText)
                 .strikethrough(isGlucoseStale)
+                .font(.footnote)
             Text(currentGlucoseText)
                 .strikethrough(isGlucoseStale)
+                .font(.headline)
+                .bold()
             if let currentTrendImageName {
                 Image(systemName: currentTrendImageName)
                     .resizable()
@@ -33,7 +37,13 @@ struct LatestGlucoseView: View {
     }
     
     var currentGlucoseDateText: String {
-        return timeFormat.string(from: latestGlucose.date)
+        if isLastEntry {
+            return ""
+        }
+        let elapsedMinutes: Double = timelineEntryDate.timeIntervalSince(latestGlucose.date) / 60.0
+        let roundedMinutes = Int(exactly: elapsedMinutes.rounded(.up)) ?? 0
+        return "\(roundedMinutes) min"
+//        return timeFormat.string(from: latestGlucose.date) + " (\(elapsedMinutes)m)"
     }
     
     var isGlucoseStale: Bool {
@@ -107,6 +117,6 @@ struct LatestGlucoseView: View {
 
 struct CurrentBGView_Previews: PreviewProvider {
     static var previews: some View {
-        LatestGlucoseView(timelineEntryDate: Date(), latestGlucose: NewGlucoseSample(date: Date(), quantity: .init(unit: .internationalUnitsPerHour, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345"), lastGlucoseChange: 3, settings: CaregiverSettings())
+        LatestGlucoseView(timelineEntryDate: Date(), latestGlucose: NewGlucoseSample(date: Date(), quantity: .init(unit: .internationalUnitsPerHour, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345"), lastGlucoseChange: 3, settings: CaregiverSettings(), isLastEntry: true)
     }
 }
