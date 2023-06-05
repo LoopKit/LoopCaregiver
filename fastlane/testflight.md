@@ -70,14 +70,6 @@ If you have already built Loop via Xcode using this Apple ID, you can skip on to
 1. Click "Confirm".
 1. Remember to do this for each of the identifiers above.
 
-## Add Time Sensitive Notifications to Loop App ID
-1. Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) on the apple developer site.
-1. Click on the "Loop" identifier
-1. Scroll down to "Time Sensitive Notifications"
-1. Tap the check box to enable Time Sensitive Notifications.
-1. Click "Save".
-1. Click "Confirm".
-
 ## Create Loop App in App Store Connect
 
 If you have created a Loop app in App Store Connect before, you can skip this section as well.
