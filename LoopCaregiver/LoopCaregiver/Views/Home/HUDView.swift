@@ -52,6 +52,7 @@ struct HUDView: View {
                 HStack {
                     if nightscoutDateSource.updating {
                         ProgressView()
+                            .padding([.trailing], 10.0)
                     }
                     pickerButton
                 }
