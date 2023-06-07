@@ -13,13 +13,13 @@ import HealthKit
 struct HUDView: View {
     
     @ObservedObject var hudViewModel: HUDViewModel
-    @ObservedObject var nightscoutDateSource: RemoteDataServiceManager
+    @ObservedObject var nightscoutDataSource: RemoteDataServiceManager
     @ObservedObject private var settings: CaregiverSettings
     @State private var looperPopoverShowing: Bool = false
     
     init(looperService: LooperService, settings: CaregiverSettings){
         self.hudViewModel = HUDViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
-        self.nightscoutDateSource = looperService.remoteDataSource
+        self.nightscoutDataSource = looperService.remoteDataSource
         self.settings = settings
     }
     
@@ -27,11 +27,11 @@ struct HUDView: View {
         VStack {
             HStack (alignment: .center) {
                 HStack {
-                    Text(nightscoutDateSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
+                    Text(nightscoutDataSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
                         .strikethrough(egvIsOutdated())
                         .font(.largeTitle)
                         .foregroundColor(egvValueColor())
-                    if let egv = nightscoutDateSource.currentGlucoseSample {
+                    if let egv = nightscoutDataSource.currentGlucoseSample {
                         Image(systemName: arrowImageName(egv: egv))
                             .resizable()
                             .aspectRatio(contentMode: .fit)
@@ -50,7 +50,7 @@ struct HUDView: View {
                 }
                 Spacer()
                 HStack {
-                    if nightscoutDateSource.updating {
+                    if nightscoutDataSource.updating {
                         ProgressView()
                             .padding([.trailing], 10.0)
                     }
@@ -120,7 +120,7 @@ struct HUDView: View {
     }
     
     func lastGlucoseChange() -> Double? {
-        let egvs = nightscoutDateSource.glucoseSamples
+        let egvs = nightscoutDataSource.glucoseSamples
         guard egvs.count > 1 else {
             return nil
         }
@@ -130,7 +130,7 @@ struct HUDView: View {
     }
     
     func egvValueColor() -> Color {
-        if let currentEGV = nightscoutDateSource.currentGlucoseSample {
+        if let currentEGV = nightscoutDataSource.currentGlucoseSample {
             return ColorType(quantity: currentEGV.quantity).color
         } else {
             return .white
@@ -138,14 +138,14 @@ struct HUDView: View {
     }
     
     func egvIsOutdated() -> Bool {
-        guard let currentEGV = nightscoutDateSource.currentGlucoseSample else {
+        guard let currentEGV = nightscoutDataSource.currentGlucoseSample else {
             return true
         }
         return Date().timeIntervalSince(currentEGV.date) > 60 * 10
     }
     
     func lastEGVTimeFormatted() -> String {
-        guard let currentEGV = self.nightscoutDateSource.currentGlucoseSample else {
+        guard let currentEGV = self.nightscoutDataSource.currentGlucoseSample else {
             return ""
         }
         
