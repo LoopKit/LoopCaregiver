@@ -172,7 +172,7 @@ struct LooperSetupView: View {
             throw AccountViewModelError.genericError(message: "Must enter OTP URL")
         }
 
-        let looper = Looper(name: name, nightscoutCredentials: NightscoutCredentials(url: nightscoutURL, secretKey: apiSecret, otpURL: otpURL), lastSelectedDate: Date())
+        let looper = Looper(identifier: UUID(), name: name, nightscoutCredentials: NightscoutCredentials(url: nightscoutURL, secretKey: apiSecret, otpURL: otpURL), lastSelectedDate: Date())
         let service = accountService.createLooperService(looper: looper, settings: settings)
         try await service.remoteDataSource.checkAuth()
         

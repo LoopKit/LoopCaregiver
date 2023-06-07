@@ -14,7 +14,12 @@ class CoreDataAccountService: AccountService {
     
     init(inMemory: Bool = false) {
         self.container = Self.createContainer(inMemory: inMemory)
-        self.observeContext()
+        do {
+            try migrateDefaultUUIDs()
+        } catch {
+            print("Error migrating Looper UUIDs \(error)")
+        }
+        observeContext()
     }
     
     
@@ -23,6 +28,7 @@ class CoreDataAccountService: AccountService {
     func addLooper(_ looper: Looper) throws {
         let context = mainContext()
         let looperCD = LooperCD(context: context)
+        looperCD.identifier = looper.identifier
         looperCD.name = looper.name
         looperCD.nightscoutURL = looper.nightscoutCredentials.url.absoluteString
         looperCD.nightscoutAPISecret = looper.nightscoutCredentials.secretKey
@@ -31,11 +37,11 @@ class CoreDataAccountService: AccountService {
         try context.save()
     }
     
-    func fetchLooperCD(name: String) throws -> LooperCD? {
+    func fetchLooperCD(identifier: UUID) throws -> LooperCD? {
         let context = mainContext()
         let fetchRequest = NSFetchRequest<LooperCD>(entityName: looperEntityName())
         fetchRequest.predicate = NSPredicate(
-            format: "name == %@", name //TODO: Use exact name match -- add a UUID to model.
+            format: "identifier == %@", identifier.uuidString
         )
         
         let results = try context.fetch(fetchRequest)
@@ -50,14 +56,14 @@ class CoreDataAccountService: AccountService {
     
     func updateActiveLoopUser(_ looper: Looper) throws {
         let context = mainContext()
-        guard let looperCD = try fetchLooperCD(name: looper.name) else {
+        guard let looperCD = try fetchLooperCD(identifier: looper.identifier) else {
             throw LooperPersistenceError.updateError
         }
         
         looperCD.lastSelectedDate = Date()
         try context.save()
         
-        guard try fetchLooperCD(name: looper.name)?.toLooper() != nil else {
+        guard try fetchLooperCD(identifier: looper.identifier)?.toLooper() != nil else {
             throw LooperPersistenceError.updateError
         }
     }
@@ -73,7 +79,7 @@ class CoreDataAccountService: AccountService {
     }
     
     func removeLooper(_ looper: Looper) throws {
-        guard let looperCD = try fetchLooperCD(name: looper.name) else {
+        guard let looperCD = try fetchLooperCD(identifier: looper.identifier) else {
             throw LooperPersistenceError.deleteError
         }
         
@@ -108,6 +114,17 @@ class CoreDataAccountService: AccountService {
         return container.viewContext
     }
     
+    func migrateDefaultUUIDs() throws {
+        let fetchRequest = NSFetchRequest<LooperCD>(entityName: looperEntityName())
+        let loopers = try mainContext().fetch(fetchRequest)
+        for looper in loopers {
+            if looper.identifier == nil {
+                looper.identifier = UUID()
+                try mainContext().save()
+            }
+        }
+    }
+
     static func createContainer(inMemory: Bool) -> NSPersistentContainer {
         let container = NSPersistentContainer(name: "LoopCaregiver")
         if inMemory {
@@ -128,23 +145,14 @@ class CoreDataAccountService: AccountService {
     static var preview: CoreDataAccountService = {
         let result = CoreDataAccountService(inMemory: true)
         let viewContext = result.container.viewContext
-        for _ in 0..<10 {
-            let newItem = Item(context: viewContext)
-            newItem.timestamp = Date()
-        }
-        do {
-            try viewContext.save()
-        } catch {
-            let nsError = error as NSError
-            fatalError("Unresolved error \(nsError), \(nsError.userInfo)")
-        }
         return result
     }()
 }
 
 extension LooperCD {
     func toLooper() -> Looper? {
-        guard let name = name,
+        guard let identifier = identifier,
+              let name = name,
               let nightscoutURL = nightscoutURL,
               let nightscoutAPISecret = nightscoutAPISecret,
               let otpURL = otpURL,
@@ -154,6 +162,7 @@ extension LooperCD {
         }
         
         //TODO: Remove force cast
-        return Looper(name: name, nightscoutCredentials: NightscoutCredentials(url: URL(string: nightscoutURL)!, secretKey: nightscoutAPISecret, otpURL: otpURL), lastSelectedDate: lastSelectedDate)
+        let credentials = NightscoutCredentials(url: URL(string: nightscoutURL)!, secretKey: nightscoutAPISecret, otpURL: otpURL)
+        return Looper(identifier: identifier, name: name, nightscoutCredentials: credentials, lastSelectedDate: lastSelectedDate)
     }
 }
