@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
+		A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
 		A947026C293254B500FB3E59 /* COBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026B293254B500FB3E59 /* COBChartView.swift */; };
@@ -36,13 +37,15 @@
 		A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
 		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
 		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
-		A98F5E112930F18A00A03580 /* NewGlucoseSample+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* NewGlucoseSample+Extensions.swift */; };
+		A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */; };
 		A98FF28E29A11CC8005739A5 /* OverrideTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */; };
 		A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
 		A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
 		A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
 		A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC86429992DD20058EBA5 /* DisclaimerView.swift */; };
 		A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
+		A99F2F742A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */; };
+		A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
@@ -90,6 +93,7 @@
 		3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LoopCaregiver.xcconfig; sourceTree = "<group>"; };
 		3DF4E0882980736C00E91E16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
+		A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Presentable.swift"; sourceTree = "<group>"; };
 		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
 		A94702682932429F00FB3E59 /* DoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseChartView.swift; sourceTree = "<group>"; };
@@ -116,13 +120,15 @@
 		A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtils.swift; sourceTree = "<group>"; };
 		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
 		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
-		A98F5E102930F18A00A03580 /* NewGlucoseSample+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Extensions.swift"; sourceTree = "<group>"; };
+		A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Charts.swift"; sourceTree = "<group>"; };
 		A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideTreatment.swift; sourceTree = "<group>"; };
 		A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccountService.swift; sourceTree = "<group>"; };
 		A9972775292FCE6A006C8C74 /* LooperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
 		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
 		A99DC86429992DD20058EBA5 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		A99DC866299984430058EBA5 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
+		A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarbCorrectionNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
+		A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BolusNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9C4D7E52969A69F00D3875F /* IOBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBStatus.swift; sourceTree = "<group>"; };
@@ -164,6 +170,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A92AB6BE2A3151E900977536 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				A92AB6BF2A3151E900977536 /* LoopKit */,
+			);
+			path = Extensions;
+			sourceTree = "<group>";
+		};
+		A92AB6BF2A3151E900977536 /* LoopKit */ = {
+			isa = PBXGroup;
+			children = (
+				A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */,
+			);
+			path = LoopKit;
+			sourceTree = "<group>";
+		};
 		A947025A2932286200FB3E59 /* NightscoutChart */ = {
 			isa = PBXGroup;
 			children = (
@@ -185,7 +207,9 @@
 		A94702662932356B00FB3E59 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				A98F5E102930F18A00A03580 /* NewGlucoseSample+Extensions.swift */,
+				A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */,
+				A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */,
+				A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -244,6 +268,7 @@
 		A96929302926E2B700B8BF43 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A92AB6BE2A3151E900977536 /* Extensions */,
 				A96929902927FFBA00B8BF43 /* AccountService.swift */,
 				A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */,
 				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
@@ -471,6 +496,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */,
+				A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */,
 				A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */,
 				A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */,
 				A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */,
@@ -486,7 +512,7 @@
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
 				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
-				A98F5E112930F18A00A03580 /* NewGlucoseSample+Extensions.swift in Sources */,
+				A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */,
 				A98FF28E29A11CC8005739A5 /* OverrideTreatment.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
 				A9744DEA2933B0FE000A3D6A /* SwiftUIExtensions.swift in Sources */,
@@ -501,10 +527,12 @@
 				A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */,
 				A9C4D7F42969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift in Sources */,
 				A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */,
+				A99F2F742A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift in Sources */,
 				A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */,
 				A9C4D7EE2969B70000D3875F /* NightscoutTreatment.swift in Sources */,
 				A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */,
 				A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */,
+				A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */,
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
 				A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */,

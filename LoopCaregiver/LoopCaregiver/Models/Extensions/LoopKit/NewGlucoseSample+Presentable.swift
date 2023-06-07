@@ -1,32 +1,15 @@
 //
-//  NewGlucoseSample+Extensions.swift
+//  NewGlucoseSample+Presentable.swift
 //  LoopCaregiver
 //
-//  Created by Bill Gestrich on 11/25/22.
+//  Created by Bill Gestrich on 6/3/23.
 //
 
 import Foundation
 import LoopKit
 import HealthKit
 
-
-//Loop Charts
-extension NewGlucoseSample: GlucoseValue {
-    public var startDate: Date {
-        return date
-    }
-}
-
-
-//Nightscout Graph
 extension NewGlucoseSample {
-    func graphItem(displayUnit: HKUnit) -> GraphItem {
-        return GraphItem(type: .egv, displayTime: date, quantity: quantity, displayUnit: displayUnit)
-    }
-    
-    func predictedBGGraphItem(displayUnit: HKUnit) -> GraphItem {
-        return GraphItem(type: .predictedBG, displayTime: date, quantity: quantity, displayUnit: displayUnit)
-    }
     
     func presentableUserValue(displayUnits: HKUnit) -> Double {
         return quantity.doubleValue(for: displayUnits)
@@ -47,4 +30,3 @@ extension NewGlucoseSample {
         }
     }
 }
-
