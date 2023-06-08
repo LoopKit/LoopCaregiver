@@ -9,6 +9,7 @@ import SwiftUI
 import Charts
 import CoreData
 import LoopKit
+import WidgetKit
 
 struct ContentView: View {
     
@@ -51,6 +52,8 @@ struct HomeView: View {
     @State private var showOverrideView = false
     @State private var showSettingsView = false
     
+    @Environment(\.scenePhase) var scenePhase
+    
     init(looperService: LooperService){
         self.looperService = looperService
         self.settings = looperService.settings
@@ -89,6 +92,24 @@ struct HomeView: View {
         .sheet(isPresented: $showSettingsView) {
             SettingsView(accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
         }
+        .onChange(of: scenePhase) { newPhase in
+            if newPhase == .active {
+                WidgetCenter.shared.reloadAllTimelines()
+            }
+        }
+        .onOpenURL(perform: { (url) in
+            guard let looperId = url.absoluteString.components(separatedBy: "//").last else {
+                return
+            }
+            
+            guard let looper = accountService.loopers.first(where: {$0.id == looperId}) else {
+                return
+            }
+            
+            if accountService.selectedLooper != looper {
+                accountService.selectedLooper = looper
+            }
+        })
     }
     
     func disclaimerOverlay() -> some View {

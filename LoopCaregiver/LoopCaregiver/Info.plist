@@ -20,12 +20,16 @@
 	<string>$(MARKETING_VERSION)</string>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>INIntentsSupported</key>
+	<array>
+		<string>Configuration</string>
+	</array>
 	<key>ITSAppUsesNonExemptEncryption</key>
 	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Used for scanning QR codes from Looper&apos;s device</string>
+	<string>Used for scanning QR codes from Looper's device</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Authentication required for Bolus and Carb delivery</string>
 	<key>NSUserActivityTypes</key>
@@ -37,6 +41,8 @@
 		<key>UIApplicationSupportsMultipleScenes</key>
 		<true/>
 	</dict>
+	<key>UIApplicationSupportsIndirectInputEvents</key>
+	<true/>
 	<key>UILaunchScreen</key>
 	<dict>
 		<key>UILaunchScreen</key>
