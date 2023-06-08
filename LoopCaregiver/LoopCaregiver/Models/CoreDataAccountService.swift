@@ -171,6 +171,12 @@ class NoAppGroupsPersistentContainerFactory: PersistentContainerFactory {
 
 class AppGroupPersisentContainerFactory: PersistentContainerFactory {
     
+    let appGroupName: String
+    
+    init(appGroupName: String) {
+        self.appGroupName = appGroupName
+    }
+    
     //MARK: NSPersistentContainer Creation
     
     func createContainer() -> NSPersistentContainer {
@@ -206,12 +212,8 @@ class AppGroupPersisentContainerFactory: PersistentContainerFactory {
         }
     }
     
-    var appGroup: String {
-        return Bundle.main.appGroupSuiteName
-    }
-    
     var storeURL: URL {
-        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)!.appendingPathComponent(storeFileName.appending(".sqlite"))
+        return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupName)!.appendingPathComponent(storeFileName.appending(".sqlite"))
     }
     
     func getStoreMigrationStatus() -> StoreMigrationStatus {

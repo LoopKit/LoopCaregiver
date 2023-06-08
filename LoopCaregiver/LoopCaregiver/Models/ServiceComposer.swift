@@ -14,10 +14,12 @@ class ServiceComposer {
     init() {
         let userDefaults: UserDefaults
         let containerFactory: PersistentContainerFactory
-        let appGroupsSupported = Self.appGroupsSupported
-        if appGroupsSupported {
+        var appGroupsSupported = false
+
+        if let appGroupName = Bundle.main.appGroupSuiteName, let _ = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupName) {
+            appGroupsSupported = true
             userDefaults = UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
-            containerFactory = AppGroupPersisentContainerFactory()
+            containerFactory = AppGroupPersisentContainerFactory(appGroupName: appGroupName)
         } else {
             userDefaults = UserDefaults.standard
             containerFactory = NoAppGroupsPersistentContainerFactory()
@@ -25,9 +27,5 @@ class ServiceComposer {
         
         self.settings = CaregiverSettings(userDefaults: userDefaults, appGroupsSupported: appGroupsSupported)
         self.accountServiceManager = AccountServiceManager(accountService: CoreDataAccountService(containerFactory: containerFactory))
-    }
-    
-    static var appGroupsSupported: Bool {
-        return false
     }
 }
