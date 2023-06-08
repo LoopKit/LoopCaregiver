@@ -114,3 +114,40 @@ WARNING: These Loop and NS branch are based off dev. If dev updates are desired 
 * After delivering carbs/bolus/override, the command status will show at the bottom of Caregiver Settings -> Select Loopers name.
 * Additional commands such as autobolus activation, closed loop activation are available in aforementioned view.
 * Note that occasionally (every few weeks) you should clear old commands in Settings -> Select Loopers name -> Delete All Commands. This is to avoid a performance issue when too many commands build up that will be fixed later.
+
+# Widget Feature
+
+
+### TODO 
+* Styling
+    * Support lock screen style only for V1
+* App Group migration
+    * Document Group ID update process
+    * Fix Github Action Builds
+* Remove this TODO section
+
+
+###
+
+* App Group Migration Notes
+    * Caregiver Docs
+        * https://loopkit.github.io/loopdocs/nightscout/remote-overrides/#loopcaregiver
+        * Github notes point you to https://loopkit.github.io/loopdocs/gh-actions/gh-other-apps
+    * Other Apps Docs
+        * https://loopkit.github.io/loopdocs/gh-actions/gh-other-apps/#build-app
+        * No mention of app groups setup
+    * Loop App Group Docs
+        * https://loopkit.github.io/loopdocs/gh-actions/gh-first-time/#create-app-group
+        * Quite complicated
+    * Apple API
+        * Billy Booth notes 
+            * Mentioned there is not a fastlane API for both creating group and adding an app to the group.
+            * If we could do the 2nd, we could reuse the same app group?
+            * See Fastlane Page for auth requirements
+                * https://docs.fastlane.tools/app-store-connect-api/
+        * Produce API
+            * https://docs.fastlane.tools/actions/produce/
+            * Does group things
+        * Existing Caregiver Used APIs
+            * latest_testflight_build_number
+            * https://docs.fastlane.tools/actions/latest_testflight_build_number/
