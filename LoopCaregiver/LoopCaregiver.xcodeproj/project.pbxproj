@@ -94,6 +94,7 @@
 		3DF4E0882980736C00E91E16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
 		A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Presentable.swift"; sourceTree = "<group>"; };
+		A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LoopCaregiver 2.xcdatamodel"; sourceTree = "<group>"; };
 		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
 		A94702682932429F00FB3E59 /* DoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseChartView.swift; sourceTree = "<group>"; };
@@ -802,9 +803,10 @@
 		A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
+				A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */,
 				A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */,
 			);
-			currentVersion = A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */;
+			currentVersion = A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */;
 			path = LoopCaregiver.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
