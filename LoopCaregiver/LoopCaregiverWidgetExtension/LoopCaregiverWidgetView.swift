@@ -12,7 +12,7 @@ struct LoopCaregiverWidgetView : View {
     
     var entry: SimpleEntry
     @Environment(\.widgetFamily) var family
-    @AppStorage(UserDefaults.standard.experimentalFeaturesUnlockedKey, store: UserDefaults.appGroupDefaults) private var experimentalFeaturesUnlocked = false
+//    @AppStorage(UserDefaults.standard.experimentalFeaturesUnlockedKey, store: UserDefaults.appGroupDefaults) private var experimentalFeaturesUnlocked = false
     
     init(entry: SimpleEntry){
         self.entry = entry
@@ -59,14 +59,14 @@ struct LoopCaregiverWidgetView : View {
             } else {
                 emptyLatestGlucoseView
             }
-            if experimentalFeaturesUnlocked {
-                if let lastGlucoseDate = entry.currentGlucoseSample?.date {
-                    Text(timeFormat.string(from: lastGlucoseDate))
-                        .font(.footnote)
-                }
-                Text("\(timeFormat.string(from: entry.date)) (\(entry.entryIndex))")
-                    .font(.footnote)
-            }
+//            if experimentalFeaturesUnlocked {
+//                if let lastGlucoseDate = entry.currentGlucoseSample?.date {
+//                    Text(timeFormat.string(from: lastGlucoseDate))
+//                        .font(.footnote)
+//                }
+//                Text("\(timeFormat.string(from: entry.date)) (\(entry.entryIndex))")
+//                    .font(.footnote)
+//            }
         }
     }
     
