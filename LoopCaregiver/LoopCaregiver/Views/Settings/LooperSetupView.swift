@@ -159,12 +159,13 @@ struct LooperSetupView: View {
         guard let name = name, name.count > 0 else {
             throw AccountViewModelError.genericError(message: "Must enter Looper Name")
         }
-        
-        guard let nightscoutURLString = nightscoutURLText, let nightscoutURL = URL(string: nightscoutURLString) else {
+
+        guard let nightscoutURLString = nightscoutURLText?.trimmingCharacters(in: CharacterSet(charactersIn: "/")),
+                let nightscoutURL = URL(string: nightscoutURLString) else {
             throw AccountViewModelError.genericError(message: "Must enter valid Nightscout URL")
         }
         
-        guard let apiSecret = apiSecret, apiSecret.count > 0 else {
+        guard let apiSecret = apiSecret?.trimmingCharacters(in: .whitespacesAndNewlines), apiSecret.count > 0 else {
             throw AccountViewModelError.genericError(message: "Must enter API Secret")
         }
         
