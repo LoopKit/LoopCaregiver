@@ -14,8 +14,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/twostraws/CodeScanner",
       "state" : {
-        "revision" : "c7859712034a08bb5a018fbe8751c1f1edc4b248",
-        "version" : "2.2.1"
+        "revision" : "4b2f9c57d03bfe94e6b45572e0c908c1433c32b2",
+        "version" : "2.3.2"
       }
     },
     {
@@ -23,8 +23,8 @@
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gestrich/NightscoutKit.git",
       "state" : {
-        "branch" : "feature/2023-03/bg/remote-commands",
-        "revision" : "6bf4358cff951c6fa6b3d97b21a27150648338ca"
+        "branch" : "feature/2023-04/bg/remote-commands",
+        "revision" : "bccad50eda671748bbb83db4c2b79acdc240588e"
       }
     },
     {
