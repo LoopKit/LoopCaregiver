@@ -38,7 +38,9 @@ struct LoopCaregiverWidgetView : View {
             default:
                 defaultView
             }
-        }.widgetURL(widgetURL)
+        }
+        .adoptableWidgetBackground(.clear)
+        .widgetURL(widgetURL)
     }
     
     var emptyLatestGlucoseView: some View {
@@ -77,3 +79,15 @@ struct LoopCaregiverWidgetView : View {
     }
 }
 
+extension View {
+    //Solution for iOS 17 widgets not showing
+    //https://developer.apple.com/forums/thread/731084
+    @ViewBuilder func adoptableWidgetBackground(_ color: Color) -> some View {
+        if #available(iOS 17.0, *) {
+            //Enable this line for iOS 17
+            //containerBackground(for: .widget) { color }
+        } else {
+            background(color)
+        }
+    }
+}
