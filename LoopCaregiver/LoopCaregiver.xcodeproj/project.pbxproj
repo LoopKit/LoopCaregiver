@@ -770,7 +770,7 @@
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/gestrich/NightscoutKit.git";
 			requirement = {
-				branch = "feature/2023-04/bg/remote-commands";
+				branch = "feature/2023-07/bg/remote-commands";
 				kind = branch;
 			};
 		};
