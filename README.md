@@ -89,14 +89,24 @@ Remote Commands 2.0 is a set of experimental features that supports command stat
 
 Setting up these features may be difficult except for advanced Loop builders that are comfortable troubleshooting git and Xcode issues and deploying to Nightscout.
 
-* Deploy special instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
-  * Make sure to deploy the "feature/2023-07/bg/remote-commands" branch
-  * This branch was based off of Nightscout dev and includes Remote 2.0 additions.
-* Build special branch of LoopWorkspace
-  * Clone either
-    * Main (Loop 3.2.1): `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-03/bg/remote-commands --recurse-submodules`
-    * Dev (as of 7-3-23): `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-07/bg/remote-commands --recurse-submodules`
-      * WARNING: This branch will not be updated as the dev branch updates. If updates are desired you will need to merge them in yourself.
+### Branch Configuration
+
+Special Nightscout and Loop branches are required to use Remote 2.0. This describes each.
+
+WARNING: These Loop and NS branch are based off dev. If dev updates are desired you will need to merge them in yourself.
+
+* Nightscout
+  * Description: Includes Remote 2.0 API and Time sensitive notifications. This was based off NS dev as of June 2023.
+  * Repo: https://github.com/gestrich/cgm-remote-monitor
+  * Branch: feature/2023-07/bg/remote-commands
+* Loop
+  * Description: Includes Remote 2.0 additions
+  * Repo: https://github.com/LoopKit/LoopWorkspace.git
+  * Branch feature/2023-07/bg/remote-commands - This was based off Loop dev as of 7-3-23
+    * `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-07/bg/remote-commands --recurse-submodules`
+
+### Remote 2.0 Usage
+
 * Activate Remote Commands 2 in Caregiver
   * Caregiver -> Settings
   * Tap and hold the "Disabled" text under the "Experimental Features" section to reveal the secret experimental features options.
