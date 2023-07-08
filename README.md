@@ -90,7 +90,7 @@ Remote Commands 2.0 is a set of experimental features that supports command stat
 Setting up these features may be difficult except for advanced Loop builders that are comfortable troubleshooting git and Xcode issues and deploying to Nightscout.
 
 * Deploy special instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
-  * Make sure to deploy the "caregiver" branch
+  * Make sure to deploy the "feature/2023-07/bg/remote-commands" branch
   * This branch was based off of Nightscout dev and includes Remote 2.0 additions.
 * Build special branch of LoopWorkspace
   * Clone either
