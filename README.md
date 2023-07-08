@@ -89,12 +89,13 @@ Remote Commands 2.0 is a set of experimental features that supports command stat
 
 Setting up these features may be difficult except for advanced Loop builders that are comfortable troubleshooting git and Xcode issues and deploying to Nightscout.
 
-* Deploy special caregiver instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
+* Deploy special instance of Nightscout https://github.com/gestrich/cgm-remote-monitor/tree/caregiver
   * Make sure to deploy the "caregiver" branch
+  * This branch was based off of Nightscout dev and includes Remote 2.0 additions.
 * Build special branch of LoopWorkspace
   * Clone either
     * Main (Loop 3.2.1): `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-03/bg/remote-commands --recurse-submodules`
-    * Dev (as of 4-22-23): `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-04/bg/remote-commands --recurse-submodules`
+    * Dev (as of 7-3-23): `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-07/bg/remote-commands --recurse-submodules`
       * WARNING: This branch will not be updated as the dev branch updates. If updates are desired you will need to merge them in yourself.
 * Activate Remote Commands 2 in Caregiver
   * Caregiver -> Settings
