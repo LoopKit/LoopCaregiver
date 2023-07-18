@@ -8,7 +8,6 @@
 import Foundation
 import NightscoutKit
 import LoopKit
-import LoopUI
 import HealthKit
 
 extension GlucoseEntry {

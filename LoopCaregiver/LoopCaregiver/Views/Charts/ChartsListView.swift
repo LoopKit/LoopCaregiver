@@ -172,7 +172,10 @@ extension ChartSettings {
 }
 
 extension ChartColorPalette {
+    //TODO: Need a way to share this with Loop
+    //as it has some of its own colors.
+    //Or we could just asset color assets to Caregiver?
     static var primary: ChartColorPalette {
-        return ChartColorPalette(axisLine: .axisLineColor, axisLabel: .axisLabelColor, grid: .gridColor, glucoseTint: .glucoseTintColor, insulinTint: .insulinTintColor)
+        return ChartColorPalette(axisLine: .clear, axisLabel: .secondaryLabel, grid: .systemGray2, glucoseTint: .systemTeal, insulinTint: .orange, carbTint: .systemGreen)
     }
 }
