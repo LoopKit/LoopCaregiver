@@ -1,15 +1,3 @@
-[submodule "Loop"]
-	path = Loop
-	url = https://github.com/LoopKit/Loop.git
 [submodule "LoopKit"]
 	path = LoopKit
 	url = https://github.com/LoopKit/LoopKit.git
-[submodule "MKRingProgressView"]
-	path = MKRingProgressView
-	url = https://github.com/LoopKit/MKRingProgressView.git
-[submodule "Minizip"]
-	path = Minizip
-	url = https://github.com/LoopKit/Minizip.git
-[submodule "TrueTime.swift"]
-	path = TrueTime.swift
-	url = https://github.com/LoopKit/TrueTime.swift.git
