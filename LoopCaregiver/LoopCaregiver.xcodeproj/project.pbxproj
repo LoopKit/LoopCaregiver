@@ -54,6 +54,8 @@
 		A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */; };
 		A9C4D7F42969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */; };
 		A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */; };
+		A9C89ED72A7074EE00EFD938 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED62A7074EE00EFD938 /* UIColor.swift */; };
+		A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */; };
 		A9D3FF222A6C3B99000C891D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF212A6C3B99000C891D /* Color.swift */; };
 		A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF232A6C3C54000C891D /* HKUnit.swift */; };
 		A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */; };
@@ -137,6 +139,8 @@
 		A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusNightscoutTreatment.swift; sourceTree = "<group>"; };
 		A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbCorrectionNightscoutTreatment.swift; sourceTree = "<group>"; };
 		A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryScheduleOverride.swift; sourceTree = "<group>"; };
+		A9C89ED62A7074EE00EFD938 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
+		A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HIG.swift"; sourceTree = "<group>"; };
 		A9D3FF212A6C3B99000C891D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9D3FF232A6C3C54000C891D /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9EC1978291FEF940022D39F /* LoopCaregiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -320,6 +324,8 @@
 			children = (
 				A9D3FF212A6C3B99000C891D /* Color.swift */,
 				A9744DE92933B0FE000A3D6A /* View.swift */,
+				A9C89ED62A7074EE00EFD938 /* UIColor.swift */,
+				A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -526,6 +532,8 @@
 				A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */,
 				A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */,
 				A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */,
+				A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */,
+				A9C89ED72A7074EE00EFD938 /* UIColor.swift in Sources */,
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
 				A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */,
