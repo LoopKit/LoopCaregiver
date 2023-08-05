@@ -25,7 +25,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     @Published var currentIOB: IOBStatus? = nil
     @Published var currentCOB: COBStatus? = nil
     @Published var currentProfile: ProfileSet?
-    @Published var recentCommands: [NSRemoteCommandPayload] = []
+    @Published var recentCommands: [RemoteCommand] = []
     @Published var updating: Bool = false
     
     private let remoteDataProvider: RemoteDataServiceProvider
@@ -315,7 +315,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return override
     }
     
-    func fetchRecentCommands() async throws -> [NSRemoteCommandPayload] {
+    func fetchRecentCommands() async throws -> [RemoteCommand] {
         return try await remoteDataProvider.fetchRecentCommands()
     }
     
@@ -340,6 +340,6 @@ protocol RemoteDataServiceProvider {
     func activateAutobolus(activate: Bool) async throws
     func activateClosedLoop(activate: Bool) async throws
     func fetchCurrentProfile() async throws -> ProfileSet
-    func fetchRecentCommands() async throws -> [NSRemoteCommandPayload]
+    func fetchRecentCommands() async throws -> [RemoteCommand]
     func deleteAllCommands() async throws
 }

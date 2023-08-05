@@ -182,9 +182,9 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return NSRemoteCommandPayload(version: "2.0", createdDate: Date(), action: action, sendNotification: true, status: .init(state: .Pending, message: ""), otp: credentialService.otpCode)
     }
     
-    func fetchRecentCommands() async throws -> [NSRemoteCommandPayload] {
+    func fetchRecentCommands() async throws -> [RemoteCommand] {
         if settings.remoteCommands2Enabled {
-            return try await nightscoutUploader.fetchRemoteCommands(earliestDate: fetchInterval().start, commandState: nil)
+            return try await nightscoutUploader.fetchRemoteCommands(earliestDate: fetchInterval().start, commandState: nil).compactMap({try? $0.toRemoteCommand()})
         } else {
             return []
         }

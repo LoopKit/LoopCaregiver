@@ -96,12 +96,12 @@ struct LooperView: View {
                         }
                     }
                     Section {
-                        ForEach(remoteDataSource.recentCommands, id: \._id, content: { command in
+                        ForEach(remoteDataSource.recentCommands, id: \.id, content: { command in
                             CommandStatusView(command: command)
                         })
                     }
                 }
-  
+
             }
         }
         .confirmationDialog("Are you sure?",
@@ -126,7 +126,7 @@ struct LooperView: View {
 }
 
 struct CommandStatusView: View {
-    let command: NSRemoteCommandPayload
+    let command: RemoteCommand
     var body: some View {
         
         VStack {
