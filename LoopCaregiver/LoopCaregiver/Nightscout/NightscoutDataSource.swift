@@ -56,6 +56,10 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     func fetchOverrideEntries() async throws -> [OverrideTreatment] {
         return try await treatmentsFetcher.fetchOverrideEntries()
     }
+
+    func fetchNotes() async throws -> [NoteNightscoutTreatment] {
+        return try await treatmentsFetcher.fetchNotes()
+    }
     
     func fetchLatestDeviceStatus() async throws -> DeviceStatus? {
         let result = try await withCheckedThrowingContinuation({ continuation in
@@ -189,7 +193,8 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         if settings.remoteCommands2Enabled {
             return try await nightscoutUploader.fetchRemoteCommands(earliestDate: fetchInterval().start, commandState: nil).compactMap({try? $0.toRemoteCommand()})
         } else {
-            return []
+            return try await fetchNotes()
+                .compactMap({$0.toRemoteCommand()})
         }
     }
     
@@ -240,6 +245,11 @@ actor NightscoutTreatmentFetcher {
     func fetchOverrideEntries() async throws -> [OverrideTreatment] {
         return try await fetchTreatments()
             .overrideTreatments()
+    }
+    
+    func fetchNotes() async throws -> [NoteNightscoutTreatment] {
+        return try await fetchTreatments()
+            .noteTreatments()
     }
 
     func fetchTreatments() async throws -> [NightscoutTreatment] {

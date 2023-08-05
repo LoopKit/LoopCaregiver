@@ -95,13 +95,12 @@ struct LooperView: View {
                             }
                         }
                     }
-                    Section {
-                        ForEach(remoteDataSource.recentCommands, id: \.id, content: { command in
-                            CommandStatusView(command: command)
-                        })
-                    }
                 }
-
+                Section(remoteCommandSectionText) {
+                    ForEach(remoteDataSource.recentCommands, id: \.id, content: { command in
+                        CommandStatusView(command: command)
+                    })
+                }
             }
         }
         .confirmationDialog("Are you sure?",
@@ -120,8 +119,12 @@ struct LooperView: View {
         .navigationBarTitle(Text(looper.name), displayMode: .inline)
     }
     
-    func reloadCommands() async {
-        
+    var remoteCommandSectionText: String {
+        if looperService.settings.remoteCommands2Enabled {
+            return "Remote Commands"
+        } else {
+            return "Remote Command Errors"
+        }
     }
 }
 
@@ -129,31 +132,27 @@ struct CommandStatusView: View {
     let command: RemoteCommand
     var body: some View {
         
-        VStack {
+        VStack(alignment: .leading) {
             HStack {
                 Text(command.action.actionName)
                 Spacer()
-                Text(command.action.actionDetails)
+                Text(command.createdDate, style: .time)
             }
-            HStack {
-                Text(command.createdDate.description)
-                Spacer()
-                switch command.status.state {
-                case .Error:
-                    Text([command.status.state.rawValue, command.status.message].joined(separator: "\n"))
-                        .foregroundColor(Color.red)
-                case .InProgress:
-                    Text(command.status.state.rawValue)
-                        .foregroundColor(Color.blue)
-                case .Success:
-                    Text(command.status.state.rawValue)
-                        .foregroundColor(Color.green)
-                case .Pending:
-                    Text(command.status.state.rawValue)
-                        .foregroundColor(Color.blue)
-                }
+            Text(command.action.actionDetails)
+            switch command.status.state {
+            case .Error:
+                Text([command.status.message].joined(separator: "\n"))
+                    .foregroundColor(Color.red)
+            case .InProgress:
+                Text(command.status.state.rawValue)
+                    .foregroundColor(Color.blue)
+            case .Success:
+                Text(command.status.state.rawValue)
+                    .foregroundColor(Color.green)
+            case .Pending:
+                Text(command.status.state.rawValue)
+                    .foregroundColor(Color.blue)
             }
-            .padding(.top)
         }
     }
 }

@@ -51,6 +51,13 @@
 		A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
 		A99F2F742A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */; };
 		A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */; };
+		A9A362DB2A80EEFE007B017C /* OverrideCancelRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */; };
+		A9A362DC2A80EEFE007B017C /* CarbRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */; };
+		A9A362DD2A80EEFE007B017C /* OverrideRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */; };
+		A9A362DE2A80EEFE007B017C /* BolusRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */; };
+		A9A362DF2A80EEFE007B017C /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */; };
+		A9A362E12A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */; };
+		A9A45D702A77B5480013CD5B /* NoteNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
@@ -150,6 +157,13 @@
 		A99DC866299984430058EBA5 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarbCorrectionNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
 		A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BolusNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
+		A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideCancelRemoteNotification.swift; sourceTree = "<group>"; };
+		A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbRemoteNotification.swift; sourceTree = "<group>"; };
+		A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideRemoteNotification.swift; sourceTree = "<group>"; };
+		A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BolusRemoteNotification.swift; sourceTree = "<group>"; };
+		A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
+		A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteNightscoutTreatment+RemoteCommand.swift"; sourceTree = "<group>"; };
+		A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNightscoutTreatment.swift; sourceTree = "<group>"; };
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9C4D7E52969A69F00D3875F /* IOBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBStatus.swift; sourceTree = "<group>"; };
@@ -273,6 +287,7 @@
 		A952236F2A7EDCA50070FE13 /* RemoteCommands */ = {
 			isa = PBXGroup;
 			children = (
+				A9A362D52A80EEED007B017C /* V1 */,
 				A95223702A7EDCB90070FE13 /* NSRemoteCommandPayload.swift */,
 				A95223712A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift */,
 			);
@@ -400,6 +415,18 @@
 			path = Nightscout;
 			sourceTree = "<group>";
 		};
+		A9A362D52A80EEED007B017C /* V1 */ = {
+			isa = PBXGroup;
+			children = (
+				A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */,
+				A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */,
+				A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */,
+				A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */,
+				A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */,
+			);
+			path = V1;
+			sourceTree = "<group>";
+		};
 		A9C4D7E42969A68800D3875F /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,10 +436,12 @@
 				A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */,
 				A9C4D7E52969A69F00D3875F /* IOBStatus.swift */,
 				A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */,
+				A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */,
 				A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */,
 				A9C4D7E92969A6B600D3875F /* ProfileSet.swift */,
 				A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */,
 				A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */,
+				A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -546,6 +575,7 @@
 				A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */,
 				A95223772A7EDE660070FE13 /* ClosedLoopAction.swift in Sources */,
 				A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */,
+				A9A362DC2A80EEFE007B017C /* CarbRemoteNotification.swift in Sources */,
 				A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */,
 				A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */,
 				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
@@ -554,12 +584,14 @@
 				A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */,
 				A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */,
 				A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */,
+				A9A362DF2A80EEFE007B017C /* RemoteNotification.swift in Sources */,
 				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
 				A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */,
 				A952236D2A7EDC790070FE13 /* RemoteCommand.swift in Sources */,
 				A952236A2A7EDA9B0070FE13 /* Action.swift in Sources */,
 				A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */,
 				A95223692A7EDA9B0070FE13 /* CarbAction.swift in Sources */,
+				A9A362DD2A80EEFE007B017C /* OverrideRemoteNotification.swift in Sources */,
 				A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */,
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
 				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
@@ -578,6 +610,7 @@
 				A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */,
 				A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */,
 				A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */,
+				A9A45D702A77B5480013CD5B /* NoteNightscoutTreatment.swift in Sources */,
 				A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */,
 				A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */,
 				A95223662A7EDA9B0070FE13 /* OverrideAction.swift in Sources */,
@@ -594,9 +627,12 @@
 				A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */,
 				A952236E2A7EDC790070FE13 /* RemoteCommandStatus.swift in Sources */,
 				A9C89ED72A7074EE00EFD938 /* UIColor.swift in Sources */,
+				A9A362DB2A80EEFE007B017C /* OverrideCancelRemoteNotification.swift in Sources */,
+				A9A362DE2A80EEFE007B017C /* BolusRemoteNotification.swift in Sources */,
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
 				A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */,
+				A9A362E12A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */,
 				A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */,
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
 				A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */,

@@ -48,4 +48,14 @@ extension [NightscoutTreatment] {
             }
         }
     }
+
+    func noteTreatments() -> [NoteNightscoutTreatment] {
+        return self.compactMap { treatment in
+            if let note = treatment as? NoteNightscoutTreatment {
+                return note
+            } else {
+                return nil
+            }
+        }
+    }
 }
