@@ -21,11 +21,11 @@ extension NewGlucoseSample: GlucoseValue {
 //Nightscout Graph
 extension NewGlucoseSample {
     func graphItem(displayUnit: HKUnit) -> GraphItem {
-        return GraphItem(type: .egv, displayTime: date, quantity: quantity, displayUnit: displayUnit)
+        return GraphItem(type: .egv, displayTime: date, quantity: quantity, displayUnit: displayUnit, graphItemState: .success)
     }
     
     func predictedBGGraphItem(displayUnit: HKUnit) -> GraphItem {
-        return GraphItem(type: .predictedBG, displayTime: date, quantity: quantity, displayUnit: displayUnit)
+        return GraphItem(type: .predictedBG, displayTime: date, quantity: quantity, displayUnit: displayUnit, graphItemState: .success)
     }
 }
 

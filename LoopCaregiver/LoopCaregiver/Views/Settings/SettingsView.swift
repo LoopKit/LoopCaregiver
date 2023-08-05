@@ -280,13 +280,13 @@ struct CommandStatusView: View {
                 Text([command.status.message].joined(separator: "\n"))
                     .foregroundColor(Color.red)
             case .InProgress:
-                Text(command.status.state.rawValue)
+                Text(command.status.state.title)
                     .foregroundColor(Color.blue)
             case .Success:
-                Text(command.status.state.rawValue)
+                Text(command.status.state.title)
                     .foregroundColor(Color.green)
             case .Pending:
-                Text(command.status.state.rawValue)
+                Text(command.status.state.title)
                     .foregroundColor(Color.blue)
             }
         }

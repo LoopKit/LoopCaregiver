@@ -10,20 +10,47 @@ import SwiftUI
 
 struct TreatmentAnnotationView: View {
     @State var graphItem: GraphItem
+    @Environment(\.colorScheme) var colorScheme
     
     @ViewBuilder var body: some View {
         VStack {
             ZStack {
-                HalfFilledAnnotationView(color: graphItem.annotationFillColor(), fillStyle: graphItem.annotationFillStyle())
+                HalfFilledAnnotationView(fillColorStyle: graphItem.annotationFillColor(), fillStyle: graphItem.annotationFillStyle())
                     .frame(width: graphItem.annotationWidth(), height: graphItem.annotationHeight())
                 if graphItem.shouldShowLabel() {
                     Text(graphItem.formattedValue())
                         .frame(width: 30.0)
                         .font(.system(size: graphItem.fontSize()))
                         .font(.footnote)
+                        .foregroundColor(fontColor)
+                        .strikethrough(isError, pattern: .solid, color: .red)
                         .offset(.init(width: 0.0, height: fontOffsetFromAnnotationCenter(labelPosition: graphItem.annotationLabelPosition())))
                 }
             }
+        }
+    }
+    
+    var fontColor: Color {
+        switch graphItem.graphItemState {
+        case .error:
+            return Color.red
+        case .pending:
+            return Color.yellow
+        default:
+            if colorScheme == .dark {
+                return .white
+            } else {
+                return .black
+            }
+        }
+    }
+    
+    var isError: Bool {
+        switch graphItem.graphItemState {
+        case .error:
+            return true
+        default:
+            return false
         }
     }
     
@@ -41,33 +68,36 @@ struct TreatmentAnnotationView: View {
     }
     
     struct HalfFilledAnnotationView: View {
-        
-        let color: Color
+        let fillColorStyle: AnnotationColorStyle
         let fillStyle: FillStyle
         @Environment(\.colorScheme) var colorScheme
         
         @ViewBuilder var body: some View {
             switch fillStyle {
+            case .noFill:
+                Circle()
+                    .stroke(.red)
             case .bottomFill:
                 Circle()
                     .stroke()
                     .foregroundColor(.white)
                 Circle()
                     .trim(from: 0.0, to: 0.5)
-                    .fill(.blue)
+                    .fill(fillColorStyle.color(scheme: colorScheme))
             case .topFill:
                 Circle()
                     .stroke()
                     .foregroundColor(.blue)
                 Circle()
                     .trim(from: 0.5, to: 1.0)
-                    .fill(colorScheme == .dark ? Color.white : Color.brown)
+                    .fill(fillColorStyle.color(scheme: colorScheme))
             case .fullFill:
                 Circle()
             }
         }
         
         enum FillStyle {
+            case noFill
             case topFill
             case bottomFill
             case fullFill

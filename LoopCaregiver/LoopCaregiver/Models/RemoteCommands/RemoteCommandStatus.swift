@@ -8,16 +8,16 @@
 
 import Foundation
 
-public struct RemoteCommandStatus: Codable, Equatable {
+public struct RemoteCommandStatus: Equatable {
     
     public let state: RemoteComandState
     public let message: String
     
-    public enum RemoteComandState: String, Codable {
+    public enum RemoteComandState: Equatable {
         case Pending
         case InProgress
         case Success
-        case Error
+        case Error(RemoteCommandStatusError)
         
         var title: String {
             switch self {
@@ -33,8 +33,13 @@ public struct RemoteCommandStatus: Codable, Equatable {
         }
     }
     
-    public enum RemoteCommandStatusError: LocalizedError {
-        case parseError
+    public struct RemoteCommandStatusError: LocalizedError, Equatable {
+        
+        let message: String
+        
+        public var errorDescription: String? {
+            return message
+        }
     }
     
     public init(state: RemoteCommandStatus.RemoteComandState, message: String) {

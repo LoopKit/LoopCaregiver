@@ -25,6 +25,7 @@
 		A95223732A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223712A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift */; };
 		A95223762A7EDE660070FE13 /* AutobolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223742A7EDE660070FE13 /* AutobolusAction.swift */; };
 		A95223772A7EDE660070FE13 /* ClosedLoopAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */; };
+		A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */; };
 		A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */; };
 		A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C6292A657F00079AAF /* LoopKitUI.framework */; };
 		A95F50C8292A657F00079AAF /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C6292A657F00079AAF /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -126,6 +127,7 @@
 		A95223712A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemoteCommandStatus+Extras.swift"; sourceTree = "<group>"; };
 		A95223742A7EDE660070FE13 /* AutobolusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutobolusAction.swift; sourceTree = "<group>"; };
 		A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosedLoopAction.swift; sourceTree = "<group>"; };
+		A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteCommand+Charts.swift"; sourceTree = "<group>"; };
 		A95F50BF292A602F00079AAF /* LoopKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictedGlucoseChartView.swift; sourceTree = "<group>"; };
 		A95F50C6292A657F00079AAF /* LoopKitUI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LoopKitUI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -238,6 +240,7 @@
 				A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */,
 				A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */,
 				A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */,
+				A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				A9A362DD2A80EEFE007B017C /* OverrideRemoteNotification.swift in Sources */,
 				A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */,
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
+				A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */,
 				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
 				A95223732A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift in Sources */,

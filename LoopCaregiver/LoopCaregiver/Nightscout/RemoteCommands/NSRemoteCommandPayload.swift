@@ -41,22 +41,19 @@ extension NSRemoteCommandPayload {
 
 extension NSRemoteCommandStatus {
     func toStatus() -> RemoteCommandStatus {
-        return RemoteCommandStatus(state: state.toState(), message: message)
-    }
-}
-
-extension NSRemoteCommandStatus.NSRemoteComandState {
-    func toState() -> RemoteCommandStatus.RemoteComandState {
-        switch self {
+        let commandState: RemoteCommandStatus.RemoteComandState
+        switch self.state {
         case .Pending:
-            return RemoteCommandStatus.RemoteComandState.Pending
+            commandState = RemoteCommandStatus.RemoteComandState.Pending
         case .InProgress:
-            return RemoteCommandStatus.RemoteComandState.InProgress
+            commandState = RemoteCommandStatus.RemoteComandState.InProgress
         case .Success:
-            return RemoteCommandStatus.RemoteComandState.Success
+            commandState = RemoteCommandStatus.RemoteComandState.Success
         case .Error:
-            return RemoteCommandStatus.RemoteComandState.Error
+            let error = RemoteCommandStatus.RemoteCommandStatusError(message: message)
+            commandState = RemoteCommandStatus.RemoteComandState.Error(error)
         }
+        return RemoteCommandStatus(state: commandState, message: message)
     }
 }
 

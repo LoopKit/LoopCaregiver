@@ -27,7 +27,9 @@ extension NoteNightscoutTreatment {
             return nil
         }
         
-        return RemoteCommand(id: remotePayload.id, action: remotePayload.toRemoteAction(), status: RemoteCommandStatus(state: .Error, message: extractResult.leadingText), createdDate: sentAtDate)
+        let error = RemoteCommandStatus.RemoteCommandStatusError(message: extractResult.leadingText)
+        
+        return RemoteCommand(id: remotePayload.id, action: remotePayload.toRemoteAction(), status: RemoteCommandStatus(state: .Error(error), message: extractResult.leadingText), createdDate: sentAtDate)
     }
     
     private func extractAndParseErrorTextAndJSON(from text: String) -> (leadingText: String, dictionary: [String: AnyObject])? {
