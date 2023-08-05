@@ -10,56 +10,23 @@ import Charts
 import LoopKit
 import HealthKit
 import LoopKitUI
+import Combine
 
 struct NightscoutChartScrollView: View {
-
-    @ObservedObject var settings: CaregiverSettings
-    private var remoteDataSource: RemoteDataServiceManager
-    private let configuration = NightscoutChartConfiguration()
-    
-    private var minScale: CGFloat = 0.10
-    private var maxScale: CGFloat = 3.0
-    @State var currentScale: CGFloat = 1.0
-    
-    init(remoteDataSource: RemoteDataServiceManager, settings: CaregiverSettings) {
-        self.settings = settings
-        self.remoteDataSource = remoteDataSource
-    }
-    
-    var body: some View {
-        GeometryReader { containerReaderProxy in
-            ScrollViewReader { scrollReaderProxy in
-                ScrollView ([.horizontal]) {
-                    NightscoutChartView(settings: settings, remoteDataSource: remoteDataSource)
-                        .tag(configuration.graphTag)
-                        .frame(width: containerReaderProxy.size.width * CGFloat(configuration.graphTotalDays) / configuration.daysPerVisbleScrollFrame * currentScale, height: containerReaderProxy.size.height, alignment: .center)
-                        .animation(.none, value: currentScale)
-                        .padding([.top, .bottom]) //Prevent top Y label from clipping
-                        .id(configuration.graphTag)
-                        .modifier(PinchToZoom(minScale: minScale, maxScale: maxScale, scale: $currentScale))
-                        .onChange(of: currentScale) { newValue in
-                            scrollReaderProxy.scrollTo(configuration.graphTag, anchor: .trailing)
-                        }
-                        //TODO clean up scrolling to land at a nice place so you see mostly real BGs and ~1h of predicted BGs
-                        .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
-                            scrollReaderProxy.scrollTo(configuration.graphTag, anchor: .trailing)
-                        })
-                        //TODO clean up scrolling to land at a nice place so you see mostly real BGs and ~1h of predicted BGs
-                        .onAppear(perform: {
-                            scrollReaderProxy.scrollTo(configuration.graphTag, anchor: .trailing)
-                        })
-                }
-                
-            }
-        }
-    }
-}
-
-struct NightscoutChartView: View {
     
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
+    @State var scrollRequestSubject = PassthroughSubject<ScrollType, Never>()
     let timer = Timer.publish(every: 30, on: .main, in: .common).autoconnect()
+    static let timelineLookbackIntervals = [1, 3, 6, 12, 24]
+    
+    private let configuration = NightscoutChartConfiguration()
+
+    //TODO: Remove Disabled Zoom View Things
+    @State private var lastScrollUpdate: Date? = nil
+    private let minScale: CGFloat = 0.10
+    private let maxScale: CGFloat = 3.0
+    @State private var currentScale: CGFloat = 1.0
     
     func glucoseGraphItems() -> [GraphItem] {
         return remoteDataSource.glucoseSamples.map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
@@ -68,6 +35,7 @@ struct NightscoutChartView: View {
     func predictionGraphItems() -> [GraphItem] {
         return remoteDataSource.predictedGlucose
             .map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
+            .filter({$0.displayTime <= Date().addingTimeInterval(Double(timelinePredictionHours) * 60.0 * 60.0 )})
     }
     
     func bolusGraphItems() -> [GraphItem] {
@@ -86,6 +54,74 @@ struct NightscoutChartView: View {
     }
     
     var body: some View {
+        GeometryReader { containerGeometry in
+            ZoomableScrollView() { zoomScrollViewProxy in
+                chartView
+                    .chartOverlay { chartProxy in
+                        GeometryReader { chartGeometry in
+                            Rectangle().fill(.clear).contentShape(Rectangle())
+                                .onTapGesture(count: 2) { tapLocation in
+                                    switch self.settings.timelineVisibleLookbackHours {
+                                    case 6:
+                                        updateTimelineHours(1)
+                                    default:
+                                        updateTimelineHours(6)
+                                    }
+                                    scrollRequestSubject.send(.contentPoint(tapLocation))
+                                }
+                                .onTapGesture(count: 1) { tapLocation in
+                                    //print("x pos: \(tapLocation.x)")
+                                    //let val = chartProxy.value(
+                                    //    atX: tapLocation.x, as: Date.self
+                                    //)
+                                    //print("Date: \(val)")
+                                }
+                                .onAppear {
+                                    scrollRequestSubject.send(.scrollViewCenter)
+                                    //zoomScrollViewProxy.scrollTrailing()
+                                }
+                                .onReceive(scrollRequestSubject) { scrollType in
+                                    let lookbackHours = CGFloat(totalGraphHours - timelinePredictionHours)
+                                    let lookBackWidthRatio = lookbackHours / CGFloat(totalGraphHours)
+                                    let axisWidth = chartGeometry.size.width - chartProxy.plotAreaSize.width
+                                    let graphWithoutYAxisWidth = (containerGeometry.size.width * zoomLevel) - axisWidth
+                                    let lookbackWidth = graphWithoutYAxisWidth * lookBackWidthRatio
+                                    let focusedContentFrame = CGRect(x: 0, y: 0, width: lookbackWidth, height: containerGeometry.size.height)
+                                    
+                                    let request = ZoomScrollRequest(scrollType: scrollType, updatedFocusedContentFrame: focusedContentFrame, zoomAmount: zoomLevel)
+                                    zoomScrollViewProxy.handleZoomScrollRequest(request)
+                                }
+                                .onChange(of: currentScale, perform: { newValue in
+//                                    if let lastScrollUpdate, Date().timeIntervalSince(lastScrollUpdate) < 0.1 {
+//                                        return
+//                                    }
+//                                    zoomScrollViewProxy.updateZoomKeepingCenter(newValue)
+//                                    let centerPosition = CGPoint(x: chartGeometry.size.width / 2.0, y: 100.0)
+//                                    zoomScrollViewProxy.updateZoom(newValue, centerPosition)
+//                                    lastScrollUpdate = Date()
+//                                    scrollRequestSubject.send(.scrollViewCenter)
+                                })
+                            //TODO: Remove Disabled Zoom View Things
+                            //.modifier(PinchToZoom(minScale: 0.10, maxScale: 3.0, scale: $currentScale))
+                        }
+                    }
+                    .padding(.init(top: 5.0, leading: 0, bottom: 0, trailing: 0)) //Prevent top Y label from clipping
+                    .onChange(of: settings.timelineVisibleLookbackHours) { newValue in
+                        //This is to catch updates to the picker
+                        scrollRequestSubject.send(.scrollViewCenter)
+                    }
+                    .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
+                        zoomScrollViewProxy.scrollTrailing()
+                    })
+                    .onAppear(perform: {
+                        scrollRequestSubject.send(.scrollViewCenter)
+                        zoomScrollViewProxy.scrollTrailing()
+                    })
+            }
+        }
+    }
+    
+    var chartView: some View {
         
         Chart() {
             ForEach(glucoseGraphItems()){
@@ -141,24 +177,84 @@ struct NightscoutChartView: View {
         }
         //Make sure the domain values line up with what is in foregroundStyle above.
         .chartForegroundStyleScale(domain: ColorType.membersAsRange(), range: ColorType.allCases.map({$0.color}), type: .none)
+        .chartXScale(domain: chartXRange())
         .chartYScale(domain: chartYRange())
         .chartXAxis{
-            AxisMarks(position: .bottom, values: .stride(by: xAxisStride, count: xAxisStrideCount)) { date in
-                AxisValueLabel(format: xAxisLabelFormatStyle(for: date.as(Date.self) ?? Date()))
+            AxisMarks(position: .bottom, values: AxisMarkValues.automatic(desiredCount: totalAxisMarks, roundLowerBound: false, roundUpperBound: false)) { date in
+                if let date = date.as(Date.self) {
+                    AxisValueLabel(format: xAxisLabelFormatStyle(for:  date))
+                } else {
+                    AxisValueLabel(format: xAxisLabelFormatStyle(for: Date()))
+                }
+                AxisGridLine(centered: true)
+
             }
         }
-        .chartOverlay { proxy in
-            GeometryReader { geometry in
-                Rectangle().fill(.clear).contentShape(Rectangle()) //For taps
-                    .onTapGesture { tapPosition in
-                        guard let (date, value) = proxy.value(at: tapPosition, as: (Date, Int).self) else {
-                            print("Could not convert")
-                            return
-                        }
-                        print("Location: \(date), \(value)")
-                    }
-            }
+//        .chartYAxis(.hidden)
+    }
+    
+    func updateTimelineHours(_ hours: Int) {
+        settings.timelineVisibleLookbackHours = hours
+    }
+    
+    func getGraphItem(date: Date, value: Double) -> GraphItem? {
+        
+        //Get the cartesian distance between value/Date given and graphItem
+        //Find the closest one
+        //Return if within a certain number of points
+        
+        func distanceCalcuator(graphItem: GraphItem, date: Date, value: Double) -> Double {
+            let dateHeightScaled = date.timeIntervalSince1970 / (chartYRange().upperBound - chartYRange().lowerBound)
+            let graphDateHeightScaled = graphItem.displayTime.timeIntervalSince1970 / (chartYRange().upperBound - chartYRange().lowerBound)
+            return hypot(dateHeightScaled - graphDateHeightScaled, value - graphItem.value)
         }
+        
+        guard let closest = allGraphItems().sorted(by: { item1, item2 in
+            distanceCalcuator(graphItem: item1, date: date, value: value) < distanceCalcuator(graphItem: item2, date: date, value: value)
+        }).first else {
+            return nil
+        }
+        
+        let distance = distanceCalcuator(graphItem: closest, date: date, value: value)
+        
+        if distance > 100 {
+            return nil
+        }
+        
+        print(distance)
+        
+        return closest
+        
+    }
+    
+    func allGraphItems() -> [GraphItem] {
+        return remoteCommandGraphItems() + carbEntryGraphItems() + bolusGraphItems() + predictionGraphItems() + glucoseGraphItems()
+    }
+    
+    func chartXRange() -> ClosedRange<Date> {
+        let maxXDate = Date().addingTimeInterval(60 * 60 * TimeInterval(timelinePredictionHours))
+        let minXDate = Date().addingTimeInterval(-60*60*TimeInterval(configuration.totalLookbackhours))
+        return minXDate...maxXDate
+    }
+    
+    var zoomLevel: Double {
+        return CGFloat(totalGraphHours) / CGFloat(visibleFrameHours)
+    }
+    
+    var timelinePredictionHours: Int {
+        guard settings.timelinePredictionEnabled else {
+            return 0
+        }
+        
+        return min(6, settings.timelineVisibleLookbackHours)
+    }
+    
+    var totalGraphHours: Int {
+        return configuration.totalLookbackhours + timelinePredictionHours
+    }
+    
+    var visibleFrameHours: Int {
+        return settings.timelineVisibleLookbackHours + timelinePredictionHours
     }
     
     func chartYRange() -> ClosedRange<Double> {
@@ -207,57 +303,42 @@ struct NightscoutChartView: View {
         return quantity.doubleValue(for: settings.glucoseDisplayUnits)
     }
     
-
-    //MARK: Experimental time range things
-    
-    //See https://mobile.blog/2022/07/04/an-adventure-with-swift-charts
-    
-    var timeRange: TimeRange {
-        return .today
-    }
-    
-    enum TimeRange {
-        case today
-        case thisWeek
-        case thisMonth
-        case thisYear
-    }
-    
     private var xAxisStride: Calendar.Component {
-        switch timeRange {
-        case .today:
-            return .hour
-        case .thisWeek, .thisMonth:
-            return .day
-        case .thisYear:
-            return .month
-        }
+            return .minute
     }
      
+     //How many minutes to skip (i.e. 1 is show every hour)
     private var xAxisStrideCount: Int {
-        switch timeRange {
-        case .today:
-            return 1
-        case .thisWeek:
-            return 1
-        case .thisMonth:
-            return 5
-        case .thisYear:
-            return 3
-        }
+        let visibleFrameMinutes = visibleFrameHours * 60
+        let minutesPerInterval = visibleFrameMinutes / 6
+        return minutesPerInterval
+    }
+    
+    private var maxVisibleXLabels: Int {
+        return 5
+    }
+    
+    private var totalAxisMarks: Int {
+        let result = totalGraphHours / visibleFrameHours * maxVisibleXLabels
+        return result
     }
      
     private func xAxisLabelFormatStyle(for date: Date) -> Date.FormatStyle {
-        switch timeRange {
-        case .today:
-            return .dateTime.hour()
-        case .thisWeek, .thisMonth:
-            if date == glucoseGraphItems().first?.displayTime {
-                return .dateTime.month(.abbreviated).day(.twoDigits)
-            }
-            return .dateTime.day(.twoDigits)
-        case .thisYear:
-            return .dateTime.month(.abbreviated)
+        switch visibleFrameHours {
+        case 0..<2:
+            return .dateTime.hour().minute()
+        case 2..<4:
+            return .dateTime.hour().minute()
+        case 4..<6:
+            return .dateTime.hour().minute()
+        case 6..<12:
+            return .dateTime.hour().minute()
+        case 12..<24:
+            return .dateTime.hour().minute()
+        case 24...:
+            return .dateTime.hour().minute()
+        default:
+            return .dateTime.hour().minute()
         }
     }
 }
@@ -562,8 +643,7 @@ func interpolateYValueInRange(yRange: (y1: Double, y2: Double), referenceXRange:
 }
 
 struct NightscoutChartConfiguration {
-    let graphTotalDays = 1
-    let daysPerVisbleScrollFrame = 0.3
+    let totalLookbackhours: Int = 24
     let graphTag = 1000
 }
 

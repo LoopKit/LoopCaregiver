@@ -67,11 +67,10 @@ struct HomeView: View {
                 .padding([.leading, .trailing])
             if let recommendedBolus = remoteDataSource.recommendedBolus {
                 TitleSubtitleRowView(title: "Recommended Bolus", subtitle: LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus) + " U")
-                    .padding([.leading, .trailing, .bottom])
+                    .padding([.bottom, .trailing], 5.0)
             }
             ChartsListView(looperService: looperService, remoteDataSource: remoteDataSource, settings: looperService.settings)
-                .padding([.leading, .trailing, .bottom])
-            Spacer()    
+                .padding([.leading, .trailing], 5.0)
             BottomBarView(showCarbView: $showCarbView, showBolusView: $showBolusView, showOverrideView: $showOverrideView, showSettingsView: $showSettingsView, remoteDataSource: remoteDataSource)
         }
         .overlay {
