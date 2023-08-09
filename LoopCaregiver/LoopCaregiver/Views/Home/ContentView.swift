@@ -33,9 +33,12 @@ struct FirstRunView: View {
     @ObservedObject var accountService: AccountServiceManager
     let settings: CaregiverSettings
     @State var showSheetView: Bool = false
+    @State private var path = NavigationPath()
     
     var body: some View {
-        SettingsView(accountService: accountService, settings: settings, showSheetView: $showSheetView)
+        NavigationStack (path: $path) {
+            LooperSetupView(accountService: accountService, settings: settings, path: $path)
+        }
     }
 }
 
@@ -44,7 +47,7 @@ struct HomeView: View {
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @ObservedObject var settings: CaregiverSettings
-    let looperService: LooperService
+    @ObservedObject var looperService: LooperService
     
     @State private var showCarbView = false
     @State private var showBolusView = false
@@ -87,7 +90,7 @@ struct HomeView: View {
             OverrideView(looperService: looperService, showSheetView: $showOverrideView)
         }
         .sheet(isPresented: $showSettingsView) {
-            SettingsView(accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
+            SettingsView(looperService: looperService, accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
         }
     }
     

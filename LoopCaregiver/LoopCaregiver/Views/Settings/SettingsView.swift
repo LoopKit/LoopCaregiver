@@ -6,9 +6,13 @@
 //
 
 import SwiftUI
+import Combine
 
 struct SettingsView: View {
 
+    @ObservedObject var settingsViewModel: SettingsViewModel
+    @ObservedObject var looperService: LooperService
+    @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var accountService: AccountServiceManager
     @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     @AppStorage(UserDefaults.standard.timelinePredictionEnabledKey) private var timelinePredictionEnabled = false
@@ -17,12 +21,25 @@ struct SettingsView: View {
     
     @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
+    @State private var isPresentingConfirm: Bool = false
     @State private var path = NavigationPath()
+    @State private var deleteAllCommandsShowing: Bool = false
+    
+    init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, showSheetView: Binding<Bool>) {
+        self.settingsViewModel = SettingsViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
+        self.looperService = looperService
+        self.nightscoutCredentialService = NightscoutCredentialService(credentials: looperService.looper.nightscoutCredentials)
+        self.accountService = accountService
+        self.settings = settings
+        self._showSheetView = showSheetView
+    }
     
     var body: some View {
         NavigationStack (path: $path) {
             Form {
-                loopersSection
+                looperSection
+                addNewLooperSection
+                commandsSection
                 unitsSection
                 timelineSection
                 experimentalSection
@@ -34,28 +51,63 @@ struct SettingsView: View {
                 Text("Done").bold()
             })
             .navigationDestination(
-                for: Looper.self
-            ) { looper in
-                LooperView(looper: looper, accountServiceManager: accountService, settings: settings, path: $path)
-            }
-            .navigationDestination(
                 for: String.self
             ) { val in
                 LooperSetupView(accountService: accountService, settings: settings, path: $path)
             }
         }
+        .confirmationDialog("Are you sure?",
+                            isPresented: $isPresentingConfirm) {
+            Button("Remove \(looperService.looper.name)?", role: .destructive) {
+                do {
+                    try looperService.accountService.removeLooper(looperService.looper)
+                    path.removeLast()
+                } catch {
+                    //TODO: Show errors here
+                    print("Error removing loop user")
+                }
+            }
+            Button("Cancel", role: .cancel) {}
+        }
     }
     
-    var loopersSection: some View {
-        Section("Loopers"){
-            List(accountService.loopers) { looper in
-                looperRowView(looper: looper)
-            }
+    var addNewLooperSection: some View {
+        Section {
             NavigationLink(value: "AddLooper") {
                 HStack {
                     Image(systemName: "plus")
                         .foregroundColor(.green)
                     Text("Add New Looper")
+                }
+            }
+        }
+    }
+    
+    var looperSection: some View {
+        Section {
+            Picker("Looper", selection: $settingsViewModel.selectedLooper) {
+                ForEach(settingsViewModel.loopers()) { looper in
+                    Text(looper.name).tag(looper)
+                }
+            }
+            .pickerStyle(.automatic)
+            LabeledContent {
+                Text(nightscoutCredentialService.credentials.url.absoluteString)
+            } label: {
+                Text("Nightscout")
+            }
+            LabeledContent {
+                Text(nightscoutCredentialService.otpCode)
+            } label: {
+                Text("OTP")
+            }
+            Button(role: .destructive) {
+                isPresentingConfirm = true
+            } label: {
+                HStack {
+                    Spacer()
+                    Text("Remove")
+                    Spacer()
                 }
             }
         }
@@ -92,6 +144,62 @@ struct SettingsView: View {
         }
     }
     
+    var commandsSection: some View {
+        Group {
+            Section(remoteCommandSectionText) {
+                ForEach(looperService.remoteDataSource.recentCommands, id: \.id, content: { command in
+                    CommandStatusView(command: command)
+                })
+            }
+            if looperService.settings.remoteCommands2Enabled {
+                Section("Remote Special Actions") {
+                    Button("Autobolus Activate") {
+                        Task {
+                            try await looperService.remoteDataSource.activateAutobolus(activate: true)
+                            await looperService.remoteDataSource.updateData()
+                        }
+                    }
+                    Button("Autobolus Deactivate") {
+                        Task {
+                            try await looperService.remoteDataSource.activateAutobolus(activate: false)
+                            await looperService.remoteDataSource.updateData()
+                        }
+                    }
+                    Button("Closed Loop Activate") {
+                        Task {
+                            try await looperService.remoteDataSource.activateClosedLoop(activate: true)
+                            await looperService.remoteDataSource.updateData()
+                        }
+                    }
+                    Button("Closed Loop Deactivate") {
+                        Task {
+                            try await looperService.remoteDataSource.activateClosedLoop(activate: false)
+                            await looperService.remoteDataSource.updateData()
+                        }
+                    }
+                    Button("Reload") {
+                        Task {
+                            await looperService.remoteDataSource.updateData()
+                        }
+                    }
+                    Button("Delete All Commands", role: .destructive) {
+                        deleteAllCommandsShowing = true
+                    }.alert("Are you sure you want to delete all commands?", isPresented: $deleteAllCommandsShowing) {
+                        Button("Delete", role: .destructive) {
+                            Task {
+                                try await looperService.remoteDataSource.deleteAllCommands()
+                                await looperService.remoteDataSource.updateData()
+                            }
+                        }
+                        Button("Nevermind", role: .cancel) {
+                            print("Nevermind pressed")
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
     func looperRowView(looper: Looper) -> some View {
         HStack {
             Button {
@@ -108,6 +216,76 @@ struct SettingsView: View {
             .buttonStyle(PlainButtonStyle())
             NavigationLink(value: looper) {
                 Text(looper.name)
+            }
+        }
+    }
+    
+    var remoteCommandSectionText: String {
+        if looperService.settings.remoteCommands2Enabled {
+            return "Remote Commands"
+        } else {
+            return "Remote Command Errors"
+        }
+    }
+}
+
+class SettingsViewModel: ObservableObject {
+    
+    @Published var selectedLooper: Looper {
+        didSet {
+            do {
+                try accountService.updateActiveLoopUser(selectedLooper)
+            } catch {
+                print(error)
+            }
+        }
+    }
+    @ObservedObject var accountService: AccountServiceManager
+    private var settings: CaregiverSettings
+    private var subscribers: Set<AnyCancellable> = []
+    
+    init(selectedLooper: Looper, accountService: AccountServiceManager, settings: CaregiverSettings) {
+        self.selectedLooper = selectedLooper
+        self.accountService = accountService
+        self.settings = settings
+        
+        self.accountService.$selectedLooper.sink { val in
+        } receiveValue: { [weak self] updatedUser in
+            if let self, let updatedUser, self.selectedLooper != updatedUser {
+                self.selectedLooper = updatedUser
+            }
+        }.store(in: &subscribers)
+    }
+    
+    func loopers() -> [Looper] {
+        return accountService.loopers
+    }
+}
+
+struct CommandStatusView: View {
+    let command: RemoteCommand
+    var body: some View {
+        
+        VStack(alignment: .leading) {
+            HStack {
+                Text(command.action.actionName)
+                Spacer()
+                Text(command.createdDate, style: .time)
+            }
+            Text(command.action.actionDetails)
+            switch command.status.state {
+            case .Error:
+                Text([command.status.message].joined(separator: "\n"))
+                    .foregroundColor(Color.red)
+            case .InProgress:
+                Text(command.status.state.rawValue)
+                    .foregroundColor(Color.blue)
+            case .Success:
+                Text(command.status.state.rawValue)
+                    .foregroundColor(Color.green)
+            case .Pending:
+                Text(command.status.state.rawValue)
+                    .foregroundColor(Color.blue)
             }
         }
     }

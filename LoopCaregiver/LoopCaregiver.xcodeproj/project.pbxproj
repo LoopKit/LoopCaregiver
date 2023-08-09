@@ -33,7 +33,6 @@
 		A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
 		A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */; };
 		A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */; };
-		A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969296C2927E9AB00B8BF43 /* LooperView.swift */; };
 		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
 		A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
 		A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
@@ -138,7 +137,6 @@
 		A969293C2926EFEC00B8BF43 /* Looper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Looper.swift; sourceTree = "<group>"; };
 		A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountServiceManager.swift; sourceTree = "<group>"; };
 		A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooperSetupView.swift; sourceTree = "<group>"; };
-		A969296C2927E9AB00B8BF43 /* LooperView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperView.swift; sourceTree = "<group>"; };
 		A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoopCaregiver.xcdatamodel; sourceTree = "<group>"; };
 		A96929902927FFBA00B8BF43 /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
 		A96929922929908100B8BF43 /* NightscoutDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSource.swift; sourceTree = "<group>"; };
@@ -355,7 +353,6 @@
 			isa = PBXGroup;
 			children = (
 				A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */,
-				A969296C2927E9AB00B8BF43 /* LooperView.swift */,
 				A9B033E729231DCE0052AA9E /* SettingsView.swift */,
 			);
 			path = Settings;
@@ -581,7 +578,6 @@
 				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
 				A95223762A7EDE660070FE13 /* AutobolusAction.swift in Sources */,
 				A94702702932C21E00FB3E59 /* IOBChartView.swift in Sources */,
-				A969296D2927E9AB00B8BF43 /* LooperView.swift in Sources */,
 				A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */,
 				A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */,
 				A9A362DF2A80EEFE007B017C /* RemoteNotification.swift in Sources */,

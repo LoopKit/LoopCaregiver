@@ -56,9 +56,11 @@ struct HUDView: View {
                     }
                     pickerButton
                 }
+            }.onChange(of: hudViewModel.selectedLooper) { newValue in
+                looperPopoverShowing = false
             }
-            
         }
+        
     }
     
    var pickerButton: some View {
@@ -188,6 +190,16 @@ struct HUDView: View {
 class HUDViewModel: ObservableObject {
     
     @Published var glucoseDisplayUnits: HKUnit
+    /*
+     TODO: This property both reflects
+     the selectedLooper account to the AccountServiceManager
+     and the selection state of the HUD view. This may be a problem
+     as it can lead to recursive updates since updating the active
+     loop user, updates the lastSelectedDate.
+     See note == method of Looper.
+     See also the refresh() method of AccountServiceManager which
+     may be working around some of this.
+     */
     @Published var selectedLooper: Looper {
         didSet {
             do {
