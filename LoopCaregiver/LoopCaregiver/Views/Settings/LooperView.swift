@@ -10,19 +10,23 @@ import NightscoutKit
 
 struct LooperView: View {
     
+    @ObservedObject var looper: Looper
+    @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
     @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
-    @ObservedObject var looper: Looper
     @Binding var path: NavigationPath
     @State private var isPresentingConfirm: Bool = false
     @State private var deleteAllCommandsShowing: Bool = false
     
-    init(looperService: LooperService, nightscoutCredentialService: NightscoutCredentialService, remoteDataSource: RemoteDataServiceManager, looper: Looper, path: Binding<NavigationPath>) {
-        self.looperService = looperService
-        self.nightscoutCredentialService = nightscoutCredentialService
-        self.remoteDataSource = remoteDataSource
+    init(looper: Looper, accountServiceManager: AccountServiceManager, settings: CaregiverSettings, path: Binding<NavigationPath>) {
         self.looper = looper
+        self.settings = settings
+        let looperService = accountServiceManager.createLooperService(looper: looper, settings: settings)
+        self.looperService = looperService
+        self.nightscoutCredentialService = NightscoutCredentialService(credentials: looperService.looper.nightscoutCredentials)
+        self.remoteDataSource = looperService.remoteDataSource
+
         self._path = Binding(projectedValue: path)
     }
     

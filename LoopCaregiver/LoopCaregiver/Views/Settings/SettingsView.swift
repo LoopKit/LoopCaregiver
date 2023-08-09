@@ -34,13 +34,9 @@ struct SettingsView: View {
                 Text("Done").bold()
             })
             .navigationDestination(
-                for: LooperService.self
-            ) { looperService in
-                LooperView(looperService: looperService,
-                           nightscoutCredentialService: NightscoutCredentialService(credentials: looperService.looper.nightscoutCredentials),
-                           remoteDataSource: looperService.remoteDataSource,
-                           looper: looperService.looper,
-                           path: $path)
+                for: Looper.self
+            ) { looper in
+                LooperView(looper: looper, accountServiceManager: accountService, settings: settings, path: $path)
             }
             .navigationDestination(
                 for: String.self
@@ -110,8 +106,8 @@ struct SettingsView: View {
                 }
             }
             .buttonStyle(PlainButtonStyle())
-            NavigationLink(value: accountService.createLooperService(looper: looper, settings: settings)) {
-                    Text(looper.name)
+            NavigationLink(value: looper) {
+                Text(looper.name)
             }
         }
     }
