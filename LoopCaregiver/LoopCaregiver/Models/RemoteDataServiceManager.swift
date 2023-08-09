@@ -33,21 +33,24 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     
     init(remoteDataProvider: RemoteDataServiceProvider){
         self.remoteDataProvider = remoteDataProvider
-        monitorForUpdates(updateInterval: 30)
-    }
-    
-    func monitorForUpdates(updateInterval: TimeInterval) {
-        self.dateUpdateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { timer in
-            Task {
-                await self.updateData()
-            }
-        })
         
         Task {
             await self.updateData()
         }
         
-        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { _ in
+        monitorForUpdates(updateInterval: 30)
+    }
+    
+    func monitorForUpdates(updateInterval: TimeInterval) {
+        self.dateUpdateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { [weak self] timer in
+            guard let self else { return }
+            Task {
+                await self.updateData()
+            }
+        })
+        
+        NotificationCenter.default.addObserver(forName: UIApplication.willEnterForegroundNotification, object: nil, queue: .main) { [weak self] _ in
+            guard let self else { return }
             Task {
                 await self.updateData()
             }
