@@ -145,7 +145,10 @@ struct LooperSetupView: View {
                 errorText = ""
                 authenticating = true
                 try await save(nightscoutURLText: nightscoutURLFieldText, name: nameFieldText, apiSecret: apiSecretFieldText, otpURL: qrURLFieldText)
-                path.removeLast()
+                if !path.isEmpty {
+                    path.removeLast()
+                }
+
             } catch {
                 errorText = "\(error.localizedDescription)"
             }

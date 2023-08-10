@@ -61,7 +61,9 @@ struct SettingsView: View {
             Button("Remove \(looperService.looper.name)?", role: .destructive) {
                 do {
                     try looperService.accountService.removeLooper(looperService.looper)
-                    path.removeLast()
+                    if !path.isEmpty {
+                        path.removeLast()
+                    }
                 } catch {
                     //TODO: Show errors here
                     print("Error removing loop user")
