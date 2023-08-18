@@ -94,13 +94,17 @@ struct NightscoutChartView: View {
                     y: .value("Reading", $0.value)
                 )
                 .foregroundStyle(by: .value("Reading", $0.colorType))
+                .symbol(
+                    FilledCircle()
+                )
             }
             if settings.timelinePredictionEnabled {
                 ForEach(predictionGraphItems()){
-                    PointMark(
+                    LineMark(
                         x: .value("Time", $0.displayTime),
                         y: .value("Reading", $0.value)
                     )
+                    .lineStyle(StrokeStyle(lineWidth: 1, dash: [7.0, 3.0]))
                     .foregroundStyle(Color(uiColor: .magenta.withAlphaComponent(0.5)))
                 }   
             }
@@ -561,4 +565,14 @@ struct NightscoutChartConfiguration {
     let graphTotalDays = 1
     let daysPerVisbleScrollFrame = 0.3
     let graphTag = 1000
+}
+
+struct FilledCircle: Shape, ChartSymbolShape {
+    var perceptualUnitRect: CGRect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+    
+    func path(in rect: CGRect) -> Path {
+        var path = Path()
+        path.addEllipse(in: rect.scaledBy(0.55))
+        return path
+    }
 }

@@ -76,24 +76,27 @@ struct TreatmentAnnotationView: View {
             switch fillStyle {
             case .noFill:
                 Circle()
-                    .stroke(.red)
+                    .strokeBorder(strokeColor, lineWidth: strokeWidth)
             case .bottomFill:
                 Circle()
-                    .stroke()
-                    .foregroundColor(.white)
-                Circle()
-                    .trim(from: 0.0, to: 0.5)
-                    .fill(fillColorStyle.color(scheme: colorScheme))
+                    .strokeBorder(strokeColor, lineWidth: strokeWidth)
+                    .background(Circle().trim(from: 0.0, to: 0.5).fill(fillColorStyle.color(scheme: colorScheme)))
             case .topFill:
                 Circle()
-                    .stroke()
-                    .foregroundColor(.blue)
-                Circle()
-                    .trim(from: 0.5, to: 1.0)
-                    .fill(fillColorStyle.color(scheme: colorScheme))
+                    .strokeBorder(strokeColor, lineWidth: strokeWidth)
+                    .background(Circle().trim(from: 0.5, to: 1.0).fill(fillColorStyle.color(scheme: colorScheme)))
             case .fullFill:
                 Circle()
+                    .strokeBorder(strokeColor, lineWidth: strokeWidth)
             }
+        }
+        
+        var strokeWidth: CGFloat {
+            return 0.5
+        }
+        
+        var strokeColor: Color {
+            colorScheme == .dark ? .gray : .gray
         }
         
         enum FillStyle {
