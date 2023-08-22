@@ -146,7 +146,6 @@ struct TimelineWrapperView<ChartContent:View>: View {
 
     let title: String
     @ObservedObject var settings: CaregiverSettings
-    @AppStorage(UserDefaults.standard.timelineVisibleLookbackHoursKey) private var timelineLookbackIntervals = 6
     let lookbackIntervals = NightscoutChartScrollView.timelineLookbackIntervals
     let chartContent:ChartContent
     
