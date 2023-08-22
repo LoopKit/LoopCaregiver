@@ -66,6 +66,7 @@ struct ChartsListView: View {
             TimelineWrapperView(title:"Timeline", settings: settings) {
                 NightscoutChartScrollView(settings: looperService.settings, remoteDataSource: remoteDataSource)
             }
+            .padding([.leading, .trailing], 10)
         }
     }
     
@@ -163,7 +164,7 @@ struct TimelineWrapperView<ChartContent:View>: View {
                     .font(.subheadline)
                     .padding([.leading], 10.0)
                 Spacer()
-                Picker("Range", selection: $timelineLookbackIntervals) {
+                Picker("Range", selection: $settings.timelineVisibleLookbackHours) {
                     ForEach(lookbackIntervals, id: \.self) { period in
                         Text("\(period)h").tag(period)
                     }
