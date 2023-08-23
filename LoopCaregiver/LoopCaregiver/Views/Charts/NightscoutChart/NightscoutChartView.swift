@@ -105,7 +105,7 @@ struct NightscoutChartScrollView: View {
                             //.modifier(PinchToZoom(minScale: 0.10, maxScale: 3.0, scale: $currentScale))
                         }
                     }
-                    .padding(.init(top: 5.0, leading: 0, bottom: 0, trailing: 0)) //Prevent top Y label from clipping
+                    .padding(.init(top: 5, leading: 10, bottom: 0, trailing: 10)) //Top to prevent top Y label from clipping
                     .onChange(of: settings.timelineVisibleLookbackHours) { newValue in
                         //This is to catch updates to the picker
                         scrollRequestSubject.send(.scrollViewCenter)

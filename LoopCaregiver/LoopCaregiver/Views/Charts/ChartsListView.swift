@@ -66,7 +66,6 @@ struct ChartsListView: View {
             TimelineWrapperView(title:"Timeline", settings: settings) {
                 NightscoutChartScrollView(settings: looperService.settings, remoteDataSource: remoteDataSource)
             }
-            .padding([.leading, .trailing], 10)
         }
     }
     
