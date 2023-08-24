@@ -20,15 +20,16 @@ struct ZoomableScrollView<Content: View>: View {
     
     @ViewBuilder var content: (CustomViewProxy) -> Content
     
-    let viewTag = ScrollState.viewTag
-    let showDiagnostics = false
+    private let viewTag = ScrollState.viewTag
+    private let showDiagnostics = false
     
-    @State var zoomLevel: Double = 1.0
-    @State var focusedContentFrame: CGRect = .zero
+    @State private var zoomLevel: Double = 1.0
+    @State private var focusedContentFrame: CGRect = .zero
     @State private var contentViewFrame: CGRect = .zero
-    @State var scrollRequestSubject = PassthroughSubject<ZoomScrollRequest, Never>()
-    @State var _scrollReaderProxy: ScrollViewProxy? = nil
-    @State var lastZoomScrollRequest: ZoomScrollRequest? = nil
+    @State private var scrollRequestSubject = PassthroughSubject<ZoomScrollRequest, Never>()
+    @State private var _scrollReaderProxy: ScrollViewProxy? = nil
+    @State private var lastZoomScrollRequest: ZoomScrollRequest? = nil
+
     var body: some View {
         
         VStack {

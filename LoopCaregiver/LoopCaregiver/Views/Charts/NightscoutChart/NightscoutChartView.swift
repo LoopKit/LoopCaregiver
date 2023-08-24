@@ -28,6 +28,8 @@ struct NightscoutChartScrollView: View {
     private let maxScale: CGFloat = 3.0
     @State private var currentScale: CGFloat = 1.0
     
+    @Environment(\.scenePhase) private var scenePhase
+    
     func glucoseGraphItems() -> [GraphItem] {
         return remoteDataSource.glucoseSamples.map({$0.graphItem(displayUnit: settings.glucoseDisplayUnits)})
     }
@@ -76,10 +78,6 @@ struct NightscoutChartScrollView: View {
                                     //)
                                     //print("Date: \(val)")
                                 }
-                                .onAppear {
-                                    scrollRequestSubject.send(.scrollViewCenter)
-                                    //zoomScrollViewProxy.scrollTrailing()
-                                }
                                 .onReceive(scrollRequestSubject) { scrollType in
                                     let lookbackHours = CGFloat(totalGraphHours - timelinePredictionHours)
                                     let lookBackWidthRatio = lookbackHours / CGFloat(totalGraphHours)
@@ -110,13 +108,15 @@ struct NightscoutChartScrollView: View {
                         //This is to catch updates to the picker
                         scrollRequestSubject.send(.scrollViewCenter)
                     }
-                    .onChange(of: remoteDataSource.glucoseSamples, perform: { newValue in
-                        zoomScrollViewProxy.scrollTrailing()
-                    })
                     .onAppear(perform: {
                         scrollRequestSubject.send(.scrollViewCenter)
                         zoomScrollViewProxy.scrollTrailing()
                     })
+                    .onChange(of: scenePhase) { newPhase in
+                        if newPhase == .active {
+                            zoomScrollViewProxy.scrollTrailing()
+                        }
+                    }
             }
         }
     }
