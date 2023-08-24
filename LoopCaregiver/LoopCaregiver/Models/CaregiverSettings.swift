@@ -12,7 +12,6 @@ class CaregiverSettings: ObservableObject {
     
     @Published var glucoseDisplayUnits: HKUnit
     @Published var timelinePredictionEnabled: Bool
-    @Published var timelineVisibleLookbackHours: Int
     @Published var experimentalFeaturesUnlocked: Bool
     @Published var remoteCommands2Enabled: Bool
     @Published var disclaimerAcceptedDate: Date?
@@ -20,7 +19,6 @@ class CaregiverSettings: ObservableObject {
     init(){
         self.glucoseDisplayUnits = UserDefaults.standard.glucosePreference.unit
         self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
-        self.timelineVisibleLookbackHours = UserDefaults.standard.timelineVisibleLookbackHours
         self.remoteCommands2Enabled = UserDefaults.standard.remoteCommands2Enabled
         self.experimentalFeaturesUnlocked = UserDefaults.standard.experimentalFeaturesUnlocked
         self.disclaimerAcceptedDate = UserDefaults.standard.disclaimerAcceptedDate
@@ -36,10 +34,6 @@ class CaregiverSettings: ObservableObject {
         
         if self.timelinePredictionEnabled != UserDefaults.standard.timelinePredictionEnabled {
             self.timelinePredictionEnabled = UserDefaults.standard.timelinePredictionEnabled
-        }
-        
-        if self.timelineVisibleLookbackHours != UserDefaults.standard.timelineVisibleLookbackHours {
-            self.timelineVisibleLookbackHours = UserDefaults.standard.timelineVisibleLookbackHours
         }
         
         if self.remoteCommands2Enabled != UserDefaults.standard.remoteCommands2Enabled {
@@ -114,14 +108,6 @@ extension UserDefaults {
     
     @objc dynamic var timelinePredictionEnabled: Bool {
         return UserDefaults.standard.bool(forKey: timelinePredictionEnabledKey)
-    }
-    
-    @objc dynamic var timelineVisibleLookbackHours: Int {
-        var toRet = UserDefaults.standard.integer(forKey: timelineVisibleLookbackHoursKey)
-        if toRet == 0 {
-            toRet = 6
-        }
-        return toRet
     }
     
     @objc dynamic var remoteCommands2Enabled: Bool {
