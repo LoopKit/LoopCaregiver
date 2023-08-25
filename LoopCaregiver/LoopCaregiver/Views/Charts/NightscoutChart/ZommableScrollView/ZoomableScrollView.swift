@@ -11,8 +11,14 @@ import Combine
 /*
  Terminology
  
- ScrollView: The view that manages your scrollable contentView - this is like a view port. Frame is often {0, 0, visibleWidth, visibleHeight}
- ContentView: Is your scrollable content. Frame  example: {-100, 0, 1000, 300}
+ ScrollView:
+    The view that manages your scrollable contentView - this is like a view port.
+    Frame is often {0, 0, visibleWidth, visibleHeight}
+ ContentView:
+    Scrollable content.
+    Frame  example: {-100, 0, 1000, 300}
+    The X is 0 when scrolled to leading edge and negative as scrolled right.
+    Note that contentViewGeometry contains is same size as that read by contentViewFrame preference.
  FocusedContent: The frame within ContentView that we will focus on. That frame may scale differently than other content.
  */
 
@@ -37,8 +43,10 @@ struct ZoomableScrollView<Content: View>: View {
                 VStack (alignment: .leading) {
                     Text("ContentFrame: \(contentViewFrame.xAndWidthDescription)")
                         .font(.footnote)
-                    Text("ZoomScrollRequest: \(lastZoomScrollRequest.debugDescription)")
-                        .font(.footnote)
+                    if let lastZoomScrollRequest = lastZoomScrollRequest{
+                        Text("ZoomScrollRequest: \n\(lastZoomScrollRequest.description)")
+                            .font(.footnote)
+                    }
                 }
                 .background {
                     Rectangle()
@@ -109,7 +117,7 @@ struct ZoomableScrollView<Content: View>: View {
     
     func zoom(zoomScrollRequest: ZoomScrollRequest, scrollReaderProxy: ScrollViewProxy, contentViewSize: CGSize, scrollViewSize: CGSize) {
         self.lastZoomScrollRequest = zoomScrollRequest
-        let viewState = ScrollState(focusedContentFrame: focusedContentFrame, scrollRect: self.contentViewFrame, scrollViewSize: scrollViewSize, contentViewSize: contentViewSize)
+        let viewState = ScrollState(focusedContentFrame: focusedContentFrame, contentViewFrame: self.contentViewFrame, scrollViewSize: scrollViewSize)
         
         switch zoomScrollRequest.scrollType {
         case .scrollViewCenter:
@@ -131,7 +139,7 @@ struct ZoomableScrollView<Content: View>: View {
     
     func zoom(zoomLevel: Double, updatedFocusedContentFrame: CGRect, focusContentAnchor: Double, scrollViewAnchor: Double, viewState: ScrollState, scrollReaderProxy: ScrollViewProxy) {
         withAnimation(.none) {
-            let upcomingViewState = viewState.transforming(zoomLevel: zoomLevel, updatedFocusedContentFrame: updatedFocusedContentFrame, anchor: focusContentAnchor, scrollViewAnchor: scrollViewAnchor)
+            let upcomingViewState = viewState.transforming(zoomLevel: zoomLevel, updatedFocusedContentFrame: updatedFocusedContentFrame, focusContentAnchor: focusContentAnchor, scrollViewAnchor: scrollViewAnchor)
             upcomingViewState.scrollToAnchor(focusContentAnchor: focusContentAnchor, scrollViewAnchor: scrollViewAnchor, scrollReaderProxy: scrollReaderProxy)
             self.zoomLevel = zoomLevel
             self.focusedContentFrame = updatedFocusedContentFrame
@@ -186,16 +194,26 @@ struct ZoomScrollRequest: Equatable, CustomStringConvertible {
     
     var description: String {
         return """
-        scrollType: \(scrollType)
-        focusedContentFrame: \(updatedFocusedContentFrame.xAndWidthDescription)
-        zoomAmount: \(zoomAmount)
+        \tscrollType: \(scrollType)
+        \tfocusedContentFrame: \(updatedFocusedContentFrame.xAndWidthDescription)
+        \tzoomAmount: \(zoomAmount)
         """
     }
 }
 
-enum ScrollType: Equatable {
+enum ScrollType: Equatable, CustomStringConvertible {
     case scrollViewCenter
     case contentPoint(CGPoint)
+    
+    var description: String {
+        switch self {
+        case .scrollViewCenter:
+            return ".scrollViewCenter"
+        case .contentPoint(let point):
+            return "contentPoint: \(point.simpleDescription)"
+        }
+    }
+    
 }
 
 struct ContentViewFrameKey: PreferenceKey {
@@ -208,9 +226,9 @@ struct ContentViewFrameKey: PreferenceKey {
 struct ScrollState {
     
     let focusedContentFrame: CGRect
-    let scrollRect: CGRect
+    let contentViewFrame: CGRect
     let scrollViewSize: CGSize
-    let contentViewSize: CGSize
+    
     static let viewTag = 100
     
     
@@ -221,18 +239,18 @@ struct ScrollState {
     }
     
     func isScrolledToLeadingSide() -> Bool {
-        let leadingScrollViewX = abs(scrollRect.origin.x)
+        let leadingScrollViewX = abs(contentViewFrame.origin.x)
         return abs(leadingScrollViewX) < 2.0
     }
     
     func isScrolledToTrailingSide() -> Bool {
-        let trailingScrollViewX = abs(scrollRect.origin.x) + scrollViewSize.width
-        return abs(trailingScrollViewX - contentViewSize.width) < 2.0
+        let trailingScrollViewX = abs(contentViewFrame.origin.x) + scrollViewSize.width
+        return abs(trailingScrollViewX - contentViewFrame.width) < 2.0
     }
     
     //MARK: Focused Content Frame
     func focusedContentFrameCenterAnchor() -> Double {
-        let xPosition = abs(scrollRect.origin.x) + (scrollViewSize.width / 2.0)
+        let xPosition = abs(contentViewFrame.origin.x) + (scrollViewSize.width / 2.0)
         return xPosition / focusedContentFrame.width
     }
     
@@ -241,7 +259,7 @@ struct ScrollState {
     }
     
     func getScrollViewAnchor(contentViewX: Double) -> Double {
-        let xPositionInScrollView = contentViewX - abs(scrollRect.origin.x)
+        let xPositionInScrollView = contentViewX - abs(contentViewFrame.origin.x)
         return xPositionInScrollView / scrollViewSize.width
     }
     
@@ -251,7 +269,7 @@ struct ScrollState {
         
         //Add position in the scrollViewAnchor
         //TODO: This should have a 0 origin and instead adjust the contentView rect.
-        //Note though that self.scrollRect has a non-zero origin, so maybe his is ok?
+        //Note though that self.scrollRect has a non-zero origin, so maybe this is ok?
         xPosition = xPosition - (scrollViewSize.width * scrollViewAnchor)
         return CGRect(origin: CGPoint(x: xPosition, y: 0.0),
                       size: CGSize(width: scrollViewSize.width, height: 100.0))
@@ -262,7 +280,7 @@ struct ScrollState {
         //TODO: This may be working backwards. The contentViewRect is what should be offset (negative)
         let scrollViewRect = getScrollViewRect(focusContentAnchor: focusContentAnchor, scrollViewAnchor: scrollViewAnchor)
         let contentViewRect = CGRect(origin: CGPoint(x: 0.0, y: 0.0),
-                                   size: CGSize(width: contentViewSize.width, height: 100.0))
+                                   size: CGSize(width: contentViewFrame.width, height: 100.0))
         
         if scrollViewRect.minX < 0 {
             scrollReaderProxy.scrollTo(Self.viewTag, anchor: .leading)
@@ -285,19 +303,17 @@ struct ScrollState {
         return numerator / denominator
     }
     
-    func transforming(zoomLevel: Double, updatedFocusedContentFrame: CGRect, anchor: Double, scrollViewAnchor: Double?) -> ScrollState {
-        
-        let updatedContentViewSize = CGSize(width: scrollViewSize.width * zoomLevel, height: scrollViewSize.height * zoomLevel)
+    func transforming(zoomLevel: Double, updatedFocusedContentFrame: CGRect, focusContentAnchor: Double, scrollViewAnchor: Double?) -> ScrollState {
 
-        var anchorXPosition = updatedContentViewSize.width * anchor
+        //Use updatedFocusedContentFrame to get X offset since that is where our anchor is valid, not the content view width
+        var contentViewAnchorXPosition = -(updatedFocusedContentFrame.width * focusContentAnchor) //Content offets is always in negative coordinates
         if let scrollViewAnchor {
             let scrollViewXOffset = scrollViewSize.width * scrollViewAnchor
-            anchorXPosition = anchorXPosition - scrollViewXOffset
+            contentViewAnchorXPosition = contentViewAnchorXPosition + scrollViewXOffset //Add since that shifts frame right
         }
 
-        let updatedScrollRect = CGRect(x: anchorXPosition, y: 0.0, width: scrollViewSize.width, height: scrollRect.height)
-
-        return ScrollState(focusedContentFrame: updatedFocusedContentFrame, scrollRect: updatedScrollRect, scrollViewSize: scrollViewSize, contentViewSize: updatedContentViewSize)
+        let updatedContentViewRect = CGRect(x: contentViewAnchorXPosition, y: 0.0, width: scrollViewSize.width * zoomLevel, height: scrollViewSize.width * zoomLevel)
+        return ScrollState(focusedContentFrame: updatedFocusedContentFrame, contentViewFrame: updatedContentViewRect, scrollViewSize: scrollViewSize)
     }
 }
 
@@ -312,6 +328,16 @@ struct CustomViewProxy {
 extension CGRect {
     var xAndWidthDescription: String {
         return "x: \(formatValue(self.origin.x)), w: \(formatValue(self.size.width))"
+    }
+
+    private func formatValue(_ value: CGFloat) -> String {
+        return (value.truncatingRemainder(dividingBy: 1) == 0) ? String(format: "%.0f", value) : String(format: "%.2f", value)
+    }
+}
+
+extension CGPoint {
+    var simpleDescription: String {
+        return "x: \(formatValue(self.x)), w: \(formatValue(self.y))"
     }
 
     private func formatValue(_ value: CGFloat) -> String {

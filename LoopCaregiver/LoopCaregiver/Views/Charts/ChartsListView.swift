@@ -64,7 +64,15 @@ struct ChartsListView: View {
                  */
             }
             TimelineWrapperView(title:"Timeline", settings: settings) {
-                NightscoutChartScrollView(settings: looperService.settings, remoteDataSource: remoteDataSource)
+                HStack {
+                    //Using .padding causes the chart overlay GeometryReader to
+                    //have an offset that is the padding amount.
+                    //Using a custom "padding" solution here with an HStack to avoid this.
+                    Spacer(minLength: 10.0)
+                    NightscoutChartScrollView(settings: looperService.settings, remoteDataSource: remoteDataSource)
+                    Spacer(minLength: 10.0)
+                }
+
             }
         }
     }

@@ -73,7 +73,7 @@ struct NightscoutChartScrollView: View {
                                     scrollRequestSubject.send(.contentPoint(tapLocation))
                                 }
                                 .onTapGesture(count: 1) { tapLocation in
-//                                    print("x pos: \(tapLocation.x)")
+                                    print("x pos: \(tapLocation.x)")
 //                                    if let (date, glucose) = chartProxy.value(at: tapLocation, as: (Date, Double).self) {
 //                                        print("Location: \(date), \(glucose)")
 //                                        let graphItem = getTappableGraphItem(date: date, value: glucose)
