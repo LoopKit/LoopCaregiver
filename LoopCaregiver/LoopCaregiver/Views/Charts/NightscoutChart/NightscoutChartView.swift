@@ -21,6 +21,8 @@ struct NightscoutChartScrollView: View {
     static let timelineLookbackIntervals = [1, 3, 6, 12, 24]
     @AppStorage(UserDefaults.standard.timelineVisibleLookbackHoursKey) private var timelineVisibleLookbackHours = 6
     
+    @State private var graphItemsInPopover: [GraphItem]? = nil
+    
     private let configuration = NightscoutChartConfiguration()
 
     //TODO: Remove Disabled Zoom View Things
@@ -74,11 +76,12 @@ struct NightscoutChartScrollView: View {
                                 }
                                 .onTapGesture(count: 1) { tapLocation in
                                     print("x pos: \(tapLocation.x)")
-//                                    if let (date, glucose) = chartProxy.value(at: tapLocation, as: (Date, Double).self) {
-//                                        print("Location: \(date), \(glucose)")
-//                                        let graphItem = getTappableGraphItem(date: date, value: glucose)
-//                                        print(graphItem)
-//                                    }
+                                    if let (date, glucose) = chartProxy.value(at: tapLocation, as: (Date, Double).self) {
+                                        let items = getNearbyGraphItems(date: date, value: glucose, chartProxy: chartProxy)
+                                        
+                                        guard items.count > 0 else { return }
+                                            graphItemsInPopover = items
+                                    }
                                 }
                                 .onReceive(scrollRequestSubject) { scrollType in
                                     let lookbackHours = CGFloat(totalGraphHours - timelinePredictionHours)
@@ -123,6 +126,9 @@ struct NightscoutChartScrollView: View {
                         }
                     }
             }
+        }
+        .popover(item: $graphItemsInPopover) { graphItemsInPopover in
+            graphItemsPopoverView(graphItemsInPopover: graphItemsInPopover)
         }
     }
     
@@ -198,18 +204,75 @@ struct NightscoutChartScrollView: View {
 //        .chartYAxis(.hidden)
     }
     
+    func graphItemsPopoverView(graphItemsInPopover: [GraphItem]) -> some View {
+        NavigationStack {
+            List {
+                ForEach (graphItemsInPopover) { item in
+                    switch item.type {
+                    case .bolus, .carb:
+                        VStack {
+                            HStack {
+                                Text(item.displayTime, style: .time)
+                                Spacer()
+                                VStack(alignment: .trailing) {
+                                    Text(item.type.presentableName)
+                                    Text(item.formattedValue())
+                                }
+                            }
+                            switch item.graphItemState {
+                            case .error(let error):
+                                Text(error.localizedDescription)
+                                    .foregroundColor(.red)
+                            default:
+                                EmptyView()
+                            }
+                        }
+                    default:
+                        EmptyView()
+                    }
+                }
+            }
+            .toolbar(content: {
+                    Button {
+                        self.graphItemsInPopover = nil
+                    } label: {
+                        Text("Done")
+                    }
+                
+            })
+        }
+        .presentationDetents([.medium])
+    }
+    
     func updateTimelineHours(_ hours: Int) {
         timelineVisibleLookbackHours = hours
     }
     
-    func getTappableGraphItem(date: Date, value: Double) -> GraphItem? {
-        
-        let yAxisLength = chartYRange().upperBound - chartYRange().lowerBound
+    func getNearbyGraphItems(date: Date, value: Double, chartProxy: ChartProxy) -> [GraphItem] {
         
         func distanceCalcuator(graphItem: GraphItem, date: Date, value: Double) -> Double {
-            let dateHeightScaled = date.timeIntervalSince1970 / yAxisLength
-            let graphDateHeightScaled = graphItem.displayTime.timeIntervalSince1970 / yAxisLength
-            return hypot(dateHeightScaled - graphDateHeightScaled, value - graphItem.value)
+            
+            guard let graphItemDatePosition = chartProxy.position(forX: graphItem.displayTime) else {
+                assertionFailure("Unexpected")
+                return Double.infinity
+            }
+            
+            guard let graphItemValuePosition = chartProxy.position(forY: graphItem.value) else {
+                assertionFailure("Unexpected")
+                return Double.infinity
+            }
+            
+            guard let tappedDatePosition = chartProxy.position(forX: date) else {
+                assertionFailure("Unexpected")
+                return Double.infinity
+            }
+            
+            guard let tappedValuePosition = chartProxy.position(forY: value) else {
+                assertionFailure("Unexpected")
+                return Double.infinity
+            }
+            
+            return hypot(tappedDatePosition - graphItemDatePosition, tappedValuePosition - graphItemValuePosition)
         }
         
         let tappableGraphItems = allGraphItems().filter({ graphItem in
@@ -221,22 +284,15 @@ struct NightscoutChartScrollView: View {
             }
         })
         
-        guard let closest = tappableGraphItems.sorted(by: { item1, item2 in
-            distanceCalcuator(graphItem: item1, date: date, value: value) < distanceCalcuator(graphItem: item2, date: date, value: value)
-        }).first else {
-            return nil
+        let sortedItems = tappableGraphItems.sorted(by: { item1, item2 in
+            item1.displayTime < item2.displayTime
+        }).filter({distanceCalcuator(graphItem: $0, date: date, value: value) < 20})
+        
+        if sortedItems.count <= 5 {
+            return sortedItems
+        } else {
+            return Array(sortedItems[0...4])
         }
-        
-        let distance = distanceCalcuator(graphItem: closest, date: date, value: value)
-        
-        if distance > 100 {
-            return nil
-        }
-        
-        print(distance)
-        
-        return closest
-        
     }
     
     func allGraphItems() -> [GraphItem] {
@@ -360,12 +416,36 @@ enum GraphItemType {
     case predictedBG
     case bolus(Double)
     case carb(Int)
+    
+    var presentableName: String {
+        switch self {
+        case .egv:
+            return "Glucose"
+        case .predictedBG:
+            return "Predicted Glucose"
+        case .bolus:
+            return "Bolus"
+        case .carb:
+            return "Carbs"
+        }
+    }
 }
 
 enum GraphItemState {
     case success
     case pending
-    case error(Error)
+    case error(LocalizedError)
+}
+
+//Required to use [GraphItem] to control popover visibility
+extension [GraphItem]: Identifiable {
+    public var id: String {
+        var combinedUUID = ""
+        for item in self {
+            combinedUUID.append(item.id.uuidString)
+        }
+        return combinedUUID
+    }
 }
 
 struct GraphItem: Identifiable, Equatable {
