@@ -1,15 +1,23 @@
-name: Build LoopCaregiver
+name: 4. Build LoopCaregiver
+run-name: Build LoopCaregiver (${{ github.ref_name }})
 on:
   workflow_dispatch:
 
 jobs:
+  validate:
+    name: Validate
+    uses: ./.github/workflows/validate_secrets.yml
+    secrets: inherit
+  
   build:
+    name: Build
+    needs: validate
     runs-on: macos-13
     steps:
       # Uncomment to manually select latest Xcode if needed
       - name: Select Latest Xcode
         run: "sudo xcode-select --switch /Applications/Xcode_14.3.1.app/Contents/Developer"
-
+      
       # Checks-out the repo
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -41,7 +49,7 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-
+      
       # Upload IPA and Symbols
       - name: Upload IPA and Symbol artifacts
         uses: actions/upload-artifact@v3
