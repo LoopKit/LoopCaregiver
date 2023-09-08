@@ -27,7 +27,7 @@ Note that installing with TestFlight, (in the US), requires the Apple ID account
 
 ## Save 6 Secrets
 
-You require 6 Secrets (alphanumeric items) to use the GitHub build method and if you use the GitHub method to build more than LoopCaregiver, e.g., Loop or Loop Follow, you will use the same 6 Secrets for each app you build with this method. Each secret is identified below by `ALL_CAPITAL_LETTER_NAMES`.
+You require 6 Secrets (alphanumeric items) to use the GitHub build method, and if you use the GitHub method to build more than LoopCaregiver, e.g., Loop or Loop Follow, you will use the same 6 Secrets for each app you build with this method. Each secret is identified below by `ALL_CAPITAL_LETTER_NAMES`.
 
 * Four Secrets are from your Apple Account
 * Two Secrets are from your GitHub account
@@ -47,7 +47,7 @@ This step is common for all GitHub Browser Builds; do this step only once. You w
 
 ## Create GitHub Personal Access Token
 
-Log into your GitHub account to create a personal access token; this is one of two GitHub secrets needed for your build.
+This step is common for all GitHub Browser Builds; do this step only once. This is the first of two GitHub secrets needed for your build.
 
 1. Create a [new personal access token](https://github.com/settings/tokens/new):
     * Enter a name for your token, use "FastLane Access Token".
@@ -58,7 +58,7 @@ Log into your GitHub account to create a personal access token; this is one of t
 
 ## Make up a Password
 
-This is the second one of two GitHub secrets needed for your build.
+This step is common for all GitHub Browser Builds; do this step only once. This is the second of two GitHub secrets needed for your build.
 
 The first time you build with the GitHub Browser Build method for any DIY app, you will make up a password and record it as `MATCH_PASSWORD`. Note, if you later lose `MATCH_PASSWORD`, you will need to delete the Match-Secrets repository so that a new one can be created for you.
 
@@ -91,7 +91,7 @@ This step validates most of your six Secrets and provides error messages if it d
 1. On the right side, click "Run Workflow", and tap the green `Run workflow` button.
 1. Wait, and within a minute or two you should see a green checkmark indicating the workflow succeeded.
 
-#### Table with Name and Identifier for LoopCaregiver
+#### Table with Name and Identifiers for LoopCaregiver
 
 | NAME | IDENTIFIER |
 |-------|------------|
