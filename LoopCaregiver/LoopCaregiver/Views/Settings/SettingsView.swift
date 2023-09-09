@@ -17,6 +17,7 @@ struct SettingsView: View {
     @AppStorage(UserDefaults.standard.glucoseUnitKey) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     @AppStorage(UserDefaults.standard.timelinePredictionEnabledKey) private var timelinePredictionEnabled = false
     @AppStorage(UserDefaults.standard.remoteCommands2EnabledKey) private var remoteCommands2Enabled = false
+    @AppStorage(UserDefaults.standard.demoModeEnabledKey) private var demoModeEnabled = false
     @AppStorage(UserDefaults.standard.experimentalFeaturesUnlockedKey) private var experimentalFeaturesUnlocked = false
     
     @ObservedObject var settings: CaregiverSettings
@@ -94,7 +95,7 @@ struct SettingsView: View {
             }
             .pickerStyle(.automatic)
             LabeledContent {
-                Text(nightscoutCredentialService.credentials.url.absoluteString)
+                Text(demoModeEnabled ? "https://www.YourLoopersURL.com" : nightscoutCredentialService.credentials.url.absoluteString)
             } label: {
                 Text("Nightscout")
             }
@@ -136,6 +137,9 @@ struct SettingsView: View {
             if experimentalFeaturesUnlocked || remoteCommands2Enabled {
                 Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
                 Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
+                    .font(.footnote)
+                Toggle("Demo Mode", isOn: $demoModeEnabled)
+                Text("Demo mode hides sensitive data for Caregiver presentations.")
                     .font(.footnote)
             } else {
                 Text("Disabled                             ")
