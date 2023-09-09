@@ -619,7 +619,7 @@ enum AnnotationColorStyle {
             if scheme == .dark {
                 return .white
             } else {
-                return . brown
+                return Color(.sRGB ,red: 0.7, green: 0.6, blue: 0.5)
             }
         case .blue:
             return .blue
