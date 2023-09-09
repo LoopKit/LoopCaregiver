@@ -139,8 +139,7 @@ struct CarbInputView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        absorption = "0.5"
-                    }
+                        absorption = LocalizationUtils.presentableStringFromHoursAmount(0.5)                   }
                     Spacer()
                     
                     //Medium carb entry emoji
@@ -149,7 +148,7 @@ struct CarbInputView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        absorption = "3"
+                        absorption = LocalizationUtils.presentableStringFromHoursAmount(3.0)
                     }
                     Spacer()
                     
@@ -159,7 +158,7 @@ struct CarbInputView: View {
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                     .onTapGesture {
-                        absorption = "5"
+                        absorption = LocalizationUtils.presentableStringFromHoursAmount(5.0)
                     }
                     Spacer()
                     
