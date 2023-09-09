@@ -16,6 +16,7 @@ struct BottomBarView: View {
     @Binding var showOverrideView: Bool
     @Binding var showSettingsView: Bool
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
+    @Environment(\.colorScheme) var colorScheme
     
     var body: some View {
         HStack (alignment: .center) {
@@ -57,7 +58,7 @@ struct BottomBarView: View {
                     .padding(.trailing)
             }
         }
-        .background(Color(red: 0.1, green: 0.1, blue: 0.1))
+        .background(barBackgroundColor)
         .frame(height: 40, alignment: .center)
     }
     
@@ -67,5 +68,13 @@ struct BottomBarView: View {
     
     func overrideIsActive() -> Bool {
         remoteDataSource.activeOverride() != nil
+    }
+    
+    var barBackgroundColor: Color {
+        if colorScheme == .dark {
+            return Color(red: 0.1, green: 0.1, blue: 0.1)
+        } else {
+            return Color(red: 0.97, green: 0.97, blue: 0.97)
+        }
     }
 }
