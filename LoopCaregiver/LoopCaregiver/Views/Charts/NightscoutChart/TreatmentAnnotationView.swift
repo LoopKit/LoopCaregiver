@@ -96,7 +96,7 @@ struct TreatmentAnnotationView: View {
         }
         
         var strokeColor: Color {
-            colorScheme == .dark ? .gray : .gray
+            return .gray
         }
         
         enum FillStyle {
