@@ -23,7 +23,7 @@ struct BottomBarView: View {
             Button {
                 showCarbView = true
             } label: {
-                Image("Pre-Meal")
+                Image("carbs")
                     .renderingMode(.template)
                     .foregroundColor(.green)
                     .frame(width: iconSize(), height: iconSize())
