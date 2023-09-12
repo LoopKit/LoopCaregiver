@@ -60,36 +60,52 @@ struct LooperSetupView: View {
     private var inputFormView: some View {
         Form {
             Section {
-                TextField(
-                    "Name",
-                    text: $nameFieldText, onCommit:
-                        {
-                            self.save()
-                        })
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                TextField(
-                    "Nightscout URL",
-                    text: $nightscoutURLFieldText, onCommit:
-                        {
-                            self.save()
-                        })
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
-                TextField(
-                    "API Secret",
-                    text: $apiSecretFieldText
-                ) {
-                    self.save()
+                VStack {
+                    Text("Name")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    TextField(
+                        "Required",
+                        text: $nameFieldText, onCommit:
+                            {
+                                self.save()
+                            })
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)
                 }
-                .autocapitalization(.none)
-                .disableAutocorrection(true)
+                VStack{
+                    Text("Nightscout URL")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    TextField(
+                        "Required",
+                        text: $nightscoutURLFieldText, onCommit:
+                            {
+                                self.save()
+                            })
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)}
+                VStack{
+                    Text("API Secret")
+                        .font(.headline)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                    TextField(
+                        "Required",
+                        text: $apiSecretFieldText
+                    ) {
+                        self.save()
+                    }
+                    .autocapitalization(.none)
+                    .disableAutocorrection(true)}
                 if qrURLFieldText == "" {
                     Button {
                         isShowingScanner = true
                     } label: {
                         Text("Scan QR")
                     }
+                    .buttonStyle(.borderedProminent)
+                    .frame(maxWidth: .infinity)
+                    .padding(.vertical, 10)
                 } else {
                     TextField(
                         "QR Scan",
