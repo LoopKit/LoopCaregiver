@@ -104,10 +104,28 @@ struct CarbInputView: View {
             }
             
             LabeledContent {
-                Button {
-                    showDatePickerSheet = true
-                } label: {
-                    Text(dateFormatter.string(from: pickerConsumedDate))
+                HStack {
+                    Button {} label: {
+                        Image(systemName: "minus.circle.fill")
+                            .foregroundColor(Color.blue)
+                            .font(.title)
+                    }
+                    .onTapGesture {
+                        pickerConsumedDate -= 15 * 60
+                    }
+                    Button {
+                        showDatePickerSheet = true
+                    } label: {
+                        Text(Date.FormatStyle.FormatInput(rawValue: dateFormatter.string(from: pickerConsumedDate)) ?? pickerConsumedDate, format: Date.FormatStyle().hour().minute())
+                    }
+                    Button {} label: {
+                        Image(systemName: "plus.circle.fill")
+                            .foregroundColor(Color.blue)
+                            .font(.title)
+                    }
+                    .onTapGesture {
+                        pickerConsumedDate += 15 * 60
+                    }
                 }
             } label: {
                 Text("Time")
