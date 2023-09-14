@@ -42,7 +42,7 @@ struct COBChartView: UIViewRepresentable {
         viewModel.chartManager.startDate = dateInterval.start
         viewModel.chartManager.maxEndDate = dateInterval.end
         viewModel.chartManager.updateEndDate(dateInterval.end)
-        let cobValues = remoteDataSource.carbEntries.map({CarbValue(startDate: $0.timestamp, quantity: HKQuantity(unit: .gram(), doubleValue: Double($0.carbs)))})
+        let cobValues = remoteDataSource.carbEntries.map({CarbValue(startDate: $0.timestamp, value: Double($0.carbs))})
         cobChart.setCOBValues(cobValues)
         /*
          This will probably need to do something as done in:
