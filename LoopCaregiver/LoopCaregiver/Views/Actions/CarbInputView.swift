@@ -42,9 +42,9 @@ struct CarbInputView: View {
                         Text(errorText)
                             .foregroundColor(.critical)
                     }
-                    Text("Carbs will be stored without accepting any recommended bolus. Storing carbs may increase automatic insulin delivery per your Loop Settings.")
+                    Text("Karbohydratet vil bli lagret uten å akseptere noen anbefalt bolus. Lagring av karbohydrater kan øke automatisk tilførsel av insulin som pr. Loop instillinger.")
                         .padding()
-                    Button("Save without Bolusing") {
+                    Button("Lagre uten å gi bolus") {
                         deliverButtonTapped()
                     }
                     .buttonStyle(.borderedProminent)
@@ -64,19 +64,19 @@ struct CarbInputView: View {
                     ProgressView()
                 }
             }
-            .navigationBarTitle(Text("Add Carb Entry"), displayMode: .inline)
+            .navigationBarTitle(Text("Legg til karbohydrater"), displayMode: .inline)
             .navigationBarItems(leading: Button(action: {
                 self.showSheetView = false
             }) {
-                Text("Cancel")
+                Text("Avbryt")
             })
             .sheet(isPresented: $showDatePickerSheet) {
                 VStack {
-                    Text("Consumption Date")
+                    Text("Konsumeringsdato")
                         .font(.headline)
                         .padding()
                     Form {
-                        DatePicker("Time", selection: $pickerConsumedDate, displayedComponents: [.hourAndMinute, .date])
+                        DatePicker("Tid", selection: $pickerConsumedDate, displayedComponents: [.hourAndMinute, .date])
                             .datePickerStyle(.automatic)
                     }
                 }.presentationDetents([.fraction(1/4)])
@@ -100,7 +100,7 @@ struct CarbInputView: View {
                 Text("g")
                     .frame(width: unitFrameWidth)
             } label: {
-                Text("Amount Consumed")
+                Text("Antall karbohydrater")
             }
             
             LabeledContent {
@@ -128,7 +128,7 @@ struct CarbInputView: View {
                     }
                 }
             } label: {
-                Text("Time")
+                Text("Tid")
             }
 
             //TODO: can we get absorption from Loop directly via .slow, .medium, .fast?
@@ -145,7 +145,7 @@ struct CarbInputView: View {
                         }
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 } label: {
-                    Text("Food Type")
+                    Text("Type mat")
                 }
                 .frame(width: foodTypeWidth, height: 30, alignment: .trailing)
                 Spacer()
@@ -200,10 +200,10 @@ struct CarbInputView: View {
                 .multilineTextAlignment(.trailing)
                 .keyboardType(.decimalPad)
                 .focused($absorptionInputFieldIsFocused)
-                Text("hr")
+                Text("t")
                     .frame(width: unitFrameWidth)
             } label: {
-                Text("Absorption Time")
+                Text("Absorpsjonstid")
             }
         }
     }

@@ -38,25 +38,25 @@ struct BolusInputView: View {
                     }
                     if let deviceDate = remoteDataSource.latestDeviceStatus?.timestamp, remoteDataSource.recommendedBolus != nil {
                         let interval = nowDate.timeIntervalSince(deviceDate)
-                        Text("WARNING: New treatments may have occurred since the last recommended bolus was calculated \(LocalizationUtils.presentableMinutesFormat(timeInterval: interval)) ago.")
+                        Text("ADVARSEL: Nye behandlinger kan ha forekommet siden siste anbefalte bolus ble beregnet \(LocalizationUtils.presentableMinutesFormat(timeInterval: interval)) ago.")
                             .font(.callout)
                             .foregroundColor(.red)
                             .padding()
                         Spacer()
                     }
-                    Button("Deliver") {
+                    Button("Gi bolus") {
                         deliverButtonTapped()
                     }
                     .buttonStyle(.borderedProminent)
                     .frame(maxWidth: .infinity)
                     .disabled(disableForm())
                     .padding()
-                    .confirmationDialog("Are you sure?",
+                    .confirmationDialog("Er du sikker?",
                                         isPresented: $isPresentingConfirm) {
                         Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
                             deliverConfirmationButtonTapped()
                         }
-                        Button("Cancel", role: .cancel) {}
+                        Button("Avbryt", role: .cancel) {}
                     }
                 }
                 .disabled(submissionInProgress)
@@ -71,7 +71,7 @@ struct BolusInputView: View {
             .navigationBarItems(leading: Button(action: {
                 self.showSheetView = false
             }) {
-                Text("Cancel")
+                Text("Avbryt")
             })
         }
     }
@@ -81,10 +81,10 @@ struct BolusInputView: View {
             if let recommendedBolus = remoteDataSource.recommendedBolus {
                 LabeledContent {
                     Text(LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus))
-                    Text("U")
+                    Text("E")
                         .frame(width: unitFrameWidth)
                 } label: {
-                    Text("Recommended Bolus")
+                    Text("Anbefalt bolus")
                 }
             }
             LabeledContent {
@@ -101,7 +101,7 @@ struct BolusInputView: View {
                         bolusAmount = LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus)
                     }
                 })
-                Text("U")
+                Text("E")
                     .frame(width: unitFrameWidth)
             } label: {
                 Text("Bolus")
@@ -128,10 +128,10 @@ struct BolusInputView: View {
 
         Task {
 
-            let message = String(format: NSLocalizedString("Authenticate to Bolus", comment: "The message displayed during a device authentication prompt for bolus specification"))
+            let message = String(format: NSLocalizedString("Autentiser for å gi bolus", comment: "Meldingen som vises under en enhetsautentiseringsforespørsel om bolusspesifikasjon"))
             
             guard (await authenticationHandler(message)) else {
-                errorText = "Authentication required"
+                errorText = "Autentisering kreves"
                 return
             }
             

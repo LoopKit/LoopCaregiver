@@ -31,7 +31,7 @@ struct OverrideView: View {
                     } else {
                         //TODO: Only show picker if overrides successfully loaded
                         Picker("Overrides", selection: $pickerCurrentlySelectedOverride) {
-                            Text("None").tag(nil as TemporaryScheduleOverride?)
+                            Text("Ingen").tag(nil as TemporaryScheduleOverride?)
                             ForEach(overidePresets, id: \.self) { overrideValue in
                                 Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
                             }
@@ -47,7 +47,7 @@ struct OverrideView: View {
                 Spacer()
                 //TODO: Disable button when overrides not successfully loaded
                 //and show a reload button
-                Button("Update") {
+                Button("Oppdater") {
                     Task {
                         await activateSelectedOverride()
                     }
@@ -55,11 +55,11 @@ struct OverrideView: View {
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity)
             }
-            .navigationBarTitle(Text("Custom Preset"), displayMode: .inline)
+            .navigationBarTitle(Text("Manuell overstyring"), displayMode: .inline)
             .navigationBarItems(leading: Button(action: {
                 self.showSheetView = false
             }) {
-                Text("Cancel")
+                Text("Avbryt")
             })
         }
         .onAppear(perform: {
