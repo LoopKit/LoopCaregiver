@@ -71,20 +71,20 @@ struct BolusInputView: View {
             .navigationBarItems(leading: Button(action: {
                 self.showSheetView = false
             }) {
-                Text("Cancel")
+                Text("Avbryt")
             })
         }
     }
     
     var bolusEntryForm: some View {
         Form {
-            if let recommendedBolus = remoteDataSource.recommendedBolus {
+            if let mendedBolus = remoteDataSource.mendedBolus {
                 LabeledContent {
-                    Text(LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus))
-                    Text("U")
+                    Text(LocalizationUtils.presentableStringFromBolusAmount(mendedBolus))
+                    Text("E")
                         .frame(width: unitFrameWidth)
                 } label: {
-                    Text("Recommended Bolus")
+                    Text("Anbefalt bolus")
                 }
             }
             LabeledContent {
@@ -101,7 +101,7 @@ struct BolusInputView: View {
                         bolusAmount = LocalizationUtils.presentableStringFromBolusAmount(recommendedBolus)
                     }
                 })
-                Text("U")
+                Text("E")
                     .frame(width: unitFrameWidth)
             } label: {
                 Text("Bolus")
@@ -131,7 +131,7 @@ struct BolusInputView: View {
             let message = String(format: NSLocalizedString("Authenticate to Bolus", comment: "The message displayed during a device authentication prompt for bolus specification"))
             
             guard (await authenticationHandler(message)) else {
-                errorText = "Authentication required"
+                errorText = "Autentisering kreves"
                 return
             }
             
@@ -204,9 +204,9 @@ enum BolusInputViewError: LocalizedError {
     
     func pluralizeHour(count: Int) -> String {
         if count > 1 {
-            return "hours"
+            return "timer"
         } else {
-            return "hour"
+            return "time"
         }
     }
 }
