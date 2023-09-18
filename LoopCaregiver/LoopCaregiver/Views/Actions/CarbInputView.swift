@@ -51,12 +51,12 @@ struct CarbInputView: View {
                     .frame(maxWidth: .infinity)
                     .disabled(disableForm())
                     .padding()
-                    .confirmationDialog("Are you sure?",
+                    .confirmationDialog("Er du sikker?",
                                         isPresented: $isPresentingConfirm) {
                         Button("Save \(carbInput)g of carbs for \(looperService.looper.name)?", role: .none) {
                             deliverConfirmationButtonTapped()
                         }
-                        Button("Cancel", role: .cancel) {}
+                        Button("Avbryt", role: .cancel) {}
                     }
                 }
                 .disabled(submissionInProgress)
@@ -339,9 +339,9 @@ enum CarbInputViewError: LocalizedError {
     
     func pluralizeHour(count: Int) -> String {
         if count > 1 {
-            return "hours"
+            return "timer"
         } else {
-            return "hour"
+            return "time"
         }
     }
 }
