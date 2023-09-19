@@ -53,7 +53,7 @@ struct BolusInputView: View {
                     .padding()
                     .confirmationDialog("Er du sikker?",
                                         isPresented: $isPresentingConfirm) {
-                        Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
+                        Button("Gi \(bolusAmount) med insulin til \(looperService.looper.name)?", role: .none) {
                             deliverConfirmationButtonTapped()
                         }
                         Button("Avbryt", role: .cancel) {}
