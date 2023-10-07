@@ -11,6 +11,7 @@
 		A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */; };
 		A930C6C22A8F99AA004BB459 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C12A8F99AA004BB459 /* CGRect.swift */; };
 		A930C6C52A9364BD004BB459 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C42A9364BC004BB459 /* DemoView.swift */; };
+		A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
 		A947026C293254B500FB3E59 /* COBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026B293254B500FB3E59 /* COBChartView.swift */; };
@@ -92,6 +93,16 @@
 		A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		A9346F872AC9820500C15F70 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EC1970291FEF940022D39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9EC1977291FEF940022D39F;
+			remoteInfo = LoopCaregiver;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXCopyFilesBuildPhase section */
 		A95F50C2292A602F00079AAF /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -117,6 +128,8 @@
 		A930C6C12A8F99AA004BB459 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		A930C6C42A9364BC004BB459 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9346F832AC9820500C15F70 /* LoopCaregiverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoopCaregiverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideViewModelTests.swift; sourceTree = "<group>"; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
 		A94702682932429F00FB3E59 /* DoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseChartView.swift; sourceTree = "<group>"; };
 		A947026B293254B500FB3E59 /* COBChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBChartView.swift; sourceTree = "<group>"; };
@@ -198,6 +211,13 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		A9346F802AC9820500C15F70 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9EC1975291FEF940022D39F /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -229,6 +249,14 @@
 				A930C6C42A9364BC004BB459 /* DemoView.swift */,
 			);
 			path = ZommableScrollView;
+			sourceTree = "<group>";
+		};
+		A9346F842AC9820500C15F70 /* LoopCaregiverTests */ = {
+			isa = PBXGroup;
+			children = (
+				A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */,
+			);
+			path = LoopCaregiverTests;
 			sourceTree = "<group>";
 		};
 		A947025A2932286200FB3E59 /* NightscoutChart */ = {
@@ -468,6 +496,7 @@
 			children = (
 				A9688E2D299730C500CDD4D6 /* LICENSE */,
 				A9EC197A291FEF940022D39F /* LoopCaregiver */,
+				A9346F842AC9820500C15F70 /* LoopCaregiverTests */,
 				A9EC1979291FEF940022D39F /* Products */,
 				A95F50BE292A602E00079AAF /* Frameworks */,
 				3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */,
@@ -478,6 +507,7 @@
 			isa = PBXGroup;
 			children = (
 				A9EC1978291FEF940022D39F /* LoopCaregiver.app */,
+				A9346F832AC9820500C15F70 /* LoopCaregiverTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -507,6 +537,24 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		A9346F822AC9820500C15F70 /* LoopCaregiverTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9346F8B2AC9820500C15F70 /* Build configuration list for PBXNativeTarget "LoopCaregiverTests" */;
+			buildPhases = (
+				A9346F7F2AC9820500C15F70 /* Sources */,
+				A9346F802AC9820500C15F70 /* Frameworks */,
+				A9346F812AC9820500C15F70 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9346F882AC9820500C15F70 /* PBXTargetDependency */,
+			);
+			name = LoopCaregiverTests;
+			productName = LoopCaregiverTests;
+			productReference = A9346F832AC9820500C15F70 /* LoopCaregiverTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		A9EC1977291FEF940022D39F /* LoopCaregiver */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9EC1986291FEF950022D39F /* Build configuration list for PBXNativeTarget "LoopCaregiver" */;
@@ -538,9 +586,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1410;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1410;
 				TargetAttributes = {
+					A9346F822AC9820500C15F70 = {
+						CreatedOnToolsVersion = 15.0;
+						TestTargetID = A9EC1977291FEF940022D39F;
+					};
 					A9EC1977291FEF940022D39F = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -566,11 +618,19 @@
 			projectRoot = "";
 			targets = (
 				A9EC1977291FEF940022D39F /* LoopCaregiver */,
+				A9346F822AC9820500C15F70 /* LoopCaregiverTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		A9346F812AC9820500C15F70 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9EC1976291FEF940022D39F /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -583,6 +643,14 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		A9346F7F2AC9820500C15F70 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9EC1974291FEF940022D39F /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -665,7 +733,60 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		A9346F882AC9820500C15F70 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9EC1977291FEF940022D39F /* LoopCaregiver */;
+			targetProxy = A9346F872AC9820500C15F70 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		A9346F892AC9820500C15F70 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "--CAREGIVER-APP-BUNDLE-IDENTIFIER-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoopCaregiver.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LoopCaregiver";
+			};
+			name = Debug;
+		};
+		A9346F8A2AC9820500C15F70 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "--CAREGIVER-APP-BUNDLE-IDENTIFIER-Tests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LoopCaregiver.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LoopCaregiver";
+			};
+			name = Release;
+		};
 		A9EC1984291FEF950022D39F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */;
@@ -837,6 +958,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		A9346F8B2AC9820500C15F70 /* Build configuration list for PBXNativeTarget "LoopCaregiverTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9346F892AC9820500C15F70 /* Debug */,
+				A9346F8A2AC9820500C15F70 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		A9EC1973291FEF940022D39F /* Build configuration list for PBXProject "LoopCaregiver" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
