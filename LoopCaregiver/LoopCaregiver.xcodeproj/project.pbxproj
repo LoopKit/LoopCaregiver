@@ -61,6 +61,7 @@
 		A9A362DF2A80EEFE007B017C /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */; };
 		A9A362E12A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */; };
 		A9A45D702A77B5480013CD5B /* NoteNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */; };
+		A9A62C7F2AD1BD4C004CD316 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
@@ -182,6 +183,7 @@
 		A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
 		A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteNightscoutTreatment+RemoteCommand.swift"; sourceTree = "<group>"; };
 		A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNightscoutTreatment.swift; sourceTree = "<group>"; };
+		A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9BD0DDF2A89515700988E2C /* ZoomableScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
@@ -434,6 +436,7 @@
 				A9744DE92933B0FE000A3D6A /* View.swift */,
 				A9C89ED62A7074EE00EFD938 /* UIColor.swift */,
 				A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */,
+				A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -656,6 +659,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9BD0DE02A89515700988E2C /* ZoomableScrollView.swift in Sources */,
+				A9A62C7F2AD1BD4C004CD316 /* TimeInterval.swift in Sources */,
 				A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */,
 				A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */,
 				A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */,

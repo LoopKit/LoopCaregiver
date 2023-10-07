@@ -7,6 +7,7 @@
 
 import SwiftUI
 import NightscoutKit
+import Combine
 
 struct OverrideView: View {
     
@@ -16,10 +17,8 @@ struct OverrideView: View {
     
     var body: some View {
         VStack {
-            Spacer()
             pickerContainerView
             deliveryStatusContainerView
-            Spacer()
             actionButton
         }
         .onAppear(perform: {
@@ -50,13 +49,34 @@ struct OverrideView: View {
                     Text(error.localizedDescription)
                 }
             case .loadingComplete(let overrideState):
-                Picker("Overrides", selection: $viewModel.pickerSelectedOverride) {
-                    ForEach(overrideState.availableOverrides, id: \.self) { overrideValue in
-                        Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
-                            .fontWeight(overrideValue == viewModel.activeOverride ? .heavy : .regular)
+                Form {
+                    Section (){
+                        HStack {
+                            Picker("Overrides", selection: $viewModel.pickerSelectedOverride) {
+                                ForEach(overrideState.availableOverrides, id: \.self) { overrideValue in
+                                    Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
+                                        .fontWeight(overrideValue == viewModel.activeOverride ? .heavy : .regular)
+                                }
+                            }.pickerStyle(.wheel)
+                                .labelsHidden()
+                        }
+                        Toggle("Enable Indefinitely", isOn: $viewModel.enableIndefinitely)
+                        if !viewModel.enableIndefinitely {
+                            LabeledContent("Duration", value: viewModel.selectedHoursAndMinutesDescription)
+                                .background(Color.white.opacity(0.0000001)) //support tap
+                                .onTapGesture {
+                                    withAnimation(.linear) {
+                                        viewModel.durationExpanded.toggle()
+                                    }
+                                }
+                            if viewModel.durationExpanded {
+                                if !viewModel.enableIndefinitely {
+                                    CustomDatePicker(hourSelection: $viewModel.durationHourSelection, minuteSelection: $viewModel.durationMinuteSelection)
+                                }
+                            }
+                        }
                     }
-                }.pickerStyle(.wheel)
-                    .labelsHidden()
+                }
             }
         }
     }
@@ -105,19 +125,68 @@ class OverrideViewModel: ObservableObject, Identifiable {
     
     var delegate: OverrideViewDelegate? = nil
     var deliveryCompleted: (() -> Void)? = nil
+    var cancellables = [AnyCancellable]()
     
     @Published var overrideListState: OverrideListState = .loading
     @Published var pickerSelectedOverride: TemporaryScheduleOverride?
     @Published var activeOverride: TemporaryScheduleOverride?
     @Published var lastDeliveryError: Error? = nil
     @Published var deliveryInProgress: Bool = false
+    @Published var enableIndefinitely: Bool = false
+    @Published var durationHourSelection = 0
+    @Published var durationMinuteSelection = 0
+    @Published var durationExpanded = false
+    
+    init() {
+        bindPickerSelection()
+        bindEnableIndefinitely()
+    }
+    
+    func bindPickerSelection() {
+        $pickerSelectedOverride.sink { val in
+            if let duration = val?.duration, duration > 0  {
+                self.enableIndefinitely = false
+                let (hours, minutes) = duration.hoursAndMinutes()
+                self.durationHourSelection = hours
+                self.durationMinuteSelection = minutes
+            } else {
+                self.enableIndefinitely = true
+            }
+            self.durationExpanded = false
+        }.store(in: &cancellables)
+    }
+    
+    func bindEnableIndefinitely() {
+        $enableIndefinitely.sink { enable in
+            if enable {
+                self.durationHourSelection = 0
+                self.durationMinuteSelection = 0
+                self.durationExpanded = false
+            } else {
+                if let duration = self.activeOverride?.duration, duration != 0 {
+                    let hours = Int(duration / 3600)
+                    let minutes = (Int(duration) - (hours * 3600)) / 60
+                    self.durationHourSelection = hours
+                    self.durationMinuteSelection = minutes
+                } else {
+                    self.durationHourSelection = 1
+                    self.durationMinuteSelection = 0
+                }
+            }
+        }.store(in: &cancellables)
+    }
+    
+    var selectedDuration: TimeInterval {
+        return TimeInterval(durationHourSelection * 3600) + TimeInterval(durationMinuteSelection * 60)
+    }
     
     var actionButtonEnabled: Bool {
         readyForDelivery
     }
     
     var actionButtonType: ActionButtonType {
-        if let pickerSelectedOverride = pickerSelectedOverride, pickerSelectedOverride == activeOverride {
+        if let pickerSelectedOverride = pickerSelectedOverride,
+           pickerSelectedOverride == activeOverride, activeOverride?.duration == selectedDuration {
             return .cancel
         } else {
             return .update
@@ -130,6 +199,28 @@ class OverrideViewModel: ObservableObject, Identifiable {
         } else {
             return "-"
         }
+    }
+    
+    var activeOverrideDuration: Double? {
+        guard let duration = pickerSelectedOverride?.duration else { return nil }
+        return duration
+    }
+    
+    var selectedHoursAndMinutesDescription: String {
+        
+        let (hours, minutes) = (durationHourSelection, durationMinuteSelection)
+        
+        var hoursPart: String? = nil
+        if hours > 0 {
+            hoursPart = "\(hours)h"
+        }
+        
+        var minutesPart: String? = nil
+        if minutes > 0 {
+            minutesPart = "\(minutes)m"
+        }
+        
+        return [hoursPart, minutesPart].compactMap({$0}).joined(separator: " ")
     }
     
     private var readyForDelivery: Bool {
@@ -210,7 +301,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
         do {
             if let selectedOverride = pickerSelectedOverride {
                 try await delegate.startOverride(overrideName: selectedOverride.name ?? "",
-                                                                       durationTime: selectedOverride.duration)
+                                                                       durationTime: selectedDuration)
             } else {
                 //TODO: Throw error
             }
@@ -285,8 +376,8 @@ struct OverrideViewPreviewMock: OverrideViewDelegate {
     
     static var mockOverrides: [NightscoutKit.TemporaryScheduleOverride] {
         return [
-        TemporaryScheduleOverride(duration: 60.0, targetRange: nil, insulinNeedsScaleFactor: nil, symbol: "🏃", name: "Running"),
-        TemporaryScheduleOverride(duration: 60.0, targetRange: nil, insulinNeedsScaleFactor: nil, symbol: "🏊", name: "Swimming")
+        TemporaryScheduleOverride(duration: 60 * 60, targetRange: nil, insulinNeedsScaleFactor: nil, symbol: "🏃", name: "Running"),
+        TemporaryScheduleOverride(duration: 60 * 90, targetRange: nil, insulinNeedsScaleFactor: nil, symbol: "🏊", name: "Swimming")
         ]
     }
     
@@ -312,5 +403,56 @@ extension RemoteDataServiceManager: OverrideViewDelegate {
 extension TemporaryScheduleOverride: Identifiable {
     public var id: String {
         return name ?? ""
+    }
+    
+    var presentedHourAndMinutes: String {
+        guard durationInMinutes() > 0 else {
+            return "∞"
+        }
+        
+        let (hours, minutes) = duration.hoursAndMinutes()
+        
+        var hoursPart: String? = nil
+        if hours > 0 {
+            hoursPart = "\(hours)h"
+        }
+        
+        var minutesPart: String? = nil
+        if minutes > 0 {
+            minutesPart = "\(minutes)m"
+        }
+
+        return [hoursPart, minutesPart].compactMap({$0}).joined(separator: " ")
+    }
+}
+
+struct CustomDatePicker: View {
+    @Binding var hourSelection: Int
+    @Binding var minuteSelection: Int
+    
+    static private let maxHours = 24
+    static private let maxMinutes = 60
+    private let hours = [Int](0...Self.maxHours)
+    private let minutes = [0, 15, 30, 45]
+    
+    var body: some View {
+            HStack(spacing: .zero) {
+                Picker(selection: $hourSelection, label: Text("")) {
+                    ForEach(hours, id: \.self) { value in
+                        Text("\(value) hour")
+                            .tag(value)
+                    }
+                }
+                .pickerStyle(.wheel)
+                
+                Picker(selection: $minuteSelection, label: Text("")) {
+                    ForEach(minutes, id: \.self) { value in
+                        Text("\(value) min")
+                            .tag(value)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .pickerStyle(.wheel)
+            }
     }
 }

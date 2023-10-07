@@ -17,6 +17,11 @@ extension TemporaryScheduleOverride {
     func presentableDescription() -> String {
         return "\(symbol ?? "") \(name ?? "")"
     }
+    
+    func targetRangePresentableDescription() -> String? {
+        guard let targetRange else { return nil }
+        return "\(Int(targetRange.lowerBound)) - \(Int(targetRange.upperBound))"
+    }
 }
 
 extension TemporaryScheduleOverride: Hashable {
