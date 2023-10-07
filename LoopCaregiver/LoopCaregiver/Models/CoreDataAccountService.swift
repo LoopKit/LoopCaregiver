@@ -12,12 +12,8 @@ class CoreDataAccountService: AccountService {
     let container: NSPersistentContainer
     weak var delegate: AccountServiceDelegate?
     
-    init(inMemory: Bool = false) {
-        if inMemory {
-            self.container = Self.createInMemoryContainer()
-        } else {
-            self.container = Self.createContainer()
-        }
+    init(containerFactory: PersistentContainerFactory) {
+        self.container = containerFactory.createContainer()
 
         do {
             try migrateDefaultUUIDs()
@@ -129,11 +125,55 @@ class CoreDataAccountService: AccountService {
             }
         }
     }
+    
+    
+    //MARK: Previews
+    
+    static var preview: CoreDataAccountService = {
+        let result = CoreDataAccountService(containerFactory: InMemoryPersistentContainerFactory())
+        let viewContext = result.container.viewContext
+        return result
+    }()
 
+}
+
+protocol PersistentContainerFactory {
+    func createContainer() -> NSPersistentContainer
+}
+
+class InMemoryPersistentContainerFactory: PersistentContainerFactory {
+    func createContainer() -> NSPersistentContainer {
+        let container = NSPersistentContainer(name: "LoopCaregiver")
+        container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        container.loadPersistentStores(completionHandler: { (_, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        return container
+    }
+}
+
+class NoAppGroupsPersistentContainerFactory: PersistentContainerFactory {
+    func createContainer() -> NSPersistentContainer {
+        let container = NSPersistentContainer(name: "LoopCaregiver")
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            }
+        })
+        container.viewContext.automaticallyMergesChangesFromParent = true
+        return container
+    }
+}
+
+class AppGroupPersisentContainerFactory: PersistentContainerFactory {
     
     //MARK: NSPersistentContainer Creation
     
-    static func createContainer() -> NSPersistentContainer {
+    func createContainer() -> NSPersistentContainer {
         
         switch getStoreMigrationStatus() {
         case .notRequired:
@@ -158,7 +198,7 @@ class CoreDataAccountService: AccountService {
                     fatalError("Could not load legacy store for migration")
                 }
                 
-                container.persistentStoreCoordinator.migrateAndDeleteStore(legacyStore, atURL: legacyDefaultStoreURL, toURL: storeURL)
+                container.persistentStoreCoordinator.migrateAndDeleteStore(legacyStore, atURL: legacyDefaultStoreURL, toURL: self.storeURL)
             })
             
             container.viewContext.automaticallyMergesChangesFromParent = true
@@ -166,28 +206,15 @@ class CoreDataAccountService: AccountService {
         }
     }
     
-    static var appGroup: String {
+    var appGroup: String {
         return Bundle.main.appGroupSuiteName
     }
     
-    static var storeURL: URL {
+    var storeURL: URL {
         return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroup)!.appendingPathComponent(storeFileName.appending(".sqlite"))
     }
     
-    static func createInMemoryContainer() -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: storeFileName)
-        container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
-        container.loadPersistentStores(completionHandler: { (_, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        
-        container.viewContext.automaticallyMergesChangesFromParent = true
-        return container
-    }
-    
-    static func getStoreMigrationStatus() -> StoreMigrationStatus {
+    func getStoreMigrationStatus() -> StoreMigrationStatus {
         
         let container = NSPersistentContainer(name: storeFileName)
         
@@ -206,7 +233,7 @@ class CoreDataAccountService: AccountService {
         return .required(legacyDefaultStoreURL: legacyDefaultStoreURL)
     }
     
-    static var storeFileName: String {
+    var storeFileName: String {
         return "LoopCaregiver"
     }
     
@@ -214,15 +241,6 @@ class CoreDataAccountService: AccountService {
         case required(legacyDefaultStoreURL: URL)
         case notRequired
     }
-    
-    
-    //MARK: Previews
-    
-    static var preview: CoreDataAccountService = {
-        let result = CoreDataAccountService(inMemory: true)
-        let viewContext = result.container.viewContext
-        return result
-    }()
 
 }
 

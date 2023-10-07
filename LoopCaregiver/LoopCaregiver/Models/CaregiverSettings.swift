@@ -5,6 +5,7 @@
 //  Created by Bill Gestrich on 11/25/22.
 //
 
+import Combine
 import Foundation
 import HealthKit
 
@@ -17,20 +18,79 @@ class CaregiverSettings: ObservableObject {
     @Published var demoModeEnabled: Bool
     @Published var disclaimerAcceptedDate: Date?
     
-    init(){
-        Self.migrateUserDefaultsToAppGroup()
-        let defaults = Self.userDefaults
-        self.glucoseDisplayUnits = defaults.glucosePreference.unit
-        self.timelinePredictionEnabled = defaults.timelinePredictionEnabled
-        self.remoteCommands2Enabled = defaults.remoteCommands2Enabled
-        self.demoModeEnabled = defaults.demoModeEnabled
-        self.experimentalFeaturesUnlocked = defaults.experimentalFeaturesUnlocked
-        self.disclaimerAcceptedDate = defaults.disclaimerAcceptedDate
+    let userDefaults: UserDefaults
+    
+    var cancellables = [AnyCancellable]()
+    
+    let appGroupsSupported: Bool
+    
+    init(userDefaults: UserDefaults, appGroupsSupported: Bool){
         
+        self.userDefaults = userDefaults
+        self.appGroupsSupported = appGroupsSupported
+        
+        //Migrations
+        if appGroupsSupported {
+            Self.migrateUserDefaultsToAppGroup(userDefaults: userDefaults)
+        }
+
+        //Defaults
+        self.glucoseDisplayUnits = userDefaults.glucosePreference.unit
+        self.timelinePredictionEnabled = userDefaults.timelinePredictionEnabled
+        self.remoteCommands2Enabled = userDefaults.remoteCommands2Enabled
+        self.demoModeEnabled = userDefaults.demoModeEnabled
+        self.experimentalFeaturesUnlocked = userDefaults.experimentalFeaturesUnlocked
+        self.disclaimerAcceptedDate = userDefaults.disclaimerAcceptedDate
+        
+        //Binding
+        self.bindToPublishers()
+        self.bindToUserDefaults()
+    }
+    
+    func bindToPublishers() {
+        $glucoseDisplayUnits.sink { val in
+            if val != self.userDefaults.glucosePreference.unit {
+                self.userDefaults.set(val, forKey: self.userDefaults.glucoseUnitKey)
+            }
+        }.store(in: &cancellables)
+        
+        $timelinePredictionEnabled.sink { val in
+            if val != self.userDefaults.timelinePredictionEnabled {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.timelinePredictionEnabledKey)
+            }
+        }.store(in: &cancellables)
+        
+        $remoteCommands2Enabled.sink { val in
+            if val != self.userDefaults.remoteCommands2Enabled {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.remoteCommands2EnabledKey)
+            }
+        }.store(in: &cancellables)
+        
+        $demoModeEnabled.sink { val in
+            if val != self.userDefaults.demoModeEnabled {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.demoModeEnabledKey)
+            }
+        }.store(in: &cancellables)
+        
+        $experimentalFeaturesUnlocked.sink { val in
+            if val != self.userDefaults.experimentalFeaturesUnlocked {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.experimentalFeaturesUnlockedKey)
+            }
+        }.store(in: &cancellables)
+        
+        $disclaimerAcceptedDate.sink { val in
+            if val != self.userDefaults.disclaimerAcceptedDate {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.disclaimerAcceptedDateKey)
+            }
+        }.store(in: &cancellables)
+    }
+    
+    func bindToUserDefaults() {
         NotificationCenter.default.addObserver(self, selector: #selector(defaultsChanged), name: UserDefaults.didChangeNotification, object: nil)
     }
     
     @objc func defaultsChanged(notication: Notification){
+
         let glucoseDisplayUnits = userDefaults.glucosePreference.unit
         if self.glucoseDisplayUnits != glucoseDisplayUnits {
             self.glucoseDisplayUnits = glucoseDisplayUnits
@@ -82,11 +142,16 @@ class CaregiverSettings: ObservableObject {
         }
     }
     
-    var userDefaults: UserDefaults {
-        Self.userDefaults
+    //TODO: We should get rid of glucoseDisplayUnits and instead just use this.
+    func saveGlucoseUnitPreference(_ preference: GlucoseUnitPrefererence) {
+        userDefaults.setValue(preference.rawValue, forKey: userDefaults.glucoseUnitKey)
     }
     
-    static func migrateUserDefaultsToAppGroup() {
+    var glucoseUnitPreference: GlucoseUnitPrefererence {
+        return userDefaults.glucosePreference
+    }
+    
+    static func migrateUserDefaultsToAppGroup(userDefaults: UserDefaults) {
     
         let defaultUserDefaults = UserDefaults.standard
         let didMigrateToAppGroups = "DidMigrateToAppGroups"
@@ -103,18 +168,10 @@ class CaregiverSettings: ObservableObject {
         userDefaults.synchronize()
         print("Successfully migrated defaults")
     }
-    
-    static var userDefaults: UserDefaults {
-        UserDefaults.appGroupDefaults
-    }
 }
 
 
 extension UserDefaults {
-    
-    static var appGroupDefaults: UserDefaults {
-        UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
-    }
     
     var glucoseUnitKey: String {
         return "glucoseUnit"

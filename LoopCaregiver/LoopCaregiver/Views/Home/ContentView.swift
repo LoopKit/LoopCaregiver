@@ -13,10 +13,12 @@ import LoopKit
 struct ContentView: View {
     
     @ObservedObject var accountService: AccountServiceManager
-    let settings: CaregiverSettings = CaregiverSettings()
+    let settings: CaregiverSettings
     
     init(){
-        self.accountService = AccountServiceManager(accountService: CoreDataAccountService(inMemory: false))
+        let composer = ServiceComposer()
+        self.settings = composer.settings
+        self.accountService = composer.accountServiceManager
     }
     
     var body: some View {
@@ -106,7 +108,9 @@ struct HomeView: View {
     func disclaimerOverlay() -> some View {
         return ZStack {
             Color.cellBackgroundColor
-            DisclaimerView()
+            DisclaimerView(disclaimerAgreedTo: {
+                settings.disclaimerAcceptedDate = Date()
+            })
         }
     }
     

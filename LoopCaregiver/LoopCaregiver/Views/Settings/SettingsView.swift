@@ -14,17 +14,12 @@ struct SettingsView: View {
     @ObservedObject var looperService: LooperService
     @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var accountService: AccountServiceManager
-    @AppStorage(UserDefaults.appGroupDefaults.glucoseUnitKey, store: UserDefaults.appGroupDefaults) var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
-    @AppStorage(UserDefaults.appGroupDefaults.timelinePredictionEnabledKey, store: UserDefaults.appGroupDefaults) private var timelinePredictionEnabled = false
-    @AppStorage(UserDefaults.appGroupDefaults.remoteCommands2EnabledKey, store: UserDefaults.appGroupDefaults) private var remoteCommands2Enabled = false
-    @AppStorage(UserDefaults.appGroupDefaults.demoModeEnabledKey, store: UserDefaults.appGroupDefaults) private var demoModeEnabled = false
-    @AppStorage(UserDefaults.appGroupDefaults.experimentalFeaturesUnlockedKey, store: UserDefaults.appGroupDefaults) private var experimentalFeaturesUnlocked = false
-    
     @ObservedObject var settings: CaregiverSettings
     @Binding var showSheetView: Bool
     @State private var isPresentingConfirm: Bool = false
     @State private var path = NavigationPath()
     @State private var deleteAllCommandsShowing: Bool = false
+    @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     
     init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, showSheetView: Binding<Bool>) {
         self.settingsViewModel = SettingsViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
@@ -57,6 +52,14 @@ struct SettingsView: View {
                 LooperSetupView(accountService: accountService, settings: settings, path: $path)
             }
         }
+        .onAppear {
+            self.glucosePreference = settings.glucoseUnitPreference
+        }
+        .onChange(of: glucosePreference, perform: { value in
+            if settings.glucoseUnitPreference != glucosePreference {
+                settings.saveGlucoseUnitPreference(glucosePreference)
+            }
+        })
         .confirmationDialog("Are you sure?",
                             isPresented: $isPresentingConfirm) {
             Button("Remove \(looperService.looper.name)?", role: .destructive) {
@@ -95,7 +98,7 @@ struct SettingsView: View {
             }
             .pickerStyle(.automatic)
             LabeledContent {
-                Text(demoModeEnabled ? "https://www.YourLoopersURL.com" : nightscoutCredentialService.credentials.url.absoluteString)
+                Text(settings.demoModeEnabled ? "https://www.YourLoopersURL.com" : nightscoutCredentialService.credentials.url.absoluteString)
             } label: {
                 Text("Nightscout")
             }
@@ -128,23 +131,26 @@ struct SettingsView: View {
     
     var timelineSection: some View {
         Section("Timeline") {
-            Toggle("Show Prediction", isOn: $timelinePredictionEnabled)
+            Toggle("Show Prediction", isOn: $settings.timelinePredictionEnabled)
         }
     }
     
     var experimentalSection: some View {
         Section("Experimental Features") {
-            if experimentalFeaturesUnlocked || remoteCommands2Enabled {
-                Toggle("Remote Commands 2", isOn: $remoteCommands2Enabled)
+            if settings.experimentalFeaturesUnlocked || settings.remoteCommands2Enabled {
+                Toggle("Remote Commands 2", isOn: $settings.remoteCommands2Enabled)
                 Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
                     .font(.footnote)
-                Toggle("Demo Mode", isOn: $demoModeEnabled)
+                LabeledContent("App Groups", value: settings.appGroupsSupported ? "Enabled" : "Disabled")
+                Text("App Groups are required for Widgets to function.")
+                    .font(.footnote)
+                Toggle("Demo Mode", isOn: $settings.demoModeEnabled)
                 Text("Demo mode hides sensitive data for Caregiver presentations.")
                     .font(.footnote)
             } else {
                 Text("Disabled                             ")
                     .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
-                        experimentalFeaturesUnlocked = true
+                        settings.experimentalFeaturesUnlocked = true
                     })
             }
         }

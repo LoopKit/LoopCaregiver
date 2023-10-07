@@ -10,7 +10,8 @@ import SwiftUI
 struct DisclaimerView: View {
     
     @ObservedObject var viewModel = DisclaimerViewModel()
-    @AppStorage(UserDefaults.appGroupDefaults.disclaimerAcceptedDateKey, store: UserDefaults.appGroupDefaults) private var disclaimerAcceptedDateString = ""
+    
+    var disclaimerAgreedTo: () -> Void
     
     var body: some View {
         NavigationStack {
@@ -21,17 +22,13 @@ struct DisclaimerView: View {
                 }
                 .scrollIndicators(.visible)
                 Button("Continue With Risks") {
-                    understoodButtonTapped()
+                    disclaimerAgreedTo()
                 }
                 .buttonStyle(.borderedProminent)
                 .frame(maxWidth: .infinity)
                 .padding()
             }.navigationTitle("Warning!")
         }
-    }
-    
-    func understoodButtonTapped() {
-        disclaimerAcceptedDateString = Date().rawValue
     }
 }
 
