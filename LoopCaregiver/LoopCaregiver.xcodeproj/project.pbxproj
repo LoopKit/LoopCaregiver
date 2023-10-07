@@ -43,6 +43,7 @@
 		A9744DEA2933B0FE000A3D6A /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DE92933B0FE000A3D6A /* View.swift */; };
 		A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DEB293405A4000A3D6A /* PinchZoom.swift */; };
 		A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
+		A98348912AD206CD0034ABB2 /* PresetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98348902AD206CD0034ABB2 /* PresetRowView.swift */; };
 		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
 		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
 		A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */; };
@@ -167,6 +168,7 @@
 		A9744DE92933B0FE000A3D6A /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A9744DEB293405A4000A3D6A /* PinchZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoom.swift; sourceTree = "<group>"; };
 		A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtils.swift; sourceTree = "<group>"; };
+		A98348902AD206CD0034ABB2 /* PresetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetRowView.swift; sourceTree = "<group>"; };
 		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
 		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
 		A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Charts.swift"; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				A9EC19A8292144040022D39F /* OverrideView.swift */,
 				A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */,
 				A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */,
+				A98348902AD206CD0034ABB2 /* PresetRowView.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -691,6 +694,7 @@
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
 				A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */,
 				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
+				A98348912AD206CD0034ABB2 /* PresetRowView.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
 				A95223732A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift in Sources */,
 				A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */,
