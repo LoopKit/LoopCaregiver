@@ -66,6 +66,8 @@
 		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
 		A9BD0DE02A89515700988E2C /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD0DDF2A89515700988E2C /* ZoomableScrollView.swift */; };
+		A9BD7B532AD0D8D300E73973 /* OverrideInsulinNeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */; };
+		A9BD7B552AD17AAD00E73973 /* PresetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */; };
 		A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E52969A69F00D3875F /* IOBStatus.swift */; };
 		A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E72969A6A900D3875F /* COBStatus.swift */; };
 		A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E92969A6B600D3875F /* ProfileSet.swift */; };
@@ -187,6 +189,8 @@
 		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9BD0DDF2A89515700988E2C /* ZoomableScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
+		A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideInsulinNeedsView.swift; sourceTree = "<group>"; };
+		A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetEditView.swift; sourceTree = "<group>"; };
 		A9C4D7E52969A69F00D3875F /* IOBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBStatus.swift; sourceTree = "<group>"; };
 		A9C4D7E72969A6A900D3875F /* COBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBStatus.swift; sourceTree = "<group>"; };
 		A9C4D7E92969A6B600D3875F /* ProfileSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSet.swift; sourceTree = "<group>"; };
@@ -425,6 +429,8 @@
 				A9EC19AC2921A19C0022D39F /* BolusInputView.swift */,
 				A9EC19AA292156D80022D39F /* CarbInputView.swift */,
 				A9EC19A8292144040022D39F /* OverrideView.swift */,
+				A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */,
+				A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -694,6 +700,7 @@
 				A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,
 				A9D3FF222A6C3B99000C891D /* Color.swift in Sources */,
+				A9BD7B552AD17AAD00E73973 /* PresetEditView.swift in Sources */,
 				A95223682A7EDA9B0070FE13 /* OverrideCancelAction.swift in Sources */,
 				A930C6C22A8F99AA004BB459 /* CGRect.swift in Sources */,
 				A9EC199E292101550022D39F /* NightscoutChartView.swift in Sources */,
@@ -728,6 +735,7 @@
 				A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */,
 				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
 				A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */,
+				A9BD7B532AD0D8D300E73973 /* OverrideInsulinNeedsView.swift in Sources */,
 				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
 				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
 				A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */,
