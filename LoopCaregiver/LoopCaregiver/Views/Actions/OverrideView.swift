@@ -71,6 +71,7 @@ struct OverrideView: View {
     var durationContainerView: some View {
         Group {
             Toggle("Enable Indefinitely", isOn: $viewModel.enableIndefinitely)
+                .disabled(!viewModel.indefiniteOverridesAllowed)
             if !viewModel.enableIndefinitely {
                 LabeledContent("Duration", value: viewModel.selectedHoursAndMinutesDescription)
                     .background(Color.white.opacity(0.0000001)) //support tap
@@ -84,6 +85,10 @@ struct OverrideView: View {
                         CustomDatePicker(hourSelection: $viewModel.durationHourSelection, minuteSelection: $viewModel.durationMinuteSelection)
                     }
                 }
+            }
+            if !viewModel.indefiniteOverridesAllowed {
+                Text("Overrides with default durations can't be set to indefinite.")
+                    .font(.footnote)
             }
         }
     }
@@ -285,6 +290,15 @@ class OverrideViewModel: ObservableObject, Identifiable {
         return TimeInterval(durationHourSelection * 3600) + TimeInterval(durationMinuteSelection * 60)
     }
     
+    var indefiniteOverridesAllowed: Bool {
+        guard let pickerSelectedOverride else {return false}
+        if pickerSelectedOverride.duration > 0 {
+            return false //Remote APIs don't support flagging overrides as indefinite yet
+        } else {
+            return true
+        }
+    }
+    
     var actionButtonEnabled: Bool {
         readyForDelivery
     }
@@ -364,6 +378,10 @@ class OverrideViewModel: ObservableObject, Identifiable {
             if let activeOverride = overrideState.activeOverride {
                 self.pickerSelectedOverride = activeOverride
                 self.activeOverride = activeOverride
+            } else if let firstOverride = overrideState.availableOverrides.first {
+                //The picker would set this automatically but we set it intentionally
+                //to make sure our pickerSelectedOverride triggers Publish notifications.
+                self.pickerSelectedOverride = firstOverride
             }
         } catch {
             overrideListState = .loadingError(error)
