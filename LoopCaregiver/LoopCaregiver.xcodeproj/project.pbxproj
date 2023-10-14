@@ -202,6 +202,7 @@
 		A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusNightscoutTreatment.swift; sourceTree = "<group>"; };
 		A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbCorrectionNightscoutTreatment.swift; sourceTree = "<group>"; };
 		A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryScheduleOverride.swift; sourceTree = "<group>"; };
+		A9C666392ADAD41700D3B5CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A9C89ED62A7074EE00EFD938 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HIG.swift"; sourceTree = "<group>"; };
 		A9D3FF212A6C3B99000C891D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
@@ -506,6 +507,7 @@
 		A9EC196F291FEF940022D39F = {
 			isa = PBXGroup;
 			children = (
+				A9C666392ADAD41700D3B5CA /* README.md */,
 				A9688E2D299730C500CDD4D6 /* LICENSE */,
 				A9EC197A291FEF940022D39F /* LoopCaregiver */,
 				A9346F842AC9820500C15F70 /* LoopCaregiverTests */,

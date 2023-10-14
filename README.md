@@ -102,8 +102,8 @@ WARNING: These Loop and NS branch are based off dev. If dev updates are desired 
 * Loop
   * Description: Includes Remote 2.0 additions
   * Repo: https://github.com/LoopKit/LoopWorkspace.git
-  * Branch feature/2023-07/bg/remote-commands - This was based off Loop dev as of 7-3-23
-    * `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-07/bg/remote-commands --recurse-submodules`
+  * Branch: Use below to clone which was forked from the dev branch. Note these branches get out of date quickly with dev work. 
+    * `git clone https://github.com/LoopKit/LoopWorkspace.git --branch=feature/2023-10/bg/remote-commands --recurse-submodules`
 
 ### Remote 2.0 Usage
 
