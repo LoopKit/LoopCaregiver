@@ -222,10 +222,11 @@ extension UserDefaults {
     }
     
     @objc dynamic var disclaimerAcceptedDate: Date? {
-        guard let rawString = string(forKey: disclaimerAcceptedDateKey) else {
+        guard let date = object(forKey: disclaimerAcceptedDateKey) as? Date else {
             return nil
         }
-        return Date(rawValue: rawString)
+
+        return date
     }
 }
 
