@@ -147,6 +147,10 @@ struct SettingsView: View {
                 Toggle("Demo Mode", isOn: $settings.demoModeEnabled)
                 Text("Demo mode hides sensitive data for Caregiver presentations.")
                     .font(.footnote)
+                if !settings.demoModeEnabled {
+                    Text(addLooperDeepLink)
+                        .textSelection(.enabled)
+                }
             } else {
                 Text("Disabled                             ")
                     .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
@@ -154,6 +158,23 @@ struct SettingsView: View {
                     })
             }
         }
+    }
+    
+    var addLooperDeepLink: String {
+        guard let selectedLooper = accountService.selectedLooper else {
+            return ""
+        }
+        guard let otpURL = URL(string: selectedLooper.nightscoutCredentials.otpURL) else {
+            return ""
+        }
+        let secretKey = selectedLooper.nightscoutCredentials.secretKey
+        let deepLink = CreateLooperDeepLink(name: selectedLooper.name, nsURL: selectedLooper.nightscoutCredentials.url, secretKey: secretKey, otpURL: otpURL)
+        do {
+            return try deepLink.toURL()
+        } catch {
+            return ""
+        }
+
     }
     
     var commandsSection: some View {

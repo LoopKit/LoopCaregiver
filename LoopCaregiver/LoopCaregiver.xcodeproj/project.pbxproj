@@ -175,6 +175,10 @@
 		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
 		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
 		A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */; };
+		A9EFD0002ADF6A01008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
+		A9EFD0022AE08418008D63EC /* DeepLinkParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */; };
+		A9EFD0032AE093F9008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
+		A9EFD0042AE093F9008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
 		A9F871202A2EBE63007EC235 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F8711F2A2EBE63007EC235 /* Intents.framework */; };
 		A9F871232A2EBE63007EC235 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F871222A2EBE63007EC235 /* IntentHandler.swift */; };
 		A9F871382A2EBE64007EC235 /* LoopCaregiverIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -375,6 +379,8 @@
 		A9EC19A8292144040022D39F /* OverrideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideView.swift; sourceTree = "<group>"; };
 		A9EC19AA292156D80022D39F /* CarbInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbInputView.swift; sourceTree = "<group>"; };
 		A9EC19AC2921A19C0022D39F /* BolusInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusInputView.swift; sourceTree = "<group>"; };
+		A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
+		A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTestCase.swift; sourceTree = "<group>"; };
 		A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9F8711F2A2EBE63007EC235 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		A9F871222A2EBE63007EC235 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -460,6 +466,7 @@
 			isa = PBXGroup;
 			children = (
 				A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */,
+				A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */,
 			);
 			path = LoopCaregiverTests;
 			sourceTree = "<group>";
@@ -586,6 +593,7 @@
 				A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */,
 				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
 				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
+				A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */,
 				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
 				A969293C2926EFEC00B8BF43 /* Looper.swift */,
 				A9972775292FCE6A006C8C74 /* LooperService.swift */,
@@ -963,6 +971,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EFD0022AE08418008D63EC /* DeepLinkParserTestCase.swift in Sources */,
 				A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1016,6 +1025,7 @@
 				A916A9722A3276530096B999 /* NSPersistentStoreCoordinator+Migration.swift in Sources */,
 				A9A94EAE2A85B102001663FA /* OverrideCancelRemoteNotification.swift in Sources */,
 				A9A94EA22A85B0CA001663FA /* RemoteCommandStatus.swift in Sources */,
+				A9EFD0032AE093F9008D63EC /* DeepLinkParser.swift in Sources */,
 				A9A94EAB2A85B0FC001663FA /* BolusRemoteNotification.swift in Sources */,
 				A9A94EB22A85B119001663FA /* NSRemoteCommandPayload.swift in Sources */,
 				A9A94E9E2A85B0C2001663FA /* ClosedLoopAction.swift in Sources */,
@@ -1040,6 +1050,7 @@
 				A9A362DC2A80EEFE007B017C /* CarbRemoteNotification.swift in Sources */,
 				A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */,
 				A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */,
+				A9EFD0002ADF6A01008D63EC /* DeepLinkParser.swift in Sources */,
 				A99F2F522A2A92D100F7DE2D /* Bundle+Extensions.swift in Sources */,
 				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
 				A95223762A7EDE660070FE13 /* AutobolusAction.swift in Sources */,
@@ -1142,6 +1153,7 @@
 				A9F8715B2A2FF437007EC235 /* GlucoseEntry.swift in Sources */,
 				A9F871622A2FF46F007EC235 /* TempBasalNightscoutTreatment.swift in Sources */,
 				A9A94EA12A85B0C6001663FA /* OverrideAction.swift in Sources */,
+				A9EFD0042AE093F9008D63EC /* DeepLinkParser.swift in Sources */,
 				A9F871482A2FF307007EC235 /* RemoteDataServiceManager.swift in Sources */,
 				A92AB6CB2A31564400977536 /* NewGlucoseSample+Presentable.swift in Sources */,
 				A9A94EAA2A85B0FC001663FA /* BolusRemoteNotification.swift in Sources */,

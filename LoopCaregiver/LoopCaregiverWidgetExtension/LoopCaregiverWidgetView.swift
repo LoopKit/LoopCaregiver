@@ -20,11 +20,14 @@ struct LoopCaregiverWidgetView : View {
     }
     
     var widgetURL: URL {
-        var looperID: String = ""
         if let looper = entry.looper {
-            looperID = looper.id
+            let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
+            return URL(string: deepLink.toURL())!
+        } else {
+            let deepLink = SelectLooperDeepLink(looperUUID: "")
+            return URL(string: deepLink.toURL())!
         }
-        return URL(string: "widget-deeplink://\(looperID)")!
+
     }
 
     var body: some View {

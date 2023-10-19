@@ -11,6 +11,8 @@ import WidgetKit
 struct ContentView: View {
     
     @ObservedObject var accountService: AccountServiceManager
+    @State var deepLinkErrorShowing = false
+    @State var deepLinkErrorText: String = ""
     let settings: CaregiverSettings
     
     init(){
@@ -20,10 +22,62 @@ struct ContentView: View {
     }
     
     var body: some View {
-        if let looper = accountService.selectedLooper {
-            HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
-        } else {
-            FirstRunView(accountService: accountService, settings: settings, showSheetView: true)
+        return Group {
+            if let looper = accountService.selectedLooper {
+                HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
+            } else {
+                FirstRunView(accountService: accountService, settings: settings, showSheetView: true)
+            }
+        }.onOpenURL(perform: { (url) in
+            Task {
+                do {
+                    try await handleDeepLinkURL(url)
+                } catch {
+                    deepLinkErrorShowing = true
+                    deepLinkErrorText = error.localizedDescription
+                }
+            }
+        })
+        .alert(deepLinkErrorText, isPresented: $deepLinkErrorShowing) {
+            Button(role: .cancel) {
+            } label: {
+                Text("OK")
+            }
+        }
+        
+        @MainActor func handleDeepLinkURL(_ url: URL) async throws {
+            
+            let deepLink = try DeepLinkParser().parseDeepLink(url: url)
+            switch deepLink {
+            case .addLooper(let createLooperDeepLink):
+                try await handleAddLooperDeepLink(createLooperDeepLink)
+            case .selectLooper(let selectLooperDeepLink):
+                try await handleSelectLooperDeepLink(selectLooperDeepLink)
+            }
+        }
+        
+        @MainActor
+        func handleSelectLooperDeepLink(_ deepLink: SelectLooperDeepLink) async throws {
+            guard let looper = accountService.loopers.first(where: {$0.id == deepLink.looperUUID}) else {
+                return
+            }
+            
+            if accountService.selectedLooper != looper {
+                accountService.selectedLooper = looper
+            }
+        }
+        
+        @MainActor
+        func handleAddLooperDeepLink(_ deepLink: CreateLooperDeepLink) async throws {
+            let looper = Looper(identifier: UUID(), name: deepLink.name, nightscoutCredentials: NightscoutCredentials(url: deepLink.nsURL, secretKey: deepLink.secretKey, otpURL: deepLink.otpURL.absoluteString), lastSelectedDate: Date())
+            let service = accountService.createLooperService(looper: looper, settings: settings)
+            try await service.remoteDataSource.checkAuth()
+
+            if let existingLooper = accountService.loopers.first(where: {$0.name == looper.name}) {
+                try accountService.removeLooper(existingLooper)
+            }
+            try accountService.addLooper(looper)
+            try accountService.updateActiveLoopUser(looper)
         }
     }
 }
@@ -108,19 +162,6 @@ struct HomeView: View {
                 WidgetCenter.shared.reloadAllTimelines()
             }
         }
-        .onOpenURL(perform: { (url) in
-            guard let looperId = url.absoluteString.components(separatedBy: "//").last else {
-                return
-            }
-            
-            guard let looper = accountService.loopers.first(where: {$0.id == looperId}) else {
-                return
-            }
-            
-            if accountService.selectedLooper != looper {
-                accountService.selectedLooper = looper
-            }
-        })
     }
     
     func disclaimerOverlay() -> some View {
