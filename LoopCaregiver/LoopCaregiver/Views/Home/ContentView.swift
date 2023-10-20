@@ -6,9 +6,7 @@
 //
 
 import SwiftUI
-import Charts
-import CoreData
-import LoopKit
+import WidgetKit
 
 struct ContentView: View {
     
