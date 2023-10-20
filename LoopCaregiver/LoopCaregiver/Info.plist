@@ -25,7 +25,7 @@
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSCameraUsageDescription</key>
-	<string>Used for scanning QR codes from Looper&apos;s device</string>
+	<string>Used for scanning QR codes for remote authentication</string>
 	<key>NSFaceIDUsageDescription</key>
 	<string>Authentication required for Bolus and Carb delivery</string>
 	<key>NSUserActivityTypes</key>
