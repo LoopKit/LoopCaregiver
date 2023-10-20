@@ -56,8 +56,8 @@ platform :ios do
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
         "com.#{TEAMID}.loopkit.LoopCaregiver",
-        "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension",
-        "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension"
+        #"com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension",
+        #"com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension"
       ]
     )
 
@@ -84,19 +84,19 @@ platform :ios do
       targets: ["LoopCaregiver"]
     )
 
-    update_code_signing_settings(
-      path: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
-      profile_name: mapping["com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension"],
-      code_sign_identity: "iPhone Distribution",
-      targets: ["LoopCaregiverIntentExtension"]
-    )
+    #update_code_signing_settings(
+    #  path: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
+    #  profile_name: mapping["com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension"],
+    #  code_sign_identity: "iPhone Distribution",
+    #  targets: ["LoopCaregiverIntentExtension"]
+    #)
 
-    update_code_signing_settings(
-      path: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
-      profile_name: mapping["com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension"],
-      code_sign_identity: "iPhone Distribution",
-      targets: ["LoopCaregiverWidgetExtension"]
-    )
+    #update_code_signing_settings(
+    #  path: "#{GITHUB_WORKSPACE}/LoopCaregiver/LoopCaregiver.xcodeproj",
+    #  profile_name: mapping["com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension"],
+    #  code_sign_identity: "iPhone Distribution",
+    #  targets: ["LoopCaregiverWidgetExtension"]
+    #)
 
     gym(
       export_method: "app-store",
@@ -148,16 +148,16 @@ platform :ios do
     end
 
     configure_bundle_id("LoopCaregiver", "com.#{TEAMID}.loopkit.LoopCaregiver", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
+      #Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS,
     ])
 
-    configure_bundle_id("LoopCaregiverIntentExtension", "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
-    ])
+    #configure_bundle_id("LoopCaregiverIntentExtension", "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension", [
+      #Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
+    #])
 
-    configure_bundle_id("LoopCaregiverWidgetExtension", "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension", [
-      Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
-    ])
+    #configure_bundle_id("LoopCaregiverWidgetExtension", "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension", [
+      #Spaceship::ConnectAPI::BundleIdCapability::Type::APP_GROUPS
+    #])
 
   end
 
@@ -178,8 +178,8 @@ platform :ios do
       git_basic_authorization: Base64.strict_encode64("#{GITHUB_REPOSITORY_OWNER}:#{GH_PAT}"),
       app_identifier: [
         "com.#{TEAMID}.loopkit.LoopCaregiver",
-        "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension",
-        "com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension",
+        #"com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverIntentExtension",
+        #"com.#{TEAMID}.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension",
       ]
     )
   end
