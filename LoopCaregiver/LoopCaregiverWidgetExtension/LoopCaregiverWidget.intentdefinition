@@ -9,16 +9,18 @@
 	<key>INIntentDefinitionNamespace</key>
 	<string>88xZPY</string>
 	<key>INIntentDefinitionSystemVersion</key>
-	<string>22E261</string>
+	<string>23A344</string>
 	<key>INIntentDefinitionToolsBuildVersion</key>
-	<string>14E222b</string>
+	<string>15A240d</string>
 	<key>INIntentDefinitionToolsVersion</key>
-	<string>14.3</string>
+	<string>15.0</string>
 	<key>INIntents</key>
 	<array>
 		<dict>
 			<key>INIntentCategory</key>
 			<string>information</string>
+			<key>INIntentDescription</key>
+			<string>Configure Caregiver Widget for Your Looper</string>
 			<key>INIntentDescriptionID</key>
 			<string>tVvJ9c</string>
 			<key>INIntentEligibleForWidgets</key>
@@ -59,26 +61,6 @@
 							<true/>
 							<key>INIntentParameterPromptDialogType</key>
 							<string>Primary</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>There are ${count} options matching ‘${looper}’.</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>ulIaJg</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>DisambiguationIntroduction</string>
-						</dict>
-						<dict>
-							<key>INIntentParameterPromptDialogCustom</key>
-							<true/>
-							<key>INIntentParameterPromptDialogFormatString</key>
-							<string>Just to confirm, you wanted ‘${looper}’?</string>
-							<key>INIntentParameterPromptDialogFormatStringID</key>
-							<string>6jE5yM</string>
-							<key>INIntentParameterPromptDialogType</key>
-							<string>Confirmation</string>
 						</dict>
 					</array>
 					<key>INIntentParameterSupportsDynamicEnumeration</key>
