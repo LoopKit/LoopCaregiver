@@ -28,18 +28,12 @@ struct TimelineProvider: IntentTimelineProvider {
     func getEntry(configuration: ConfigurationIntent, completion: @escaping (SimpleEntry) -> Void ) {
         Task {
             
-            var looper: Looper? = nil
-            do {
-                if let configurationLooper = configuration.looper {
-                    looper = try accountServiceManager.getLoopers().first(where: {$0.id == configurationLooper.identifier})
-                } else {
-                    looper = accountServiceManager.selectedLooper
-                }
-            } catch {
-                print("Error fetching looper: \(error)")
-            }
-            
-            guard let looper = looper else {
+            var looper: Looper
+            if let configurationLooper = getLooper(configuration: configuration) {
+                looper = configurationLooper
+            } else if let selectedLooper = accountServiceManager.selectedLooper {
+                looper = selectedLooper
+            } else {
                 completion(SimpleEntry(looper: nil, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, configuration: configuration))
                 return
             }
@@ -50,6 +44,19 @@ struct TimelineProvider: IntentTimelineProvider {
             let glucoseChange = getLastGlucoseChange(samples: sortedSamples)
             
             completion(SimpleEntry(looper: looper, currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), entryIndex: 0, isLastEntry: true, configuration: configuration))
+        }
+    }
+    
+    func getLooper(configuration: ConfigurationIntent) -> Looper? {
+        guard let configurationLooper = configuration.looper else {
+            return nil
+        }
+        
+        do {
+            return try accountServiceManager.getLoopers().first(where: {$0.id == configurationLooper.identifier})
+        } catch {
+            print("Error \(error)")
+            return nil
         }
     }
     
