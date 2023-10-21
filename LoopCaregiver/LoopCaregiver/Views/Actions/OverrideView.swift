@@ -293,9 +293,22 @@ class OverrideViewModel: ObservableObject, Identifiable {
         return TimeInterval(durationHourSelection * 3600) + TimeInterval(durationMinuteSelection * 60)
     }
     
+    var selectedDefaultDuration: TimeInterval? {
+        guard let pickerSelectedOverride else {return nil}
+        if case .loadingComplete(let overrideState) = overrideListState {
+            if let availOverride = overrideState.availableOverrides.first(where: {$0.id == pickerSelectedOverride.id}) {
+                return availOverride.duration
+            } else {
+                return nil
+            }
+        } else {
+            return nil
+        }
+    }
+    
     var indefiniteOverridesAllowed: Bool {
-        guard let pickerSelectedOverride else {return false}
-        if pickerSelectedOverride.duration > 0 {
+        guard let selectedDefaultDuration else {return false}
+        if selectedDefaultDuration > 0 {
             return false //Remote APIs don't support flagging overrides as indefinite yet
         } else {
             return true
