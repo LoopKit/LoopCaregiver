@@ -372,6 +372,7 @@
 		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
 		A99BC5172AE5645B006D52EF /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; name = .github; path = ../.github; sourceTree = "<group>"; };
 		A99BC5182AE56468006D52EF /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
+		A99BC51A2AE5B2C0006D52EF /* build_scripts */ = {isa = PBXFileReference; lastKnownFileType = folder; name = build_scripts; path = ../build_scripts; sourceTree = "<group>"; };
 		A99DC86429992DD20058EBA5 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
 		A99DC866299984430058EBA5 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -847,6 +848,7 @@
 			children = (
 				A9C666392ADAD41700D3B5CA /* README.md */,
 				A9688E2D299730C500CDD4D6 /* LICENSE */,
+				A99BC51A2AE5B2C0006D52EF /* build_scripts */,
 				A99BC5182AE56468006D52EF /* fastlane */,
 				A99BC5172AE5645B006D52EF /* .github */,
 				A9EC197A291FEF940022D39F /* LoopCaregiver */,

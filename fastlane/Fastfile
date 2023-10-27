@@ -184,9 +184,9 @@ platform :ios do
     ])
 
   end
-  
+
   class CaregiverBuildError < StandardError; end
-  
+
   def createCaregiverError(error_message)
       return CaregiverBuildError.new("Error: #{error_message}")
   end

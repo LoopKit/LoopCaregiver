@@ -30,7 +30,7 @@ jobs:
       
       # Build signed LoopCaregiver IPA file
       - name: Fastlane Build & Archive
-        run: fastlane caregiver_build
+        run: build_scripts/fastlane_workflows.sh build_loopcaregiver
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
