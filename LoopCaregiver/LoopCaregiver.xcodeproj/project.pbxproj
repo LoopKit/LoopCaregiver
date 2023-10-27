@@ -159,6 +159,16 @@
 		A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */; };
 		A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; };
 		A9CA10302A7FF73200EE114C /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */; };
+		A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */; };
+		A9CFDD222AEBFF1400FA701B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD212AEBFF1400FA701B /* Assets.xcassets */; };
+		A9CFDD252AEBFF1400FA701B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD242AEBFF1400FA701B /* Preview Assets.xcassets */; };
+		A9CFDD322AEC02D600FA701B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F2F372A29350C00F7DE2D /* WidgetKit.framework */; };
+		A9CFDD332AEC02D600FA701B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F2F392A29350D00F7DE2D /* SwiftUI.framework */; };
+		A9CFDD362AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD352AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift */; };
+		A9CFDD382AEC02D600FA701B /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD372AEC02D600FA701B /* AppIntent.swift */; };
+		A9CFDD3A2AEC02D700FA701B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD392AEC02D700FA701B /* Assets.xcassets */; };
+		A9CFDD3E2AEC02D700FA701B /* LoopCaregiverWatchAppExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A9CFDD312AEC02D600FA701B /* LoopCaregiverWatchAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A9D2B8272A2CAFD500826490 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
 		A9D3FF222A6C3B99000C891D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF212A6C3B99000C891D /* Color.swift */; };
 		A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF232A6C3C54000C891D /* HKUnit.swift */; };
@@ -222,6 +232,13 @@
 			remoteGlobalIDString = A9EC1977291FEF940022D39F;
 			remoteInfo = LoopCaregiver;
 		};
+		A9CFDD3C2AEC02D700FA701B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EC1970291FEF940022D39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9CFDD302AEC02D600FA701B;
+			remoteInfo = LoopCaregiverWatchAppExtensionExtension;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -238,12 +255,13 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		A9E14D3D2A2BA5A600BDB93D /* Embed Foundation Extensions */ = {
+		A9CFDD422AEC02D700FA701B /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				A9CFDD3E2AEC02D700FA701B /* LoopCaregiverWatchAppExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -350,6 +368,19 @@
 		A9C666392ADAD41700D3B5CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A9C89ED62A7074EE00EFD938 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HIG.swift"; sourceTree = "<group>"; };
+		A9CFDD1B2AEBFF1200FA701B /* LoopCaregiverWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiverWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverWatchAppApp.swift; sourceTree = "<group>"; };
+		A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		A9CFDD212AEBFF1400FA701B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9CFDD242AEBFF1400FA701B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		A9CFDD312AEC02D600FA701B /* LoopCaregiverWatchAppExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverWatchAppExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A9CFDD352AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverWatchAppExtension.swift; sourceTree = "<group>"; };
+		A9CFDD372AEC02D600FA701B /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		A9CFDD392AEC02D700FA701B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		A9CFDD3B2AEC02D700FA701B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A9CFDD432AEC042500FA701B /* LoopCaregiverWatchApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiverWatchApp.entitlements; sourceTree = "<group>"; };
+		A9CFDD442AEC043300FA701B /* LoopCaregiverWatchAppExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiverWatchAppExtension.entitlements; sourceTree = "<group>"; };
+		A9CFDD452AEC055500FA701B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A9D3FF212A6C3B99000C891D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
 		A9D3FF232A6C3C54000C891D /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9E14D3E2A2BB18500BDB93D /* LatestGlucoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestGlucoseView.swift; sourceTree = "<group>"; };
@@ -390,6 +421,22 @@
 				A99F2F6D2A2A977700F7DE2D /* NightscoutKit in Frameworks */,
 				A99F2F3A2A29350D00F7DE2D /* SwiftUI.framework in Frameworks */,
 				A99F2F382A29350D00F7DE2D /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CFDD182AEBFF1200FA701B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CFDD2E2AEC02D600FA701B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9CFDD332AEC02D600FA701B /* SwiftUI.framework in Frameworks */,
+				A9CFDD322AEC02D600FA701B /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -715,6 +762,39 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		A9CFDD1C2AEBFF1200FA701B /* LoopCaregiverWatchApp */ = {
+			isa = PBXGroup;
+			children = (
+				A9CFDD452AEC055500FA701B /* Info.plist */,
+				A9CFDD432AEC042500FA701B /* LoopCaregiverWatchApp.entitlements */,
+				A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */,
+				A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */,
+				A9CFDD212AEBFF1400FA701B /* Assets.xcassets */,
+				A9CFDD232AEBFF1400FA701B /* Preview Content */,
+			);
+			path = LoopCaregiverWatchApp;
+			sourceTree = "<group>";
+		};
+		A9CFDD232AEBFF1400FA701B /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				A9CFDD242AEBFF1400FA701B /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		A9CFDD342AEC02D600FA701B /* LoopCaregiverWatchAppExtension */ = {
+			isa = PBXGroup;
+			children = (
+				A9CFDD442AEC043300FA701B /* LoopCaregiverWatchAppExtension.entitlements */,
+				A9CFDD352AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift */,
+				A9CFDD372AEC02D600FA701B /* AppIntent.swift */,
+				A9CFDD392AEC02D700FA701B /* Assets.xcassets */,
+				A9CFDD3B2AEC02D700FA701B /* Info.plist */,
+			);
+			path = LoopCaregiverWatchAppExtension;
+			sourceTree = "<group>";
+		};
 		A9EC196F291FEF940022D39F = {
 			isa = PBXGroup;
 			children = (
@@ -726,6 +806,8 @@
 				A9346F842AC9820500C15F70 /* LoopCaregiverTests */,
 				A9F871212A2EBE63007EC235 /* LoopCaregiverIntentExtension */,
 				A99F2F3B2A29350D00F7DE2D /* LoopCaregiverWidgetExtension */,
+				A9CFDD1C2AEBFF1200FA701B /* LoopCaregiverWatchApp */,
+				A9CFDD342AEC02D600FA701B /* LoopCaregiverWatchAppExtension */,
 				A9EC1979291FEF940022D39F /* Products */,
 				A95F50BE292A602E00079AAF /* Frameworks */,
 				3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */,
@@ -739,6 +821,8 @@
 				A9346F832AC9820500C15F70 /* LoopCaregiverTests.xctest */,
 				A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */,
 				A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */,
+				A9CFDD1B2AEBFF1200FA701B /* LoopCaregiverWatchApp.app */,
+				A9CFDD312AEC02D600FA701B /* LoopCaregiverWatchAppExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -818,6 +902,42 @@
 			productReference = A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		A9CFDD1A2AEBFF1200FA701B /* LoopCaregiverWatchApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9CFDD2C2AEBFF1400FA701B /* Build configuration list for PBXNativeTarget "LoopCaregiverWatchApp" */;
+			buildPhases = (
+				A9CFDD172AEBFF1200FA701B /* Sources */,
+				A9CFDD182AEBFF1200FA701B /* Frameworks */,
+				A9CFDD192AEBFF1200FA701B /* Resources */,
+				A9CFDD422AEC02D700FA701B /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				A9CFDD3D2AEC02D700FA701B /* PBXTargetDependency */,
+			);
+			name = LoopCaregiverWatchApp;
+			productName = "LoopCaregiverWatchApp Watch App";
+			productReference = A9CFDD1B2AEBFF1200FA701B /* LoopCaregiverWatchApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A9CFDD302AEC02D600FA701B /* LoopCaregiverWatchAppExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A9CFDD3F2AEC02D700FA701B /* Build configuration list for PBXNativeTarget "LoopCaregiverWatchAppExtension" */;
+			buildPhases = (
+				A9CFDD2D2AEC02D600FA701B /* Sources */,
+				A9CFDD2E2AEC02D600FA701B /* Frameworks */,
+				A9CFDD2F2AEC02D600FA701B /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LoopCaregiverWatchAppExtension;
+			productName = LoopCaregiverWatchAppExtensionExtension;
+			productReference = A9CFDD312AEC02D600FA701B /* LoopCaregiverWatchAppExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		A9EC1977291FEF940022D39F /* LoopCaregiver */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = A9EC1986291FEF950022D39F /* Build configuration list for PBXNativeTarget "LoopCaregiver" */;
@@ -826,7 +946,6 @@
 				A9EC1975291FEF940022D39F /* Frameworks */,
 				A9EC1976291FEF940022D39F /* Resources */,
 				A95F50C2292A602F00079AAF /* Embed Frameworks */,
-				A9E14D3D2A2BA5A600BDB93D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
@@ -881,6 +1000,12 @@
 					A99F2F352A29350C00F7DE2D = {
 						CreatedOnToolsVersion = 14.3;
 					};
+					A9CFDD1A2AEBFF1200FA701B = {
+						CreatedOnToolsVersion = 15.0;
+					};
+					A9CFDD302AEC02D600FA701B = {
+						CreatedOnToolsVersion = 15.0;
+					};
 					A9EC1977291FEF940022D39F = {
 						CreatedOnToolsVersion = 14.1;
 					};
@@ -912,6 +1037,8 @@
 				A9346F822AC9820500C15F70 /* LoopCaregiverTests */,
 				A99F2F352A29350C00F7DE2D /* LoopCaregiverWidgetExtension */,
 				A9F8711D2A2EBE63007EC235 /* LoopCaregiverIntentExtension */,
+				A9CFDD1A2AEBFF1200FA701B /* LoopCaregiverWatchApp */,
+				A9CFDD302AEC02D600FA701B /* LoopCaregiverWatchAppExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -929,6 +1056,23 @@
 			buildActionMask = 2147483647;
 			files = (
 				A99F2F442A29350F00F7DE2D /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CFDD192AEBFF1200FA701B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9CFDD252AEBFF1400FA701B /* Preview Assets.xcassets in Resources */,
+				A9CFDD222AEBFF1400FA701B /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CFDD2F2AEC02D600FA701B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9CFDD3A2AEC02D700FA701B /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1017,6 +1161,24 @@
 				A99F2F802A2AB24300F7DE2D /* Date+Utils.swift in Sources */,
 				A99F2F5B2A2A970B00F7DE2D /* RemoteDataServiceManager.swift in Sources */,
 				A99F2F552A2A96F500F7DE2D /* Bundle+Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CFDD172AEBFF1200FA701B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */,
+				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9CFDD2D2AEC02D600FA701B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A9CFDD362AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift in Sources */,
+				A9CFDD382AEC02D600FA701B /* AppIntent.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1172,6 +1334,11 @@
 			target = A9EC1977291FEF940022D39F /* LoopCaregiver */;
 			targetProxy = A9346F872AC9820500C15F70 /* PBXContainerItemProxy */;
 		};
+		A9CFDD3D2AEC02D700FA701B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9CFDD302AEC02D600FA701B /* LoopCaregiverWatchAppExtension */;
+			targetProxy = A9CFDD3C2AEC02D700FA701B /* PBXContainerItemProxy */;
+		};
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
@@ -1278,6 +1445,152 @@
 			};
 			name = Release;
 		};
+		A9CFDD2A2AEBFF1400FA701B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LoopCaregiverWatchApp/LoopCaregiverWatchApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiverWatchApp/Preview Content\"";
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LoopCaregiverWatchApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(MAIN_APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(CAREGIVER_APP_BUNDLE_IDENTIFIER)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${CAREGIVER_APP_BUNDLE_IDENTIFIER}.LoopCaregiverWatchApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A9CFDD2B2AEBFF1400FA701B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LoopCaregiverWatchApp/LoopCaregiverWatchApp.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"LoopCaregiverWatchApp/Preview Content\"";
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
+				ENABLE_PREVIEWS = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LoopCaregiverWatchApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(MAIN_APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "$(CAREGIVER_APP_BUNDLE_IDENTIFIER)";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${CAREGIVER_APP_BUNDLE_IDENTIFIER}.LoopCaregiverWatchApp";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
+		A9CFDD402AEC02D700FA701B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LoopCaregiverWatchAppExtension/LoopCaregiverWatchAppExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LoopCaregiverWatchAppExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(MAIN_APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${CAREGIVER_APP_BUNDLE_IDENTIFIER}.LoopCaregiverWatchApp.watchkitextension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Debug;
+		};
+		A9CFDD412AEC02D700FA701B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = LoopCaregiverWatchAppExtension/LoopCaregiverWatchAppExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = "$(LOOP_DEVELOPMENT_TEAM)";
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LoopCaregiverWatchAppExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "$(MAIN_APP_DISPLAY_NAME)";
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+					"@executable_path/../../../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "${CAREGIVER_APP_BUNDLE_IDENTIFIER}.LoopCaregiverWatchApp.watchkitextension";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = watchos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 4;
+				WATCHOS_DEPLOYMENT_TARGET = 10.0;
+			};
+			name = Release;
+		};
 		A9EC1984291FEF950022D39F /* Debug */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */;
@@ -1331,6 +1644,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MAIN_APP_DISPLAY_NAME = "Loop Caregiver";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1387,6 +1701,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
+				MAIN_APP_DISPLAY_NAME = "Loop Caregiver";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1539,6 +1854,24 @@
 			buildConfigurations = (
 				A99F2F4C2A29350F00F7DE2D /* Debug */,
 				A99F2F4D2A29350F00F7DE2D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9CFDD2C2AEBFF1400FA701B /* Build configuration list for PBXNativeTarget "LoopCaregiverWatchApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9CFDD2A2AEBFF1400FA701B /* Debug */,
+				A9CFDD2B2AEBFF1400FA701B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A9CFDD3F2AEC02D700FA701B /* Build configuration list for PBXNativeTarget "LoopCaregiverWatchAppExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A9CFDD402AEC02D700FA701B /* Debug */,
+				A9CFDD412AEC02D700FA701B /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
