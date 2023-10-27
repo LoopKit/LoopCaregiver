@@ -1,5 +1,9 @@
 ## Build
 DerivedData/
+buildlog/
+fastlane/fastlane.log
+artifacts/
+LoopCaregiver.app.dSYM.zip
 
 ## Settings
 *.pbxuser
