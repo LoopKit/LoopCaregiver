@@ -84,8 +84,8 @@ function create_certs() {
                 echo "::error::Action Required: Login to the Apple developer portal to add the following app identifier: '${captured_id}'. Then re-run the 'Add Identifiers' and 'Create Certificates' workflows."
             elif [[ "$line" == *"App Identifier not found for"* ]]; then
               echo "::error::The app identifier in the below error message has not been created. Run the Add Identifiers Gitbub Workflow. Then add the app group to the identifier. See the Loop Docs for more information."
-            else
-                echo "::error::$line"
+            #else
+                #echo "::error::$line"
             fi
         done <fastlane.log
         exit 1
