@@ -7,23 +7,13 @@ function appGroupName() {
 }
 
 function missingCertificateError() {
-    #This error is hit after deleting the match repo. The Create secrets step will recreate it (or is it after deleting your certificate???)
-    #Running Add Identifiers does not reveal the error nor fix it.
-    echo "::error::Certificate is missing. Resolve this by recreating your Match repository. Then run all Gihub workflows again."
+    #This error is hit after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo and recreating.
+    echo "::error::Certificate is missing. Resolve this by deleting the Github Match-Secrets repository. Then run all Gihub workflows again."
 }
 
 function missingMatchRepoError() {
     #This error is hit after deleting the match repo. The Validate Secrets step will recreate it.
     echo "::error::The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
-}
-
-function missingAppGroupError() {
-    #NOTE: When running the caregiver_build lane, and lacking the added app group (but having the capability), I got this message.
-    #So I went onto the apple portal and added the group.
-    #That invalidated the profiles. I then ran the caregiver_build lane again. The regenerated the profiles...
-    #Is the Create Certs step unneeded in this scenario? How about when the app group capabilty is missing?
-    appGroup="group.com.$TEAMID.loopkit.LoopCaregiverGroup"
-    echo "::error::The Caregiver app group is not added to the identifer in the below error message. Login to the Apple dev portal to add $appGroup. Then run the Create Certificates Github workflow. See the Loop Docs for more information."
 }
 
 function caregiver_identifier() {
@@ -53,7 +43,7 @@ function create_certs() {
                 #Occurs if you exceed certs. This can happen if you keep add/delete the Match-Secrets repo during testing.
                 echo "::error::Cannot create a new certificate. Login to the Apple developer portal and delete unneeded certificates."
                 exit 1
-            elif [[ "$line" == *"Couldn't find bundle identifier"* && $"line" =~ identifier\ \'([^\']+)\' ]]; then
+            elif [[ "$line" == *"Couldn't find bundle identifier"* && "$line" =~ identifier\ \'([^\']+)\' ]]; then
                 #Ex: Couldn't find bundle identifier 'com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverIntentExtension' for the user ''
                 captured_id="${BASH_REMATCH[1]}"
                 echo "::error::The app identifier '${captured_id}' is missing from the Apple Developer portal. Resolve this by re-running the 'Add Identifiers' and 'Create Certificates' workflows."
@@ -78,15 +68,17 @@ function build_loopcaregiver() {
                 #Ex: Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
                 echo "$(missingCertificateError)"
                 exit 1
+            #TODO: I have not seen this one for a while - delete this case if I can't reproduce after trying an upgrade.
             elif [[ "$line" == *"No matching provisioning profiles found for"* ]]; then
                 #I think this is the error when your provisioning profiles are missing.
                 #Note that deleting all your profiles does not trigger this error...?? Maybe when you have an old cert?
                 echo "::error::Error 1 - Provisioning profile(s) invalid. Run the the following Github workflows to add them: 2. Add Identifiers 3. Create Certificates"
                 exit 1
-            elif [[ "$line" == *"doesn't support the App Groups capability"* ]]; then
+            elif [[ "$line" == *"doesn't support the App Groups capability"*  && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 #This error was hit when I removed the App Group capability from the identifier
-                #Adding it to the group and running just the Build step resolved it.
-                echo "$(missingAppGroupError)"
+                #Adding the capability and group, then running the Build step resolves it.
+                app_identifier="${BASH_REMATCH[1]}"
+                echo "::error::An app identifier is missing the app group capability. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 app_identifier="${BASH_REMATCH[1]}"
@@ -94,16 +86,17 @@ function build_loopcaregiver() {
                 #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'LoopCaregiverWidgetExtension' from project 'LoopCaregiver')[0m
                 echo "::error::An app identifier is missing the required app group. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
                 exit 1
-            elif [[ "$line" == *"doesn't include the com.apple.security.application-groups entitlement"* ]]; then
-                #This error was hit when I removed the App Group capability from the identifier
-                #Adding it to the group and running just the Build step resolved it.
-                echo "$(missingAppGroupError)"
+            elif [[ "$line" == *"doesn't include signing certificate "* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
+                #This can happen if you delete the Match repo and skip the `Create Certificates` step.
+                #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWatchApp" doesn't include signing certificate "Apple Distribution: William Gestrich (5K844XFC6W)". (in target 'LoopCaregiverWatchApp' from project 'LoopCaregiver')
+                app_identifier="${BASH_REMATCH[1]}"
+                echo "::error::The provisioning profile for $app_identifier is out-of-date. To resolve, run the 'Create Certificates' workflow again."
                 exit 1
             fi
         done <fastlane.log
         
         #Default
-        echo "::error::Error 4 Could not build Loop Caregiver. See error log for details."
+        echo "::error::Could not build Loop Caregiver. See error log for details."
         exit 1
     fi
 }
