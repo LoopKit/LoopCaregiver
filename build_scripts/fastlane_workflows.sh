@@ -7,11 +7,14 @@ function appGroupName() {
 }
 
 function missingCertificateError() {
-    echo "::error::Your developer certificate is missing. Resolve this by recreating your Match repository. Then run all Gihub workflows again."
+    #This error is hit after deleting the match repo. The Create secrets step will recreate it (or is it after deleting your certificate???)
+    #Running Add Identifiers does not reveal the error nor fix it.
+    echo "::error::Certificate is missing. Resolve this by recreating your Match repository. Then run all Gihub workflows again."
 }
 
 function missingMatchRepoError() {
-    echo "::error::The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets step again."
+    #This error is hit after deleting the match repo. The Validate Secrets step will recreate it.
+    echo "::error::The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
 }
 
 function missingAppGroupError() {
@@ -35,16 +38,20 @@ function create_certs() {
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
-                #This error is hit after deleting the match repo. The Create secrets step will recreate it.
                 #Ex: Error cloning certificates git repo, please make sure you have access to the repository - see instructions above
                 echo "$(missingMatchRepoError)"
                 exit 1
+            elif [[ "$line" == *"Error cloning certificates repo, please make sure you have read access to the repository you want to use"* ]]; then
+                #Sometimes you need to run the create certificates step twice due to this error.
+                #It seems there is a race condition with it being created and immediately clone... or maybe being rate limited.
+                echo "$("::error::Error cloning Match-Secrets repo. First try running the `Create Certificates` step again. If that fails, check your Github repository access.")"
             elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
-                #Occurs if you delete your certificate
-                #This can also occur in the `Create Certifates` step too.
-                #Running Add Identifiers does not reveal the error nor fix it.
-                #Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
+                #Ex: Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
                 echo "$(missingCertificateError)"
+                exit 1
+            elif [[ "$line" == *"Could not create another Distribution certificate, reached the maximum number of available Distribution certificates."* ]]; then
+                #Occurs if you exceed certs. This can happen if you keep add/delete the Match-Secrets repo during testing.
+                echo "::error::Cannot create a new certificate. Login to the Apple developer portal and delete unneeded certificates."
                 exit 1
             elif [[ "$line" == *"Couldn't find bundle identifier"* && $"line" =~ identifier\ \'([^\']+)\' ]]; then
                 #Ex: Couldn't find bundle identifier 'com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverIntentExtension' for the user ''
@@ -55,7 +62,7 @@ function create_certs() {
         done <fastlane.log
         
         #Default
-        echo "::error::Error 4 Could not create certificates. See error log for details."
+        echo "::error::Could not create certificates. See error log for details."
         exit 1
     fi
 }
@@ -64,14 +71,10 @@ function build_loopcaregiver() {
     if ! fastlane caregiver_build 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
-                #This error is hit after deleting the match repo. The Create secrets step will recreate it.
                 #Ex: Error cloning certificates git repo, please make sure you have access to the repository - see instructions above
                 echo "$(missingMatchRepoError)"
                 exit 1
             elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
-                #Occurs if you delete your certificate
-                #This can also occur in the `Create Certifates` step too.
-                #Running Add Identifiers does not reveal the error nor fix it.
                 #Ex: Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
                 echo "$(missingCertificateError)"
                 exit 1
