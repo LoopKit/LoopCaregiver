@@ -88,29 +88,40 @@ function build_loopcaregiver() {
 
     if ! fastlane caregiver_build 2>1 | tee fastlane.log; then
 
-        log_contents=$(<fastlane.log)
-        if [[ "$log_contents" == *"No matching provisioning profiles found for"* ]]; then
-            #I think this is the error when your provisioing profiles are missing.
-            echo "::error::Error 1 - Provisioning profile(s) invalid. Run the the following Github workflows to add them: 2. Add Identifiers 3. Create Certificates"
-        elif [[ "$log_contents" =~ .*error:\ Provisioning\ profile\ \"(.*)\"\ doesn\'t\ match\ the\ entitlements\ file\'s\ value\ for\ the\ com\.apple\.security\.application\-groups\ entitlement\..* ]]; then
-            provisiong_profile_name="${BASH_REMATCH[1]}"
-            #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'LoopCaregiverWidgetExtension' from project 'LoopCaregiver')[0m
-            #Occurs when you have the wrong App Group assigned or it is missing, but the group capablity is added.
-            #TODO: I could use the "target" name above for a better description.
-            app_identifier="${provisiong_profile_name#match AppStore }" #Trim leading profile part
-            echo "::error::The app group is missing from the following app identifier '${app_identifier}'. Resolve this by logging into the Apple Developer portal and adding the app group '$(appGroupName)' to the '${app_identifier}' app identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
-        elif [[ "$log_contents" == *"doesn't support the App Groups capability"* ]]; then
-            #This error was hit when I removed the App Group capability from the identifier
-            #Adding it to the group and running just the Build step resolved it.
-            echo "$(missingAppGroupMessage)"
-        elif [[ "$log_contents" == *"doesn't include the com.apple.security.application-groups entitlement"* ]]; then
-            #This error was hit when I removed the App Group capability from the identifier
-            #Adding it to the group and running just the Build step resolved it.
-            echo "Error 3:$(missingAppGroupMessage)"
-        else
-            echo "::error::Error 4 Could not build Loop Caregiver. See error log for details."
-        fi
-    
+        while read -r line; do
+
+            if [[ "$line" == *"No matching provisioning profiles found for"* ]]; then
+                #I think this is the error when your provisioning profiles are missing.
+                #Note that deleting all your profiles does not trigger this error...?? Maybe when you have an old cert?
+                echo "::error::Error 1 - Provisioning profile(s) invalid. Run the the following Github workflows to add them: 2. Add Identifiers 3. Create Certificates"
+                exit 1
+            elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
+                app_identifier="${BASH_REMATCH[1]}"
+                #Missing or wrong App Group but the group capablity is added.
+                #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'LoopCaregiverWidgetExtension' from project 'LoopCaregiver')[0m
+                echo "::error::An app identifier is missing the required app group. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
+                exit 1
+            elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
+                #Occurs if you delete your certificate
+                #Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
+                echo "::error::Your developer certificate is missing. Resolve this by running the 'Create Certificates' and 'Build Caregiver' workflows."
+                exit 1
+            elif [[ "$line" == *"doesn't support the App Groups capability"* ]]; then
+                #This error was hit when I removed the App Group capability from the identifier
+                #Adding it to the group and running just the Build step resolved it.
+                echo "Error 2:$(missingAppGroupMessage)"
+                exit 1
+            elif [[ "$line" == *"doesn't include the com.apple.security.application-groups entitlement"* ]]; then
+                #This error was hit when I removed the App Group capability from the identifier
+                #Adding it to the group and running just the Build step resolved it.
+                echo "Error 3:$(missingAppGroupMessage)"
+                exit 1
+            fi
+        
+        done <fastlane.log
+        
+        #Default
+        echo "::error::Error 4 Could not build Loop Caregiver. See error log for details."
         exit 1
     fi
 }
