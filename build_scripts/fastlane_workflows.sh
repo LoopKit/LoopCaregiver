@@ -44,6 +44,10 @@ function appGroupName() {
     echo "group.com.$TEAMID.loopkit.LoopCaregiverGroup"
 }
 
+function missingCertificateError() {
+    echo "::error::Your developer certificate is missing. Resolve this by running the 'Create Certificates' and 'Build Caregiver' workflows."
+}
+
 function missingAppGroupMessage() {
     #NOTE: When running the caregiver_build lane, and lacking the added app group (but having the capability), I got this message.
     #So I went onto the apple portal and added the group.
@@ -70,16 +74,26 @@ function caregiver_identifier() {
 function create_certs() {
 
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
-
-        log_contents=$(<fastlane.log)
-        if [[ "$log_contents" =~ Couldn\'t\ find\ bundle\ identifier\ \'([^\']+)\' ]]; then
-            #Ex: Couldn't find bundle identifier 'com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverIntentExtension' for the user ''
-            captured_id="${BASH_REMATCH[1]}"
-            echo "::error::The app identifier '${captured_id}' is missing from the Apple Developer portal. Resolve this by re-running the 'Add Identifiers' and 'Create Certificates' workflows."
-        else
-            echo "::error::Could not create certificates. See error log for details."
-        fi
-    
+        while read -r line; do
+            if [[ "$line" == *"Couldn't find bundle identifier"* && $"line" =~ identifier\ \'([^\']+)\' ]]; then
+                    #Ex: Couldn't find bundle identifier 'com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverIntentExtension' for the user ''
+                captured_id="${BASH_REMATCH[1]}"
+                echo "::error::The app identifier '${captured_id}' is missing from the Apple Developer portal. Resolve this by re-running the 'Add Identifiers' and 'Create Certificates' workflows."
+                exit 1
+            elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
+                #Occurs if you delete your certificate
+                #This can also occur in the `Create Certifates` step too.
+                #Running Add Identifiers does not reveal the error nor fix it.
+                #Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
+                echo "$(missingCertificateError)"
+                exit 1
+            else
+                echo "::error::Could not create certificates. See error log for details."
+            fi
+        done <fastlane.log
+        
+        #Default
+        echo "::error::Error 4 Could not build Loop Caregiver. See error log for details."
         exit 1
     fi
 }
@@ -103,8 +117,10 @@ function build_loopcaregiver() {
                 exit 1
             elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
                 #Occurs if you delete your certificate
+                #This can also occur in the `Create Certifates` step too.
+                #Running Add Identifiers does not reveal the error nor fix it.
                 #Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
-                echo "::error::Your developer certificate is missing. Resolve this by running the 'Create Certificates' and 'Build Caregiver' workflows."
+                echo "$(missingCertificateError)"
                 exit 1
             elif [[ "$line" == *"doesn't support the App Groups capability"* ]]; then
                 #This error was hit when I removed the App Group capability from the identifier
