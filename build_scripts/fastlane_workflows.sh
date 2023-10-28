@@ -7,7 +7,7 @@ function appGroupName() {
 }
 
 function missingCertificateError() {
-    #This error is hit after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo and recreating.
+    #This error is hit after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo.
     echo "::error::Certificate is missing. Resolve this by deleting the Github Match-Secrets repository. Then run all Gihub workflows again."
 }
 
@@ -72,7 +72,7 @@ function build_loopcaregiver() {
             elif [[ "$line" == *"No matching provisioning profiles found for"* ]]; then
                 #I think this is the error when your provisioning profiles are missing.
                 #Note that deleting all your profiles does not trigger this error...?? Maybe when you have an old cert?
-                echo "::error::Error 1 - Provisioning profile(s) invalid. Run the the following Github workflows to add them: 2. Add Identifiers 3. Create Certificates"
+                echo "::error::Provisioning profile(s) invalid. Run the the 'Add Identifiers' and 'Create Certificates' workflows."
                 exit 1
             elif [[ "$line" == *"doesn't support the App Groups capability"*  && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 #This error was hit when I removed the App Group capability from the identifier
