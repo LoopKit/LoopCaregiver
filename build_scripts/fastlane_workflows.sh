@@ -67,27 +67,15 @@ function create_certs() {
 
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
 
-        #errors="$( getErrorLinesFromFile fastlane.log )"
-        #echo "$errors" | while read -r line; do
-        while read -r line; do
-            if [[ "$line" == *"capability not found for identifier"* ]]; then
-                #Ex: Error: APP_GROUPS capability not found for identifier: com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverIntentExtension
-                #This error match is a custom error we throw from fastlane
-                #Without this, the certificate step will succeeed with
-                #invalid certifiates.
-                #The user will then fail in the build stage and need to add
-                #the capabilty, then rerun the 'Create Certificates' step.
-                echo "$(missingAppGroupMessage)"
-            elif [[ "$line" =~ Couldn\'t\ find\ bundle\ identifier\ \'([^\']+)\' ]]; then
-                #Could not find App ID with bundle identifier 'com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension'
-                captured_id="${BASH_REMATCH[1]}"
-                echo "::error::Action Required: Login to the Apple developer portal to add the following app identifier: '${captured_id}'. Then re-run the 'Add Identifiers' and 'Create Certificates' workflows."
-            elif [[ "$line" == *"App Identifier not found for"* ]]; then
-              echo "::error::The app identifier in the below error message has not been created. Run the Add Identifiers Gitbub Workflow. Then add the app group to the identifier. See the Loop Docs for more information."
-            #else
-                #echo "::error::$line"
-            fi
-        done <fastlane.log
+        log_contents=$(<fastlane.log)
+        if [[ "$log_contents" =~ Couldn\'t\ find\ bundle\ identifier\ \'([^\']+)\' ]]; then
+            #Ex: Couldn't find bundle identifier 'com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverIntentExtension' for the user ''
+            captured_id="${BASH_REMATCH[1]}"
+            echo "::error::The app identifier '${captured_id}' is missing from the Apple Developer portal. Resolve this by re-running the 'Add Identifiers' and 'Create Certificates' workflows."
+        else
+            echo "::error::Could not create certificates. See error log for details."
+        fi
+    
         exit 1
     fi
 }
