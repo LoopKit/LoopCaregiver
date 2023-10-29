@@ -25,7 +25,7 @@ function caregiver_identifier() {
 }
 
 function create_certs() {
-    echo "::notice title=Resolution Tips::This is a notice. https://www.google.com https://github.com/LoopKit/LoopCaregiver/issues/26"
+    
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
@@ -79,7 +79,8 @@ function build_loopcaregiver() {
                 #This error was hit when I removed the App Group capability from the identifier
                 #Adding the capability and group, then running the Build step resolves it.
                 app_identifier="${BASH_REMATCH[1]}"
-                echo "::error::An app identifier is missing the app group capability. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
+                echo "::notice title=Resolution::An app identifier is missing the app group capability. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. https://github.com/LoopKit/LoopCaregiver/issues/26"
+                echo "::error title=Raw Error::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 app_identifier="${BASH_REMATCH[1]}"
