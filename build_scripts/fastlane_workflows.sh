@@ -25,6 +25,7 @@ function caregiver_identifier() {
 }
 
 function create_certs() {
+    echo "::notice::This is a notice"
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
