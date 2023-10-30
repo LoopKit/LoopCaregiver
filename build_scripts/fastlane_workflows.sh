@@ -81,7 +81,7 @@ function build_loopcaregiver() {
                 app_identifier="${BASH_REMATCH[1]}"
                 echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
                 echo "::error title=Loop Docs::Missing Capabilities: https://github.com/LoopKit/LoopCaregiver/issues/26"
-                echo "::error title=Loop Docs::App Group Migration: https://github.com/LoopKit/LoopCaregiver/issues/26"
+                echo "::error title=Loop Docs::App Group Migration: https://github.com/LoopKit/LoopCaregiver/issues/25"
                 echo "::error title=Raw Error::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
