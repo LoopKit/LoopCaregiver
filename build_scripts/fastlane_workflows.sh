@@ -80,8 +80,8 @@ function build_loopcaregiver() {
                 #Adding the capability and group, then running the Build step resolves it.
                 app_identifier="${BASH_REMATCH[1]}"
                 echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
-                echo "::error title=Loop Docs::Missing Capabilities: https://github.com/LoopKit/LoopCaregiver/issues/26"
-                echo "::error title=Loop Docs::App Group Migration: https://github.com/LoopKit/LoopCaregiver/issues/25"
+                echo "::error title=Loop Docs::Missing Capabilities: https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction"
+                echo "::error title=Loop Docs::App Group Migration: https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction"
                 echo "::error title=Raw Error::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
@@ -90,7 +90,7 @@ function build_loopcaregiver() {
                 #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'LoopCaregiverWidgetExtension' from project 'LoopCaregiver')[0m
                 echo "::error::An app identifier is missing the required app group. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
                 echo "::error title=Loop Docs::See instructions https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction"
-                echo "::notice title=Underlying Error::${line}" 
+                echo "::notice title=Underlying Error::${line}"
                 exit 1
             elif [[ "$line" == *"doesn't include signing certificate "* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 #This can happen if you delete the Match repo and skip the `Create Certificates` step.
