@@ -79,11 +79,11 @@ function build_loopcaregiver() {
                 #This error was hit when I removed the App Group capability from the identifier
                 #Adding the capability and group, then running the Build step resolves it.
                 app_identifier="${BASH_REMATCH[1]}"
-                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
+                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. Use the 'More Help' link(s) listed below for details."
                 branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-                #echo "::error::Branch ${branchName}"
-                echo "::error title=Loop Docs::Missing Capabilities: https://github.com/gestrich/LoopCaregiver/blob/${branchName}/fastlane/testflight.md#add-identifiers-for-loopcaregiver-app"
-                echo "::error title=Loop Docs::App Group Migration: https://github.com/gestrich/LoopCaregiver/blob/${branchName}/fastlane/testflight.md#add-identifiers-for-loopcaregiver-app"
+                githubHelpURL="${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
+                echo "::error title=More Help::Missing Capabilities:${githubHelpURL}#add-identifiers-for-loopcaregiver-app"
+                echo "::error title=More Help::App Group Migration: https://github.com/gestrich/LoopCaregiver/blob/${branchName}/fastlane/testflight.md#add-identifiers-for-loopcaregiver-app"
                 echo "::error title=Raw Error::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
