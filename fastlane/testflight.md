@@ -115,7 +115,7 @@ Note 2 - Depending on your build history, you may find some of the Identifiers a
     * LoopCaregiverWatchAppExtension
 1. Click on the identifier's name.
 1. On the "App Groups" capabilies, click on the "Configure" button.
-1. Select the "Loop App Group"
+1. Select the "LoopCaregiver App Group"
 1. Click "Continue".
 1. Click "Save".
 1. Click "Confirm".
@@ -170,10 +170,19 @@ Please refer to [LoopDocs: Set Up Users](https://loopkit.github.io/loopdocs/gh-a
 
 ## App Group Update
 
-The Caregiver app was updated in November 2023 to support App Groups required for widget support. You need to take a few 1 time steps to build after this.
+The Caregiver app was updated in November 2023 to require App Groups for iOS widget support. You need to take some extract steps teh first time you build after this.
 
 1. Run the "Add Identifiers" Github Workflow [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
-1. Add the App Group to your App [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
-1. Add App Group to Bundle Identifiers [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
+1. Create the LoopCaregiver App Group [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
+1. Add the LoopCaregiver App Group to Bundle Identifiers [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
 1. Run the "Create Certificates" Github Workflow [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
 1. Run the "Build LoopCaregiver" Github Workflow [Docs](https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction)
+
+## Build Errors
+
+### App Group Capability Missing
+
+This error means the app identifiers in the Apple Developer portal are missing the app group capability. To resolve:
+
+1. Perform the [App Group Update](#App-Group-Update) steps.
+1. Pay close attention to the "Add App Group to Bundle Identifiers" as one of your app identifiers is missing the LoopCaregiver App Group.

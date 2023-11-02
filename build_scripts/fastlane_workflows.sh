@@ -79,11 +79,10 @@ function build_loopcaregiver() {
                 #This error was hit when I removed the App Group capability from the identifier
                 #Adding the capability and group, then running the Build step resolves it.
                 app_identifier="${BASH_REMATCH[1]}"
-                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. Use the 'More Help' link(s) listed below for details."
+                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. Use the 'More Help' link listed below for details."
                 branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
                 githubHelpURL="${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
-                echo "::error title=More Help::Missing Capabilities:${githubHelpURL}#add-identifiers-for-loopcaregiver-app"
-                echo "::error title=More Help::App Group Migration: https://github.com/gestrich/LoopCaregiver/blob/${branchName}/fastlane/testflight.md#add-identifiers-for-loopcaregiver-app"
+                echo "::error title=More Help::Missing Capabilities:${githubHelpURL}#App-Group-Capability-Missing"
                 echo "::error title=Raw Error::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
@@ -91,8 +90,6 @@ function build_loopcaregiver() {
                 #Missing or wrong App Group but the group capablity is added.
                 #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'LoopCaregiverWidgetExtension' from project 'LoopCaregiver')[0m
                 echo "::error::An app identifier is missing the required app group. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
-                echo "::error title=Loop Docs::See instructions https://github.com/gestrich/LoopCaregiver/blob/dev/fastlane/testflight.md#introduction"
-                echo "::notice title=Underlying Error::${line}"
                 exit 1
             elif [[ "$line" == *"doesn't include signing certificate "* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 #This can happen if you delete the Match repo and skip the `Create Certificates` step.
