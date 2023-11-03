@@ -24,6 +24,11 @@ function caregiver_identifier() {
     fi
 }
 
+function readMEURL() {
+    branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+    echo "${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
+}
+
 function create_certs() {
     
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
@@ -79,11 +84,8 @@ function build_loopcaregiver() {
                 #This error was hit when I removed the App Group capability from the identifier
                 #Adding the capability and group, then running the Build step resolves it.
                 app_identifier="${BASH_REMATCH[1]}"
-                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. Use the 'More Help' link listed below for details."
-                branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-                githubHelpURL="${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
-                echo "::error title=More Help::Missing Capabilities:${githubHelpURL}#App-Group-Capability-Missing"
-                echo "::error title=Raw Error::$line"
+                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. For more details on this error: $(readMEURL)/#App-Group-Capability-Missing"
+                echo "::error title=Fastlane Details::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 app_identifier="${BASH_REMATCH[1]}"
