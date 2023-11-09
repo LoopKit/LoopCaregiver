@@ -7,26 +7,34 @@ function appGroupName() {
 }
 
 function missingCertificateError() {
-    #This error is hit after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo.
+    #Occurs after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo.
     echo "::error::Certificate is missing. Resolve this by deleting the Github Match-Secrets repository. Then run all Gihub workflows again."
 }
 
 function missingMatchRepoError() {
-    #This error is hit after deleting the match repo. The Validate Secrets step will recreate it.
+    #Occurs after deleting the match repo. The Validate Secrets step will recreate it.
     echo "::error::The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
-}
-
-function caregiver_identifier() {
-    if ! fastlane caregiver_identifier 2>1 | tee fastlane.log; then
-        #Default
-        echo "::error::Could not create identifiers. See error log for details."
-        exit 1
-    fi
 }
 
 function readMEURL() {
     branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
     echo "${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
+}
+
+#Unused except for local testing.
+function caregiver_identifier() {
+    if ! fastlane caregiver_identifier 2>1 | tee fastlane.log; then
+        echo "::error::Could not create identifiers. See error log for details."
+        exit 1
+    fi
+}
+
+#Unused except for local testing.
+function validate_secrets() {
+    if ! fastlane validate_secrets 2>1 | tee fastlane.log; then
+        echo "::error::Could not validate secrets. See error log for details."
+        exit 1
+    fi
 }
 
 function create_certs() {
@@ -35,12 +43,14 @@ function create_certs() {
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
                 #Ex: Error cloning certificates git repo, please make sure you have access to the repository - see instructions above
-                echo "$(missingMatchRepoError)"
+                echo "::error title=Match Repository Missing::$(missingMatchRepoError) For more details on this error: $(readMEURL)/#match-repository-missing"
+                echo "::error title=Fastlane Details::$line"
                 exit 1
             elif [[ "$line" == *"Error cloning certificates repo, please make sure you have read access to the repository you want to use"* ]]; then
                 #Sometimes you need to run the create certificates step twice due to this error.
                 #It seems there is a race condition with it being created and immediately clone... or maybe being rate limited.
-                echo "$("::error::Error cloning Match-Secrets repo. First try running the `Create Certificates` step again. If that fails, check your Github repository access.")"
+                echo "::error title=Match Repository Clone Issue::Error cloning Match-Secrets repo. First try running the `Create Certificates` step again. If that fails, check your Github repository access. For more details on this error: $(readMEURL)/#match-repository-clone-issue"
+                echo "::error title=Fastlane Details::$line"
             elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
                 #Ex: Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
                 echo "$(missingCertificateError)"
@@ -81,10 +91,10 @@ function build_loopcaregiver() {
                 echo "::error::Provisioning profile(s) invalid. Run the the 'Add Identifiers' and 'Create Certificates' workflows."
                 exit 1
             elif [[ "$line" == *"doesn't support the App Groups capability"*  && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
-                #This error was hit when I removed the App Group capability from the identifier
+                #Replicate this error by removing the App Group capability from the identifier
                 #Adding the capability and group, then running the Build step resolves it.
                 app_identifier="${BASH_REMATCH[1]}"
-                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. For more details on this error: $(readMEURL)/#App-Group-Capability-Missing"
+                echo "::error title=App Group Capability Missing::Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group (where *** is your 10-character TEAMID) to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. For more details on this error: $(readMEURL)/#App-Group-Capability-Missing"
                 echo "::error title=Fastlane Details::$line"
                 exit 1
             elif [[ "$line" == *"doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement"* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then

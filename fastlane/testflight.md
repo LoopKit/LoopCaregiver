@@ -186,3 +186,20 @@ This error means the app identifiers in the Apple Developer portal are missing t
 
 1. Perform the [App Group Update](#app-group-update) steps.
 1. Pay close attention to the "Add App Group to Bundle Identifiers" as this error suggests at least one of your app identifiers is missing the LoopCaregiver App Group.
+
+### Match Repository Missing
+
+This error indicates the Match-Secrets repository is missing or was deleted. To resolve: 
+
+1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-secrets repository.
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
+
+### Match Repository Clone Issue
+
+This error indicates there was an issue cloning the Match-secrets repository, although the reposistory appears to exist. Sometimes running the `Create Certificates` step a second time fixes it. To resolve: 
+
+1. Run [Create Building Certificates](#create-building-certificates) again.
+1. If the prior step fails again, check your Github Personal Access Token has the correct permissions. See [Create GitHub Personal Access Token](create-github-personal-access-token)
+1. Check that the Github Personal Access Token was stored as a secret. See [Setup GitHub LoopCaregiver Repository](setup-gitHub-loopcaregiver-repository)
