@@ -1416,15 +1416,15 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_IDENTITY = "Apple Development";
+				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 32;
-				DEVELOPMENT_TEAM = 5K844XFC6W;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "--CAREGIVER-APP-BUNDLE-IDENTIFIER-Tests";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
 				SWIFT_EMIT_LOC_STRINGS = NO;
@@ -1440,7 +1440,6 @@
 				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CURRENT_PROJECT_VERSION = 32;
-				DEVELOPMENT_TEAM = 5K844XFC6W;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -1535,7 +1534,7 @@
 				INFOPLIST_FILE = LoopCaregiverWatchApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Loop Caregiver";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.5K844XFC6W.loopkit.LoopCaregiver;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "${CAREGIVER_APP_BUNDLE_IDENTIFIER}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1574,7 +1573,7 @@
 				INFOPLIST_FILE = LoopCaregiverWatchApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "Loop Caregiver";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = com.5K844XFC6W.loopkit.LoopCaregiver;
+				INFOPLIST_KEY_WKCompanionAppBundleIdentifier = "${CAREGIVER_APP_BUNDLE_IDENTIFIER}";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1720,7 +1719,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
-				LOOP_DEVELOPMENT_TEAM = "${LOOP_DEVELOPMENT_TEAM}";
 				MAIN_APP_DISPLAY_NAME = "Loop Caregiver";
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -1779,7 +1777,6 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.1;
-				LOOP_DEVELOPMENT_TEAM = "${LOOP_DEVELOPMENT_TEAM}";
 				MAIN_APP_DISPLAY_NAME = "Loop Caregiver";
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -1915,7 +1912,6 @@
 			buildSettings = {
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = 5K844XFC6W;
 				PRODUCT_NAME = LoopCaregiverTests;
 			};
 			name = Release;
