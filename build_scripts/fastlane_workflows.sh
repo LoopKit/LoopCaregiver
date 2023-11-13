@@ -101,7 +101,8 @@ function build_loopcaregiver() {
                 app_identifier="${BASH_REMATCH[1]}"
                 #Missing or wrong App Group but the group capablity is added.
                 #Ex: error: Provisioning profile "match AppStore com.5K844XFC6W.loopkit.LoopCaregiver.LoopCaregiverWidgetExtension" doesn't match the entitlements file's value for the com.apple.security.application-groups entitlement. (in target 'LoopCaregiverWidgetExtension' from project 'LoopCaregiver')[0m
-                echo "::error::An app identifier is missing the required app group. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows."
+                echo "::error title=Bundle Identifier Missing App Group:: An bundle identifier is missing the required app group. Resolve this by logging into the Apple Developer portal and add the '$(appGroupName)' app group to the '${app_identifier}' identifier. Then re-run the 'Create Certificates' and 'Build Caregiver' workflows. For more details on this error: $(readMEURL)/#bundle-identifier-missing-app-group"
+                echo "::error title=Fastlane Details::$line"
                 exit 1
             elif [[ "$line" == *"doesn't include signing certificate "* && "$line" =~ \(in\ target\ \'([^\']+)\' ]]; then
                 #This can happen if you delete the Match repo and skip the `Create Certificates` step.

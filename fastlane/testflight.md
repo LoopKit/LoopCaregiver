@@ -203,3 +203,11 @@ This error indicates there was an issue cloning the Match-secrets repository, al
 1. Run [Create Building Certificates](#create-building-certificates) again.
 1. If the prior step fails again, check your Github Personal Access Token has the correct permissions. See [Create GitHub Personal Access Token](create-github-personal-access-token)
 1. Check that the Github Personal Access Token was stored as a secret. See [Setup GitHub LoopCaregiver Repository](setup-gitHub-loopcaregiver-repository)
+
+### Bundle Identifier Missing App Group
+
+This error inidicates one or more of your App Identifiers are not assigned the "LoopCaregiver App Group". To resolve:
+
+1. Add the app group for each bundle identifier. Follow the steps in [Add App Group to Bundle Identifiers](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
