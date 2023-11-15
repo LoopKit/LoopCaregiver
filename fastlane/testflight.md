@@ -204,10 +204,47 @@ This error indicates there was an issue cloning the Match-secrets repository, al
 1. If the prior step fails again, check your Github Personal Access Token has the correct permissions. See [Create GitHub Personal Access Token](create-github-personal-access-token)
 1. Check that the Github Personal Access Token was stored as a secret. See [Setup GitHub LoopCaregiver Repository](setup-gitHub-loopcaregiver-repository)
 
+### Missing Bundle Identifier
+
+This error indicates you are missing some required bundle identifier(s). Resolve this by:
+
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+
 ### Bundle Identifier Missing App Group
 
-This error inidicates one or more of your App Identifiers are not assigned the "LoopCaregiver App Group". To resolve:
+This error indicates one or more of your App Identifiers are not assigned the "LoopCaregiver App Group". To resolve:
 
 1. Add the app group for each bundle identifier. Follow the steps in [Add App Group to Bundle Identifiers](#add-identifiers-for-loopcaregiver-app)
 1. [Create Building Certificates](#create-building-certificates)
 1. [Build LoopCaregiver](#build-loopcaregiver)
+
+### Certificate is Missing
+
+This error indicates indicates your Apple Certificate is missing. To resolve:
+
+1. Delete the Github Match-Secrets repository.
+1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-secrets repository.
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
+
+### Maximum Certificates Reached
+
+This error indicates you have too many certificates on the Apple developer portal. This seems to occur when deleting and recreating your setup multiple times. To resolve:
+
+1. Login to the Apple developer portal. 
+1. Delete unneeded certificates.
+
+### Provisioning Profiles Invalid
+
+This error indicates a provisioning profile(s) is invalid. To resolve:
+
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+
+### Missing Signing Certificates
+
+The error inddicates a provisioning profile is missing its signing certificate. To resolve: 
+
+1. [Create Building Certificates](#create-building-certificates)
