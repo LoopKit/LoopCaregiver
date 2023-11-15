@@ -62,11 +62,7 @@ function create_certs() {
     
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
         while read -r line; do
-            if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
-                #Ex: Error cloning certificates git repo, please make sure you have access to the repository
-                logMissingMatchRepoError "${line}"
-                exit 1
-            elif [[ "$line" == *"Error cloning certificates repo, please make sure you have read access to the repository you want to use"* ]]; then
+            if [[ "$line" == *"Error cloning certificates repo, please make sure you have read access to the repository you want to use"* ]]; then
                 #Sometimes you need to run the create certificates step twice due to this error.
                 #It seems there is a race condition with it being created and immediately clone... or maybe being rate limited.
                 errorTitle="Match Repository Clone Issue"
