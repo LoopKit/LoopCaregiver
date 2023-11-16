@@ -10,7 +10,8 @@ function appGroupName() {
 
 function readMEURL() {
     branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-    echo "${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
+    echo "${REPO_URL}"
+    #echo "${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
 }
 
 ## Error Message Helpers
