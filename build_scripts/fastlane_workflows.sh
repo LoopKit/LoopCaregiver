@@ -8,12 +8,6 @@ function appGroupName() {
     echo "group.com.$TEAMID.loopkit.LoopCaregiverGroup"
 }
 
-function readMEURL() {
-    branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-    echo "${REPO_URL}"
-    #echo "${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
-}
-
 ## Error Message Helpers
 
 function logMissingCertificateError() {
@@ -37,7 +31,9 @@ function logErrorMessages() {
     errorMessage="$2"
     rawError="$3"
     readMETag="#$(echo $errorTitle | tr " " "-")"
-    echo "::error title=$errorTitle::$errorMessage For more details on this error: $(readMEURL)/${readMETag}"
+    branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+    readMEURL="${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
+    echo "::error title=$errorTitle::$errorMessage For more details on this error: ${readMEURL}/${readMETag}"
     echo "::error title=Fastlane Details::$rawError"
 }
 
