@@ -233,7 +233,7 @@ This error indicates indicates your Apple Certificate is missing. To resolve:
 
 This error indicates you have too many certificates on the Apple developer portal. This sometimes occurs after deleting and recreating your Match Secrets repository. To resolve:
 
-![image](files:multiple-certificates.jpeg)
+![image](multiple-certificates.jpeg)
 
 1. Login to the Apple developer portal. 
 1. Delete unneeded certificates.
@@ -247,6 +247,6 @@ This error indicates a provisioning profile(s) is invalid. To resolve:
 
 ### Missing Signing Certificates
 
-The error inddicates a provisioning profile is missing its signing certificate. To resolve: 
+The error indicates a provisioning profile is missing its signing certificate. To resolve: 
 
 1. [Create Building Certificates](#create-building-certificates)
