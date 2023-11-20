@@ -1,6 +1,9 @@
 #!/bin/bash
 
-set -euo pipefail
+set -eu
+set -o errexit
+set -o pipefail
+set -o nounset
 
 ## Workflows
 
