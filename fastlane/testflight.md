@@ -191,17 +191,20 @@ This error means the app identifiers in the Apple Developer portal are missing t
 
 This error indicates the Match-Secrets repository is missing or was deleted. To resolve: 
 
-1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-secrets repository.
+1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-Secrets repository.
 1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
 1. [Create Building Certificates](#create-building-certificates)
 1. [Build LoopCaregiver](#build-loopcaregiver)
 
-### Match Repository Clone Issue
+### Match-Secrets Repository Clone Issue
 
-This error indicates there was an issue cloning the Match-secrets repository, although the reposistory appears to exist. Sometimes running the `Create Certificates` step a second time fixes it. To resolve: 
+This error indicates there was an issue accessing the Match-Secrets repository, although the reposistory appears to exist. To resolve: 
 
-1. Run [Create Building Certificates](#create-building-certificates) again.
-1. If the prior step fails again, check your Github Personal Access Token has the correct permissions. See [Create GitHub Personal Access Token](create-github-personal-access-token)
+* Run [Create Building Certificates](#create-building-certificates) again as running it twice sometimes fixes it. 
+
+If you receive the same failure again, try these:
+
+1. Check your Github Personal Access Token has the correct permissions. See [Create GitHub Personal Access Token](create-github-personal-access-token)
 1. Check that the Github Personal Access Token was stored as a secret. See [Setup GitHub LoopCaregiver Repository](setup-gitHub-loopcaregiver-repository)
 
 ### Missing Bundle Identifier
@@ -224,7 +227,7 @@ This error indicates one or more of your App Identifiers are not assigned the "L
 This error indicates indicates your Apple Certificate is missing. To resolve:
 
 1. Delete the Github Match-Secrets repository.
-1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-secrets repository.
+1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-Secrets repository.
 1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
 1. [Create Building Certificates](#create-building-certificates)
 1. [Build LoopCaregiver](#build-loopcaregiver)
@@ -233,10 +236,11 @@ This error indicates indicates your Apple Certificate is missing. To resolve:
 
 This error indicates you have too many certificates on the Apple developer portal. This sometimes occurs after deleting and recreating your Match Secrets repository. To resolve:
 
-![image](multiple-certificates.jpeg)
-
 1. Login to the Apple developer portal. 
-1. Delete unneeded certificates.
+1. Go to the "Certificates" page. 
+1. Delete all "Distribution" certificates that contain "API Key" in the "Created By" column.
+
+![image](multiple-certificates.jpeg)
 
 ### Provisioning Profiles Invalid
 
@@ -249,4 +253,4 @@ This error indicates a provisioning profile(s) is invalid. To resolve:
 
 The error indicates a provisioning profile is missing its signing certificate. To resolve: 
 
-1. [Create Building Certificates](#create-building-certificates)
+* [Create Building Certificates](#create-building-certificates)

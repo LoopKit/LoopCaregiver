@@ -2,41 +2,6 @@
 
 set -euo pipefail
 
-## Environment Helpers
-
-function appGroupName() {
-    echo "group.com.$TEAMID.loopkit.LoopCaregiverGroup"
-}
-
-## Error Message Helpers
-
-function logMissingCertificateError() {
-    #Occurs after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo.
-    line="$1"
-    errorTitle="Certificate is Missing"
-    errorMessage="Certificate is missing from the Apple developer portal. Resolve this by deleting the Github Match-Secrets repository. Then run all Gihub workflows again."
-    logErrorMessages "${errorTitle}" "${errorMessage}" "${line}"
-}
-
-function logMissingMatchRepoError() {
-    #Occurs after deleting the match repo. The Validate Secrets step will recreate it.
-    line="$1"
-    errorTitle="Match Repository Missing"
-    errorMessage="The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
-    logErrorMessages "${errorTitle}" "${errorMessage}" "${line}"
-}
-
-function logErrorMessages() {
-    errorTitle="$1"
-    errorMessage="$2"
-    rawError="$3"
-    readMETag="#$(echo $errorTitle | tr " " "-")"
-    branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
-    readMEURL="${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
-    echo "::error title=$errorTitle::$errorMessage For more details on this error: ${readMEURL}/${readMETag}"
-    echo "::error title=Fastlane Details::$rawError"
-}
-
 ## Workflows
 
 #Unused except for local testing.
@@ -60,10 +25,9 @@ function create_certs() {
     if ! fastlane caregiver_cert 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates repo, please make sure you have read access to the repository you want to use"* ]]; then
-                #Sometimes you need to run the create certificates step twice due to this error.
-                #It seems there is a race condition with it being created and immediately clone... or maybe being rate limited.
-                errorTitle="Match Repository Clone Issue"
-                errorMessage="Error cloning Match-Secrets repo. First try running the `Create Certificates` step again. If that fails, check your Github repository access."
+                #It seems there is a race condition with it being created and immediately cloned.
+                errorTitle="Match-Secrets Repository Clone Issue"
+                errorMessage="There was an error cloning the Match-Secrets repository. First try running the `Create Certificates` step again. If that fails, check your Github repository access."
                 logErrorMessages "${errorTitle}" "${errorMessage}" "${line}"
                 exit 1
             elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
@@ -153,11 +117,44 @@ function caregiver_release() {
     fi
 }
 
+## Environment Helpers
+
+function appGroupName() {
+    echo "group.com.$TEAMID.loopkit.LoopCaregiverGroup"
+}
+
+## Error Message Helpers
+
+function logMissingCertificateError() {
+    #Occurs after deleting your certificate. No steps seem to fix this, except deleting the Match-Secrets repo.
+    line="$1"
+    errorTitle="Certificate is Missing"
+    errorMessage="Certificate is missing from the Apple developer portal. Resolve this by deleting the Github Match-Secrets repository. Then run all Gihub workflows again."
+    logErrorMessages "${errorTitle}" "${errorMessage}" "${line}"
+}
+
+function logMissingMatchRepoError() {
+    #Occurs after deleting the match repo. The Validate Secrets step will recreate it.
+    line="$1"
+    errorTitle="Match Repository Missing"
+    errorMessage="The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
+    logErrorMessages "${errorTitle}" "${errorMessage}" "${line}"
+}
+
+function logErrorMessages() {
+    errorTitle="$1"
+    errorMessage="$2"
+    rawError="$3"
+    readMETag="#$(echo $errorTitle | tr " " "-")"
+    branchName=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}
+    readMEURL="${REPO_URL}/blob/${branchName}/fastlane/testflight.md"
+    echo "::error title=$errorTitle::$errorMessage For more details on this error: ${readMEURL}/${readMETag}"
+    echo "::error title=Fastlane Details::$rawError"
+}
+
 ## Invoke any script function from the command line
 
-  if [ $# -gt 0 ]; then
-#if declare -f "$1" > /dev/null
-  # call arguments verbatim
+if [ $# -gt 0 ]; then
   "$@"
 else
   # Show a helpful error
