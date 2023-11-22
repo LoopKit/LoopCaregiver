@@ -59,7 +59,7 @@ function create_certs() {
     fi
 }
 
-function build_loopcaregiver() {
+function build() {
     if ! fastlane caregiver_build 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
@@ -112,7 +112,7 @@ function build_loopcaregiver() {
 }
 
 #Unused except for local testing.
-function caregiver_release() {
+function release() {
     if ! fastlane caregiver_release 2>1 | tee fastlane.log; then
         #Default
         echo "::error::Could not create release. See error log for details."
