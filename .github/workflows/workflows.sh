@@ -29,6 +29,7 @@ function create_certs() {
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates repo, please make sure you have read access to the repository you want to use"* ]]; then
                 # There may be a race condition between creating the repo and immediately cloning it.
+                # Note the Validate / Access job may catch this first.
                 readMeSectionTitle="Match-Secrets Repository Clone Issue"
                 errorMessage="There was an error cloning the Match-Secrets repository. First try running the `Create Certificates` step again. If that fails, check your Github repository access."
                 logErrorMessages "${readMeSectionTitle}" "${errorMessage}" "${line}"
@@ -63,8 +64,9 @@ function build() {
     if ! fastlane caregiver_build 2>1 | tee fastlane.log; then
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
-                #Ex: Error cloning certificates git repo, please make sure you have access to the repository - see instructions above
-                #Occurs after deleting the match repo. The Validate Secrets step will recreate it.
+                # Ex: Error cloning certificates git repo, please make sure you have access to the repository - see instructions above
+                # Occurs after deleting the match repo. The Validate Secrets step will recreate it.
+                # Note the Validate / Access job may catch this first.
                 readMeSectionTitle="Match Repository Missing"
                 errorMessage="The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
                 logErrorMessages "${readMeSectionTitle}" "${errorMessage}" "${line}"
