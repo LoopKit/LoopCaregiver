@@ -14,7 +14,7 @@
 
 ## Clone Repo
 
-* Xcode version 14 or greater required
+* Xcode version 15 or greater required
 * Run the following command to clone the repo to a new directory named "LoopCaregiver" (The directory will be created for you)
 ```
 git clone --branch=dev --recurse-submodules https://github.com/LoopKit/LoopCaregiver LoopCaregiver

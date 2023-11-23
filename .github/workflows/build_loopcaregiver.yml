@@ -30,7 +30,7 @@ jobs:
       
       # Build signed LoopCaregiver IPA file
       - name: Fastlane Build & Archive
-        run: fastlane caregiver_build
+        run: .github/workflows/workflows.sh build
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
@@ -38,6 +38,7 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
       
       # Upload to TestFlight
       - name: Fastlane upload to TestFlight

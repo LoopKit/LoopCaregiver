@@ -28,7 +28,7 @@ jobs:
       
       # Create or update certificate for LoopCaregiver
       - name: Create Caregiver Certificate
-        run: fastlane caregiver_cert
+        run: .github/workflows/workflows.sh create_certs
         env:
           TEAMID: ${{ secrets.TEAMID }}
           GH_PAT: ${{ secrets.GH_PAT }}
@@ -36,3 +36,4 @@ jobs:
           FASTLANE_KEY_ID: ${{ secrets.FASTLANE_KEY_ID }}
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
+          REPO_URL: ${{ github.server_url }}/${{ github.repository }}
