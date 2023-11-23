@@ -64,7 +64,10 @@ function build() {
         while read -r line; do
             if [[ "$line" == *"Error cloning certificates git repo"* ]]; then
                 #Ex: Error cloning certificates git repo, please make sure you have access to the repository - see instructions above
-                logMissingMatchRepoError "${line}"
+                #Occurs after deleting the match repo. The Validate Secrets step will recreate it.
+                readMeSectionTitle="Match Repository Missing"
+                errorMessage="The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
+                logErrorMessages "${readMeSectionTitle}" "${errorMessage}" "${line}"
                 exit 1
             elif [[ "$line" == *"Certificate "* && "$line" == *"(stored in your storage) is not available on the Developer Portal"* ]]; then
                 #Ex: Certificate 'WZUK5NWX3L' (stored in your storage) is not available on the Developer Portal
@@ -133,14 +136,6 @@ function logMissingCertificateError() {
     line="$1"
     readMeSectionTitle="Certificate is Missing"
     errorMessage="Certificate is missing from the Apple developer portal. Resolve this by deleting the Github Match-Secrets repository. Then run all Gihub workflows again."
-    logErrorMessages "${readMeSectionTitle}" "${errorMessage}" "${line}"
-}
-
-function logMissingMatchRepoError() {
-    #Occurs after deleting the match repo. The Validate Secrets step will recreate it.
-    line="$1"
-    readMeSectionTitle="Match Repository Missing"
-    errorMessage="The Match-Secrets repository is missing. To resolve, run the 'Validate Secrets' step again."
     logErrorMessages "${readMeSectionTitle}" "${errorMessage}" "${line}"
 }
 
