@@ -1,13 +1,17 @@
-#include? "../../LoopConfigOverride.xcconfig"
+//The values in this file can override the configuration at LoopCaregiver/LoopConfigOverride.xcconfig
 
-// Override this if you don't want the default com.${DEVELOPMENT_TEAM}.loopkit that loop uses
-// MAIN_APP_BUNDLE_IDENTIFIER = com.myname.loop
+// Override this if you don't want the default com.${DEVELOPMENT_TEAM}.loopkit that Caregiver uses
+// CAREGIVER_APP_BUNDLE_IDENTIFIER = com.myname.LoopCaregiver
 
 // Customize this to change the app name displayed
-//MAIN_APP_DISPLAY_NAME = Loop
+MAIN_APP_DISPLAY_NAME = LoopCaregiver
 
 // Features
 SWIFT_ACTIVE_COMPILATION_CONDITIONS = $(inherited) SIMULATORS_ENABLED //DEBUG_FEATURES_ENABLED
 
 // Put your team id here for signing
 //LOOP_DEVELOPMENT_TEAM = UY678SP37Q
+
+//You can optionally add a configuration file like this, 1 directory above this file.
+//That will allow you to override congfiguration without changing your repository code here.
+#include? "../../LoopConfigOverride.xcconfig"
