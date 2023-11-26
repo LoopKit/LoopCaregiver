@@ -74,12 +74,21 @@
          runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
+            BlueprintIdentifier = "A9CFDD302AEC02D600FA701B"
+            BuildableName = "LoopCaregiverWatchAppExtension.appex"
+            BlueprintName = "LoopCaregiverWatchAppExtension"
+            ReferencedContainer = "container:LoopCaregiver.xcodeproj">
+         </BuildableReference>
+      </BuildableProductRunnable>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
             BlueprintIdentifier = "A9CFDD1A2AEBFF1200FA701B"
             BuildableName = "LoopCaregiverWatchApp.app"
             BlueprintName = "LoopCaregiverWatchApp"
             ReferencedContainer = "container:LoopCaregiver.xcodeproj">
          </BuildableReference>
-      </BuildableProductRunnable>
+      </MacroExpansion>
       <EnvironmentVariables>
          <EnvironmentVariable
             key = "_XCWidgetKind"

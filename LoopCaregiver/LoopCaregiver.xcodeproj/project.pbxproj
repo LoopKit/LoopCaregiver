@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
+		A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */; };
 		A916A9722A3276530096B999 /* NSPersistentStoreCoordinator+Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */; };
 		A9299C432ADC3DE7009193AB /* ServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9299C422ADC3DE7009193AB /* ServiceComposer.swift */; };
 		A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */; };
@@ -183,6 +184,11 @@
 		A9EC19A9292144040022D39F /* OverrideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A8292144040022D39F /* OverrideView.swift */; };
 		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
 		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
+		A9EC5C792B10CDC600AA32EF /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */; };
+		A9EC5C7C2B10D1EF00AA32EF /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
+		A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
+		A9EC5C7F2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
+		A9EC5C802B10EA9100AA32EF /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
 		A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */; };
 		A9EFD0002ADF6A01008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
 		A9EFD0022AE08418008D63EC /* DeepLinkParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */; };
@@ -272,6 +278,7 @@
 		3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LoopCaregiver.xcconfig; sourceTree = "<group>"; };
 		3DF4E0882980736C00E91E16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
+		A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
 		A9299C422ADC3DE7009193AB /* ServiceComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComposer.swift; sourceTree = "<group>"; };
 		A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Presentable.swift"; sourceTree = "<group>"; };
 		A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPersistentStoreCoordinator+Migration.swift"; sourceTree = "<group>"; };
@@ -394,6 +401,7 @@
 		A9EC19A8292144040022D39F /* OverrideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideView.swift; sourceTree = "<group>"; };
 		A9EC19AA292156D80022D39F /* CarbInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbInputView.swift; sourceTree = "<group>"; };
 		A9EC19AC2921A19C0022D39F /* BolusInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusInputView.swift; sourceTree = "<group>"; };
+		A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Watch.swift"; sourceTree = "<group>"; };
 		A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
 		A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTestCase.swift; sourceTree = "<group>"; };
 		A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -768,7 +776,9 @@
 				A9CFDD452AEC055500FA701B /* Info.plist */,
 				A9CFDD432AEC042500FA701B /* LoopCaregiverWatchApp.entitlements */,
 				A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */,
+				A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */,
 				A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */,
+				A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */,
 				A9CFDD212AEBFF1400FA701B /* Assets.xcassets */,
 				A9CFDD232AEBFF1400FA701B /* Preview Content */,
 			);
@@ -1168,7 +1178,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */,
+				A9EC5C802B10EA9100AA32EF /* Bundle+Extensions.swift in Sources */,
 				A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */,
+				A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */,
 				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1177,8 +1190,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9EC5C7F2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */,
 				A9CFDD362AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift in Sources */,
 				A9CFDD382AEC02D600FA701B /* AppIntent.swift in Sources */,
+				A9EC5C7C2B10D1EF00AA32EF /* Bundle+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1207,6 +1222,7 @@
 				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
 				A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */,
 				A952236D2A7EDC790070FE13 /* RemoteCommand.swift in Sources */,
+				A9EC5C792B10CDC600AA32EF /* WatchConnectivityManager.swift in Sources */,
 				A952236A2A7EDA9B0070FE13 /* Action.swift in Sources */,
 				A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */,
 				A95223692A7EDA9B0070FE13 /* CarbAction.swift in Sources */,

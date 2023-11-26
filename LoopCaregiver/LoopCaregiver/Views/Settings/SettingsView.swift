@@ -147,6 +147,12 @@ struct SettingsView: View {
                 Toggle("Demo Mode", isOn: $settings.demoModeEnabled)
                 Text("Demo mode hides sensitive data for Caregiver presentations.")
                     .font(.footnote)
+                Button("Send Watch Message") {
+                    let formatter = DateFormatter()
+                    formatter.dateStyle = .none
+                    formatter.timeStyle = .short
+                    WatchConnectivityManager.shared.send(formatter.string(from: Date()))
+                }
                 if !settings.demoModeEnabled {
                     Text(addLooperDeepLink)
                         .textSelection(.enabled)

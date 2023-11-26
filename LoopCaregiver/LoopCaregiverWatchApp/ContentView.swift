@@ -6,16 +6,41 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct ContentView: View {
+    
+    @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
+    var userDefaults = UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
+    @State var lastPhoneDebugMessage: String? = nil
+    
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("The Caregiver Watch app feature is not complete. Stay Tuned.")
+            if let lastMessage = lastPhoneDebugMessage {
+                Button(action: {
+                    reloadWidget()
+                }, label: {
+                    Text("Reload Widget")
+                })
+                Text(lastMessage)
+            } else {
+                Text("The Caregiver Watch app feature is not complete. Stay tuned.")
+            }
         }
         .padding()
+        .onChange(of: connectivityManager.notificationMessage, {
+            if let message = connectivityManager.notificationMessage?.text {
+                userDefaults.updateLastPhoneDebugMessage(message)
+                lastPhoneDebugMessage = message
+            }
+        })
+        .onAppear {
+            self.lastPhoneDebugMessage = userDefaults.lastPhoneDebugMessage
+        }
+    }
+    
+    func reloadWidget() {
+        WidgetCenter.shared.reloadTimelines(ofKind: "LoopCaregiverWatchAppExtension")
     }
 }
 

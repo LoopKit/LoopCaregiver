@@ -44,18 +44,22 @@ struct SimpleEntry: TimelineEntry {
 
 struct LoopCaregiverWatchAppExtensionEntryView : View {
     var entry: Provider.Entry
+    var userDefaults = UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
 
     var body: some View {
         VStack {
-            HStack {
-                Text("Time:")
-                Text(entry.date, style: .time)
-            }
-        
-            Text("Caregiver Watch App:")
-            Text(entry.configuration.favoriteEmoji)
+            Text(lastPhoneDebugMessage)
         }
     }
+
+    var lastPhoneDebugMessage: String {
+        if let message = userDefaults.lastPhoneDebugMessage {
+            return message
+        } else {
+            return "?"
+        }
+    }
+
 }
 
 @main
