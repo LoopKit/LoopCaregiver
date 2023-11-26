@@ -164,6 +164,7 @@
 		A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */; };
 		A9CFDD222AEBFF1400FA701B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD212AEBFF1400FA701B /* Assets.xcassets */; };
 		A9CFDD252AEBFF1400FA701B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD242AEBFF1400FA701B /* Preview Assets.xcassets */; };
+		A9CFDD292AEBFF1400FA701B /* LoopCaregiverWatchApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = A9CFDD1B2AEBFF1200FA701B /* LoopCaregiverWatchApp.app */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A9CFDD322AEC02D600FA701B /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F2F372A29350C00F7DE2D /* WidgetKit.framework */; };
 		A9CFDD332AEC02D600FA701B /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F2F392A29350D00F7DE2D /* SwiftUI.framework */; };
 		A9CFDD362AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD352AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift */; };
@@ -173,6 +174,7 @@
 		A9D2B8272A2CAFD500826490 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
 		A9D3FF222A6C3B99000C891D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF212A6C3B99000C891D /* Color.swift */; };
 		A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF232A6C3C54000C891D /* HKUnit.swift */; };
+		A9E14D3A2A2BA5A600BDB93D /* LoopCaregiverWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A9E14D3F2A2BB18500BDB93D /* LatestGlucoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E14D3E2A2BB18500BDB93D /* LatestGlucoseView.swift */; };
 		A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */; };
 		A9EC197E291FEF940022D39F /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197D291FEF940022D39F /* ContentView.swift */; };
@@ -196,6 +198,7 @@
 		A9EFD0042AE093F9008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
 		A9F871202A2EBE63007EC235 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F8711F2A2EBE63007EC235 /* Intents.framework */; };
 		A9F871232A2EBE63007EC235 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F871222A2EBE63007EC235 /* IntentHandler.swift */; };
+		A9F871382A2EBE64007EC235 /* LoopCaregiverIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A9F8713F2A2EBE79007EC235 /* LoopCaregiverWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F422A29350D00F7DE2D /* LoopCaregiverWidget.intentdefinition */; };
 		A9F871402A2FF2F5007EC235 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
 		A9F871412A2FF2F5007EC235 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
@@ -238,12 +241,33 @@
 			remoteGlobalIDString = A9EC1977291FEF940022D39F;
 			remoteInfo = LoopCaregiver;
 		};
+		A9CFDD262AEBFF1400FA701B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EC1970291FEF940022D39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9CFDD1A2AEBFF1200FA701B;
+			remoteInfo = "LoopCaregiverWatchApp Watch App";
+		};
 		A9CFDD3C2AEC02D700FA701B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = A9EC1970291FEF940022D39F /* Project object */;
 			proxyType = 1;
 			remoteGlobalIDString = A9CFDD302AEC02D600FA701B;
 			remoteInfo = LoopCaregiverWatchAppExtensionExtension;
+		};
+		A9E14D382A2BA59C00BDB93D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EC1970291FEF940022D39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A99F2F352A29350C00F7DE2D;
+			remoteInfo = LoopCaregiverWidgetExtension;
+		};
+		A9F871362A2EBE64007EC235 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = A9EC1970291FEF940022D39F /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A9F8711D2A2EBE63007EC235;
+			remoteInfo = MyIntentExtension;
 		};
 /* End PBXContainerItemProxy section */
 
@@ -261,6 +285,17 @@
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		A9CFDD282AEBFF1400FA701B /* Embed Watch Content */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "$(CONTENTS_FOLDER_PATH)/Watch";
+			dstSubfolderSpec = 16;
+			files = (
+				A9CFDD292AEBFF1400FA701B /* LoopCaregiverWatchApp.app in Embed Watch Content */,
+			);
+			name = "Embed Watch Content";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		A9CFDD422AEC02D700FA701B /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -268,6 +303,18 @@
 			dstSubfolderSpec = 13;
 			files = (
 				A9CFDD3E2AEC02D700FA701B /* LoopCaregiverWatchAppExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A9E14D3D2A2BA5A600BDB93D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				A9F871382A2EBE64007EC235 /* LoopCaregiverIntentExtension.appex in Embed Foundation Extensions */,
+				A9E14D3A2A2BA5A600BDB93D /* LoopCaregiverWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -956,10 +1003,15 @@
 				A9EC1975291FEF940022D39F /* Frameworks */,
 				A9EC1976291FEF940022D39F /* Resources */,
 				A95F50C2292A602F00079AAF /* Embed Frameworks */,
+				A9E14D3D2A2BA5A600BDB93D /* Embed Foundation Extensions */,
+				A9CFDD282AEBFF1400FA701B /* Embed Watch Content */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				A9E14D392A2BA59C00BDB93D /* PBXTargetDependency */,
+				A9F871372A2EBE64007EC235 /* PBXTargetDependency */,
+				A9CFDD272AEBFF1400FA701B /* PBXTargetDependency */,
 			);
 			name = LoopCaregiver;
 			packageProductDependencies = (
@@ -1350,10 +1402,25 @@
 			target = A9EC1977291FEF940022D39F /* LoopCaregiver */;
 			targetProxy = A9346F872AC9820500C15F70 /* PBXContainerItemProxy */;
 		};
+		A9CFDD272AEBFF1400FA701B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9CFDD1A2AEBFF1200FA701B /* LoopCaregiverWatchApp */;
+			targetProxy = A9CFDD262AEBFF1400FA701B /* PBXContainerItemProxy */;
+		};
 		A9CFDD3D2AEC02D700FA701B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = A9CFDD302AEC02D600FA701B /* LoopCaregiverWatchAppExtension */;
 			targetProxy = A9CFDD3C2AEC02D700FA701B /* PBXContainerItemProxy */;
+		};
+		A9E14D392A2BA59C00BDB93D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A99F2F352A29350C00F7DE2D /* LoopCaregiverWidgetExtension */;
+			targetProxy = A9E14D382A2BA59C00BDB93D /* PBXContainerItemProxy */;
+		};
+		A9F871372A2EBE64007EC235 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A9F8711D2A2EBE63007EC235 /* LoopCaregiverIntentExtension */;
+			targetProxy = A9F871362A2EBE64007EC235 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
