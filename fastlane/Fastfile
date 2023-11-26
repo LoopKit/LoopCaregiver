@@ -184,6 +184,18 @@ platform :ios do
     ])
 
   end
+  
+  class CaregiverBuildError < StandardError; end
+  
+  def createCaregiverError(error_message)
+      return CaregiverBuildError.new("Error: #{error_message}")
+  end
+
+  class CaregiverBuildError < StandardError; end
+
+  def createCaregiverError(error_message)
+      return CaregiverBuildError.new("Error: #{error_message}")
+  end
 
   desc "Provision Caregiver Certificate"
   lane :caregiver_cert do
@@ -196,6 +208,34 @@ platform :ios do
       key_content: "#{FASTLANE_KEY}"
     )
 
+    def validate_bundle_id(identifier)
+
+      bundle_id = Spaceship::ConnectAPI::BundleId.find(identifier)
+
+      # Throw an error if the bundle_id can't be found
+      raise createCaregiverError("App Identifier not found for: #{identifier}") if bundle_id.nil?
+
+      capabilities = bundle_id.get_capabilities
+
+      # Try to find a capability where capability_type is "APP_GROUPS"
+      app_group_capability_exists = false
+      capabilities.each do |capability|
+        if capability.capability_type == "APP_GROUPS"
+          app_group_capability_exists = true
+          break
+        end
+      end
+
+      # Throw an error if no such capability exists
+      raise createCaregiverError("APP_GROUPS capability not found for identifier: #{identifier}") unless app_group_capability_exists
+    end
+
+    #validate_bundle_id("com.#{TEAMID}.loopkit.LoopCaregiver")
+    #validate_bundle_id("com.#{TEAMID}.loopkit.LoopCaregiver.IntentExtension")
+    #validate_bundle_id("com.#{TEAMID}.loopkit.LoopCaregiver.WidgetExtension")
+    #validate_bundle_id("com.#{TEAMID}.loopkit.LoopCaregiver.watchkitapp")
+    #validate_bundle_id("com.#{TEAMID}.loopkit.LoopCaregiver.watchkitapp.WidgetExtension")
+    
     match(
       type: "appstore",
       force: true,
