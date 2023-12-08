@@ -55,7 +55,7 @@ struct OverrideView: View {
                             HStack {
                                 //Loading Pickers when there is a nil selection causes consolve warnings
                                 Picker("Overrides", selection: $viewModel.pickerSelectedOverride) {
-                                    ForEach(overrideState.availableOverrides, id: \.self) { overrideValue in
+                                    ForEach(overrideState.presets, id: \.self) { overrideValue in
                                         Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
                                             .fontWeight(overrideValue == viewModel.activeOverride ? .heavy : .regular)
                                     }
@@ -210,7 +210,7 @@ struct OverrideView: View {
                 
                 Section ("Presets") {
                     VStack(spacing: 10) {
-                        ForEach(overrideState.availableOverrides) { preset in
+                        ForEach(overrideState.presets) { preset in
                             experimentalPresetButtonRow(preset: preset)
                         }
                     }
@@ -296,7 +296,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
     var selectedDefaultDuration: TimeInterval? {
         guard let pickerSelectedOverride else {return nil}
         if case .loadingComplete(let overrideState) = overrideListState {
-            if let availOverride = overrideState.availableOverrides.first(where: {$0.id == pickerSelectedOverride.id}) {
+            if let availOverride = overrideState.presets.first(where: {$0.id == pickerSelectedOverride.id}) {
                 return availOverride.duration
             } else {
                 return nil
@@ -368,7 +368,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
     
     private var overrideIsSelectedForUpdate: Bool {
         if case .loadingComplete(let overrideState) = overrideListState {
-            return overrideState.availableOverrides.count > 0
+            return overrideState.presets.count > 0
         } else {
             return false
         }
@@ -383,7 +383,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
         
         do {
             let overrideState = try await delegate.overrideState()
-            guard overrideState.availableOverrides.count > 0 else {
+            guard overrideState.presets.count > 0 else {
                 enum OverrideViewLoadError: LocalizedError {
                     case emptyOverrides
                     var errorDescription: String? { return "No Overrides Available"}
@@ -394,7 +394,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
             if let activeOverride = overrideState.activeOverride {
                 self.pickerSelectedOverride = activeOverride
                 self.activeOverride = activeOverride
-            } else if let firstOverride = overrideState.availableOverrides.first {
+            } else if let firstOverride = overrideState.presets.first {
                 self.pickerSelectedOverride = firstOverride
             }
         } catch {
@@ -477,7 +477,7 @@ protocol OverrideViewDelegate {
 
 struct OverrideState: Equatable {
     let activeOverride: TemporaryScheduleOverride?
-    let availableOverrides: [TemporaryScheduleOverride]
+    let presets: [TemporaryScheduleOverride]
 }
 
 
@@ -497,7 +497,7 @@ struct OverrideViewPreviewMock: OverrideViewDelegate {
     
     func overrideState() async throws -> OverrideState {
         //throw OverrideViewPreviewMockError.NetworkError //For testing
-        return OverrideState(activeOverride: currentOverride, availableOverrides: presets)
+        return OverrideState(activeOverride: currentOverride, presets: presets)
     }
     
     func startOverride(overrideName: String, durationTime: TimeInterval) async throws {
@@ -532,7 +532,7 @@ struct OverrideViewPreviewMock: OverrideViewDelegate {
 
 extension RemoteDataServiceManager: OverrideViewDelegate {
     func overrideState() async throws -> OverrideState {
-        return OverrideState(activeOverride: activeOverride(), availableOverrides: currentProfile?.settings.overridePresets ?? [])
+        return OverrideState(activeOverride: activeOverride(), presets: currentProfile?.settings.overridePresets ?? [])
     }
 }
 

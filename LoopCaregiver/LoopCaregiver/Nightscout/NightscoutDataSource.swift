@@ -53,8 +53,8 @@ class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
         return try await treatmentsFetcher.fetchCarbEntries()
     }
     
-    func fetchOverrideEntries() async throws -> [OverrideTreatment] {
-        return try await treatmentsFetcher.fetchOverrideEntries()
+    func fetchOverridePresets() async throws -> [OverrideTreatment] {
+        return try await treatmentsFetcher.fetchOverridePresets()
     }
 
     func fetchNotes() async throws -> [NoteNightscoutTreatment] {
@@ -242,7 +242,7 @@ actor NightscoutTreatmentFetcher {
             .carbTreatments()
     }
     
-    func fetchOverrideEntries() async throws -> [OverrideTreatment] {
+    func fetchOverridePresets() async throws -> [OverrideTreatment] {
         return try await fetchTreatments()
             .overrideTreatments()
     }

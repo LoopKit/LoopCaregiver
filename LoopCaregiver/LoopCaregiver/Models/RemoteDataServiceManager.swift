@@ -19,7 +19,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
     @Published var carbEntries: [CarbCorrectionNightscoutTreatment] = []
     @Published var bolusEntries: [BolusNightscoutTreatment] = []
     @Published var basalEntries: [TempBasalNightscoutTreatment] = []
-    @Published var overrideEntries: [OverrideTreatment] = []
+    @Published var overridePresets: [OverrideTreatment] = []
     @Published var latestDeviceStatus: DeviceStatus? = nil
     @Published var recommendedBolus: Double? = nil
     @Published var currentIOB: IOBStatus? = nil
@@ -77,7 +77,7 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
             async let carbEntriesAsync = remoteDataProvider.fetchCarbEntries()
             async let bolusEntriesAsync = remoteDataProvider.fetchBolusEntries()
             async let basalEntriesAsync = remoteDataProvider.fetchBasalEntries()
-            async let overrideEntriesAsync = remoteDataProvider.fetchOverrideEntries()
+            async let overridePresetsAsync = remoteDataProvider.fetchOverridePresets()
             async let deviceStatusAsync = remoteDataProvider.fetchLatestDeviceStatus()
             async let recentCommandsAsync = remoteDataProvider.fetchRecentCommands()
             async let curentProfileAsync = remoteDataProvider.fetchCurrentProfile()
@@ -97,9 +97,9 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
                 self.basalEntries = basalEntries
             }
             
-            let overrideEntries = try await overrideEntriesAsync
-            if overrideEntries != self.overrideEntries {
-                self.overrideEntries = overrideEntries
+            let overridePresets = try await overridePresetsAsync
+            if overridePresets != self.overridePresets {
+                self.overridePresets = overridePresets
             }
             
             if let deviceStatus = try await deviceStatusAsync {
@@ -240,8 +240,8 @@ class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
         return try await remoteDataProvider.fetchCarbEntries()
     }
     
-    func fetchOverrideEntries() async throws -> [NightscoutKit.OverrideTreatment] {
-        return try await remoteDataProvider.fetchOverrideEntries()
+    func fetchOverridePresets() async throws -> [NightscoutKit.OverrideTreatment] {
+        return try await remoteDataProvider.fetchOverridePresets()
     }
     
     func fetchLatestDeviceStatus() async throws -> DeviceStatus? {
@@ -334,7 +334,7 @@ protocol RemoteDataServiceProvider {
     func fetchBolusEntries() async throws -> [BolusNightscoutTreatment]
     func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment]
     func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment]
-    func fetchOverrideEntries() async throws -> [OverrideTreatment]
+    func fetchOverridePresets() async throws -> [OverrideTreatment]
     func fetchLatestDeviceStatus() async throws -> DeviceStatus?
     func deliverCarbs(amountInGrams: Double, absorptionTime: TimeInterval, consumedDate: Date) async throws
     func deliverBolus(amountInUnits: Double) async throws
