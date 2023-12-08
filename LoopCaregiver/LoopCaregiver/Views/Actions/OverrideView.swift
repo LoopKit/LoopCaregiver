@@ -51,13 +51,13 @@ struct OverrideView: View {
             case .loadingComplete(let overrideState):
                 Form {
                     Section (){
-                        if viewModel.pickerSelectedOverride != nil {
+                        if viewModel.pickerSelectedRow != nil {
                             HStack {
                                 //Loading Pickers when there is a nil selection causes console warnings
-                                Picker("Overrides", selection: $viewModel.pickerSelectedOverride) {
-                                    ForEach(overrideState.presets, id: \.self) { overrideValue in
-                                        Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
-                                            .fontWeight(overrideValue == viewModel.activeOverride ? .heavy : .regular)
+                                Picker("Overrides", selection: $viewModel.pickerSelectedRow) {
+                                    ForEach(overrideState.pickerRows(), id: \.self) { row in
+                                        Text(row.presentableDescription()).tag(row as OverridePickerRowModel?)
+                                            .fontWeight(row.isActive ? .heavy : .regular)
                                     }
                                 }.pickerStyle(.wheel)
                                     .labelsHidden()
@@ -162,18 +162,18 @@ struct OverrideView: View {
             Spacer()
         }
         .navigationDestination(isPresented: $viewModel.experimentalEditPresetShowing, destination: {
-            if let editingPreset = viewModel.pickerSelectedOverride {
+            if let editingPreset = viewModel.experimentalSelectedOverride {
                 PresetEditView( preset: editingPreset, viewModel: viewModel)
                     .navigationBarBackButtonHidden()
                     .navigationBarItems(leading: Button(action: {
                         viewModel.experimentalEditPresetShowing = false
-                        viewModel.pickerSelectedOverride = nil
+                        viewModel.experimentalSelectedOverride = nil
                     }) {
                         Text("Back")
                     })
                     .navigationBarItems(trailing: Button(action: {
                         viewModel.experimentalEditPresetShowing = false
-                        viewModel.pickerSelectedOverride = nil
+                        viewModel.experimentalSelectedOverride = nil
                     }) {
                         Text("Enable")
                     })
@@ -221,11 +221,11 @@ struct OverrideView: View {
     
     func experimentalPresetButtonRow(preset: TemporaryScheduleOverride) -> some View {
         Button(action: {
-            viewModel.pickerSelectedOverride = preset
+            viewModel.experimentalSelectedOverride = preset
             viewModel.experimentalEditPresetShowing = true
         }, label: {
             PresetRowView(preset: preset) {
-                viewModel.pickerSelectedOverride = preset
+                viewModel.experimentalSelectedOverride = preset
             }
             .background(Color.white.opacity(0.000001)) //To get taps to work
         })
@@ -240,7 +240,8 @@ class OverrideViewModel: ObservableObject, Identifiable {
     var cancellables = [AnyCancellable]()
     
     @Published var overrideListState: OverrideListState = .loading
-    @Published var pickerSelectedOverride: TemporaryScheduleOverride?
+    @Published var pickerSelectedRow: OverridePickerRowModel?
+    @Published var experimentalSelectedOverride: TemporaryScheduleOverride?
     @Published var activeOverride: TemporaryScheduleOverride?
     @Published var lastDeliveryError: Error? = nil
     @Published var deliveryInProgress: Bool = false
@@ -256,7 +257,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
     }
     
     func bindPickerSelection() {
-        $pickerSelectedOverride.sink { val in
+        $pickerSelectedRow.sink { val in
             if let duration = val?.duration, duration > 0  {
                 self.enableIndefinitely = false
                 let (hours, minutes) = duration.hoursAndMinutes()
@@ -289,15 +290,15 @@ class OverrideViewModel: ObservableObject, Identifiable {
         }.store(in: &cancellables)
     }
     
-    var selectedDuration: TimeInterval {
+    var pickerSelectedDuration: TimeInterval {
         return TimeInterval(durationHourSelection * 3600) + TimeInterval(durationMinuteSelection * 60)
     }
     
     var selectedDefaultDuration: TimeInterval? {
-        guard let pickerSelectedOverride else {return nil}
+        guard let pickerSelectedRow else {return nil}
         if case .loadingComplete(let overrideState) = overrideListState {
-            if let availOverride = overrideState.presets.first(where: {$0.id == pickerSelectedOverride.id}) {
-                return availOverride.duration
+            if let overrideRow = overrideState.pickerRows().first(where: {$0.name == pickerSelectedRow.name}) {
+                return overrideRow.duration
             } else {
                 return nil
             }
@@ -320,8 +321,8 @@ class OverrideViewModel: ObservableObject, Identifiable {
     }
     
     var actionButtonType: ActionButtonType {
-        if let pickerSelectedOverride = pickerSelectedOverride,
-           pickerSelectedOverride == activeOverride, activeOverride?.duration == selectedDuration {
+        if let pickerSelectedRow = pickerSelectedRow,
+           pickerSelectedRow.isActive, activeOverride?.duration == pickerSelectedDuration {
             return .cancel
         } else {
             return .update
@@ -337,7 +338,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
     }
     
     var activeOverrideDuration: Double? {
-        guard let duration = pickerSelectedOverride?.duration else { return nil }
+        guard let duration = pickerSelectedRow?.duration else { return nil }
         return duration
     }
     
@@ -392,10 +393,10 @@ class OverrideViewModel: ObservableObject, Identifiable {
             }
             overrideListState = .loadingComplete(overrideState: overrideState)
             if let activeOverride = overrideState.activeOverride {
-                self.pickerSelectedOverride = activeOverride
+                self.pickerSelectedRow = activeOverride.toPickerRow(isActive: true)
                 self.activeOverride = activeOverride
-            } else if let firstOverride = overrideState.presets.first {
-                self.pickerSelectedOverride = firstOverride
+            } else if let firstOverride = overrideState.presets.first?.toPickerRow(isActive: false) {
+                self.pickerSelectedRow = firstOverride
             }
         } catch {
             overrideListState = .loadingError(error)
@@ -436,9 +437,9 @@ class OverrideViewModel: ObservableObject, Identifiable {
         deliveryInProgress = true
         
         do {
-            if let selectedOverride = pickerSelectedOverride {
+            if let selectedOverride = pickerSelectedRow {
                 try await delegate.startOverride(overrideName: selectedOverride.name ?? "",
-                                                                       durationTime: selectedDuration)
+                                                                       durationTime: pickerSelectedDuration)
             } else {
                 //TODO: Throw error
             }
@@ -478,6 +479,50 @@ protocol OverrideViewDelegate {
 struct OverrideState: Equatable {
     let activeOverride: TemporaryScheduleOverride?
     let presets: [TemporaryScheduleOverride]
+    
+    func pickerRows() -> [OverridePickerRowModel] {
+        var result = [OverridePickerRowModel]()
+        for preset in presets {
+            if let activeOverride = activeOverride, preset.name == activeOverride.name {
+                result.append(activeOverride.toPickerRow(isActive: true))
+            } else {
+                result.append(preset.toPickerRow(isActive: false))
+            }
+        }
+        return result
+    }
+}
+
+extension TemporaryScheduleOverride {
+    func toPickerRow(isActive: Bool) -> OverridePickerRowModel {
+        return OverridePickerRowModel(targetRange: targetRange, insulinNeedsScaleFactor: insulinNeedsScaleFactor, symbol: symbol, duration: duration, name: name, isActive: isActive)
+    }
+}
+
+struct OverridePickerRowModel: Hashable {
+    public let targetRange: ClosedRange<Double>?
+    public let insulinNeedsScaleFactor: Double?
+    public let symbol: String?
+    public let duration: TimeInterval
+    public let name: String?
+    public let isActive: Bool
+    
+    func presentableDescription() -> String {
+        return "\(symbol ?? "") \(name ?? "")"
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+    }
+    
+    public static func == (lhs: OverridePickerRowModel, rhs: OverridePickerRowModel) -> Bool {
+        return lhs.name == rhs.name &&
+        lhs.symbol == rhs.symbol &&
+        lhs.duration == rhs.duration &&
+        lhs.targetRange == rhs.targetRange &&
+        lhs.insulinNeedsScaleFactor == rhs.insulinNeedsScaleFactor &&
+        lhs.isActive == rhs.isActive
+    }
 }
 
 
