@@ -294,26 +294,9 @@ class OverrideViewModel: ObservableObject, Identifiable {
         return TimeInterval(durationHourSelection * 3600) + TimeInterval(durationMinuteSelection * 60)
     }
     
-    var selectedDefaultDuration: TimeInterval? {
-        guard let pickerSelectedRow else {return nil}
-        if case .loadingComplete(let overrideState) = overrideListState {
-            if let overrideRow = overrideState.pickerRows().first(where: {$0.name == pickerSelectedRow.name}) {
-                return overrideRow.duration
-            } else {
-                return nil
-            }
-        } else {
-            return nil
-        }
-    }
-    
     var indefiniteOverridesAllowed: Bool {
-        guard let selectedDefaultDuration else {return false}
-        if selectedDefaultDuration > 0 {
-            return false //Remote APIs don't support flagging overrides as indefinite yet
-        } else {
-            return true
-        }
+        guard let pickerSelectedRow else {return false}
+        return pickerSelectedRow.indefiniteDurationAllowed
     }
     
     var actionButtonEnabled: Bool {
@@ -392,11 +375,11 @@ class OverrideViewModel: ObservableObject, Identifiable {
                 throw OverrideViewLoadError.emptyOverrides
             }
             overrideListState = .loadingComplete(overrideState: overrideState)
-            if let activeOverride = overrideState.activeOverride {
-                self.pickerSelectedRow = activeOverride.toPickerRow(isActive: true)
+            if let activeOverride = overrideState.activeOverride, let preset = overrideState.presets.first(where: {$0.name == activeOverride.name}) {
+                self.pickerSelectedRow = OverridePickerRowModel(preset: preset, activeOverride: activeOverride)
                 self.activeOverride = activeOverride
-            } else if let firstOverride = overrideState.presets.first?.toPickerRow(isActive: false) {
-                self.pickerSelectedRow = firstOverride
+            } else if let firstPreset = overrideState.presets.first {
+                self.pickerSelectedRow = OverridePickerRowModel(preset: firstPreset, activeOverride: nil)
             }
         } catch {
             overrideListState = .loadingError(error)
@@ -481,21 +464,13 @@ struct OverrideState: Equatable {
     let presets: [TemporaryScheduleOverride]
     
     func pickerRows() -> [OverridePickerRowModel] {
-        var result = [OverridePickerRowModel]()
-        for preset in presets {
-            if let activeOverride = activeOverride, preset.name == activeOverride.name {
-                result.append(activeOverride.toPickerRow(isActive: true))
+        return presets.map { preset in
+            if let activeOverride = activeOverride, activeOverride.name == preset.name {
+                return OverridePickerRowModel(preset: preset, activeOverride: activeOverride)
             } else {
-                result.append(preset.toPickerRow(isActive: false))
+                return OverridePickerRowModel(preset: preset, activeOverride: nil)
             }
         }
-        return result
-    }
-}
-
-extension TemporaryScheduleOverride {
-    func toPickerRow(isActive: Bool) -> OverridePickerRowModel {
-        return OverridePickerRowModel(targetRange: targetRange, insulinNeedsScaleFactor: insulinNeedsScaleFactor, symbol: symbol, duration: duration, name: name, isActive: isActive)
     }
 }
 
@@ -506,6 +481,28 @@ struct OverridePickerRowModel: Hashable {
     public let duration: TimeInterval
     public let name: String?
     public let isActive: Bool
+    public let indefiniteDurationAllowed: Bool
+    
+    init(preset: TemporaryScheduleOverride, activeOverride: TemporaryScheduleOverride?) {
+        let indefiniteDurationAllowed = preset.duration == 0
+        if let activeOverride {
+            self.targetRange = activeOverride.targetRange
+            self.insulinNeedsScaleFactor = activeOverride.insulinNeedsScaleFactor
+            self.symbol = activeOverride.symbol
+            self.duration = activeOverride.duration
+            self.name = activeOverride.name
+            self.isActive = true
+            self.indefiniteDurationAllowed = indefiniteDurationAllowed
+        } else {
+            self.targetRange = preset.targetRange
+            self.insulinNeedsScaleFactor = preset.insulinNeedsScaleFactor
+            self.symbol = preset.symbol
+            self.duration = preset.duration
+            self.name = preset.name
+            self.isActive = false
+            self.indefiniteDurationAllowed = indefiniteDurationAllowed
+        }
+    }
     
     func presentableDescription() -> String {
         return "\(symbol ?? "") \(name ?? "")"
