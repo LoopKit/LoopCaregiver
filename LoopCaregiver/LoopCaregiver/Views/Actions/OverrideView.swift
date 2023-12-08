@@ -53,7 +53,7 @@ struct OverrideView: View {
                     Section (){
                         if viewModel.pickerSelectedOverride != nil {
                             HStack {
-                                //Loading Pickers when there is a nil selection causes consolve warnings
+                                //Loading Pickers when there is a nil selection causes console warnings
                                 Picker("Overrides", selection: $viewModel.pickerSelectedOverride) {
                                     ForEach(overrideState.presets, id: \.self) { overrideValue in
                                         Text(overrideValue.presentableDescription()).tag(overrideValue as TemporaryScheduleOverride?)
