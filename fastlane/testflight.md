@@ -93,8 +93,6 @@ This step validates most of your six Secrets and provides error messages if it d
 
 ## Create App Group
 
-If you have already built LoopCaregiver via Xcode using this Apple ID, you can skip on to [Add App Group to Bundle Identifiers](#add-app-group-to-bundle-identifiers).
-
 1. Go to [Register an App Group](https://developer.apple.com/account/resources/identifiers/applicationGroup/add/) on the apple developer site.
 1. For Description, use "LoopCargiver App Group".
 1. For Identifier, enter "group.com.TEAMID.loopkit.LoopCaregiverGroup", subsituting your team id for `TEAMID`.
