@@ -91,12 +91,45 @@ This step validates most of your six Secrets and provides error messages if it d
 1. On the right side, click "Run Workflow", and tap the green `Run workflow` button.
 1. Wait, and within a minute or two you should see a green checkmark indicating the workflow succeeded.
 
+## Create App Group
+
+If you have already built LoopCaregiver via Xcode using this Apple ID, you can skip on to [Add App Group to Bundle Identifiers](#add-app-group-to-bundle-identifiers).
+
+1. Go to [Register an App Group](https://developer.apple.com/account/resources/identifiers/applicationGroup/add/) on the apple developer site.
+1. For Description, use "LoopCargiver App Group".
+1. For Identifier, enter "group.com.TEAMID.loopkit.LoopCaregiverGroup", subsituting your team id for `TEAMID`.
+1. Click "Continue" and then "Register".
+
+## Add App Group to Bundle Identifiers
+
+Note 1 - If you previously built with Xcode, the `Names` listed below may be different, but the `Identifiers` will match. A table is provided below the steps to assist. The Add Identifier Action that you completed above generates these 5 identifiers.
+
+Note 2 - Depending on your build history, you may find some of the Identifiers are already configured - and you are just verifying the status; but in other cases, you will need to configure the Identifiers.
+
+1. Go to [Certificates, Identifiers & Profiles](https://developer.apple.com/account/resources/identifiers/list) on the apple developer site.
+1. For each of the following identifier names: 
+    * LoopCaregiver
+    * LoopCaregiverWidgetExtension
+    * LoopCaregiverIntentExtension
+    * LoopCaregiverWatch
+    * LoopCaregiverWatchWidgetExtension
+1. Click on the identifier's name.
+1. On the "App Groups" capabilies, click on the "Configure" button.
+1. Select the "LoopCaregiver App Group"
+1. Click "Continue".
+1. Click "Save".
+1. Click "Confirm".
+1. Remember to do this for each of the identifiers above.
+
 #### Table with Name and Identifiers for LoopCaregiver
 
 | NAME | IDENTIFIER |
 |-------|------------|
 | LoopCaregiver | com.TEAMID.loopkit.LoopCaregiver |
-
+| LoopCaregiverWidgetExtension | com.TEAMID.loopkit.LoopCaregiver.WidgetExtension |
+| LoopCaregiverIntentExtension | com.TEAMID.loopkit.LoopCaregiver.IntentExtension |
+| LoopCaregiverWatch | com.TEAMID.loopkit.LoopCaregiver.watchkitapp |
+| LoopCaregiverWatchWidgetExtension | com.TEAMID.loopkit.LoopCaregiver.watchkitapp.WidgetExtension |
 
 ## Create LoopCaregiver App in App Store Connect
 
@@ -134,3 +167,106 @@ You do not need to fill out the next form. That is for submitting to the app sto
 ## TestFlight and Deployment Details
 
 Please refer to [LoopDocs: Set Up Users](https://loopkit.github.io/loopdocs/gh-actions/gh-first-time/#set-up-users-and-access-testflight) and [LoopDocs: Deploy](https://loopkit.github.io/loopdocs/gh-actions/gh-deploy/)
+
+## App Group Update
+
+The Caregiver app was updated in November 2023 to require App Groups for iOS widget support. You need to take some extra steps the first time you build since the update. Select each link and follow the steps to complete the update.
+
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create App Group](#create-app-group)
+1. [Add App Group to Bundle Identifiers](#add-app-group-to-bundle-identifiers)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
+
+## Build Errors
+
+### App Group Capability Missing
+
+This error means the app identifiers in the Apple Developer portal are missing the app group capability. To resolve:
+
+1. Perform the [App Group Update](#app-group-update) steps.
+1. Pay close attention to the "Add App Group to Bundle Identifiers" as this error suggests at least one of your app identifiers is missing the LoopCaregiver App Group.
+
+### Match Repository Missing
+
+This error indicates the Match-Secrets repository is missing or was deleted. To resolve: 
+
+1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-Secrets repository.
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
+
+### Credentials Invalid
+
+This is often a temporary issue that can be resolved by:
+
+* Run [Create Building Certificates](#create-building-certificates) again.
+
+If that fails, there is likely an issue with one of your saved secrets. Check that you set the following secrets correctly. See [Setup GitHub LoopCaregiver Repository](#Setup-GitHub-LoopCaregiver-Repository).
+
+* FASTLANE_ISSUER_ID
+* FASTLANE_KEY_ID
+* FASTLANE_KEY
+* GH_PAT
+
+### Match-Secrets Repository Clone Issue
+
+This is often a temporary issue that can be resolved by:
+
+* Run [Create Building Certificates](#create-building-certificates) again.
+
+If that fails, there is likely an issue with one of your saved secrets. Try these steps:
+
+1. Check your Github Personal Access Token has the correct permissions. See [Create GitHub Personal Access Token](create-github-personal-access-token)
+1. Check that the Github Personal Access Token (GH_PAT) was stored as a secret. See the secret setup steps in [Setup GitHub LoopCaregiver Repository](setup-gitHub-loopcaregiver-repository)
+
+### Missing Bundle Identifier
+
+This error indicates you are missing some required bundle identifier(s).
+
+In November 2023, existing Caregiver builds require a 1 time update. Perform the [App Group Update](#app-group-update) steps if not completed yet.
+
+If those steps were already completed, instead try the following:
+
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+
+### Bundle Identifier Missing App Group
+
+This error indicates one or more of your App Identifiers are not assigned the "LoopCaregiver App Group". To resolve:
+
+1. Create the Caregiver app group if not previously done. Follow the steps [Create App Group](#create-app-group).
+1. Add the app group for each bundle identifier. Follow the steps in [Add App Group to Bundle Identifiers](#Add-App-Group-to-Bundle-Identifiers)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
+
+### Certificate is Missing
+
+This error indicates your Apple Certificate is missing. To resolve:
+
+1. Delete the Github Match-Secrets repository.
+1. [Validate repository secrets](#validate-repository-secrets). This will create the Match-Secrets repository.
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+1. [Build LoopCaregiver](#build-loopcaregiver)
+
+### Maximum Certificates Reached
+
+This error indicates you have too many certificates on the Apple developer portal. This sometimes occurs after deleting and recreating your Match Secrets repository. To resolve:
+
+1. Login to the Apple developer portal. 
+1. Go to the "Certificates" page. 
+1. Delete all "Distribution" certificates that contain "API Key" in the "Created By" column.
+
+### Provisioning Profiles Invalid
+
+This error indicates a provisioning profile(s) is invalid. To resolve:
+
+1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
+1. [Create Building Certificates](#create-building-certificates)
+
+### Missing Signing Certificates
+
+The error indicates a provisioning profile is missing its signing certificate. To resolve: 
+
+* [Create Building Certificates](#create-building-certificates)
