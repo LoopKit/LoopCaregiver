@@ -168,7 +168,9 @@ Please refer to [LoopDocs: Set Up Users](https://loopkit.github.io/loopdocs/gh-a
 
 ## App Group Update
 
-The Caregiver app was updated in December 2023 to require App Groups for iOS widget support. You need to take some extra steps the first time you build since the update. Select each link and follow the steps to complete the update.
+The Caregiver app was updated in December 2023 to require App Groups for iOS widget support. You need to take some extra steps the first time you build since the update. 
+
+Select each of the 5 links below and complete each step, even if you did these prior to 12/8/2023. 
 
 1. [Add Identifiers for LoopCaregiver App](#add-identifiers-for-loopcaregiver-app)
 1. [Create App Group](#create-app-group)
