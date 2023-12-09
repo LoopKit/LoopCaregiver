@@ -39,7 +39,7 @@ final class OverrideViewModelTests: XCTestCase {
         
         //Assert
         
-        XCTAssertEqual(viewModel.pickerSelectedOverride, activeOverride)
+        XCTAssertEqual(viewModel.pickerSelectedRow?.name, activeOverride.name)
     }
     
     func testLoading_OverridesInactive_SelectsNoOverride() async throws {
@@ -60,7 +60,7 @@ final class OverrideViewModelTests: XCTestCase {
         
         //Assert
         
-        XCTAssertNil(viewModel.pickerSelectedOverride)
+        XCTAssertNil(viewModel.activeOverride)
     }
     
     func testLoading_WhenSuccessful_HasCompleteState() async throws {
@@ -87,7 +87,6 @@ final class OverrideViewModelTests: XCTestCase {
         default:
             XCTFail("Wrong case")
         }
-        XCTAssertTrue(viewModel.pickerSelectedOverride == viewModel.activeOverride)
     }
     
     func testLoading_WhenErrorOccurs_HasErrorState() async throws {
@@ -110,7 +109,7 @@ final class OverrideViewModelTests: XCTestCase {
         default:
             XCTFail("Wrong case")
         }
-        XCTAssertNil(viewModel.pickerSelectedOverride)
+        XCTAssertNil(viewModel.pickerSelectedRow)
     }
     
     func testLoading_WhileLoading_HasLoadingState() async throws {
@@ -160,11 +159,12 @@ final class OverrideViewModelTests: XCTestCase {
         let overrideState = OverrideState(activeOverride: activeOverride, presets: presets)
         let delegate = OverrideViewDelegateMock(mockState: .overrideState(overrideState))
         let viewModel = OverrideViewModel()
+        let selectedRow = OverridePickerRowModel(preset: presets[1], activeOverride: activeOverride)
         
         //Act
         
         await viewModel.setup(delegate: delegate, deliveryCompleted: nil)
-        viewModel.pickerSelectedOverride = presets[0]
+        viewModel.pickerSelectedRow = selectedRow
         
         //Assert
         
@@ -174,7 +174,7 @@ final class OverrideViewModelTests: XCTestCase {
         default:
             XCTFail("Wrong case")
         }
-        XCTAssertTrue(viewModel.pickerSelectedOverride == presets[0])
+        XCTAssertTrue(viewModel.pickerSelectedRow == selectedRow)
 
     }
 
@@ -203,7 +203,7 @@ final class OverrideViewModelTests: XCTestCase {
         default:
             XCTFail("Wrong case")
         }
-        XCTAssertTrue(viewModel.pickerSelectedOverride == viewModel.activeOverride)
+        XCTAssertTrue(viewModel.pickerSelectedRow?.name == viewModel.activeOverride?.name)
 
     }
 
@@ -229,7 +229,7 @@ final class OverrideViewModelTests: XCTestCase {
         var deliveryCompletionCalled = false
         await viewModel.setup(delegate: delegate, deliveryCompleted: {deliveryCompletionCalled = true})
         let updatedActiveOverride = presets[1]
-        viewModel.pickerSelectedOverride = updatedActiveOverride
+        viewModel.pickerSelectedRow = OverridePickerRowModel(preset: presets[1], activeOverride: updatedActiveOverride)
         await viewModel.updateButtonTapped()
         
         //Assert
@@ -259,7 +259,7 @@ final class OverrideViewModelTests: XCTestCase {
         var deliveryCompletionCalled = false
         await viewModel.setup(delegate: delegate, deliveryCompleted: {deliveryCompletionCalled = true})
         let updatedActiveOverride = presets[1]
-        viewModel.pickerSelectedOverride = updatedActiveOverride
+        viewModel.pickerSelectedRow = OverridePickerRowModel(preset: presets[1], activeOverride: updatedActiveOverride)
         await viewModel.updateButtonTapped()
         
         //Assert
