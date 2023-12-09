@@ -224,7 +224,7 @@ If that fails, there is likely an issue with one of your saved secrets. Try thes
 
 This error indicates you are missing some required bundle identifier(s).
 
-In November 2023, existing Caregiver builds require a 1 time update. Perform the [App Group Update](#app-group-update) steps if not completed yet.
+In December 2023, existing Caregiver builds require a 1 time update. Perform the [App Group Update](#app-group-update) steps if not completed yet.
 
 If those steps were already completed, instead try the following:
 
