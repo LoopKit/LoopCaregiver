@@ -1,7 +1,7 @@
 #!/bin/sh -e
 
 #  capture-build-details.sh
-#  LoopCaregiver
+#  Loop
 #
 #  Copyright © 2019 LoopKit Authors. All rights reserved.
 
@@ -84,10 +84,10 @@ then
     pushd . > /dev/null
     cd ..
     rev=$(git rev-parse HEAD)
-    plutil -replace com-loopkit-Loop-git-revision -string "${rev:0:7}" "${info_plist_path}"
+    plutil -replace com-loopkit-LoopWorkspace-git-revision -string "${rev:0:7}" "${info_plist_path}"
     branch=$(git branch --show-current)
     if [ -n "$branch" ]; then
-        plutil -replace com-loopkit-Loop-git-branch -string "${branch}" "${info_plist_path}"
+        plutil -replace com-loopkit-LoopWorkspace-git-branch -string "${branch}" "${info_plist_path}"
     fi
     popd . > /dev/null
 fi
