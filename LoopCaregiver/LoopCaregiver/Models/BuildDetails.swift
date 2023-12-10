@@ -26,7 +26,6 @@ class BuildDetails {
     }
 
     var buildDateString: String? {
-        print(" *** build date,", dict["com-loopkit-Loop-build-date"] as? String)
         return dict["com-loopkit-Loop-build-date"] as? String
     }
 
