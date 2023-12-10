@@ -38,6 +38,7 @@ struct SettingsView: View {
                 commandsSection
                 unitsSection
                 timelineSection
+                expirationSection
                 experimentalSection
             }
             .navigationBarTitle(Text("Settings"), displayMode: .inline)
@@ -134,7 +135,17 @@ struct SettingsView: View {
             Toggle("Show Prediction", isOn: $settings.timelinePredictionEnabled)
         }
     }
-    
+
+    var expirationSection: some View {
+        Section("Expiration") {
+            VStack {
+                Text(expireTitleString())
+                // quick and dirty truncation of date string
+                Text(expireDateString().prefix(16))
+            }
+        }
+    }
+
     var experimentalSection: some View {
         Section("Experimental Features") {
             if settings.experimentalFeaturesUnlocked || settings.remoteCommands2Enabled {
@@ -258,7 +269,75 @@ struct SettingsView: View {
             }
         }
     }
-    
+
+    // copied from LoopWorkspace/Loop/Loop/Managers/AppExpirationAlerter.swift
+    func isTestFlightBuild() -> Bool {
+
+        // uncomment next for quick and dirty testflight test
+        //return true
+
+        // If the target environment is a simulator, then
+        // this is not a TestFlight distribution. Return false.
+        #if targetEnvironment(simulator)
+        return false
+        #else
+
+        // If an "embedded.mobileprovision" is present in the main bundle, then
+        // this is an Xcode, Ad-Hoc, or Enterprise distribution. Return false.
+        if Bundle.main.url(forResource: "embedded", withExtension: "mobileprovision") != nil {
+            return false
+        }
+
+        // If an app store receipt is not present in the main bundle, then we cannot
+        // say whether this is a TestFlight or App Store distribution. Return false.
+        guard let receiptName = Bundle.main.appStoreReceiptURL?.lastPathComponent else {
+            return false
+        }
+
+        // A TestFlight distribution presents a "sandboxReceipt", while an App Store
+        // distribution presents a "receipt". Return true if we have a TestFlight receipt.
+        return "sandboxReceipt".caseInsensitiveCompare(receiptName) == .orderedSame
+        #endif
+    }
+
+    func buildDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEE MMM d HH:mm:ss 'UTC' yyyy"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Set locale to ensure parsing works
+        dateFormatter.timeZone = TimeZone(identifier: "UTC")
+
+        guard let dateString = BuildDetails.default.buildDateString,
+              let date = dateFormatter.date(from: dateString) else {
+            return nil
+        }
+
+        return date
+    }
+
+    func expireTitleString() -> String {
+        if isTestFlightBuild() {
+            return "TestFlight Expiration"
+        } else {
+            return "Profile Expiration"
+        }
+    }
+
+    func expireDateString() -> String {
+        if isTestFlightBuild() {
+            // expireDate for true returns "N/A" - please find my mistake
+            let buildDate = buildDate()
+            if buildDate == nil {
+                print(" *** buildDate is nil")
+                return "N/A"
+            }
+            let expireDate = Calendar.current.date(byAdding: .day, value: 90, to: buildDate!)
+            return "\(expireDate)"
+        } else {
+            let profileExpireString = BuildDetails.default.profileExpirationString
+            return profileExpireString
+        }
+    }
+
     var remoteCommandSectionText: String {
         if looperService.settings.remoteCommands2Enabled {
             return "Remote Commands"
