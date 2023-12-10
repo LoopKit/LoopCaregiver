@@ -47,7 +47,6 @@ class BuildDetails {
     }
 
     var profileExpiration: Date? {
-        print(" *** profileExpiration,", dict["com-loopkit-Loop-profile-expiration"] as? String)
         return dict["com-loopkit-Loop-profile-expiration"] as? Date
     }
 
