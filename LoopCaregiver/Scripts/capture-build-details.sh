@@ -54,25 +54,24 @@ info "Gathering build details in ${PWD}"
 
 if [ -e .git ]; then
   rev=$(git rev-parse HEAD)
-  plutil -replace com-loopkit-Loop-git-revision -string ${rev:0:7} "${info_plist_path}"
+  plutil -replace com-app-git-revision -string ${rev:0:7} "${info_plist_path}"
   branch=$(git branch --show-current)
   if [ -n "$branch" ]; then
-    plutil -replace com-loopkit-Loop-git-branch -string "${branch}" "${info_plist_path}"
+    plutil -replace com-app-git-branch -string "${branch}" "${info_plist_path}"
   else
-    warn "No git branch found, not setting com-loopkit-Loop-git-branch"
+    warn "No git branch found, not setting com-app-git-branch"
   fi
 fi
 
-plutil -replace com-loopkit-Loop-srcroot -string "${PWD}" "${info_plist_path}"
-plutil -replace com-loopkit-Loop-build-date -string "$(date)" "${info_plist_path}"
-build_date_string="$(date)"
-plutil -replace com-loopkit-Loop-xcode-version -string "${xcode_build_version}" "${info_plist_path}"
+plutil -replace com-app-srcroot -string "${PWD}" "${info_plist_path}"
+plutil -replace com-app-build-date -string "$(date)" "${info_plist_path}"
+plutil -replace com-app-xcode-version -string "${xcode_build_version}" "${info_plist_path}"
 
 if [ -e "${provisioning_profile_path}" ]; then
   profile_expire_date=$(security cms -D -i "${provisioning_profile_path}" | plutil -p - | grep ExpirationDate | cut -b 23-)
   # Convert to plutil format
   profile_expire_date=$(date -j -f "%Y-%m-%d %H:%M:%S" "${profile_expire_date}" +"%Y-%m-%dT%H:%M:%SZ")
-  plutil -replace com-loopkit-Loop-profile-expiration -date "${profile_expire_date}" "${info_plist_path}"
+  plutil -replace com-app-profile-expiration -date "${profile_expire_date}" "${info_plist_path}"
 else
   warn "Invalid provisioning profile path ${provisioning_profile_path}"
 fi
@@ -84,17 +83,10 @@ then
     pushd . > /dev/null
     cd ..
     rev=$(git rev-parse HEAD)
-    plutil -replace com-loopkit-LoopWorkspace-git-revision -string "${rev:0:7}" "${info_plist_path}"
+    plutil -replace com-app-workspace-git-revision -string "${rev:0:7}" "${info_plist_path}"
     branch=$(git branch --show-current)
     if [ -n "$branch" ]; then
-        plutil -replace com-loopkit-LoopWorkspace-git-branch -string "${branch}" "${info_plist_path}"
+        plutil -replace com-app-workspace-git-branch -string "${branch}" "${info_plist_path}"
     fi
     popd . > /dev/null
 fi
-
-# report all the variables to make sure they were captured
-info "info_plist_path, ${info_plist_path}"
-info "branch, ${branch}"
-info "provisioning_profile_path, ${provisioning_profile_path}"
-info "profile_expire_date, ${profile_expire_date}"
-info "build date, ${build_date_string}"

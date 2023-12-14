@@ -26,27 +26,27 @@ class BuildDetails {
     }
 
     var buildDateString: String? {
-        return dict["com-loopkit-Loop-build-date"] as? String
+        return dict["com-app-build-date"] as? String
     }
 
     var xcodeVersion: String? {
-        return dict["com-loopkit-Loop-xcode-version"] as? String
+        return dict["com-app-xcode-version"] as? String
     }
 
     var gitRevision: String? {
-        return dict["com-loopkit-Loop-git-revision"] as? String
+        return dict["com-app-git-revision"] as? String
     }
 
     var gitBranch: String? {
-        return dict["com-loopkit-Loop-git-branch"] as? String
+        return dict["com-app-git-branch"] as? String
     }
 
     var sourceRoot: String? {
-        return dict["com-loopkit-Loop-srcroot"] as? String
+        return dict["com-app-srcroot"] as? String
     }
 
     var profileExpiration: Date? {
-        return dict["com-loopkit-Loop-profile-expiration"] as? Date
+        return dict["com-app-profile-expiration"] as? Date
     }
 
     var profileExpirationString: String {
@@ -59,11 +59,11 @@ class BuildDetails {
 
     // These strings are only configured if it is a workspace build
     var workspaceGitRevision: String? {
-        return dict["com-loopkit-LoopWorkspace-git-revision"] as? String
+        return dict["com-app-workspace-git-revision"] as? String
     }
 
     var workspaceGitBranch: String? {
-       return dict["com-loopkit-LoopWorkspace-git-branch"] as? String
+       return dict["com-app-workspace-git-branch"] as? String
    }
 }
 
