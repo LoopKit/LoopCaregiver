@@ -5,8 +5,10 @@
 //  Created by Bill Gestrich on 11/13/22.
 //
 
-import SwiftUI
 import Combine
+import LoopKitUI
+import SwiftUI
+
 
 struct SettingsView: View {
 
@@ -38,7 +40,9 @@ struct SettingsView: View {
                 commandsSection
                 unitsSection
                 timelineSection
-                expirationSection
+                if let profileExpiration = BuildDetails.default.profileExpiration {
+                    appExpirationSection(profileExpiration: profileExpiration)
+                }
                 experimentalSection
             }
             .navigationBarTitle(Text("Settings"), displayMode: .inline)
@@ -121,33 +125,27 @@ struct SettingsView: View {
     }
     
     var unitsSection: some View {
-        Section("Units") {
+        Section {
             Picker("Glucose", selection: $glucosePreference, content: {
                 ForEach(GlucoseUnitPrefererence.allCases, id: \.self, content: { item in
                     Text(item.presentableDescription).tag(item)
                 })
             })
+        } header: {
+            SectionHeader(label: "Units")
         }
     }
     
     var timelineSection: some View {
-        Section("Timeline") {
+        Section {
             Toggle("Show Prediction", isOn: $settings.timelinePredictionEnabled)
+        }  header: {
+            SectionHeader(label: "Timeline")
         }
     }
-
-    var expirationSection: some View {
-        Section("Expiration") {
-            VStack {
-                Text(expireTitleString())
-                // quick and dirty truncation of date string
-                Text(expireDateString().prefix(16))
-            }
-        }
-    }
-
+    
     var experimentalSection: some View {
-        Section("Experimental Features") {
+        Section {
             if settings.experimentalFeaturesUnlocked || settings.remoteCommands2Enabled {
                 Toggle("Remote Commands 2", isOn: $settings.remoteCommands2Enabled)
                 Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
@@ -174,6 +172,8 @@ struct SettingsView: View {
                         settings.experimentalFeaturesUnlocked = true
                     })
             }
+        }  header: {
+            SectionHeader(label: "Experimental Features")
         }
     }
     
@@ -269,75 +269,7 @@ struct SettingsView: View {
             }
         }
     }
-
-    // copied from LoopWorkspace/Loop/Loop/Managers/AppExpirationAlerter.swift
-    func isTestFlightBuild() -> Bool {
-
-        // uncomment next for quick and dirty testflight test
-        //return true
-
-        // If the target environment is a simulator, then
-        // this is not a TestFlight distribution. Return false.
-        #if targetEnvironment(simulator)
-        return false
-        #else
-
-        // If an "embedded.mobileprovision" is present in the main bundle, then
-        // this is an Xcode, Ad-Hoc, or Enterprise distribution. Return false.
-        if Bundle.main.url(forResource: "embedded", withExtension: "mobileprovision") != nil {
-            return false
-        }
-
-        // If an app store receipt is not present in the main bundle, then we cannot
-        // say whether this is a TestFlight or App Store distribution. Return false.
-        guard let receiptName = Bundle.main.appStoreReceiptURL?.lastPathComponent else {
-            return false
-        }
-
-        // A TestFlight distribution presents a "sandboxReceipt", while an App Store
-        // distribution presents a "receipt". Return true if we have a TestFlight receipt.
-        return "sandboxReceipt".caseInsensitiveCompare(receiptName) == .orderedSame
-        #endif
-    }
-
-    func buildDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEE MMM d HH:mm:ss 'UTC' yyyy"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX") // Set locale to ensure parsing works
-        dateFormatter.timeZone = TimeZone(identifier: "UTC")
-
-        guard let dateString = BuildDetails.default.buildDateString,
-              let date = dateFormatter.date(from: dateString) else {
-            return nil
-        }
-
-        return date
-    }
-
-    func expireTitleString() -> String {
-        if isTestFlightBuild() {
-            return "TestFlight Expiration"
-        } else {
-            return "Profile Expiration"
-        }
-    }
-
-    func expireDateString() -> String {
-        if isTestFlightBuild() {
-            // expireDate for true returns "N/A" - please find my mistake
-            let buildDate = buildDate()
-            if buildDate == nil {
-                print(" *** buildDate is nil")
-                return "N/A"
-            }
-            let expireDate = Calendar.current.date(byAdding: .day, value: 90, to: buildDate!)
-            return "\(expireDate)"
-        } else {
-            let profileExpireString = BuildDetails.default.profileExpirationString
-            return profileExpireString
-        }
-    }
-
+    
     var remoteCommandSectionText: String {
         if looperService.settings.remoteCommands2Enabled {
             return "Remote Commands"
@@ -345,6 +277,67 @@ struct SettingsView: View {
             return "Remote Command Errors"
         }
     }
+    
+    /*
+     DIY loop specific component to show users the amount of time remaining on their build before a rebuild is necessary.
+     */
+    private func appExpirationSection(profileExpiration: Date) -> some View {
+        let expirationDate = AppExpirationAlerter.calculateExpirationDate(profileExpiration: profileExpiration)
+        let isTestFlight = AppExpirationAlerter.isTestFlightBuild()
+        let nearExpiration = AppExpirationAlerter.isNearExpiration(expirationDate: expirationDate)
+        let profileExpirationMsg = AppExpirationAlerter.createProfileExpirationSettingsMessage(expirationDate: expirationDate)
+        let readableExpirationTime = Self.dateFormatter.string(from: expirationDate)
+        
+        if isTestFlight {
+            return createAppExpirationSection(
+                headerLabel: NSLocalizedString("TestFlight", comment: "Settings app TestFlight section"),
+                footerLabel: NSLocalizedString("TestFlight expires ", comment: "Time that build expires") + readableExpirationTime,
+                expirationLabel: NSLocalizedString("TestFlight Expiration", comment: "Settings TestFlight expiration view"),
+                updateURL: "https://loopkit.github.io/loopdocs/gh-actions/gh-update/",
+                nearExpiration: nearExpiration,
+                expirationMessage: profileExpirationMsg
+            )
+        } else {
+            return createAppExpirationSection(
+                headerLabel: NSLocalizedString("App Profile", comment: "Settings app profile section"),
+                footerLabel: NSLocalizedString("Profile expires ", comment: "Time that profile expires") + readableExpirationTime,
+                expirationLabel: NSLocalizedString("Profile Expiration", comment: "Settings App Profile expiration view"),
+                updateURL: "https://loopkit.github.io/loopdocs/build/updating/",
+                nearExpiration: nearExpiration,
+                expirationMessage: profileExpirationMsg
+            )
+        }
+    }
+    
+    private func createAppExpirationSection(headerLabel: String, footerLabel: String, expirationLabel: String, updateURL: String, nearExpiration: Bool, expirationMessage: String) -> some View {
+        return Section(
+            header: SectionHeader(label: headerLabel),
+            footer: Text(footerLabel)
+        ) {
+            if nearExpiration {
+                Text(expirationMessage).foregroundColor(.red)
+            } else {
+                HStack {
+                    Text(expirationLabel)
+                    Spacer()
+                    Text(expirationMessage).foregroundColor(Color.secondary)
+                }
+            }
+            Button(action: {
+                UIApplication.shared.open(URL(string: updateURL)!)
+            }) {
+                Text(NSLocalizedString("How to update (LoopDocs)", comment: "The title text for how to update"))
+            }
+        }
+    }
+
+    private static var dateFormatter: DateFormatter = {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateStyle = .long
+        dateFormatter.timeStyle = .short
+        return dateFormatter // formats date like "February 4, 2023 at 2:35 PM"
+    }()
+
 }
 
 class SettingsViewModel: ObservableObject {
