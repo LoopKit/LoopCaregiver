@@ -6,6 +6,7 @@
 //  Copyright © 2023 Bill Gestrich. All rights reserved.
 //
 
+import LoopCaregiverKit
 import WidgetKit
 import CoreData
 import LoopKit

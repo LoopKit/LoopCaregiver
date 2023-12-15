@@ -5,6 +5,7 @@
 //  Created by Bill Gestrich on 6/1/23.
 //
 
+import LoopCaregiverKit
 import WidgetKit
 import SwiftUI
 import Intents

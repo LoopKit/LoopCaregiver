@@ -6,9 +6,9 @@
 //
 
 import Combine
+import LoopCaregiverKit
 import LoopKitUI
 import SwiftUI
-
 
 struct SettingsView: View {
 

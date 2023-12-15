@@ -7,14 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
+		A90DAD7A2B2C76CA0092A3D9 /* Looper+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DAD792B2C76CA0092A3D9 /* Looper+SwiftUI.swift */; };
 		A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */; };
-		A916A9722A3276530096B999 /* NSPersistentStoreCoordinator+Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */; };
-		A9299C432ADC3DE7009193AB /* ServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9299C422ADC3DE7009193AB /* ServiceComposer.swift */; };
-		A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */; };
-		A92AB6C62A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */; };
-		A92AB6CA2A31564400977536 /* NewGlucoseSample+Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */; };
-		A92AB6CB2A31564400977536 /* NewGlucoseSample+Presentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */; };
+		A92256352B2F952F0024EA56 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A92256342B2F952F0024EA56 /* LoopCaregiverKit */; };
 		A930C6C22A8F99AA004BB459 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C12A8F99AA004BB459 /* CGRect.swift */; };
 		A930C6C52A9364BD004BB459 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C42A9364BC004BB459 /* DemoView.swift */; };
 		A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */; };
@@ -22,45 +17,19 @@
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
 		A947026C293254B500FB3E59 /* COBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026B293254B500FB3E59 /* COBChartView.swift */; };
 		A94702702932C21E00FB3E59 /* IOBChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947026F2932C21E00FB3E59 /* IOBChartView.swift */; };
-		A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50BF292A602F00079AAF /* LoopKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		A95223662A7EDA9B0070FE13 /* OverrideAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223612A7EDA9B0070FE13 /* OverrideAction.swift */; };
-		A95223672A7EDA9B0070FE13 /* BolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223622A7EDA9B0070FE13 /* BolusAction.swift */; };
-		A95223682A7EDA9B0070FE13 /* OverrideCancelAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223632A7EDA9B0070FE13 /* OverrideCancelAction.swift */; };
-		A95223692A7EDA9B0070FE13 /* CarbAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223642A7EDA9B0070FE13 /* CarbAction.swift */; };
-		A952236A2A7EDA9B0070FE13 /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223652A7EDA9B0070FE13 /* Action.swift */; };
-		A952236D2A7EDC790070FE13 /* RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952236B2A7EDC790070FE13 /* RemoteCommand.swift */; };
-		A952236E2A7EDC790070FE13 /* RemoteCommandStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952236C2A7EDC790070FE13 /* RemoteCommandStatus.swift */; };
-		A95223722A7EDCB90070FE13 /* NSRemoteCommandPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223702A7EDCB90070FE13 /* NSRemoteCommandPayload.swift */; };
-		A95223732A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223712A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift */; };
-		A95223762A7EDE660070FE13 /* AutobolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223742A7EDE660070FE13 /* AutobolusAction.swift */; };
-		A95223772A7EDE660070FE13 /* ClosedLoopAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */; };
+		A9480DFF2B2CA5430044C972 /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9480DFE2B2CA5430044C972 /* LoopKit */; };
 		A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */; };
+		A95CCCEE2B2F90DF000BFC25 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A95CCCED2B2F90DF000BFC25 /* LoopCaregiverKit */; };
+		A95CCCF02B2F9145000BFC25 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A95CCCEF2B2F9145000BFC25 /* OneTimePassword */; };
 		A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */; };
-		A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C6292A657F00079AAF /* LoopKitUI.framework */; };
-		A95F50C8292A657F00079AAF /* LoopKitUI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50C6292A657F00079AAF /* LoopKitUI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929342926E5CE00B8BF43 /* HUDView.swift */; };
 		A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293A2926ECF500B8BF43 /* BottomBarView.swift */; };
-		A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
-		A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */; };
 		A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */; };
-		A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
-		A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
-		A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
 		A9744DEA2933B0FE000A3D6A /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DE92933B0FE000A3D6A /* View.swift */; };
 		A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DEB293405A4000A3D6A /* PinchZoom.swift */; };
-		A9748A322A70891100D7E2FE /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF232A6C3C54000C891D /* HKUnit.swift */; };
-		A9748A332A70891200D7E2FE /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF232A6C3C54000C891D /* HKUnit.swift */; };
-		A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
 		A98348912AD206CD0034ABB2 /* PresetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98348902AD206CD0034ABB2 /* PresetRowView.swift */; };
-		A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
-		A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
 		A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */; };
-		A98FF28E29A11CC8005739A5 /* OverrideTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */; };
-		A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
-		A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
-		A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
 		A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC86429992DD20058EBA5 /* DisclaimerView.swift */; };
-		A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
 		A99F2F382A29350D00F7DE2D /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F2F372A29350C00F7DE2D /* WidgetKit.framework */; };
 		A99F2F3A2A29350D00F7DE2D /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A99F2F392A29350D00F7DE2D /* SwiftUI.framework */; };
 		A99F2F3D2A29350D00F7DE2D /* LoopCaregiverWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F3C2A29350D00F7DE2D /* LoopCaregiverWidgetBundle.swift */; };
@@ -68,94 +37,21 @@
 		A99F2F442A29350F00F7DE2D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A99F2F432A29350F00F7DE2D /* Assets.xcassets */; };
 		A99F2F462A29350F00F7DE2D /* LoopCaregiverWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F422A29350D00F7DE2D /* LoopCaregiverWidget.intentdefinition */; };
 		A99F2F472A29350F00F7DE2D /* LoopCaregiverWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F422A29350D00F7DE2D /* LoopCaregiverWidget.intentdefinition */; };
-		A99F2F522A2A92D100F7DE2D /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
-		A99F2F532A2A96E200F7DE2D /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
-		A99F2F542A2A96F200F7DE2D /* AccountServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */; };
-		A99F2F552A2A96F500F7DE2D /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
-		A99F2F562A2A96F900F7DE2D /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
-		A99F2F572A2A96FC00F7DE2D /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
-		A99F2F582A2A970200F7DE2D /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
-		A99F2F592A2A970500F7DE2D /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
-		A99F2F5A2A2A970800F7DE2D /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
-		A99F2F5B2A2A970B00F7DE2D /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
-		A99F2F5E2A2A971700F7DE2D /* COBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E72969A6A900D3875F /* COBStatus.swift */; };
-		A99F2F5F2A2A971A00F7DE2D /* GlucoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */; };
-		A99F2F602A2A971D00F7DE2D /* IOBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E52969A69F00D3875F /* IOBStatus.swift */; };
-		A99F2F612A2A971F00F7DE2D /* NightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */; };
-		A99F2F622A2A972100F7DE2D /* OverrideTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */; };
-		A99F2F632A2A972400F7DE2D /* ProfileSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E92969A6B600D3875F /* ProfileSet.swift */; };
-		A99F2F642A2A972800F7DE2D /* TempBasalNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */; };
-		A99F2F652A2A972A00F7DE2D /* TemporaryScheduleOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */; };
-		A99F2F662A2A972E00F7DE2D /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
-		A99F2F672A2A973000F7DE2D /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
-		A99F2F682A2A973300F7DE2D /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
-		A99F2F692A2A973600F7DE2D /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A99F2F6B2A2A976E00F7DE2D /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A99F2F6A2A2A976E00F7DE2D /* OneTimePassword */; };
-		A99F2F6D2A2A977700F7DE2D /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A99F2F6C2A2A977700F7DE2D /* NightscoutKit */; };
-		A99F2F712A2A980400F7DE2D /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50BF292A602F00079AAF /* LoopKit.framework */; };
 		A99F2F742A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */; };
-		A99F2F752A2A988000F7DE2D /* CarbCorrectionNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */; };
 		A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */; };
-		A99F2F782A2A98C800F7DE2D /* BolusNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */; };
 		A99F2F7B2A2AA0E100F7DE2D /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F792A2AA0DD00F7DE2D /* SimpleEntry.swift */; };
 		A99F2F7D2A2AA16200F7DE2D /* LoopCaregiverWidgetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F7C2A2AA16200F7DE2D /* LoopCaregiverWidgetView.swift */; };
 		A99F2F7F2A2AA19E00F7DE2D /* TimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F7E2A2AA19E00F7DE2D /* TimelineProvider.swift */; };
-		A99F2F802A2AB24300F7DE2D /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
-		A9A362DB2A80EEFE007B017C /* OverrideCancelRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */; };
-		A9A362DC2A80EEFE007B017C /* CarbRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */; };
-		A9A362DD2A80EEFE007B017C /* OverrideRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */; };
-		A9A362DE2A80EEFE007B017C /* BolusRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */; };
-		A9A362DF2A80EEFE007B017C /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */; };
-		A9A362E12A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */; };
-		A9A45D702A77B5480013CD5B /* NoteNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */; };
 		A9A62C7F2AD1BD4C004CD316 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */; };
-		A9A94E942A85B0A8001663FA /* RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952236B2A7EDC790070FE13 /* RemoteCommand.swift */; };
-		A9A94E952A85B0A9001663FA /* RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952236B2A7EDC790070FE13 /* RemoteCommand.swift */; };
-		A9A94E962A85B0B6001663FA /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223652A7EDA9B0070FE13 /* Action.swift */; };
-		A9A94E972A85B0B7001663FA /* Action.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223652A7EDA9B0070FE13 /* Action.swift */; };
-		A9A94E982A85B0BA001663FA /* AutobolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223742A7EDE660070FE13 /* AutobolusAction.swift */; };
-		A9A94E992A85B0BA001663FA /* AutobolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223742A7EDE660070FE13 /* AutobolusAction.swift */; };
-		A9A94E9A2A85B0BD001663FA /* BolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223622A7EDA9B0070FE13 /* BolusAction.swift */; };
-		A9A94E9B2A85B0BD001663FA /* BolusAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223622A7EDA9B0070FE13 /* BolusAction.swift */; };
-		A9A94E9C2A85B0BF001663FA /* CarbAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223642A7EDA9B0070FE13 /* CarbAction.swift */; };
-		A9A94E9D2A85B0C0001663FA /* CarbAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223642A7EDA9B0070FE13 /* CarbAction.swift */; };
-		A9A94E9E2A85B0C2001663FA /* ClosedLoopAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */; };
-		A9A94E9F2A85B0C3001663FA /* ClosedLoopAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */; };
-		A9A94EA02A85B0C6001663FA /* OverrideAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223612A7EDA9B0070FE13 /* OverrideAction.swift */; };
-		A9A94EA12A85B0C6001663FA /* OverrideAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223612A7EDA9B0070FE13 /* OverrideAction.swift */; };
-		A9A94EA22A85B0CA001663FA /* RemoteCommandStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952236C2A7EDC790070FE13 /* RemoteCommandStatus.swift */; };
-		A9A94EA32A85B0CB001663FA /* RemoteCommandStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A952236C2A7EDC790070FE13 /* RemoteCommandStatus.swift */; };
-		A9A94EA42A85B0CF001663FA /* OverrideCancelAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223632A7EDA9B0070FE13 /* OverrideCancelAction.swift */; };
-		A9A94EA52A85B0CF001663FA /* OverrideCancelAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223632A7EDA9B0070FE13 /* OverrideCancelAction.swift */; };
-		A9A94EA62A85B0E1001663FA /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */; };
-		A9A94EA72A85B0E1001663FA /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */; };
-		A9A94EA82A85B0F0001663FA /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */; };
-		A9A94EA92A85B0F1001663FA /* RemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */; };
-		A9A94EAA2A85B0FC001663FA /* BolusRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */; };
-		A9A94EAB2A85B0FC001663FA /* BolusRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */; };
-		A9A94EAC2A85B0FF001663FA /* CarbRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */; };
-		A9A94EAD2A85B0FF001663FA /* CarbRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */; };
-		A9A94EAE2A85B102001663FA /* OverrideCancelRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */; };
-		A9A94EAF2A85B103001663FA /* OverrideCancelRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */; };
-		A9A94EB02A85B106001663FA /* OverrideRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */; };
-		A9A94EB12A85B106001663FA /* OverrideRemoteNotification.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */; };
-		A9A94EB22A85B119001663FA /* NSRemoteCommandPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223702A7EDCB90070FE13 /* NSRemoteCommandPayload.swift */; };
-		A9A94EB32A85B11A001663FA /* NSRemoteCommandPayload.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223702A7EDCB90070FE13 /* NSRemoteCommandPayload.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
-		A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
+		A9BBD8252B2C992900072287 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9BBD8242B2C992900072287 /* LoopCaregiverKit */; };
+		A9BBD8272B2C992F00072287 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9BBD8262B2C992F00072287 /* LoopCaregiverKit */; };
+		A9BBD8292B2C993500072287 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9BBD8282B2C993500072287 /* LoopCaregiverKit */; };
 		A9BD0DE02A89515700988E2C /* ZoomableScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD0DDF2A89515700988E2C /* ZoomableScrollView.swift */; };
 		A9BD7B532AD0D8D300E73973 /* OverrideInsulinNeedsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */; };
 		A9BD7B552AD17AAD00E73973 /* PresetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */; };
-		A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E52969A69F00D3875F /* IOBStatus.swift */; };
-		A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E72969A6A900D3875F /* COBStatus.swift */; };
-		A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E92969A6B600D3875F /* ProfileSet.swift */; };
-		A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */; };
-		A9C4D7EE2969B70000D3875F /* NightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */; };
-		A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */; };
-		A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */; };
-		A9C4D7F42969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */; };
-		A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */; };
 		A9C89ED72A7074EE00EFD938 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED62A7074EE00EFD938 /* UIColor.swift */; };
 		A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */; };
 		A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; };
@@ -171,9 +67,7 @@
 		A9CFDD382AEC02D600FA701B /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD372AEC02D600FA701B /* AppIntent.swift */; };
 		A9CFDD3A2AEC02D700FA701B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD392AEC02D700FA701B /* Assets.xcassets */; };
 		A9CFDD3E2AEC02D700FA701B /* LoopCaregiverWatchAppExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A9CFDD312AEC02D600FA701B /* LoopCaregiverWatchAppExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		A9D2B8272A2CAFD500826490 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
 		A9D3FF222A6C3B99000C891D /* Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF212A6C3B99000C891D /* Color.swift */; };
-		A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9D3FF232A6C3C54000C891D /* HKUnit.swift */; };
 		A9E14D3A2A2BA5A600BDB93D /* LoopCaregiverWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A9E14D3F2A2BB18500BDB93D /* LatestGlucoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E14D3E2A2BB18500BDB93D /* LatestGlucoseView.swift */; };
 		A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */; };
@@ -187,53 +81,21 @@
 		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
 		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
 		A9EC5C792B10CDC600AA32EF /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */; };
-		A9EC5C7C2B10D1EF00AA32EF /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
 		A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
 		A9EC5C7F2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
-		A9EC5C802B10EA9100AA32EF /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
 		A9ECCB282B286CD90057DEDF /* AppExpirationAlerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB272B286CD90057DEDF /* AppExpirationAlerter.swift */; };
 		A9ECCB2A2B286DB50057DEDF /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */; };
 		A9ECCB2C2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */; };
-		A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */; };
-		A9EFD0002ADF6A01008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
-		A9EFD0022AE08418008D63EC /* DeepLinkParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */; };
-		A9EFD0032AE093F9008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
-		A9EFD0042AE093F9008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
+		A9ECCB322B2C73270057DEDF /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9ECCB312B2C73270057DEDF /* LoopKit */; };
+		A9ECCB342B2C73270057DEDF /* LoopKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = A9ECCB332B2C73270057DEDF /* LoopKitUI */; };
+		A9ECCB362B2C73520057DEDF /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9ECCB352B2C73520057DEDF /* LoopKit */; };
+		A9ECCB382B2C73520057DEDF /* LoopKitUI in Frameworks */ = {isa = PBXBuildFile; productRef = A9ECCB372B2C73520057DEDF /* LoopKitUI */; };
+		A9ECCB3A2B2C73640057DEDF /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9ECCB392B2C73640057DEDF /* LoopKit */; };
 		A9F871202A2EBE63007EC235 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A9F8711F2A2EBE63007EC235 /* Intents.framework */; };
 		A9F871232A2EBE63007EC235 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9F871222A2EBE63007EC235 /* IntentHandler.swift */; };
 		A9F871382A2EBE64007EC235 /* LoopCaregiverIntentExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A9F8713F2A2EBE79007EC235 /* LoopCaregiverWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F422A29350D00F7DE2D /* LoopCaregiverWidget.intentdefinition */; };
-		A9F871402A2FF2F5007EC235 /* CoreDataAccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */; };
-		A9F871412A2FF2F5007EC235 /* AccountService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929902927FFBA00B8BF43 /* AccountService.swift */; };
-		A9F871422A2FF2F5007EC235 /* AccountServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */; };
-		A9F871432A2FF2F5007EC235 /* CaregiverSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DB9532930F879004B58D3 /* CaregiverSettings.swift */; };
-		A9F871442A2FF2F5007EC235 /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
-		A9F871452A2FF2F9007EC235 /* LoopCaregiver.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */; };
-		A9F871462A2FF300007EC235 /* Looper.swift in Sources */ = {isa = PBXBuildFile; fileRef = A969293C2926EFEC00B8BF43 /* Looper.swift */; };
-		A9F871472A2FF304007EC235 /* LooperService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972775292FCE6A006C8C74 /* LooperService.swift */; };
-		A9F871482A2FF307007EC235 /* RemoteDataServiceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */; };
-		A9F871492A2FF338007EC235 /* NightscoutDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A96929922929908100B8BF43 /* NightscoutDataSource.swift */; };
-		A9F8714A2A2FF338007EC235 /* OTPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E529230FF20052AA9E /* OTPManager.swift */; };
-		A9F8714B2A2FF338007EC235 /* NightscoutCredentialService.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */; };
-		A9F8714C2A2FF338007EC235 /* NightscoutCredentials.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */; };
-		A9F871502A2FF373007EC235 /* LoopKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A95F50BF292A602F00079AAF /* LoopKit.framework */; };
-		A9F871532A2FF37D007EC235 /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9F871522A2FF37D007EC235 /* NightscoutKit */; };
 		A9F871552A2FF38A007EC235 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A9F871542A2FF38A007EC235 /* OneTimePassword */; };
-		A9F871562A2FF411007EC235 /* Date+Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99DC866299984430058EBA5 /* Date+Utils.swift */; };
-		A9F871572A2FF416007EC235 /* LocalizationUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */; };
-		A9F871582A2FF42C007EC235 /* BolusNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */; };
-		A9F871592A2FF430007EC235 /* CarbCorrectionNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */; };
-		A9F8715A2A2FF434007EC235 /* COBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E72969A6A900D3875F /* COBStatus.swift */; };
-		A9F8715B2A2FF437007EC235 /* GlucoseEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */; };
-		A9F8715C2A2FF43C007EC235 /* IOBStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E52969A69F00D3875F /* IOBStatus.swift */; };
-		A9F8715D2A2FF43F007EC235 /* NightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */; };
-		A9F8715E2A2FF442007EC235 /* OverrideTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */; };
-		A9F8715F2A2FF444007EC235 /* ProfileSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7E92969A6B600D3875F /* ProfileSet.swift */; };
-		A9F871622A2FF46F007EC235 /* TempBasalNightscoutTreatment.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */; };
-		A9F871632A2FF473007EC235 /* TemporaryScheduleOverride.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */; };
-		A9FE41062ADC672900DD88E4 /* ServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9299C422ADC3DE7009193AB /* ServiceComposer.swift */; };
-		A9FE41072ADC672900DD88E4 /* ServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9299C422ADC3DE7009193AB /* ServiceComposer.swift */; };
-		A9FE41082ADC675900DD88E4 /* NSPersistentStoreCoordinator+Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */; };
 		B63A43D72B2549BA004CFEAA /* BuildDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A43D62B2549BA004CFEAA /* BuildDetails.swift */; };
 		B63A43E02B2603DD004CFEAA /* BuildDetails.plist in Resources */ = {isa = PBXBuildFile; fileRef = B63A43DF2B2603DD004CFEAA /* BuildDetails.plist */; };
 		B63A43E22B2603ED004CFEAA /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = B63A43E12B2603ED004CFEAA /* Scripts */; };
@@ -284,9 +146,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A948D1A8292AB782003C5683 /* LoopKit.framework in Embed Frameworks */,
 				A9CA10302A7FF73200EE114C /* SwiftCharts in Embed Frameworks */,
-				A95F50C8292A657F00079AAF /* LoopKitUI.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -330,12 +190,8 @@
 /* Begin PBXFileReference section */
 		3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LoopCaregiver.xcconfig; sourceTree = "<group>"; };
 		3DF4E0882980736C00E91E16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
-		A90DB9532930F879004B58D3 /* CaregiverSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaregiverSettings.swift; sourceTree = "<group>"; };
+		A90DAD792B2C76CA0092A3D9 /* Looper+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Looper+SwiftUI.swift"; sourceTree = "<group>"; };
 		A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
-		A9299C422ADC3DE7009193AB /* ServiceComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ServiceComposer.swift; sourceTree = "<group>"; };
-		A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Presentable.swift"; sourceTree = "<group>"; };
-		A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSPersistentStoreCoordinator+Migration.swift"; sourceTree = "<group>"; };
-		A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = "LoopCaregiver 2.xcdatamodel"; sourceTree = "<group>"; };
 		A930C6C12A8F99AA004BB459 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		A930C6C42A9364BC004BB459 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -345,17 +201,6 @@
 		A94702682932429F00FB3E59 /* DoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DoseChartView.swift; sourceTree = "<group>"; };
 		A947026B293254B500FB3E59 /* COBChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBChartView.swift; sourceTree = "<group>"; };
 		A947026F2932C21E00FB3E59 /* IOBChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBChartView.swift; sourceTree = "<group>"; };
-		A95223612A7EDA9B0070FE13 /* OverrideAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideAction.swift; sourceTree = "<group>"; };
-		A95223622A7EDA9B0070FE13 /* BolusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BolusAction.swift; sourceTree = "<group>"; };
-		A95223632A7EDA9B0070FE13 /* OverrideCancelAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideCancelAction.swift; sourceTree = "<group>"; };
-		A95223642A7EDA9B0070FE13 /* CarbAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbAction.swift; sourceTree = "<group>"; };
-		A95223652A7EDA9B0070FE13 /* Action.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Action.swift; sourceTree = "<group>"; };
-		A952236B2A7EDC790070FE13 /* RemoteCommand.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommand.swift; sourceTree = "<group>"; };
-		A952236C2A7EDC790070FE13 /* RemoteCommandStatus.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteCommandStatus.swift; sourceTree = "<group>"; };
-		A95223702A7EDCB90070FE13 /* NSRemoteCommandPayload.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSRemoteCommandPayload.swift; sourceTree = "<group>"; };
-		A95223712A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "RemoteCommandStatus+Extras.swift"; sourceTree = "<group>"; };
-		A95223742A7EDE660070FE13 /* AutobolusAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AutobolusAction.swift; sourceTree = "<group>"; };
-		A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ClosedLoopAction.swift; sourceTree = "<group>"; };
 		A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteCommand+Charts.swift"; sourceTree = "<group>"; };
 		A95F50BF292A602F00079AAF /* LoopKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictedGlucoseChartView.swift; sourceTree = "<group>"; };
@@ -365,28 +210,15 @@
 		A9688E2D299730C500CDD4D6 /* LICENSE */ = {isa = PBXFileReference; lastKnownFileType = text; path = LICENSE; sourceTree = "<group>"; };
 		A96929342926E5CE00B8BF43 /* HUDView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HUDView.swift; sourceTree = "<group>"; };
 		A969293A2926ECF500B8BF43 /* BottomBarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomBarView.swift; sourceTree = "<group>"; };
-		A969293C2926EFEC00B8BF43 /* Looper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Looper.swift; sourceTree = "<group>"; };
-		A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountServiceManager.swift; sourceTree = "<group>"; };
 		A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LooperSetupView.swift; sourceTree = "<group>"; };
-		A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LoopCaregiver.xcdatamodel; sourceTree = "<group>"; };
-		A96929902927FFBA00B8BF43 /* AccountService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountService.swift; sourceTree = "<group>"; };
-		A96929922929908100B8BF43 /* NightscoutDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutDataSource.swift; sourceTree = "<group>"; };
 		A973364229678EA300DFE395 /* NightscoutUploadKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NightscoutUploadKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9744DE92933B0FE000A3D6A /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A9744DEB293405A4000A3D6A /* PinchZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoom.swift; sourceTree = "<group>"; };
-		A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizationUtils.swift; sourceTree = "<group>"; };
 		A98348902AD206CD0034ABB2 /* PresetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetRowView.swift; sourceTree = "<group>"; };
-		A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentialService.swift; sourceTree = "<group>"; };
-		A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutCredentials.swift; sourceTree = "<group>"; };
 		A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Charts.swift"; sourceTree = "<group>"; };
-		A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideTreatment.swift; sourceTree = "<group>"; };
-		A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataAccountService.swift; sourceTree = "<group>"; };
-		A9972775292FCE6A006C8C74 /* LooperService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LooperService.swift; sourceTree = "<group>"; };
-		A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RemoteDataServiceManager.swift; sourceTree = "<group>"; };
 		A99BC5172AE5645B006D52EF /* .github */ = {isa = PBXFileReference; lastKnownFileType = folder; name = .github; path = ../.github; sourceTree = "<group>"; };
 		A99BC5182AE56468006D52EF /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; name = fastlane; path = ../fastlane; sourceTree = "<group>"; };
 		A99DC86429992DD20058EBA5 /* DisclaimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DisclaimerView.swift; sourceTree = "<group>"; };
-		A99DC866299984430058EBA5 /* Date+Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Utils.swift"; sourceTree = "<group>"; };
 		A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A99F2F372A29350C00F7DE2D /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		A99F2F392A29350D00F7DE2D /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -397,34 +229,17 @@
 		A99F2F452A29350F00F7DE2D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A99F2F4F2A29396900F7DE2D /* LoopCaregiverWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiverWidgetExtension.entitlements; sourceTree = "<group>"; };
 		A99F2F502A29398F00F7DE2D /* LoopCaregiver.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiver.entitlements; sourceTree = "<group>"; };
-		A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle+Extensions.swift"; sourceTree = "<group>"; };
 		A99F2F732A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CarbCorrectionNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
 		A99F2F762A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BolusNightscoutTreatment+Charts.swift"; sourceTree = "<group>"; };
 		A99F2F792A2AA0DD00F7DE2D /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
 		A99F2F7C2A2AA16200F7DE2D /* LoopCaregiverWidgetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverWidgetView.swift; sourceTree = "<group>"; };
 		A99F2F7E2A2AA19E00F7DE2D /* TimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineProvider.swift; sourceTree = "<group>"; };
-		A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideCancelRemoteNotification.swift; sourceTree = "<group>"; };
-		A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CarbRemoteNotification.swift; sourceTree = "<group>"; };
-		A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverrideRemoteNotification.swift; sourceTree = "<group>"; };
-		A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BolusRemoteNotification.swift; sourceTree = "<group>"; };
-		A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RemoteNotification.swift; sourceTree = "<group>"; };
-		A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NoteNightscoutTreatment+RemoteCommand.swift"; sourceTree = "<group>"; };
-		A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoteNightscoutTreatment.swift; sourceTree = "<group>"; };
 		A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
-		A9B033E529230FF20052AA9E /* OTPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OTPManager.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A9BBD8232B2C991D00072287 /* LoopCaregiverKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = LoopCaregiverKit; path = ../LoopCaregiverKit; sourceTree = "<group>"; };
 		A9BD0DDF2A89515700988E2C /* ZoomableScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
 		A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideInsulinNeedsView.swift; sourceTree = "<group>"; };
 		A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetEditView.swift; sourceTree = "<group>"; };
-		A9C4D7E52969A69F00D3875F /* IOBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBStatus.swift; sourceTree = "<group>"; };
-		A9C4D7E72969A6A900D3875F /* COBStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = COBStatus.swift; sourceTree = "<group>"; };
-		A9C4D7E92969A6B600D3875F /* ProfileSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSet.swift; sourceTree = "<group>"; };
-		A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlucoseEntry.swift; sourceTree = "<group>"; };
-		A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NightscoutTreatment.swift; sourceTree = "<group>"; };
-		A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempBasalNightscoutTreatment.swift; sourceTree = "<group>"; };
-		A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusNightscoutTreatment.swift; sourceTree = "<group>"; };
-		A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbCorrectionNightscoutTreatment.swift; sourceTree = "<group>"; };
-		A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemporaryScheduleOverride.swift; sourceTree = "<group>"; };
 		A9C666392ADAD41700D3B5CA /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; name = README.md; path = ../README.md; sourceTree = "<group>"; };
 		A9C89ED62A7074EE00EFD938 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HIG.swift"; sourceTree = "<group>"; };
@@ -442,7 +257,6 @@
 		A9CFDD442AEC043300FA701B /* LoopCaregiverWatchAppExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiverWatchAppExtension.entitlements; sourceTree = "<group>"; };
 		A9CFDD452AEC055500FA701B /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A9D3FF212A6C3B99000C891D /* Color.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Color.swift; sourceTree = "<group>"; };
-		A9D3FF232A6C3C54000C891D /* HKUnit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HKUnit.swift; sourceTree = "<group>"; };
 		A9E14D3E2A2BB18500BDB93D /* LatestGlucoseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestGlucoseView.swift; sourceTree = "<group>"; };
 		A9EC1978291FEF940022D39F /* LoopCaregiver.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiver.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverApp.swift; sourceTree = "<group>"; };
@@ -458,8 +272,6 @@
 		A9ECCB272B286CD90057DEDF /* AppExpirationAlerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExpirationAlerter.swift; sourceTree = "<group>"; };
 		A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
 		A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExpirationAlerterRepresentable.swift; sourceTree = "<group>"; };
-		A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
-		A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTestCase.swift; sourceTree = "<group>"; };
 		A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9F8711F2A2EBE63007EC235 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		A9F871222A2EBE63007EC235 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
@@ -484,10 +296,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				A99F2F6B2A2A976E00F7DE2D /* OneTimePassword in Frameworks */,
-				A99F2F712A2A980400F7DE2D /* LoopKit.framework in Frameworks */,
-				A99F2F6D2A2A977700F7DE2D /* NightscoutKit in Frameworks */,
+				A9ECCB362B2C73520057DEDF /* LoopKit in Frameworks */,
+				A9BBD8272B2C992F00072287 /* LoopCaregiverKit in Frameworks */,
 				A99F2F3A2A29350D00F7DE2D /* SwiftUI.framework in Frameworks */,
 				A99F2F382A29350D00F7DE2D /* WidgetKit.framework in Frameworks */,
+				A9ECCB382B2C73520057DEDF /* LoopKitUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -495,6 +308,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A9480DFF2B2CA5430044C972 /* LoopKit in Frameworks */,
+				A95CCCF02B2F9145000BFC25 /* OneTimePassword in Frameworks */,
+				A92256352B2F952F0024EA56 /* LoopCaregiverKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -504,6 +320,7 @@
 			files = (
 				A9CFDD332AEC02D600FA701B /* SwiftUI.framework in Frameworks */,
 				A9CFDD322AEC02D600FA701B /* WidgetKit.framework in Frameworks */,
+				A95CCCEE2B2F90DF000BFC25 /* LoopCaregiverKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -513,9 +330,10 @@
 			files = (
 				A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */,
 				A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */,
-				A95F50C7292A657F00079AAF /* LoopKitUI.framework in Frameworks */,
+				A9ECCB342B2C73270057DEDF /* LoopKitUI in Frameworks */,
+				A9BBD8252B2C992900072287 /* LoopCaregiverKit in Frameworks */,
+				A9ECCB322B2C73270057DEDF /* LoopKit in Frameworks */,
 				A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */,
-				A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -524,31 +342,22 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9F871202A2EBE63007EC235 /* Intents.framework in Frameworks */,
-				A9F871532A2FF37D007EC235 /* NightscoutKit in Frameworks */,
+				A9ECCB3A2B2C73640057DEDF /* LoopKit in Frameworks */,
 				A9F871552A2FF38A007EC235 /* OneTimePassword in Frameworks */,
-				A9F871502A2FF373007EC235 /* LoopKit.framework in Frameworks */,
+				A9BBD8292B2C993500072287 /* LoopCaregiverKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		A92AB6BE2A3151E900977536 /* Extensions */ = {
+		A92256362B2F972F0024EA56 /* Diagnostics */ = {
 			isa = PBXGroup;
 			children = (
-				A9D3FF232A6C3C54000C891D /* HKUnit.swift */,
-				A92AB6C42A3153DD00977536 /* Foundation */,
-				A92AB6C02A3151E900977536 /* NewGlucoseSample+Presentable.swift */,
+				B63A43D62B2549BA004CFEAA /* BuildDetails.swift */,
+				A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */,
 			);
-			path = Extensions;
-			sourceTree = "<group>";
-		};
-		A92AB6C42A3153DD00977536 /* Foundation */ = {
-			isa = PBXGroup;
-			children = (
-				A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */,
-			);
-			path = Foundation;
+			path = Diagnostics;
 			sourceTree = "<group>";
 		};
 		A930C6C32A922127004BB459 /* ZommableScrollView */ = {
@@ -564,7 +373,6 @@
 			isa = PBXGroup;
 			children = (
 				A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */,
-				A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */,
 			);
 			path = LoopCaregiverTests;
 			sourceTree = "<group>";
@@ -624,32 +432,6 @@
 			path = IOBChart;
 			sourceTree = "<group>";
 		};
-		A95223602A7ED9940070FE13 /* RemoteCommands */ = {
-			isa = PBXGroup;
-			children = (
-				A95223652A7EDA9B0070FE13 /* Action.swift */,
-				A95223742A7EDE660070FE13 /* AutobolusAction.swift */,
-				A95223622A7EDA9B0070FE13 /* BolusAction.swift */,
-				A95223642A7EDA9B0070FE13 /* CarbAction.swift */,
-				A95223752A7EDE660070FE13 /* ClosedLoopAction.swift */,
-				A95223612A7EDA9B0070FE13 /* OverrideAction.swift */,
-				A95223632A7EDA9B0070FE13 /* OverrideCancelAction.swift */,
-				A952236B2A7EDC790070FE13 /* RemoteCommand.swift */,
-				A952236C2A7EDC790070FE13 /* RemoteCommandStatus.swift */,
-			);
-			path = RemoteCommands;
-			sourceTree = "<group>";
-		};
-		A952236F2A7EDCA50070FE13 /* RemoteCommands */ = {
-			isa = PBXGroup;
-			children = (
-				A9A362D52A80EEED007B017C /* V1 */,
-				A95223702A7EDCB90070FE13 /* NSRemoteCommandPayload.swift */,
-				A95223712A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift */,
-			);
-			path = RemoteCommands;
-			sourceTree = "<group>";
-		};
 		A95F50BE292A602E00079AAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -681,28 +463,6 @@
 			path = Charts;
 			sourceTree = "<group>";
 		};
-		A96929302926E2B700B8BF43 /* Models */ = {
-			isa = PBXGroup;
-			children = (
-				A95223602A7ED9940070FE13 /* RemoteCommands */,
-				A92AB6BE2A3151E900977536 /* Extensions */,
-				A96929902927FFBA00B8BF43 /* AccountService.swift */,
-				A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */,
-				B63A43D62B2549BA004CFEAA /* BuildDetails.swift */,
-				A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */,
-				A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */,
-				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
-				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
-				A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */,
-				A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */,
-				A969293C2926EFEC00B8BF43 /* Looper.swift */,
-				A9972775292FCE6A006C8C74 /* LooperService.swift */,
-				A9972777292FEA06006C8C74 /* RemoteDataServiceManager.swift */,
-				A9299C422ADC3DE7009193AB /* ServiceComposer.swift */,
-			);
-			path = Models;
-			sourceTree = "<group>";
-		};
 		A96929332926E57C00B8BF43 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -711,7 +471,6 @@
 				A9744DE72933B0DC000A3D6A /* Extensions */,
 				A969296A29279DCB00B8BF43 /* Home */,
 				A969296929279D9F00B8BF43 /* Settings */,
-				A97B729A293E839E0053DBB8 /* Utils */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -755,34 +514,13 @@
 			isa = PBXGroup;
 			children = (
 				A9D3FF212A6C3B99000C891D /* Color.swift */,
-				A9744DE92933B0FE000A3D6A /* View.swift */,
+				A90DAD792B2C76CA0092A3D9 /* Looper+SwiftUI.swift */,
 				A9C89ED62A7074EE00EFD938 /* UIColor.swift */,
 				A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */,
 				A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */,
+				A9744DE92933B0FE000A3D6A /* View.swift */,
 			);
 			path = Extensions;
-			sourceTree = "<group>";
-		};
-		A97B729A293E839E0053DBB8 /* Utils */ = {
-			isa = PBXGroup;
-			children = (
-				A97B729B293E83BA0053DBB8 /* LocalizationUtils.swift */,
-				A99DC866299984430058EBA5 /* Date+Utils.swift */,
-			);
-			path = Utils;
-			sourceTree = "<group>";
-		};
-		A98D4CB0292C38D100EFF5C6 /* Nightscout */ = {
-			isa = PBXGroup;
-			children = (
-				A952236F2A7EDCA50070FE13 /* RemoteCommands */,
-				A9C4D7E42969A68800D3875F /* Extensions */,
-				A98D4CB1292C394800EFF5C6 /* NightscoutCredentials.swift */,
-				A98D4CAE292C26CD00EFF5C6 /* NightscoutCredentialService.swift */,
-				A96929922929908100B8BF43 /* NightscoutDataSource.swift */,
-				A9B033E529230FF20052AA9E /* OTPManager.swift */,
-			);
-			path = Nightscout;
 			sourceTree = "<group>";
 		};
 		A99F2F3B2A29350D00F7DE2D /* LoopCaregiverWidgetExtension */ = {
@@ -800,37 +538,6 @@
 				A99F2F452A29350F00F7DE2D /* Info.plist */,
 			);
 			path = LoopCaregiverWidgetExtension;
-			sourceTree = "<group>";
-		};
-		A9A362D52A80EEED007B017C /* V1 */ = {
-			isa = PBXGroup;
-			children = (
-				A9A362D92A80EEFE007B017C /* BolusRemoteNotification.swift */,
-				A9A362D72A80EEFE007B017C /* CarbRemoteNotification.swift */,
-				A9A362D62A80EEFE007B017C /* OverrideCancelRemoteNotification.swift */,
-				A9A362D82A80EEFE007B017C /* OverrideRemoteNotification.swift */,
-				A9A362DA2A80EEFE007B017C /* RemoteNotification.swift */,
-			);
-			path = V1;
-			sourceTree = "<group>";
-		};
-		A9C4D7E42969A68800D3875F /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-				A9C4D7F12969B78A00D3875F /* BolusNightscoutTreatment.swift */,
-				A9C4D7F32969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift */,
-				A9C4D7E72969A6A900D3875F /* COBStatus.swift */,
-				A9C4D7EB2969B69600D3875F /* GlucoseEntry.swift */,
-				A9C4D7E52969A69F00D3875F /* IOBStatus.swift */,
-				A9C4D7ED2969B70000D3875F /* NightscoutTreatment.swift */,
-				A9A45D6F2A77B5480013CD5B /* NoteNightscoutTreatment.swift */,
-				A98FF28D29A11CC8005739A5 /* OverrideTreatment.swift */,
-				A9C4D7E92969A6B600D3875F /* ProfileSet.swift */,
-				A9C4D7EF2969B76A00D3875F /* TempBasalNightscoutTreatment.swift */,
-				A9C4D7F52969B92800D3875F /* TemporaryScheduleOverride.swift */,
-				A9A362E02A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift */,
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		A9CFDD1C2AEBFF1200FA701B /* LoopCaregiverWatchApp */ = {
@@ -883,6 +590,7 @@
 				A9CFDD342AEC02D600FA701B /* LoopCaregiverWatchAppExtension */,
 				A9EC1979291FEF940022D39F /* Products */,
 				A95F50BE292A602E00079AAF /* Frameworks */,
+				A9BBD8232B2C991D00072287 /* LoopCaregiverKit */,
 				3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */,
 			);
 			sourceTree = "<group>";
@@ -907,8 +615,7 @@
 				B63A43DF2B2603DD004CFEAA /* BuildDetails.plist */,
 				A99F2F502A29398F00F7DE2D /* LoopCaregiver.entitlements */,
 				3DF4E0882980736C00E91E16 /* Info.plist */,
-				A96929302926E2B700B8BF43 /* Models */,
-				A98D4CB0292C38D100EFF5C6 /* Nightscout */,
+				A92256362B2F972F0024EA56 /* Diagnostics */,
 				A96929332926E57C00B8BF43 /* Views */,
 				A9EC197B291FEF940022D39F /* LoopCaregiverApp.swift */,
 				A9EC197F291FEF950022D39F /* Assets.xcassets */,
@@ -971,7 +678,9 @@
 			name = LoopCaregiverWidgetExtension;
 			packageProductDependencies = (
 				A99F2F6A2A2A976E00F7DE2D /* OneTimePassword */,
-				A99F2F6C2A2A977700F7DE2D /* NightscoutKit */,
+				A9ECCB352B2C73520057DEDF /* LoopKit */,
+				A9ECCB372B2C73520057DEDF /* LoopKitUI */,
+				A9BBD8262B2C992F00072287 /* LoopCaregiverKit */,
 			);
 			productName = LoopCaregiverWidgetExtension;
 			productReference = A99F2F362A29350C00F7DE2D /* LoopCaregiverWidgetExtension.appex */;
@@ -992,6 +701,11 @@
 				A9CFDD3D2AEC02D700FA701B /* PBXTargetDependency */,
 			);
 			name = LoopCaregiverWatchApp;
+			packageProductDependencies = (
+				A9480DFE2B2CA5430044C972 /* LoopKit */,
+				A95CCCEF2B2F9145000BFC25 /* OneTimePassword */,
+				A92256342B2F952F0024EA56 /* LoopCaregiverKit */,
+			);
 			productName = "LoopCaregiverWatchApp Watch App";
 			productReference = A9CFDD1B2AEBFF1200FA701B /* LoopCaregiverWatchApp.app */;
 			productType = "com.apple.product-type.application";
@@ -1009,6 +723,9 @@
 			dependencies = (
 			);
 			name = LoopCaregiverWatchAppExtension;
+			packageProductDependencies = (
+				A95CCCED2B2F90DF000BFC25 /* LoopCaregiverKit */,
+			);
 			productName = LoopCaregiverWatchAppExtensionExtension;
 			productReference = A9CFDD312AEC02D600FA701B /* LoopCaregiverWatchAppExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1036,8 +753,10 @@
 			packageProductDependencies = (
 				A9EC19A3292141980022D39F /* OneTimePassword */,
 				A9B033E3292306A90052AA9E /* CodeScanner */,
-				A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */,
 				A9CA102E2A7FF6A700EE114C /* SwiftCharts */,
+				A9ECCB312B2C73270057DEDF /* LoopKit */,
+				A9ECCB332B2C73270057DEDF /* LoopKitUI */,
+				A9BBD8242B2C992900072287 /* LoopCaregiverKit */,
 			);
 			productName = LoopCaregiver;
 			productReference = A9EC1978291FEF940022D39F /* LoopCaregiver.app */;
@@ -1057,8 +776,9 @@
 			);
 			name = LoopCaregiverIntentExtension;
 			packageProductDependencies = (
-				A9F871522A2FF37D007EC235 /* NightscoutKit */,
 				A9F871542A2FF38A007EC235 /* OneTimePassword */,
+				A9ECCB392B2C73640057DEDF /* LoopKit */,
+				A9BBD8282B2C993500072287 /* LoopCaregiverKit */,
 			);
 			productName = MyIntentExtension;
 			productReference = A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */;
@@ -1107,8 +827,8 @@
 			packageReferences = (
 				A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */,
 				A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */,
-				A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */,
 				A9CA102D2A7FF6A700EE114C /* XCRemoteSwiftPackageReference "SwiftCharts" */,
+				A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */,
 			);
 			productRefGroup = A9EC1979291FEF940022D39F /* Products */;
 			projectDirPath = "";
@@ -1203,7 +923,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9EFD0022AE08418008D63EC /* DeepLinkParserTestCase.swift in Sources */,
 				A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1212,59 +931,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9A94EA82A85B0F0001663FA /* RemoteNotification.swift in Sources */,
-				A9D2B8272A2CAFD500826490 /* LocalizationUtils.swift in Sources */,
 				A99F2F7B2A2AA0E100F7DE2D /* SimpleEntry.swift in Sources */,
-				A99F2F5A2A2A970800F7DE2D /* LooperService.swift in Sources */,
 				A99F2F3D2A29350D00F7DE2D /* LoopCaregiverWidgetBundle.swift in Sources */,
-				A99F2F622A2A972100F7DE2D /* OverrideTreatment.swift in Sources */,
-				A9A94E942A85B0A8001663FA /* RemoteCommand.swift in Sources */,
-				A99F2F612A2A971F00F7DE2D /* NightscoutTreatment.swift in Sources */,
-				A9A94EB02A85B106001663FA /* OverrideRemoteNotification.swift in Sources */,
 				A99F2F7D2A2AA16200F7DE2D /* LoopCaregiverWidgetView.swift in Sources */,
-				A9A94E9A2A85B0BD001663FA /* BolusAction.swift in Sources */,
-				A99F2F662A2A972E00F7DE2D /* NightscoutCredentials.swift in Sources */,
-				A99F2F5E2A2A971700F7DE2D /* COBStatus.swift in Sources */,
 				A99F2F412A29350D00F7DE2D /* LoopCaregiverWidget.swift in Sources */,
 				A99F2F7F2A2AA19E00F7DE2D /* TimelineProvider.swift in Sources */,
-				A99F2F572A2A96FC00F7DE2D /* CoreDataAccountService.swift in Sources */,
-				A99F2F652A2A972A00F7DE2D /* TemporaryScheduleOverride.swift in Sources */,
-				A9A94E982A85B0BA001663FA /* AutobolusAction.swift in Sources */,
-				A9A94E962A85B0B6001663FA /* Action.swift in Sources */,
-				A99F2F642A2A972800F7DE2D /* TempBasalNightscoutTreatment.swift in Sources */,
-				A99F2F632A2A972400F7DE2D /* ProfileSet.swift in Sources */,
-				A99F2F672A2A973000F7DE2D /* NightscoutCredentialService.swift in Sources */,
-				A99F2F582A2A970200F7DE2D /* LoopCaregiver.xcdatamodeld in Sources */,
-				A9A94EA42A85B0CF001663FA /* OverrideCancelAction.swift in Sources */,
-				A99F2F692A2A973600F7DE2D /* OTPManager.swift in Sources */,
-				A99F2F562A2A96F900F7DE2D /* CaregiverSettings.swift in Sources */,
-				A99F2F5F2A2A971A00F7DE2D /* GlucoseEntry.swift in Sources */,
-				A99F2F782A2A98C800F7DE2D /* BolusNightscoutTreatment.swift in Sources */,
-				A9A94E9C2A85B0BF001663FA /* CarbAction.swift in Sources */,
-				A9FE41062ADC672900DD88E4 /* ServiceComposer.swift in Sources */,
-				A99F2F682A2A973300F7DE2D /* NightscoutDataSource.swift in Sources */,
 				A9E14D3F2A2BB18500BDB93D /* LatestGlucoseView.swift in Sources */,
-				A99F2F542A2A96F200F7DE2D /* AccountServiceManager.swift in Sources */,
-				A99F2F532A2A96E200F7DE2D /* AccountService.swift in Sources */,
-				A9A94EA62A85B0E1001663FA /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */,
-				A9748A322A70891100D7E2FE /* HKUnit.swift in Sources */,
-				A9A94EAC2A85B0FF001663FA /* CarbRemoteNotification.swift in Sources */,
-				A99F2F752A2A988000F7DE2D /* CarbCorrectionNightscoutTreatment.swift in Sources */,
-				A99F2F592A2A970500F7DE2D /* Looper.swift in Sources */,
-				A9A94EA02A85B0C6001663FA /* OverrideAction.swift in Sources */,
-				A99F2F602A2A971D00F7DE2D /* IOBStatus.swift in Sources */,
 				A99F2F462A29350F00F7DE2D /* LoopCaregiverWidget.intentdefinition in Sources */,
-				A916A9722A3276530096B999 /* NSPersistentStoreCoordinator+Migration.swift in Sources */,
-				A9A94EAE2A85B102001663FA /* OverrideCancelRemoteNotification.swift in Sources */,
-				A9A94EA22A85B0CA001663FA /* RemoteCommandStatus.swift in Sources */,
-				A9EFD0032AE093F9008D63EC /* DeepLinkParser.swift in Sources */,
-				A9A94EAB2A85B0FC001663FA /* BolusRemoteNotification.swift in Sources */,
-				A9A94EB22A85B119001663FA /* NSRemoteCommandPayload.swift in Sources */,
-				A9A94E9E2A85B0C2001663FA /* ClosedLoopAction.swift in Sources */,
-				A92AB6CA2A31564400977536 /* NewGlucoseSample+Presentable.swift in Sources */,
-				A99F2F802A2AB24300F7DE2D /* Date+Utils.swift in Sources */,
-				A99F2F5B2A2A970B00F7DE2D /* RemoteDataServiceManager.swift in Sources */,
-				A99F2F552A2A96F500F7DE2D /* Bundle+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1273,7 +946,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */,
-				A9EC5C802B10EA9100AA32EF /* Bundle+Extensions.swift in Sources */,
 				A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */,
 				A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */,
 				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */,
@@ -1287,7 +959,6 @@
 				A9EC5C7F2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */,
 				A9CFDD362AEC02D600FA701B /* LoopCaregiverWatchAppExtension.swift in Sources */,
 				A9CFDD382AEC02D600FA701B /* AppIntent.swift in Sources */,
-				A9EC5C7C2B10D1EF00AA32EF /* Bundle+Extensions.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1297,90 +968,43 @@
 			files = (
 				A9BD0DE02A89515700988E2C /* ZoomableScrollView.swift in Sources */,
 				A9A62C7F2AD1BD4C004CD316 /* TimeInterval.swift in Sources */,
-				A97B729C293E83BA0053DBB8 /* LocalizationUtils.swift in Sources */,
 				A99F2F772A2A98AE00F7DE2D /* BolusNightscoutTreatment+Charts.swift in Sources */,
-				A9C4D7EC2969B69600D3875F /* GlucoseEntry.swift in Sources */,
-				A95223772A7EDE660070FE13 /* ClosedLoopAction.swift in Sources */,
-				A90DB9542930F879004B58D3 /* CaregiverSettings.swift in Sources */,
-				A9A362DC2A80EEFE007B017C /* CarbRemoteNotification.swift in Sources */,
-				A9972776292FCE6A006C8C74 /* LooperService.swift in Sources */,
-				A9C4D7F62969B92800D3875F /* TemporaryScheduleOverride.swift in Sources */,
-				A9EFD0002ADF6A01008D63EC /* DeepLinkParser.swift in Sources */,
-				A99F2F522A2A92D100F7DE2D /* Bundle+Extensions.swift in Sources */,
-				A96929932929908100B8BF43 /* NightscoutDataSource.swift in Sources */,
-				A95223762A7EDE660070FE13 /* AutobolusAction.swift in Sources */,
 				A94702702932C21E00FB3E59 /* IOBChartView.swift in Sources */,
 				A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */,
-				A9D3FF242A6C3C54000C891D /* HKUnit.swift in Sources */,
-				A9A362DF2A80EEFE007B017C /* RemoteNotification.swift in Sources */,
 				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
-				A9C4D7EA2969A6B600D3875F /* ProfileSet.swift in Sources */,
-				A952236D2A7EDC790070FE13 /* RemoteCommand.swift in Sources */,
 				A9EC5C792B10CDC600AA32EF /* WatchConnectivityManager.swift in Sources */,
-				A952236A2A7EDA9B0070FE13 /* Action.swift in Sources */,
-				A98D4CAF292C26CD00EFF5C6 /* NightscoutCredentialService.swift in Sources */,
-				A95223692A7EDA9B0070FE13 /* CarbAction.swift in Sources */,
-				A9A362DD2A80EEFE007B017C /* OverrideRemoteNotification.swift in Sources */,
 				A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */,
-				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
 				A9ECCB2A2B286DB50057DEDF /* UserDefaults+Extensions.swift in Sources */,
 				A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */,
-				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
 				A98348912AD206CD0034ABB2 /* PresetRowView.swift in Sources */,
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
-				A95223732A7EDCB90070FE13 /* RemoteCommandStatus+Extras.swift in Sources */,
 				A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */,
-				A98FF28E29A11CC8005739A5 /* OverrideTreatment.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
 				A9744DEA2933B0FE000A3D6A /* View.swift in Sources */,
-				A92AB6C62A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift in Sources */,
-				A9972778292FEA06006C8C74 /* RemoteDataServiceManager.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,
 				A9D3FF222A6C3B99000C891D /* Color.swift in Sources */,
 				A9BD7B552AD17AAD00E73973 /* PresetEditView.swift in Sources */,
-				A95223682A7EDA9B0070FE13 /* OverrideCancelAction.swift in Sources */,
 				A930C6C22A8F99AA004BB459 /* CGRect.swift in Sources */,
 				A9EC199E292101550022D39F /* NightscoutChartView.swift in Sources */,
-				A969293F2926EFEC00B8BF43 /* Looper.swift in Sources */,
 				A969293B2926ECF500B8BF43 /* BottomBarView.swift in Sources */,
-				A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */,
 				A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */,
-				A9A45D702A77B5480013CD5B /* NoteNightscoutTreatment.swift in Sources */,
 				A9ECCB2C2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift in Sources */,
-				A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */,
 				A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */,
-				A95223662A7EDA9B0070FE13 /* OverrideAction.swift in Sources */,
-				A9C4D7F42969B79E00D3875F /* CarbCorrectionNightscoutTreatment.swift in Sources */,
 				A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */,
 				A99F2F742A2A986600F7DE2D /* CarbCorrectionNightscoutTreatment+Charts.swift in Sources */,
-				A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */,
-				A95223672A7EDA9B0070FE13 /* BolusAction.swift in Sources */,
-				A9C4D7EE2969B70000D3875F /* NightscoutTreatment.swift in Sources */,
 				B63A43D72B2549BA004CFEAA /* BuildDetails.swift in Sources */,
-				A95223722A7EDCB90070FE13 /* NSRemoteCommandPayload.swift in Sources */,
+				A90DAD7A2B2C76CA0092A3D9 /* Looper+SwiftUI.swift in Sources */,
 				A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */,
 				A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */,
-				A92AB6C12A3151E900977536 /* NewGlucoseSample+Presentable.swift in Sources */,
 				A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */,
 				A930C6C52A9364BD004BB459 /* DemoView.swift in Sources */,
-				A9299C432ADC3DE7009193AB /* ServiceComposer.swift in Sources */,
-				A952236E2A7EDC790070FE13 /* RemoteCommandStatus.swift in Sources */,
 				A9C89ED72A7074EE00EFD938 /* UIColor.swift in Sources */,
-				A9A362DB2A80EEFE007B017C /* OverrideCancelRemoteNotification.swift in Sources */,
-				A9A362DE2A80EEFE007B017C /* BolusRemoteNotification.swift in Sources */,
 				A9EC197C291FEF940022D39F /* LoopCaregiverApp.swift in Sources */,
 				A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */,
-				A9C4D7F02969B76A00D3875F /* TempBasalNightscoutTreatment.swift in Sources */,
-				A9A362E12A80F071007B017C /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */,
-				A99DC867299984430058EBA5 /* Date+Utils.swift in Sources */,
-				A96929702927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld in Sources */,
 				A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */,
 				A9BD7B532AD0D8D300E73973 /* OverrideInsulinNeedsView.swift in Sources */,
-				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
 				A9ECCB282B286CD90057DEDF /* AppExpirationAlerter.swift in Sources */,
-				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
 				A99F2F472A29350F00F7DE2D /* LoopCaregiverWidget.intentdefinition in Sources */,
-				A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */,
 				A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1389,54 +1013,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9F871572A2FF416007EC235 /* LocalizationUtils.swift in Sources */,
-				A9F8714A2A2FF338007EC235 /* OTPManager.swift in Sources */,
-				A9F8714C2A2FF338007EC235 /* NightscoutCredentials.swift in Sources */,
 				A9F871232A2EBE63007EC235 /* IntentHandler.swift in Sources */,
-				A9F871412A2FF2F5007EC235 /* AccountService.swift in Sources */,
-				A9A94E972A85B0B7001663FA /* Action.swift in Sources */,
-				A9A94EAD2A85B0FF001663FA /* CarbRemoteNotification.swift in Sources */,
-				A9A94EB32A85B11A001663FA /* NSRemoteCommandPayload.swift in Sources */,
-				A9A94EA72A85B0E1001663FA /* NoteNightscoutTreatment+RemoteCommand.swift in Sources */,
 				A9F8713F2A2EBE79007EC235 /* LoopCaregiverWidget.intentdefinition in Sources */,
-				A9A94E9F2A85B0C3001663FA /* ClosedLoopAction.swift in Sources */,
-				A9A94EAF2A85B103001663FA /* OverrideCancelRemoteNotification.swift in Sources */,
-				A9F871562A2FF411007EC235 /* Date+Utils.swift in Sources */,
-				A9F871632A2FF473007EC235 /* TemporaryScheduleOverride.swift in Sources */,
-				A9F871402A2FF2F5007EC235 /* CoreDataAccountService.swift in Sources */,
-				A9A94E9D2A85B0C0001663FA /* CarbAction.swift in Sources */,
-				A9F871582A2FF42C007EC235 /* BolusNightscoutTreatment.swift in Sources */,
-				A9A94EA32A85B0CB001663FA /* RemoteCommandStatus.swift in Sources */,
-				A9F8715F2A2FF444007EC235 /* ProfileSet.swift in Sources */,
-				A9F871492A2FF338007EC235 /* NightscoutDataSource.swift in Sources */,
-				A9F8715A2A2FF434007EC235 /* COBStatus.swift in Sources */,
-				A9F8715B2A2FF437007EC235 /* GlucoseEntry.swift in Sources */,
-				A9F871622A2FF46F007EC235 /* TempBasalNightscoutTreatment.swift in Sources */,
-				A9A94EA12A85B0C6001663FA /* OverrideAction.swift in Sources */,
-				A9EFD0042AE093F9008D63EC /* DeepLinkParser.swift in Sources */,
-				A9F871482A2FF307007EC235 /* RemoteDataServiceManager.swift in Sources */,
-				A92AB6CB2A31564400977536 /* NewGlucoseSample+Presentable.swift in Sources */,
-				A9A94EAA2A85B0FC001663FA /* BolusRemoteNotification.swift in Sources */,
-				A9F871452A2FF2F9007EC235 /* LoopCaregiver.xcdatamodeld in Sources */,
-				A9F8715E2A2FF442007EC235 /* OverrideTreatment.swift in Sources */,
-				A9748A332A70891200D7E2FE /* HKUnit.swift in Sources */,
-				A9F8714B2A2FF338007EC235 /* NightscoutCredentialService.swift in Sources */,
-				A9F871592A2FF430007EC235 /* CarbCorrectionNightscoutTreatment.swift in Sources */,
-				A9F8715C2A2FF43C007EC235 /* IOBStatus.swift in Sources */,
-				A9A94EA52A85B0CF001663FA /* OverrideCancelAction.swift in Sources */,
-				A9A94E992A85B0BA001663FA /* AutobolusAction.swift in Sources */,
-				A9A94E952A85B0A9001663FA /* RemoteCommand.swift in Sources */,
-				A9F871422A2FF2F5007EC235 /* AccountServiceManager.swift in Sources */,
-				A9FE41072ADC672900DD88E4 /* ServiceComposer.swift in Sources */,
-				A9F871472A2FF304007EC235 /* LooperService.swift in Sources */,
-				A9A94EB12A85B106001663FA /* OverrideRemoteNotification.swift in Sources */,
-				A9FE41082ADC675900DD88E4 /* NSPersistentStoreCoordinator+Migration.swift in Sources */,
-				A9A94EA92A85B0F1001663FA /* RemoteNotification.swift in Sources */,
-				A9F871432A2FF2F5007EC235 /* CaregiverSettings.swift in Sources */,
-				A9F871442A2FF2F5007EC235 /* Bundle+Extensions.swift in Sources */,
-				A9F8715D2A2FF43F007EC235 /* NightscoutTreatment.swift in Sources */,
-				A9F871462A2FF300007EC235 /* Looper.swift in Sources */,
-				A9A94E9B2A85B0BD001663FA /* BolusAction.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2030,31 +1608,56 @@
 				revision = 8e4022f2852d77240d0a17482cbfe325354aac70;
 			};
 		};
-		A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */ = {
+		A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/gestrich/NightscoutKit.git";
+			repositoryURL = "https://github.com/LoopKit/LoopKit.git";
 			requirement = {
-				branch = "feature/2023-07/bg/remote-commands";
+				branch = dev;
 				kind = branch;
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		A92256342B2F952F0024EA56 /* LoopCaregiverKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoopCaregiverKit;
+		};
+		A9480DFE2B2CA5430044C972 /* LoopKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKit;
+		};
+		A95CCCED2B2F90DF000BFC25 /* LoopCaregiverKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoopCaregiverKit;
+		};
+		A95CCCEF2B2F9145000BFC25 /* OneTimePassword */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
+			productName = OneTimePassword;
+		};
 		A99F2F6A2A2A976E00F7DE2D /* OneTimePassword */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
 			productName = OneTimePassword;
 		};
-		A99F2F6C2A2A977700F7DE2D /* NightscoutKit */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */;
-			productName = NightscoutKit;
-		};
 		A9B033E3292306A90052AA9E /* CodeScanner */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */;
 			productName = CodeScanner;
+		};
+		A9BBD8242B2C992900072287 /* LoopCaregiverKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoopCaregiverKit;
+		};
+		A9BBD8262B2C992F00072287 /* LoopCaregiverKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoopCaregiverKit;
+		};
+		A9BBD8282B2C993500072287 /* LoopCaregiverKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = LoopCaregiverKit;
 		};
 		A9CA102E2A7FF6A700EE114C /* SwiftCharts */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2066,15 +1669,30 @@
 			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
 			productName = OneTimePassword;
 		};
-		A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */ = {
+		A9ECCB312B2C73270057DEDF /* LoopKit */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */;
-			productName = NightscoutKit;
+			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKit;
 		};
-		A9F871522A2FF37D007EC235 /* NightscoutKit */ = {
+		A9ECCB332B2C73270057DEDF /* LoopKitUI */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = A9EEB92929D4FCB3004EE7FB /* XCRemoteSwiftPackageReference "NightscoutKit" */;
-			productName = NightscoutKit;
+			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKitUI;
+		};
+		A9ECCB352B2C73520057DEDF /* LoopKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKit;
+		};
+		A9ECCB372B2C73520057DEDF /* LoopKitUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKitUI;
+		};
+		A9ECCB392B2C73640057DEDF /* LoopKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
+			productName = LoopKit;
 		};
 		A9F871542A2FF38A007EC235 /* OneTimePassword */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -2082,20 +1700,6 @@
 			productName = OneTimePassword;
 		};
 /* End XCSwiftPackageProductDependency section */
-
-/* Begin XCVersionGroup section */
-		A969296E2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */,
-				A969296F2927FEBB00B8BF43 /* LoopCaregiver.xcdatamodel */,
-			);
-			currentVersion = A92AB6CE2A31D81200977536 /* LoopCaregiver 2.xcdatamodel */;
-			path = LoopCaregiver.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
-/* End XCVersionGroup section */
 	};
 	rootObject = A9EC1970291FEF940022D39F /* Project object */;
 }

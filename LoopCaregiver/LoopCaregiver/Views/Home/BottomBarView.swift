@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import LoopCaregiverKit
 import SwiftUI
 
 struct BottomBarView: View {

@@ -7,6 +7,7 @@
 
 import HealthKit
 import SwiftUI
+import LoopCaregiverKit
 import LoopKit
 import LoopKitUI
 

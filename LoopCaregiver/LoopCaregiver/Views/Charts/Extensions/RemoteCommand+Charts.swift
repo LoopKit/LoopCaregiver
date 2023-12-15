@@ -7,6 +7,7 @@
 
 import Foundation
 import HealthKit
+import LoopCaregiverKit
 
 extension RemoteCommand {
     func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem? {

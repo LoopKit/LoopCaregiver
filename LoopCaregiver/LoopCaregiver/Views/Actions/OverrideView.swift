@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LoopCaregiverKit
 import NightscoutKit
 import Combine
 

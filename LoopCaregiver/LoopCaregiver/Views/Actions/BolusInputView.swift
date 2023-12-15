@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import LoopCaregiverKit
 import LoopKitUI
 import LocalAuthentication
 

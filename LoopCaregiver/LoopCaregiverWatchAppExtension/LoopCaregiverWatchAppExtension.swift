@@ -5,6 +5,7 @@
 //  Created by Bill Gestrich on 10/27/23.
 //
 
+import LoopCaregiverKit
 import WidgetKit
 import SwiftUI
 

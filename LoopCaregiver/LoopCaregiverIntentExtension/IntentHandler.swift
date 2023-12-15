@@ -6,6 +6,7 @@
 //
 
 import Intents
+import LoopCaregiverKit
 
 class IntentHandler: INExtension {
     

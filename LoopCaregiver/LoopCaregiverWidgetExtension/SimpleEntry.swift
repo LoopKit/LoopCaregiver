@@ -6,8 +6,9 @@
 //
 
 import Foundation
-import WidgetKit
+import LoopCaregiverKit
 import LoopKit
+import WidgetKit
 
 struct SimpleEntry: TimelineEntry {
     let looper: Looper?

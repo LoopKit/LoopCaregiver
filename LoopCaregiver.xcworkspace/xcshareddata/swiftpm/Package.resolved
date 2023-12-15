@@ -19,6 +19,15 @@
       }
     },
     {
+      "identity" : "loopkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/LoopKit/LoopKit.git",
+      "state" : {
+        "branch" : "dev",
+        "revision" : "d31a8c2eb5e001901f51dd3bf323097470beb6b5"
+      }
+    },
+    {
       "identity" : "nightscoutkit",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/gestrich/NightscoutKit.git",

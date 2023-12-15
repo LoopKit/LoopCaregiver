@@ -7,6 +7,7 @@
 
 import SwiftUI
 import SwiftCharts
+import LoopCaregiverKit
 import LoopKitUI
 
 struct ChartsListView: View {
