@@ -1,7 +1,7 @@
 //The values in this file can override the configuration at LoopCaregiver/LoopConfigOverride.xcconfig
 
 // Override this if you don't want the default com.${DEVELOPMENT_TEAM}.loopkit that Caregiver uses
-// CAREGIVER_APP_BUNDLE_IDENTIFIER = com.myname.LoopCaregiver
+// CAREGIVER_APP_BUNDLE_IDENTIFIER = com.CGJ34L8YGW.LoopCaregiver
 
 // Customize this to change the app name displayed
 MAIN_APP_DISPLAY_NAME = Loop Caregiver
