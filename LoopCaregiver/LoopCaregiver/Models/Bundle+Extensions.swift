@@ -8,8 +8,12 @@
 import Foundation
 
 extension Bundle {
+    
+    var bundleDisplayName: String {
+        return object(forInfoDictionaryKey: "CFBundleDisplayName") as! String
+    }
+    
     var appGroupSuiteName: String? {
-        //Should always defined in Xcode settings
         return object(forInfoDictionaryKey: "AppGroupIdentifier") as? String
     }
 }

@@ -191,6 +191,9 @@
 		A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
 		A9EC5C7F2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
 		A9EC5C802B10EA9100AA32EF /* Bundle+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */; };
+		A9ECCB282B286CD90057DEDF /* AppExpirationAlerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB272B286CD90057DEDF /* AppExpirationAlerter.swift */; };
+		A9ECCB2A2B286DB50057DEDF /* UserDefaults+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */; };
+		A9ECCB2C2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */; };
 		A9EEB92B29D4FCB3004EE7FB /* NightscoutKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9EEB92A29D4FCB3004EE7FB /* NightscoutKit */; };
 		A9EFD0002ADF6A01008D63EC /* DeepLinkParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */; };
 		A9EFD0022AE08418008D63EC /* DeepLinkParserTestCase.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */; };
@@ -231,6 +234,9 @@
 		A9FE41062ADC672900DD88E4 /* ServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9299C422ADC3DE7009193AB /* ServiceComposer.swift */; };
 		A9FE41072ADC672900DD88E4 /* ServiceComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9299C422ADC3DE7009193AB /* ServiceComposer.swift */; };
 		A9FE41082ADC675900DD88E4 /* NSPersistentStoreCoordinator+Migration.swift in Sources */ = {isa = PBXBuildFile; fileRef = A92AB6C52A3153DD00977536 /* NSPersistentStoreCoordinator+Migration.swift */; };
+		B63A43D72B2549BA004CFEAA /* BuildDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = B63A43D62B2549BA004CFEAA /* BuildDetails.swift */; };
+		B63A43E02B2603DD004CFEAA /* BuildDetails.plist in Resources */ = {isa = PBXBuildFile; fileRef = B63A43DF2B2603DD004CFEAA /* BuildDetails.plist */; };
+		B63A43E22B2603ED004CFEAA /* Scripts in Resources */ = {isa = PBXBuildFile; fileRef = B63A43E12B2603ED004CFEAA /* Scripts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -449,6 +455,9 @@
 		A9EC19AA292156D80022D39F /* CarbInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarbInputView.swift; sourceTree = "<group>"; };
 		A9EC19AC2921A19C0022D39F /* BolusInputView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BolusInputView.swift; sourceTree = "<group>"; };
 		A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Watch.swift"; sourceTree = "<group>"; };
+		A9ECCB272B286CD90057DEDF /* AppExpirationAlerter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExpirationAlerter.swift; sourceTree = "<group>"; };
+		A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Extensions.swift"; sourceTree = "<group>"; };
+		A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppExpirationAlerterRepresentable.swift; sourceTree = "<group>"; };
 		A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParser.swift; sourceTree = "<group>"; };
 		A9EFD0012AE08418008D63EC /* DeepLinkParserTestCase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeepLinkParserTestCase.swift; sourceTree = "<group>"; };
 		A9F8711E2A2EBE63007EC235 /* LoopCaregiverIntentExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LoopCaregiverIntentExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -457,6 +466,9 @@
 		A9F871242A2EBE63007EC235 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A9F8712A2A2EBE64007EC235 /* IntentsUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IntentsUI.framework; path = System/Library/Frameworks/IntentsUI.framework; sourceTree = SDKROOT; };
 		A9F871642A2FF498007EC235 /* LoopCaregiverIntentExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = LoopCaregiverIntentExtension.entitlements; sourceTree = "<group>"; };
+		B63A43D62B2549BA004CFEAA /* BuildDetails.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuildDetails.swift; sourceTree = "<group>"; };
+		B63A43DF2B2603DD004CFEAA /* BuildDetails.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = BuildDetails.plist; sourceTree = SOURCE_ROOT; };
+		B63A43E12B2603ED004CFEAA /* Scripts */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Scripts; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -676,7 +688,9 @@
 				A92AB6BE2A3151E900977536 /* Extensions */,
 				A96929902927FFBA00B8BF43 /* AccountService.swift */,
 				A969293D2926EFEC00B8BF43 /* AccountServiceManager.swift */,
+				B63A43D62B2549BA004CFEAA /* BuildDetails.swift */,
 				A99F2F512A2A92D100F7DE2D /* Bundle+Extensions.swift */,
+				A9ECCB292B286DB50057DEDF /* UserDefaults+Extensions.swift */,
 				A90DB9532930F879004B58D3 /* CaregiverSettings.swift */,
 				A9972773292FC0B0006C8C74 /* CoreDataAccountService.swift */,
 				A9EFCFFF2ADF6A01008D63EC /* DeepLinkParser.swift */,
@@ -707,6 +721,7 @@
 			children = (
 				A969293E2926EFEC00B8BF43 /* LooperSetupView.swift */,
 				A9B033E729231DCE0052AA9E /* SettingsView.swift */,
+				A9ECCB272B286CD90057DEDF /* AppExpirationAlerter.swift */,
 			);
 			path = Settings;
 			sourceTree = "<group>";
@@ -718,6 +733,7 @@
 				A9EC197D291FEF940022D39F /* ContentView.swift */,
 				A99DC86429992DD20058EBA5 /* DisclaimerView.swift */,
 				A96929342926E5CE00B8BF43 /* HUDView.swift */,
+				A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -887,6 +903,8 @@
 		A9EC197A291FEF940022D39F /* LoopCaregiver */ = {
 			isa = PBXGroup;
 			children = (
+				B63A43E12B2603ED004CFEAA /* Scripts */,
+				B63A43DF2B2603DD004CFEAA /* BuildDetails.plist */,
 				A99F2F502A29398F00F7DE2D /* LoopCaregiver.entitlements */,
 				3DF4E0882980736C00E91E16 /* Info.plist */,
 				A96929302926E2B700B8BF43 /* Models */,
@@ -1005,6 +1023,7 @@
 				A95F50C2292A602F00079AAF /* Embed Frameworks */,
 				A9E14D3D2A2BA5A600BDB93D /* Embed Foundation Extensions */,
 				A9CFDD282AEBFF1400FA701B /* Embed Watch Content */,
+				B63A43DC2B254B4E004CFEAA /* Capture Build Details */,
 			);
 			buildRules = (
 			);
@@ -1143,7 +1162,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9EC1983291FEF950022D39F /* Preview Assets.xcassets in Resources */,
+				B63A43E02B2603DD004CFEAA /* BuildDetails.plist in Resources */,
 				A9EC1980291FEF950022D39F /* Assets.xcassets in Resources */,
+				B63A43E22B2603ED004CFEAA /* Scripts in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1155,6 +1176,27 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		B63A43DC2B254B4E004CFEAA /* Capture Build Details */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			name = "Capture Build Details";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Scripts/capture-build-details.sh\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		A9346F7F2AC9820500C15F70 /* Sources */ = {
@@ -1281,6 +1323,7 @@
 				A9A362DD2A80EEFE007B017C /* OverrideRemoteNotification.swift in Sources */,
 				A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */,
 				A98D4CB2292C394800EFF5C6 /* NightscoutCredentials.swift in Sources */,
+				A9ECCB2A2B286DB50057DEDF /* UserDefaults+Extensions.swift in Sources */,
 				A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */,
 				A9C4D7E62969A69F00D3875F /* IOBStatus.swift in Sources */,
 				A98348912AD206CD0034ABB2 /* PresetRowView.swift in Sources */,
@@ -1303,6 +1346,7 @@
 				A96929912927FFBA00B8BF43 /* AccountService.swift in Sources */,
 				A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */,
 				A9A45D702A77B5480013CD5B /* NoteNightscoutTreatment.swift in Sources */,
+				A9ECCB2C2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift in Sources */,
 				A9C4D7F22969B78A00D3875F /* BolusNightscoutTreatment.swift in Sources */,
 				A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */,
 				A95223662A7EDA9B0070FE13 /* OverrideAction.swift in Sources */,
@@ -1312,6 +1356,7 @@
 				A9B033E629230FF20052AA9E /* OTPManager.swift in Sources */,
 				A95223672A7EDA9B0070FE13 /* BolusAction.swift in Sources */,
 				A9C4D7EE2969B70000D3875F /* NightscoutTreatment.swift in Sources */,
+				B63A43D72B2549BA004CFEAA /* BuildDetails.swift in Sources */,
 				A95223722A7EDCB90070FE13 /* NSRemoteCommandPayload.swift in Sources */,
 				A95F50C5292A648600079AAF /* PredictedGlucoseChartView.swift in Sources */,
 				A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */,
@@ -1332,6 +1377,7 @@
 				A99DC86529992DD20058EBA5 /* DisclaimerView.swift in Sources */,
 				A9BD7B532AD0D8D300E73973 /* OverrideInsulinNeedsView.swift in Sources */,
 				A9972774292FC0B0006C8C74 /* CoreDataAccountService.swift in Sources */,
+				A9ECCB282B286CD90057DEDF /* AppExpirationAlerter.swift in Sources */,
 				A96929402926EFEC00B8BF43 /* AccountServiceManager.swift in Sources */,
 				A99F2F472A29350F00F7DE2D /* LoopCaregiverWidget.intentdefinition in Sources */,
 				A9C4D7E82969A6A900D3875F /* COBStatus.swift in Sources */,

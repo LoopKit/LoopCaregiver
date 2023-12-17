@@ -44,6 +44,7 @@ struct ContentView: View {
                 Text("OK")
             }
         }
+        .background(AppExpirationAlerterRepresentable())
         
         @MainActor func handleDeepLinkURL(_ url: URL) async throws {
             
