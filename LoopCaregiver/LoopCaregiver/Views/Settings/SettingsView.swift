@@ -196,10 +196,14 @@ struct SettingsView: View {
     
     var commandsSection: some View {
         Group {
-            Section(remoteCommandSectionText) {
-                ForEach(looperService.remoteDataSource.recentCommands, id: \.id, content: { command in
-                    CommandStatusView(command: command)
-                })
+            if looperService.remoteDataSource.recentCommands.count > 0 {
+                Section {
+                    ForEach(looperService.remoteDataSource.recentCommands, id: \.id, content: { command in
+                        CommandStatusView(command: command)
+                    })
+                }  header: {
+                    SectionHeader(label: "Recent Remote Commands")
+                }
             }
             if looperService.settings.remoteCommands2Enabled {
                 Section("Remote Special Actions") {
@@ -267,14 +271,6 @@ struct SettingsView: View {
             NavigationLink(value: looper) {
                 Text(looper.name)
             }
-        }
-    }
-    
-    var remoteCommandSectionText: String {
-        if looperService.settings.remoteCommands2Enabled {
-            return "Remote Commands"
-        } else {
-            return "Remote Command Errors"
         }
     }
     
