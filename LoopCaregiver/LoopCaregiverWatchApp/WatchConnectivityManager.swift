@@ -16,6 +16,7 @@ struct NotificationMessage: Identifiable, Equatable {
 final class WatchConnectivityManager: NSObject, ObservableObject {
     static let shared = WatchConnectivityManager()
     @Published var notificationMessage: NotificationMessage? = nil
+    var pendingMessages = [String]()
     
     private override init() {
         super.init()
@@ -30,25 +31,27 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     
     func send(_ message: String) {
         guard WCSession.default.activationState == .activated else {
-          return
+            pendingMessages.append(message)
+            return
         }
-        #if os(iOS)
+#if os(iOS)
         guard WCSession.default.isWatchAppInstalled else {
             return
         }
-        #else
+#else
         guard WCSession.default.isCompanionAppInstalled else {
             return
         }
-        #endif
+#endif
         do {
             try WCSession.default.updateApplicationContext([kMessageKey : message])
         } catch {
             print("Cannot send message: \(String(describing: error))")
         }
-//        WCSession.default.sendMessage([kMessageKey : message], replyHandler: nil) { error in
+//        WCSession.default.sendMessage([kMessageKey : message]) { error in
 //            print("Cannot send message: \(String(describing: error))")
-        }
+//        }
+    }
 }
 
 extension WatchConnectivityManager: WCSessionDelegate {
@@ -70,7 +73,17 @@ extension WatchConnectivityManager: WCSessionDelegate {
     
     func session(_ session: WCSession,
                  activationDidCompleteWith activationState: WCSessionActivationState,
-                 error: Error?) {}
+                 error: Error?) {
+        if let error {
+            print("WCSession activation error: \(error)")
+        } else {
+            DispatchQueue.main.async {
+                for message in self.pendingMessages {
+                    self.send(message)
+                }
+            }
+        }
+    }
     
     #if os(iOS)
     func sessionDidBecomeInactive(_ session: WCSession) {}

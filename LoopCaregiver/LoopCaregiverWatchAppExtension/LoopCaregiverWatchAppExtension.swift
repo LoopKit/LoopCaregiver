@@ -6,71 +6,27 @@
 //
 
 import LoopCaregiverKit
+import LoopKit
 import WidgetKit
 import SwiftUI
-
-struct Provider: AppIntentTimelineProvider {
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationAppIntent())
-    }
-
-    func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: configuration)
-    }
-    
-    func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
-        }
-
-        return Timeline(entries: entries, policy: .atEnd)
-    }
-
-    func recommendations() -> [AppIntentRecommendation<ConfigurationAppIntent>] {
-        // Create an array with all the preconfigured widgets to show.
-        [AppIntentRecommendation(intent: ConfigurationAppIntent(), description: "Loop Caregiver Widget")]
-    }
-}
-
-struct SimpleEntry: TimelineEntry {
-    let date: Date
-    let configuration: ConfigurationAppIntent
-}
-
-struct LoopCaregiverWatchAppExtensionEntryView : View {
-    var entry: Provider.Entry
-    var userDefaults = UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
-
-    var body: some View {
-        VStack {
-            Text(lastPhoneDebugMessage)
-        }
-    }
-
-    var lastPhoneDebugMessage: String {
-        if let message = userDefaults.lastPhoneDebugMessage {
-            return message
-        } else {
-            return "?"
-        }
-    }
-
-}
 
 @main
 struct LoopCaregiverWatchAppExtension: Widget {
     let kind: String = "LoopCaregiverWatchAppExtension"
+    let provider = TimelineProvider()
 
     var body: some WidgetConfiguration {
-        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: Provider()) { entry in
-            LoopCaregiverWatchAppExtensionEntryView(entry: entry)
-                .containerBackground(.fill.tertiary, for: .widget)
+        AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: provider) { entry in
+            if let latestGlucose = entry.currentGlucoseSample {
+                //TODO: It is not clear if setting changes will propogate from the Caregiver watch app
+                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: nil, settings: provider.composer.settings, isLastEntry: false)
+                    .containerBackground(.fill.tertiary, for: .widget)
+            } else {
+                Text("??")
+            }
+
+//            LoopCaregiverWatchAppExtensionEntryView(entry: entry)
+//                .containerBackground(.fill.tertiary, for: .widget)
         }
     }
 }
@@ -86,5 +42,5 @@ extension ConfigurationAppIntent {
 #Preview(as: .accessoryRectangular) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(date: .now, configuration: .smiley)
-}    
+    SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false)
+}

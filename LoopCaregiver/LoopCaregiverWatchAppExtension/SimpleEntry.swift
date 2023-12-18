@@ -1,17 +1,15 @@
 //
 //  SimpleEntry.swift
-//  LoopCaregiverWidgetExtension
+//  LoopCaregiverWatchAppExtension
 //
-//  Created by Bill Gestrich on 6/2/23.
+//  Created by Bill Gestrich on 12/18/23.
 //
 
 import Foundation
-import LoopCaregiverKit
 import LoopKit
 import WidgetKit
 
 struct SimpleEntry: TimelineEntry {
-    let looper: Looper?
     let currentGlucoseSample: NewGlucoseSample?
     let lastGlucoseChange: Double?
     let date: Date

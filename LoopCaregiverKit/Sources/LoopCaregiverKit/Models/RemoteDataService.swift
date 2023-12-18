@@ -12,6 +12,7 @@ import NightscoutKit
 public protocol RemoteDataServiceProvider {
     func checkAuth() async throws
     func fetchGlucoseSamples() async throws -> [NewGlucoseSample]
+    func fetchRecentGlucoseSamples() async throws -> [NewGlucoseSample]
     func fetchBolusEntries() async throws -> [BolusNightscoutTreatment]
     func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment]
     func fetchCarbEntries() async throws -> [CarbCorrectionNightscoutTreatment]

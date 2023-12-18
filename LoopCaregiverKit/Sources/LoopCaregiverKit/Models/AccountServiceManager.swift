@@ -53,6 +53,7 @@ public class AccountServiceManager: ObservableObject, AccountServiceDelegate, Ac
     
     public func createLooperService(looper: Looper, settings: CaregiverSettings) -> LooperService {
         let remoteDataSource = RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper, settings: settings))
+        remoteDataSource.monitorForUpdates()
         return LooperService(looper: looper,
                              accountService: self,
                              remoteDataSource: remoteDataSource,

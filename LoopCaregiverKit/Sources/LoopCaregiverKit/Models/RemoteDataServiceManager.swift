@@ -13,7 +13,7 @@ import UIKit //For willEnterForegroundNotification
 
 public class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {
 
-    @Published public  var currentGlucoseSample: NewGlucoseSample? = nil
+    @Published public var currentGlucoseSample: NewGlucoseSample? = nil
     @Published public var glucoseSamples: [NewGlucoseSample] = []
     @Published public var predictedGlucose: [NewGlucoseSample] = []
     @Published public var carbEntries: [CarbCorrectionNightscoutTreatment] = []
@@ -31,17 +31,16 @@ public class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvid
     private let remoteDataProvider: RemoteDataServiceProvider
     private var dateUpdateTimer: Timer?
     
-    init(remoteDataProvider: RemoteDataServiceProvider){
+    public init(remoteDataProvider: RemoteDataServiceProvider){
         self.remoteDataProvider = remoteDataProvider
+    }
+    
+    func monitorForUpdates(updateInterval: TimeInterval = 30.0) {
         
         Task {
             await self.updateData()
         }
         
-        monitorForUpdates(updateInterval: 30)
-    }
-    
-    func monitorForUpdates(updateInterval: TimeInterval) {
         self.dateUpdateTimer = Timer.scheduledTimer(withTimeInterval: updateInterval, repeats: true, block: { [weak self] timer in
             guard let self else { return }
             Task {
@@ -228,6 +227,10 @@ public class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvid
     
     public func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
         return try await remoteDataProvider.fetchGlucoseSamples()
+    }
+    
+    public func fetchRecentGlucoseSamples() async throws -> [NewGlucoseSample] {
+        return try await remoteDataProvider.fetchRecentGlucoseSamples()
     }
     
     public func fetchBolusEntries() async throws -> [BolusNightscoutTreatment] {

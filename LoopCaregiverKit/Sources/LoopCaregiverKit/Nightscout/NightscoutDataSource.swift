@@ -31,14 +31,26 @@ public class NightscoutDataSource: ObservableObject, RemoteDataServiceProvider {
     //MARK: RemoteDataServiceProvider
     
     public func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
+        return try await fetchGlucoseSamples(dateInterval: fetchInterval())
+    }
+    
+    public func fetchGlucoseSamples(dateInterval: DateInterval) async throws -> [NewGlucoseSample] {
         let result = try await withCheckedThrowingContinuation({ continuation in
-            nightscoutUploader.fetchGlucose(dateInterval: fetchInterval(), maxCount: maxFetchCount()) { result in
+            nightscoutUploader.fetchGlucose(dateInterval: dateInterval, maxCount: maxFetchCount()) { result in
                 continuation.resume(with: result)
             }
         })
         .map({$0.toGlucoseSample()})
         assert(result.count < maxFetchCount(), "Hit max count: Consider increasing")
         return result
+    }
+    
+    public func fetchRecentGlucoseSamples() async throws -> [NewGlucoseSample] {
+        let maxCurrentMinutes = 30.0
+        let earliestDate = Date().addingTimeInterval(-60 * maxCurrentMinutes)
+        let dateInterval = DateInterval(start: earliestDate, end: Date())
+        return try await fetchGlucoseSamples(dateInterval: dateInterval)
+            .sorted(by: {$0.date < $1.date})
     }
     
     public func fetchBasalEntries() async throws -> [TempBasalNightscoutTreatment] {

@@ -17,6 +17,8 @@ struct LoopCaregiverWidgetView : View {
     
     init(entry: SimpleEntry, settings: CaregiverSettings){
         self.entry = entry
+        //TODO: Settings changes from the app don't seem to propogate here
+        //requiring a device reboot after changing the active Looper, for instance.
         self.settings = settings
     }
     

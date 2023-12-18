@@ -1,5 +1,5 @@
 //
-//  AppIntent.swift
+//  ConfigurationAppIntent.swift
 //  LoopCaregiverWatchAppExtension
 //
 //  Created by Bill Gestrich on 10/27/23.
