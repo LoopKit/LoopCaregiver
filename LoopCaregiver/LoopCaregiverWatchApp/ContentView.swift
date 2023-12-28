@@ -14,8 +14,8 @@ struct ContentView: View {
     
     @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
     @ObservedObject var accountService: AccountServiceManager
-    @State var showDiagnostics: Bool = false
     let settings: CaregiverSettings
+    @State var path: NavigationPath = NavigationPath()
     
     init(){
         let composer = ServiceComposer()
@@ -24,10 +24,10 @@ struct ContentView: View {
     }
     
     var body: some View {
-        NavigationStack {
+        NavigationStack (path: $path) {
             VStack {
                 if let looper = accountService.selectedLooper {
-                    HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
+                    HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings), navigationPath: path)
                 } else {
                     //Text("No Looper. Open Loop Caregiver on iPhone.")
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
@@ -36,13 +36,13 @@ struct ContentView: View {
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("?") {
-                        showDiagnostics = true
+                        self.path.append("SettingsView")
                     }
                 }
             }
         }
-        .sheet(isPresented: $showDiagnostics, content: {
-            DiagnosticView()
+        .navigationDestination(for: String.self, destination: { _ in
+            SettingsView(settings: settings)
         })
         .onChange(of: connectivityManager.notificationMessage, {
             if let message = connectivityManager.notificationMessage?.text {

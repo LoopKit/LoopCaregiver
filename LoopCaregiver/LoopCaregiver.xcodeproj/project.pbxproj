@@ -17,7 +17,7 @@
 		A933EFA52B3108C80094C32C /* LatestGlucoseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E14D3E2A2BB18500BDB93D /* LatestGlucoseView.swift */; };
 		A933EFA92B3116F20094C32C /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFA82B3116F20094C32C /* SimpleEntry.swift */; };
 		A933EFAB2B3117380094C32C /* LoopCaregiverWatchAppExtensionEntryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFAA2B3117380094C32C /* LoopCaregiverWatchAppExtensionEntryView.swift */; };
-		A933EFCE2B3AE40B0094C32C /* DiagnosticView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFCD2B3AE40B0094C32C /* DiagnosticView.swift */; };
+		A933EFCE2B3AE40B0094C32C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFCD2B3AE40B0094C32C /* SettingsView.swift */; };
 		A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
@@ -205,7 +205,7 @@
 		A933EFA32B3106970094C32C /* TimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineProvider.swift; sourceTree = "<group>"; };
 		A933EFA82B3116F20094C32C /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
 		A933EFAA2B3117380094C32C /* LoopCaregiverWatchAppExtensionEntryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverWatchAppExtensionEntryView.swift; sourceTree = "<group>"; };
-		A933EFCD2B3AE40B0094C32C /* DiagnosticView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticView.swift; sourceTree = "<group>"; };
+		A933EFCD2B3AE40B0094C32C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9346F832AC9820500C15F70 /* LoopCaregiverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoopCaregiverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideViewModelTests.swift; sourceTree = "<group>"; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
@@ -559,7 +559,7 @@
 				A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */,
 				A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */,
 				A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */,
-				A933EFCD2B3AE40B0094C32C /* DiagnosticView.swift */,
+				A933EFCD2B3AE40B0094C32C /* SettingsView.swift */,
 				A933EFA12B30FF460094C32C /* HomeView.swift */,
 				A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */,
 				A9CFDD212AEBFF1400FA701B /* Assets.xcassets */,
@@ -966,7 +966,7 @@
 				A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */,
 				A933EFA22B30FF460094C32C /* HomeView.swift in Sources */,
 				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */,
-				A933EFCE2B3AE40B0094C32C /* DiagnosticView.swift in Sources */,
+				A933EFCE2B3AE40B0094C32C /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

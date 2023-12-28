@@ -15,29 +15,32 @@ struct HomeView: View {
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
-    @State var showDiagnostics: Bool = false
     @Environment(\.scenePhase) var scenePhase
+    @State var navigationPath: NavigationPath
     
-    init(looperService: LooperService){
+    init(looperService: LooperService, navigationPath: NavigationPath){
         self.looperService = looperService
         self.settings = looperService.settings
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource
+        _navigationPath = State(initialValue: navigationPath)
     }
     
     var body: some View {
         VStack {
-            Text(remoteDataSource.glucoseSamples.last?.quantity.debugDescription ?? "None")
-            Text(accountService.selectedLooper?.name ?? "Name?")
+            Text(glucoseText())
+                .strikethrough(egvIsOutdated())
+                .font(.largeTitle)
         }
+        .navigationTitle(accountService.selectedLooper?.name ?? "Name?")
+        .navigationDestination(for: String.self, destination: { _ in
+            SettingsView(settings: settings)
+        })
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button {
-                    showDiagnostics = true
-                } label: {
+                NavigationLink(value: "SettingsView") {
                     Image(systemName: "gear")
-                }
-            }
+                }            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task {
@@ -54,6 +57,17 @@ struct HomeView: View {
                 await looperService.remoteDataSource.updateData()
             }
         })
+    }
+    
+    func glucoseText() -> String {
+        remoteDataSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " "
+    }
+    
+    func egvIsOutdated() -> Bool {
+        guard let currentEGV = remoteDataSource.currentGlucoseSample else {
+            return true
+        }
+        return Date().timeIntervalSince(currentEGV.date) > 60 * 10
     }
     
     func reloadWidget() {
