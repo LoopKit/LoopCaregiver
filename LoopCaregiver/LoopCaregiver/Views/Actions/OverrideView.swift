@@ -52,17 +52,18 @@ struct OverrideView: View {
             case .loadingComplete(let overrideState):
                 Form {
                     Section (){
+                        HStack {
+                            //Loading Pickers when there is a nil selection causes console warnings
+                            Picker("Overrides", selection: $viewModel.pickerSelectedRow) {
+                                Text("None").tag(nil as OverridePickerRowModel?)
+                                ForEach(overrideState.pickerRows(), id: \.self) { row in
+                                    Text(row.presentableDescription()).tag(row as OverridePickerRowModel?)
+                                        .fontWeight(row.isActive ? .heavy : .regular)
+                                }
+                            }.pickerStyle(.wheel)
+                                .labelsHidden()
+                        }
                         if viewModel.pickerSelectedRow != nil {
-                            HStack {
-                                //Loading Pickers when there is a nil selection causes console warnings
-                                Picker("Overrides", selection: $viewModel.pickerSelectedRow) {
-                                    ForEach(overrideState.pickerRows(), id: \.self) { row in
-                                        Text(row.presentableDescription()).tag(row as OverridePickerRowModel?)
-                                            .fontWeight(row.isActive ? .heavy : .regular)
-                                    }
-                                }.pickerStyle(.wheel)
-                                    .labelsHidden()
-                            }
                             durationContainerView
                         }
                     }
@@ -305,11 +306,14 @@ class OverrideViewModel: ObservableObject, Identifiable {
     }
     
     var actionButtonType: ActionButtonType {
-        if let pickerSelectedRow = pickerSelectedRow,
-           pickerSelectedRow.isActive, activeOverride?.duration == pickerSelectedDuration {
-            return .cancel
+        if let pickerSelectedRow = pickerSelectedRow{
+            if pickerSelectedRow.isActive, activeOverride?.duration == pickerSelectedDuration {
+                return .cancel
+            } else {
+                return .update
+            }
         } else {
-            return .update
+            return .cancel
         }
     }
     
@@ -379,8 +383,8 @@ class OverrideViewModel: ObservableObject, Identifiable {
             if let activeOverride = overrideState.activeOverride, let preset = overrideState.presets.first(where: {$0.name == activeOverride.name}) {
                 self.pickerSelectedRow = OverridePickerRowModel(preset: preset, activeOverride: activeOverride)
                 self.activeOverride = activeOverride
-            } else if let firstPreset = overrideState.presets.first {
-                self.pickerSelectedRow = OverridePickerRowModel(preset: firstPreset, activeOverride: nil)
+            } else {
+                self.pickerSelectedRow = nil
             }
         } catch {
             overrideListState = .loadingError(error)
