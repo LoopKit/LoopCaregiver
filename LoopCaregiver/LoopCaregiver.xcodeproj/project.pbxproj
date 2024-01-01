@@ -61,7 +61,7 @@
 		A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */; };
 		A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; };
 		A9CA10302A7FF73200EE114C /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */; };
+		A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift */; };
 		A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */; };
 		A9CFDD222AEBFF1400FA701B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD212AEBFF1400FA701B /* Assets.xcassets */; };
 		A9CFDD252AEBFF1400FA701B /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD242AEBFF1400FA701B /* Preview Assets.xcassets */; };
@@ -251,7 +251,7 @@
 		A9C89ED62A7074EE00EFD938 /* UIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIColor.swift; sourceTree = "<group>"; };
 		A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+HIG.swift"; sourceTree = "<group>"; };
 		A9CFDD1B2AEBFF1200FA701B /* LoopCaregiverWatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LoopCaregiverWatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverWatchAppApp.swift; sourceTree = "<group>"; };
+		A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoopCaregiverWatchApp.swift; sourceTree = "<group>"; };
 		A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		A9CFDD212AEBFF1400FA701B /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		A9CFDD242AEBFF1400FA701B /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -552,7 +552,7 @@
 			children = (
 				A9CFDD452AEC055500FA701B /* Info.plist */,
 				A9CFDD432AEC042500FA701B /* LoopCaregiverWatchApp.entitlements */,
-				A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift */,
+				A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift */,
 				A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */,
 				A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */,
 				A933EFCD2B3AE40B0094C32C /* SettingsView.swift */,
@@ -959,7 +959,7 @@
 				A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */,
 				A933EFA22B30FF460094C32C /* HomeView.swift in Sources */,
 				A94EFD942B3ED5030048E4F3 /* LatestGlucoseView.swift in Sources */,
-				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */,
+				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift in Sources */,
 				A933EFCE2B3AE40B0094C32C /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
