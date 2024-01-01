@@ -16,14 +16,12 @@ struct HomeView: View {
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
     @Environment(\.scenePhase) var scenePhase
-    @State var navigationPath: NavigationPath
     
-    init(looperService: LooperService, navigationPath: NavigationPath){
+    init(looperService: LooperService){
         self.looperService = looperService
         self.settings = looperService.settings
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource
-        _navigationPath = State(initialValue: navigationPath)
     }
     
     var body: some View {
@@ -40,7 +38,8 @@ struct HomeView: View {
             ToolbarItem(placement: .topBarLeading) {
                 NavigationLink(value: "SettingsView") {
                     Image(systemName: "gear")
-                }            }
+                }
+            }
             ToolbarItem(placement: .topBarTrailing) {
                 Button {
                     Task {
@@ -61,6 +60,16 @@ struct HomeView: View {
     
     func glucoseText() -> String {
         remoteDataSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " "
+    }
+    
+    func lastGlucoseChange() -> Double? {
+        let egvs = remoteDataSource.glucoseSamples
+        guard egvs.count > 1 else {
+            return nil
+        }
+        let lastGlucoseValue = egvs[egvs.count - 1].presentableUserValue(displayUnits: settings.glucoseDisplayUnits)
+        let priorGlucoseValue = egvs[egvs.count - 2].presentableUserValue(displayUnits: settings.glucoseDisplayUnits)
+        return lastGlucoseValue - priorGlucoseValue
     }
     
     func egvIsOutdated() -> Bool {

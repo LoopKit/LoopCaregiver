@@ -17,6 +17,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     static let shared = WatchConnectivityManager()
     @Published var notificationMessage: NotificationMessage? = nil
     var pendingMessages = [String]()
+    @Published var lastMessageSent: Date? = nil
     
     private override init() {
         super.init()
@@ -45,6 +46,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
 #endif
         do {
             try WCSession.default.updateApplicationContext([kMessageKey : message])
+            lastMessageSent = Date()
         } catch {
             print("Cannot send message: \(String(describing: error))")
         }

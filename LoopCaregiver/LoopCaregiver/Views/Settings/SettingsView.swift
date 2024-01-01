@@ -159,6 +159,7 @@ struct SettingsView: View {
                 Button("Enable Watch App") {
                     WatchConnectivityManager.shared.send(addLooperDeepLink)
                 }
+                LabeledContent("Watch Last Sent Message", value: WatchConnectivityManager.shared.lastMessageSent?.description ?? "None")
                 Text("The Apple Watch app is very early in development. Search Zulip #caregiver for details")
                     .font(.footnote)
                 if !settings.demoModeEnabled {

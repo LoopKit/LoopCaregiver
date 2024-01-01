@@ -27,7 +27,7 @@ struct ContentView: View {
         NavigationStack (path: $path) {
             VStack {
                 if let looper = accountService.selectedLooper {
-                    HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings), navigationPath: path)
+                    HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
                     //Text("No Looper. Open Loop Caregiver on iPhone.")
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
