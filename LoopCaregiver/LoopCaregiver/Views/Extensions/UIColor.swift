@@ -8,22 +8,6 @@
 
 import UIKit
 
-// MARK: - Color palette for common elements
-extension UIColor {
-    @nonobjc static let carbs = UIColor(named: "carbs") ?? systemGreen
-    
-    @nonobjc static let fresh = UIColor(named: "fresh") ?? HIGGreenColor()
-
-    @nonobjc static let glucose = UIColor(named: "glucose") ?? systemTeal
-    
-    @nonobjc static let insulin = UIColor(named: "insulin") ?? systemOrange
-
-    // The loopAccent color is intended to be use as the app accent color.
-    @nonobjc public static let loopAccent = UIColor(named: "accent") ?? systemBlue
-    
-    @nonobjc public static let warning = UIColor(named: "warning") ?? systemYellow
-}
-
 // MARK: - Context for colors
 extension UIColor {
     @nonobjc public static let agingColor = warning
@@ -56,3 +40,4 @@ extension UIColor {
     
     @nonobjc public static let unknownColor = systemGray4
 }
+
