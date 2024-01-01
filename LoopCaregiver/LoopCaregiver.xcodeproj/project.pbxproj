@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		A90DAD7A2B2C76CA0092A3D9 /* Looper+SwiftUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90DAD792B2C76CA0092A3D9 /* Looper+SwiftUI.swift */; };
-		A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */; };
 		A92256352B2F952F0024EA56 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A92256342B2F952F0024EA56 /* LoopCaregiverKit */; };
 		A930C6C22A8F99AA004BB459 /* CGRect.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C12A8F99AA004BB459 /* CGRect.swift */; };
 		A930C6C52A9364BD004BB459 /* DemoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A930C6C42A9364BC004BB459 /* DemoView.swift */; };
@@ -86,7 +85,6 @@
 		A9EC19A9292144040022D39F /* OverrideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A8292144040022D39F /* OverrideView.swift */; };
 		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
 		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
-		A9EC5C792B10CDC600AA32EF /* WatchConnectivityManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */; };
 		A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
 		A9EC5C7F2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */; };
 		A9ECCB282B286CD90057DEDF /* AppExpirationAlerter.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9ECCB272B286CD90057DEDF /* AppExpirationAlerter.swift */; };
@@ -197,7 +195,6 @@
 		3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LoopCaregiver.xcconfig; sourceTree = "<group>"; };
 		3DF4E0882980736C00E91E16 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		A90DAD792B2C76CA0092A3D9 /* Looper+SwiftUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Looper+SwiftUI.swift"; sourceTree = "<group>"; };
-		A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WatchConnectivityManager.swift; sourceTree = "<group>"; };
 		A930C6C12A8F99AA004BB459 /* CGRect.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGRect.swift; sourceTree = "<group>"; };
 		A930C6C42A9364BC004BB459 /* DemoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DemoView.swift; sourceTree = "<group>"; };
 		A933181B2969FC17006CC3A2 /* Crypto.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Crypto.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -560,7 +557,6 @@
 				A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */,
 				A933EFCD2B3AE40B0094C32C /* SettingsView.swift */,
 				A933EFA12B30FF460094C32C /* HomeView.swift */,
-				A91520042B10CC580054EEEA /* WatchConnectivityManager.swift */,
 				A9CFDD212AEBFF1400FA701B /* Assets.xcassets */,
 				A9CFDD232AEBFF1400FA701B /* Preview Content */,
 			);
@@ -961,7 +957,6 @@
 			files = (
 				A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */,
 				A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */,
-				A91520052B10CC580054EEEA /* WatchConnectivityManager.swift in Sources */,
 				A933EFA22B30FF460094C32C /* HomeView.swift in Sources */,
 				A94EFD942B3ED5030048E4F3 /* LatestGlucoseView.swift in Sources */,
 				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchAppApp.swift in Sources */,
@@ -992,7 +987,6 @@
 				A94702702932C21E00FB3E59 /* IOBChartView.swift in Sources */,
 				A96929352926E5CE00B8BF43 /* HUDView.swift in Sources */,
 				A9EC19A9292144040022D39F /* OverrideView.swift in Sources */,
-				A9EC5C792B10CDC600AA32EF /* WatchConnectivityManager.swift in Sources */,
 				A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */,
 				A9ECCB2A2B286DB50057DEDF /* UserDefaults+Extensions.swift in Sources */,
 				A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */,

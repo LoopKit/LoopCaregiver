@@ -8,16 +8,16 @@
 import Foundation
 import WatchConnectivity
 
-struct NotificationMessage: Identifiable, Equatable {
-    let id = UUID()
-    let text: String
+public struct NotificationMessage: Identifiable, Equatable {
+    public let id = UUID()
+    public let text: String
 }
 
-final class WatchConnectivityManager: NSObject, ObservableObject {
-    static let shared = WatchConnectivityManager()
-    @Published var notificationMessage: NotificationMessage? = nil
+public final class WatchConnectivityManager: NSObject, ObservableObject {
+    public static let shared = WatchConnectivityManager()
+    @Published public var notificationMessage: NotificationMessage? = nil
     var pendingMessages = [String]()
-    @Published var lastMessageSent: Date? = nil
+    @Published public var lastMessageSent: Date? = nil
     
     private override init() {
         super.init()
@@ -30,7 +30,7 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
     
     private let kMessageKey = "message"
     
-    func send(_ message: String) {
+    public func send(_ message: String) {
         guard WCSession.default.activationState == .activated else {
             pendingMessages.append(message)
             return
@@ -58,14 +58,14 @@ final class WatchConnectivityManager: NSObject, ObservableObject {
 
 extension WatchConnectivityManager: WCSessionDelegate {
     
-    func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
+    public func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         if let notificationText = applicationContext[kMessageKey] as? String {
             DispatchQueue.main.async { [weak self] in
                 self?.notificationMessage = NotificationMessage(text: notificationText)
             }
         }
     }
-    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+    public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         if let notificationText = message[kMessageKey] as? String {
             DispatchQueue.main.async { [weak self] in
                 self?.notificationMessage = NotificationMessage(text: notificationText)
@@ -73,7 +73,7 @@ extension WatchConnectivityManager: WCSessionDelegate {
         }
     }
     
-    func session(_ session: WCSession,
+    public func session(_ session: WCSession,
                  activationDidCompleteWith activationState: WCSessionActivationState,
                  error: Error?) {
         if let error {
@@ -88,8 +88,8 @@ extension WatchConnectivityManager: WCSessionDelegate {
     }
     
     #if os(iOS)
-    func sessionDidBecomeInactive(_ session: WCSession) {}
-    func sessionDidDeactivate(_ session: WCSession) {
+    public func sessionDidBecomeInactive(_ session: WCSession) {}
+    public func sessionDidDeactivate(_ session: WCSession) {
         session.activate()
     }
     #endif

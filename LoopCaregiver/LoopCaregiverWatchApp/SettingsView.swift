@@ -30,7 +30,7 @@ struct SettingsView: View {
         .onAppear {
             self.glucosePreference = settings.glucoseUnitPreference
         }
-        .onChange(of: glucosePreference, perform: { value in
+        .onChange(of: glucosePreference, {
             if settings.glucoseUnitPreference != glucosePreference {
                 settings.saveGlucoseUnitPreference(glucosePreference)
                 reloadWidget()
