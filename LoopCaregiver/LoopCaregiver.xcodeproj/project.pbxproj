@@ -15,7 +15,6 @@
 		A933EFA42B3106970094C32C /* TimelineProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFA32B3106970094C32C /* TimelineProvider.swift */; };
 		A933EFA52B3108C80094C32C /* LatestGlucoseCircularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9E14D3E2A2BB18500BDB93D /* LatestGlucoseCircularView.swift */; };
 		A933EFA92B3116F20094C32C /* SimpleEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFA82B3116F20094C32C /* SimpleEntry.swift */; };
-		A933EFCE2B3AE40B0094C32C /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A933EFCD2B3AE40B0094C32C /* SettingsView.swift */; };
 		A9346F862AC9820500C15F70 /* OverrideViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */; };
 		A947025D2932299600FB3E59 /* ChartsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A947025C2932299600FB3E59 /* ChartsListView.swift */; };
 		A94702692932429F00FB3E59 /* DoseChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94702682932429F00FB3E59 /* DoseChartView.swift */; };
@@ -29,6 +28,8 @@
 		A94EFDB72B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDB62B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift */; };
 		A94EFDB82B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDB62B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift */; };
 		A94EFDB92B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDB62B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift */; };
+		A94EFDBF2B44DBD80048E4F3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDBD2B44DBD80048E4F3 /* SettingsView.swift */; };
+		A94EFDC02B44DBD80048E4F3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDBE2B44DBD80048E4F3 /* SettingsViewModel.swift */; };
 		A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */; };
 		A95CCCEE2B2F90DF000BFC25 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A95CCCED2B2F90DF000BFC25 /* LoopCaregiverKit */; };
 		A95CCCF02B2F9145000BFC25 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A95CCCEF2B2F9145000BFC25 /* OneTimePassword */; };
@@ -207,7 +208,6 @@
 		A933EFA12B30FF460094C32C /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		A933EFA32B3106970094C32C /* TimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineProvider.swift; sourceTree = "<group>"; };
 		A933EFA82B3116F20094C32C /* SimpleEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleEntry.swift; sourceTree = "<group>"; };
-		A933EFCD2B3AE40B0094C32C /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		A9346F832AC9820500C15F70 /* LoopCaregiverTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LoopCaregiverTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A9346F852AC9820500C15F70 /* OverrideViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideViewModelTests.swift; sourceTree = "<group>"; };
 		A947025C2932299600FB3E59 /* ChartsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartsListView.swift; sourceTree = "<group>"; };
@@ -216,6 +216,8 @@
 		A947026F2932C21E00FB3E59 /* IOBChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOBChartView.swift; sourceTree = "<group>"; };
 		A94EFDB22B44C3290048E4F3 /* WidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WidgetViewModel.swift; sourceTree = "<group>"; };
 		A94EFDB62B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LatestGlucoseInlineView.swift; sourceTree = "<group>"; };
+		A94EFDBD2B44DBD80048E4F3 /* SettingsView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A94EFDBE2B44DBD80048E4F3 /* SettingsViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewModel.swift; sourceTree = "<group>"; };
 		A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "RemoteCommand+Charts.swift"; sourceTree = "<group>"; };
 		A95F50BF292A602F00079AAF /* LoopKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = LoopKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		A95F50C4292A648600079AAF /* PredictedGlucoseChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PredictedGlucoseChartView.swift; sourceTree = "<group>"; };
@@ -447,6 +449,15 @@
 			path = IOBChart;
 			sourceTree = "<group>";
 		};
+		A94EFDBC2B44DBD80048E4F3 /* SettingsView */ = {
+			isa = PBXGroup;
+			children = (
+				A94EFDBD2B44DBD80048E4F3 /* SettingsView.swift */,
+				A94EFDBE2B44DBD80048E4F3 /* SettingsViewModel.swift */,
+			);
+			path = SettingsView;
+			sourceTree = "<group>";
+		};
 		A95F50BE292A602E00079AAF /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -565,7 +576,7 @@
 				A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift */,
 				A9EC5C7D2B10E9FC00AA32EF /* UserDefaults+Watch.swift */,
 				A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */,
-				A933EFCD2B3AE40B0094C32C /* SettingsView.swift */,
+				A94EFDBC2B44DBD80048E4F3 /* SettingsView */,
 				A933EFA12B30FF460094C32C /* HomeView.swift */,
 				A9CFDD212AEBFF1400FA701B /* Assets.xcassets */,
 				A9CFDD232AEBFF1400FA701B /* Preview Content */,
@@ -970,11 +981,12 @@
 				A9EC5C7E2B10E9FC00AA32EF /* UserDefaults+Watch.swift in Sources */,
 				A94EFDB82B44CAAC0048E4F3 /* LatestGlucoseInlineView.swift in Sources */,
 				A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */,
+				A94EFDBF2B44DBD80048E4F3 /* SettingsView.swift in Sources */,
 				A933EFA22B30FF460094C32C /* HomeView.swift in Sources */,
+				A94EFDC02B44DBD80048E4F3 /* SettingsViewModel.swift in Sources */,
 				A94EFD942B3ED5030048E4F3 /* LatestGlucoseCircularView.swift in Sources */,
 				A94EFDB42B44C3290048E4F3 /* WidgetViewModel.swift in Sources */,
 				A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift in Sources */,
-				A933EFCE2B3AE40B0094C32C /* SettingsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

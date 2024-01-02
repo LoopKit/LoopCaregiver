@@ -15,6 +15,7 @@ struct SettingsView: View {
     @AppStorage("lastPhoneDebugMessage", store: UserDefaults(suiteName: Bundle.main.appGroupSuiteName)) var lastPhoneDebugMessage: String = ""
     @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     @ObservedObject var settings: CaregiverSettings
+    var settingsViewModel = SettingsViewModel()
     
     var body: some View {
         VStack {
