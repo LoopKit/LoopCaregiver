@@ -39,7 +39,7 @@ struct LoopCaregiverWidgetView : View {
                 switch family {
                 case .accessoryCircular:
                     if let latestGlucoseSample = entry.currentGlucoseSample {
-                        LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: settings, isLastEntry: entry.isLastEntry)
+                        LatestGlucoseCircularView(viewModel: WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: settings.glucoseDisplayUnits))
                     } else {
                         emptyLatestGlucoseView
                     }
@@ -73,7 +73,7 @@ struct LoopCaregiverWidgetView : View {
                     .font(.headline)
             }
             if let latestGlucoseSample = entry.currentGlucoseSample {
-                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, settings: settings, isLastEntry: entry.isLastEntry)
+                LatestGlucoseCircularView(viewModel: WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucoseSample, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: settings.glucoseDisplayUnits))
             } else {
                 emptyLatestGlucoseView
             }

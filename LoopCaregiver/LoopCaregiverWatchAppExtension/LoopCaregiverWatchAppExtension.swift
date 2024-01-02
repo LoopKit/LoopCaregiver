@@ -12,21 +12,40 @@ import SwiftUI
 
 @main
 struct LoopCaregiverWatchAppExtension: Widget {
+    
     let kind: String = "LoopCaregiverWatchAppExtension"
     let provider = TimelineProvider()
 
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: provider) { entry in
             if let latestGlucose = entry.currentGlucoseSample {
-                //TODO: It is not clear if setting changes will propogate from the Caregiver watch app
-                LatestGlucoseView(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: nil, settings: provider.composer.settings, isLastEntry: false)
-                    .containerBackground(.fill.tertiary, for: .widget)
+                WidgetView(viewModel: widgetViewModel(entry: entry, latestGlucose: latestGlucose))
             } else {
                 Text("??")
             }
+        }
+    }
+    
+    func widgetViewModel(entry: SimpleEntry, latestGlucose: NewGlucoseSample) -> WidgetViewModel {
+        //TODO: It is not clear if setting changes will propogate from the Caregiver watch app
+        return WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: provider.composer.settings.glucoseDisplayUnits)
+    }
+}
 
-//            LoopCaregiverWatchAppExtensionEntryView(entry: entry)
-//                .containerBackground(.fill.tertiary, for: .widget)
+struct WidgetView: View {
+    
+    var viewModel: WidgetViewModel
+    @Environment(\.widgetFamily) var family
+    
+    @ViewBuilder
+    var body: some View {
+        switch family {
+        case .accessoryInline:
+            LatestGlucoseInlineView(viewModel: viewModel)
+                .containerBackground(.fill.tertiary, for: .widget)
+        default:
+            LatestGlucoseCircularView(viewModel: viewModel)
+                .containerBackground(.fill.tertiary, for: .widget)
         }
     }
 }
