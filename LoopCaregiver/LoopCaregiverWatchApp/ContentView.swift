@@ -42,7 +42,7 @@ struct ContentView: View {
             }
         }
         .navigationDestination(for: String.self, destination: { _ in
-            SettingsView(settings: settings)
+            SettingsView(accountService: accountService, settings: settings)
         })
         .onChange(of: connectivityManager.notificationMessage, {
             if let message = connectivityManager.notificationMessage?.text {

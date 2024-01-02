@@ -11,6 +11,7 @@ import WidgetKit
 
 struct SettingsView: View {
     
+    @ObservedObject var accountService: AccountServiceManager
     @AppStorage("lastPhoneDebugMessage", store: UserDefaults(suiteName: Bundle.main.appGroupSuiteName)) var lastPhoneDebugMessage: String = ""
     @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     @ObservedObject var settings: CaregiverSettings
@@ -24,9 +25,14 @@ struct SettingsView: View {
                         Text(item.presentableDescription).tag(item)
                     })
                 })
+                Section("Loopers") {
+                    List(accountService.loopers, id: \.id) { looper in
+                        Text(looper.name)
+                    }
+                }
             }
         }
-        .navigationTitle("Diagnostics")
+        .navigationTitle("Settings")
         .onAppear {
             self.glucosePreference = settings.glucoseUnitPreference
         }
