@@ -5,17 +5,20 @@
 //  Created by Bill Gestrich on 1/2/24.
 //
 
-import LoopCaregiverKit
-import SwiftUI
-import LoopKit
 import HealthKit
+import LoopKit
+import SwiftUI
 
 
-struct LatestGlucoseInlineView: View {
+public struct LatestGlucoseInlineView: View {
+
+    public let viewModel: WidgetViewModel
     
-    let viewModel: WidgetViewModel
+    public init(viewModel: WidgetViewModel) {
+        self.viewModel = viewModel
+    }
     
-    var body: some View {
+    public var body: some View {
         HStack {
             Text(statusText)
                 .strikethrough(viewModel.isGlucoseStale)
@@ -43,7 +46,7 @@ struct LatestGlucoseInlineView: View {
 
 struct LatestGlucoseInlineView_Previews: PreviewProvider {
     static var previews: some View {
-        let latestGlucose = NewGlucoseSample(date: Date(), quantity: .init(unit: .internationalUnitsPerHour, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345")
+        let latestGlucose = NewGlucoseSample(date: Date(), quantity: .init(unit: .gramsPerUnit, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345")
         let viewModel = WidgetViewModel(timelineEntryDate: Date(), latestGlucose: latestGlucose, lastGlucoseChange: 3, isLastEntry: true, glucoseDisplayUnits: .gramsPerUnit)
         LatestGlucoseInlineView(viewModel: viewModel)
     }

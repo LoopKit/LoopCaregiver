@@ -5,16 +5,20 @@
 //  Created by Bill Gestrich on 6/3/23.
 //
 
-import LoopCaregiverKit
-import SwiftUI
-import LoopKit
 import HealthKit
+import LoopCaregiverKit
+import LoopKit
+import SwiftUI
 
-struct LatestGlucoseCircularView: View {
+public struct LatestGlucoseCircularView: View {
     
-    let viewModel: WidgetViewModel
+    public let viewModel: WidgetViewModel
     
-    var body: some View {
+    public init(viewModel: WidgetViewModel) {
+        self.viewModel = viewModel
+    }
+    
+    public var body: some View {
         VStack {
             Text(viewModel.currentGlucoseDateText)
                 .strikethrough(viewModel.isGlucoseStale)
@@ -37,7 +41,7 @@ struct LatestGlucoseCircularView: View {
 
 struct CurrentBGView_Previews: PreviewProvider {
     static var previews: some View {
-        let latestGlucose = NewGlucoseSample(date: Date(), quantity: .init(unit: .internationalUnitsPerHour, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345")
+        let latestGlucose = NewGlucoseSample(date: Date(), quantity: .init(unit: .gramsPerUnit, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345")
         let viewModel = WidgetViewModel(timelineEntryDate: Date(), latestGlucose: latestGlucose, lastGlucoseChange: 3, isLastEntry: true, glucoseDisplayUnits: .gramsPerUnit)
         LatestGlucoseCircularView(viewModel: viewModel)
     }

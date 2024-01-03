@@ -9,7 +9,7 @@ let package = Package(
     products: [
         .library(
             name: "LoopCaregiverKit",
-            targets: ["LoopCaregiverKit"]),
+            targets: ["LoopCaregiverKit", "LoopCaregiverKitUI"]),
     ],
     dependencies: [
         .package(url: "https://github.com/LoopKit/LoopKit.git", branch: "dev"),
@@ -24,6 +24,13 @@ let package = Package(
                 "LoopKit",
                 "NightscoutKit",
                 "OneTimePassword"
+            ]
+        ),
+        .target(
+            name: "LoopCaregiverKitUI",
+            dependencies: [
+                "LoopCaregiverKit",
+                "LoopKit",
             ]
         ),
         .testTarget(

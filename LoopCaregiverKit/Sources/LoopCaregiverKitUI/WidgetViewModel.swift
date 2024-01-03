@@ -17,6 +17,14 @@ public struct WidgetViewModel {
     public let isLastEntry: Bool
     public let glucoseDisplayUnits: HKUnit
     
+    public init(timelineEntryDate: Date, latestGlucose: NewGlucoseSample, lastGlucoseChange: Double? = nil, isLastEntry: Bool, glucoseDisplayUnits: HKUnit) {
+        self.timelineEntryDate = timelineEntryDate
+        self.latestGlucose = latestGlucose
+        self.lastGlucoseChange = lastGlucoseChange
+        self.isLastEntry = isLastEntry
+        self.glucoseDisplayUnits = glucoseDisplayUnits
+    }
+    
     public var currentGlucoseDateText: String {
         if isLastEntry {
             return ""
