@@ -22,6 +22,7 @@
 		A9480DFF2B2CA5430044C972 /* LoopKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9480DFE2B2CA5430044C972 /* LoopKit */; };
 		A94EFDBF2B44DBD80048E4F3 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDBD2B44DBD80048E4F3 /* SettingsView.swift */; };
 		A94EFDC02B44DBD80048E4F3 /* SettingsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A94EFDBE2B44DBD80048E4F3 /* SettingsViewModel.swift */; };
+		A94EFDC22B44E30D0048E4F3 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A94EFDC12B44E30D0048E4F3 /* OneTimePassword */; };
 		A95223792A7FA0890070FE13 /* RemoteCommand+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A95223782A7FA0890070FE13 /* RemoteCommand+Charts.swift */; };
 		A95CCCEE2B2F90DF000BFC25 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A95CCCED2B2F90DF000BFC25 /* LoopCaregiverKit */; };
 		A95CCCF02B2F9145000BFC25 /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A95CCCEF2B2F9145000BFC25 /* OneTimePassword */; };
@@ -79,7 +80,6 @@
 		A9EC1983291FEF950022D39F /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9EC1982291FEF950022D39F /* Preview Assets.xcassets */; };
 		A9EC199E292101550022D39F /* NightscoutChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC199D292101550022D39F /* NightscoutChartView.swift */; };
 		A9EC19A1292128D60022D39F /* TreatmentAnnotationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A0292128D60022D39F /* TreatmentAnnotationView.swift */; };
-		A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */ = {isa = PBXBuildFile; productRef = A9EC19A3292141980022D39F /* OneTimePassword */; };
 		A9EC19A9292144040022D39F /* OverrideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19A8292144040022D39F /* OverrideView.swift */; };
 		A9EC19AB292156D80022D39F /* CarbInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AA292156D80022D39F /* CarbInputView.swift */; };
 		A9EC19AD2921A19C0022D39F /* BolusInputView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9EC19AC2921A19C0022D39F /* BolusInputView.swift */; };
@@ -334,9 +334,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */,
-				A9EC19A4292141980022D39F /* OneTimePassword in Frameworks */,
 				A9ECCB342B2C73270057DEDF /* LoopKitUI in Frameworks */,
 				A9BBD8252B2C992900072287 /* LoopCaregiverKit in Frameworks */,
+				A94EFDC22B44E30D0048E4F3 /* OneTimePassword in Frameworks */,
 				A9ECCB322B2C73270057DEDF /* LoopKit in Frameworks */,
 				A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */,
 			);
@@ -767,12 +767,12 @@
 			);
 			name = LoopCaregiver;
 			packageProductDependencies = (
-				A9EC19A3292141980022D39F /* OneTimePassword */,
 				A9B033E3292306A90052AA9E /* CodeScanner */,
 				A9CA102E2A7FF6A700EE114C /* SwiftCharts */,
 				A9ECCB312B2C73270057DEDF /* LoopKit */,
 				A9ECCB332B2C73270057DEDF /* LoopKitUI */,
 				A9BBD8242B2C992900072287 /* LoopCaregiverKit */,
+				A94EFDC12B44E30D0048E4F3 /* OneTimePassword */,
 			);
 			productName = LoopCaregiver;
 			productReference = A9EC1978291FEF940022D39F /* LoopCaregiver.app */;
@@ -1648,6 +1648,11 @@
 			package = A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */;
 			productName = LoopKit;
 		};
+		A94EFDC12B44E30D0048E4F3 /* OneTimePassword */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
+			productName = OneTimePassword;
+		};
 		A95CCCED2B2F90DF000BFC25 /* LoopCaregiverKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LoopCaregiverKit;
@@ -1683,11 +1688,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = A9CA102D2A7FF6A700EE114C /* XCRemoteSwiftPackageReference "SwiftCharts" */;
 			productName = SwiftCharts;
-		};
-		A9EC19A3292141980022D39F /* OneTimePassword */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A9EC19A2292141980022D39F /* XCRemoteSwiftPackageReference "OneTimePassword" */;
-			productName = OneTimePassword;
 		};
 		A9ECCB312B2C73270057DEDF /* LoopKit */ = {
 			isa = XCSwiftPackageProductDependency;
