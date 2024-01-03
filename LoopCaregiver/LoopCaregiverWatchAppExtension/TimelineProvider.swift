@@ -12,56 +12,40 @@ import SwiftUI
 import WidgetKit
 
 struct TimelineProvider: AppIntentTimelineProvider {
-
-    //MARK: Caregiver Services
-    
-    let composer = ServiceComposer()
-    
-    var accountServiceManager: AccountServiceManager {
-        return AccountServiceManager(accountService: composer.accountServiceManager)
-    }
-    
-    func remoteDataSource(looper: Looper) -> RemoteDataServiceProvider {
-        return NightscoutDataSource(looper: looper, settings: composer.settings)
-    }
     
     @available(*, renamed: "getEntry()")
-    func getEntry(completion: @escaping (SimpleEntry) -> Void ) {
+    func getEntry(composer: ServiceComposer, completion: @escaping (SimpleEntry) -> Void ) {
         Task {
-            let result = await getEntry()
+            let result = await getEntry(composer: composer)
             completion(result)
         }
     }
     
-    func getEntry() async -> SimpleEntry {
+    func getEntry(composer: ServiceComposer) async -> SimpleEntry {
         return await withCheckedContinuation { continuation in
             Task {
                 
                 var looper: Looper
-                if let configurationLooper = getLooper() {
+                if let configurationLooper = composer.accountServiceManager.selectedLooper {
                     looper = configurationLooper
-                } else if let selectedLooper = accountServiceManager.selectedLooper {
+                } else if let selectedLooper = composer.accountServiceManager.selectedLooper {
                     looper = selectedLooper
                 } else {
-                    continuation.resume(returning: SimpleEntry(currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true))
+                    continuation.resume(returning: SimpleEntry(currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits))
                     return
                 }
                 
-                let nightscoutDataSource = remoteDataSource(looper: looper)
+                let nightscoutDataSource = NightscoutDataSource(looper: looper, settings: composer.settings)
                 let sortedSamples = try await nightscoutDataSource.fetchGlucoseSamples().sorted(by: {$0.date < $1.date})
                 let latestGlucoseSample = sortedSamples.last
-                let glucoseChange = getLastGlucoseChange(samples: sortedSamples)
+                let glucoseChange = getLastGlucoseChange(composer: composer, samples: sortedSamples)
                 
-                continuation.resume(returning: SimpleEntry(currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), entryIndex: 0, isLastEntry: true))
+                continuation.resume(returning: SimpleEntry(currentGlucoseSample: latestGlucoseSample, lastGlucoseChange: glucoseChange, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits))
             }
         }
     }
     
-    func getLooper() -> Looper? {
-        return accountServiceManager.selectedLooper
-    }
-    
-    func getLastGlucoseChange(samples: [NewGlucoseSample]) -> Double? {
+    func getLastGlucoseChange(composer: ServiceComposer, samples: [NewGlucoseSample]) -> Double? {
         guard samples.count > 1 else {
             return nil
         }
@@ -71,15 +55,17 @@ struct TimelineProvider: AppIntentTimelineProvider {
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true)
+        let composer = ServiceComposer()
+        return SimpleEntry(currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        return await getEntry()
+        return await getEntry(composer: ServiceComposer())
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        let entry = await getEntry()
+        let composer = ServiceComposer()
+        let entry = await getEntry(composer: composer)
         
         var entries = [SimpleEntry]()
         let nowDate = Date()
@@ -96,7 +82,8 @@ struct TimelineProvider: AppIntentTimelineProvider {
                                           lastGlucoseChange: entry.lastGlucoseChange,
                                           date: nowDate.addingTimeInterval(60 * TimeInterval(index)),
                                           entryIndex: index,
-                                          isLastEntry: isLastEntry)
+                                          isLastEntry: isLastEntry,
+                                          glucoseDisplayUnits: composer.settings.glucoseDisplayUnits)
             entries.append(futureEntry)
         }
         return Timeline(entries: entries, policy: .after(nextRequestDate))

@@ -80,6 +80,6 @@ struct HomeView: View {
     }
     
     func reloadWidget() {
-        WidgetCenter.shared.reloadTimelines(ofKind: "LoopCaregiverWatchAppExtension")
+        WidgetCenter.shared.reloadAllTimelines()
     }
 }
