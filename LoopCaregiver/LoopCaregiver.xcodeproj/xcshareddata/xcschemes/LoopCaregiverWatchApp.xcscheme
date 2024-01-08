@@ -20,20 +20,6 @@
                ReferencedContainer = "container:LoopCaregiver.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
-         <BuildActionEntry
-            buildForTesting = "YES"
-            buildForRunning = "YES"
-            buildForProfiling = "YES"
-            buildForArchiving = "YES"
-            buildForAnalyzing = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "A9EC1977291FEF940022D39F"
-               BuildableName = "LoopCaregiver.app"
-               BlueprintName = "LoopCaregiver"
-               ReferencedContainer = "container:LoopCaregiver.xcodeproj">
-            </BuildableReference>
-         </BuildActionEntry>
       </BuildActionEntries>
    </BuildAction>
    <TestAction
