@@ -5,10 +5,9 @@
 //  Created by Bill Gestrich on 11/13/22.
 //
 
-import SwiftUI
 import LoopCaregiverKit
 import NightscoutKit
-import Combine
+import SwiftUI
 
 struct OverrideView: View {
     
@@ -235,235 +234,6 @@ struct OverrideView: View {
     }
 }
 
-class OverrideViewModel: ObservableObject, Identifiable {
-    
-    var delegate: OverrideViewDelegate? = nil
-    var deliveryCompleted: (() -> Void)? = nil
-    var cancellables = [AnyCancellable]()
-    
-    @Published var overrideListState: OverrideListState = .loading
-    @Published var pickerSelectedRow: OverridePickerRowModel?
-    @Published var experimentalSelectedOverride: TemporaryScheduleOverride?
-    @Published var activeOverride: TemporaryScheduleOverride?
-    @Published var lastDeliveryError: Error? = nil
-    @Published var deliveryInProgress: Bool = false
-    @Published var enableIndefinitely: Bool = false
-    @Published var durationHourSelection = 0
-    @Published var durationMinuteSelection = 0
-    @Published var durationExpanded = false
-    @Published var experimentalEditPresetShowing = false
-    
-    init() {
-        bindPickerSelection()
-        bindEnableIndefinitely()
-    }
-    
-    func bindPickerSelection() {
-        $pickerSelectedRow.sink { val in
-            if let duration = val?.duration, duration > 0  {
-                self.enableIndefinitely = false
-                let (hours, minutes) = duration.hoursAndMinutes()
-                self.durationHourSelection = hours
-                self.durationMinuteSelection = minutes
-            } else {
-                self.enableIndefinitely = true
-            }
-            self.durationExpanded = false
-        }.store(in: &cancellables)
-    }
-    
-    func bindEnableIndefinitely() {
-        $enableIndefinitely.sink { enable in
-            if enable {
-                self.durationHourSelection = 0
-                self.durationMinuteSelection = 0
-                self.durationExpanded = false
-            } else {
-                if let duration = self.activeOverride?.duration, duration != 0 {
-                    let hours = Int(duration / 3600)
-                    let minutes = (Int(duration) - (hours * 3600)) / 60
-                    self.durationHourSelection = hours
-                    self.durationMinuteSelection = minutes
-                } else {
-                    self.durationHourSelection = 1
-                    self.durationMinuteSelection = 0
-                }
-            }
-        }.store(in: &cancellables)
-    }
-    
-    var pickerSelectedDuration: TimeInterval {
-        return TimeInterval(durationHourSelection * 3600) + TimeInterval(durationMinuteSelection * 60)
-    }
-    
-    var indefiniteOverridesAllowed: Bool {
-        guard let pickerSelectedRow else {return false}
-        return pickerSelectedRow.indefiniteDurationAllowed
-    }
-    
-    var actionButtonEnabled: Bool {
-        readyForDelivery
-    }
-    
-    var actionButtonType: ActionButtonType {
-        if let pickerSelectedRow = pickerSelectedRow{
-            if pickerSelectedRow.isActive, activeOverride?.duration == pickerSelectedDuration {
-                return .cancel
-            } else {
-                return .update
-            }
-        } else {
-            return .cancel
-        }
-    }
-    
-    var activeOverrideDescription: String {
-        if let activeOverride = activeOverride {
-            return activeOverride.presentableDescription()
-        } else {
-            return "-"
-        }
-    }
-    
-    var activeOverrideDuration: Double? {
-        guard let duration = pickerSelectedRow?.duration else { return nil }
-        return duration
-    }
-    
-    var selectedHoursAndMinutesDescription: String {
-        
-        let (hours, minutes) = (durationHourSelection, durationMinuteSelection)
-        
-        var hoursPart: String? = nil
-        if hours > 0 {
-            hoursPart = "\(hours)h"
-        }
-        
-        var minutesPart: String? = nil
-        if minutes > 0 {
-            minutesPart = "\(minutes)m"
-        }
-        
-        return [hoursPart, minutesPart].compactMap({$0}).joined(separator: " ")
-    }
-    
-    private var readyForDelivery: Bool {
-        return !deliveryInProgress && overrideIsSelectedForUpdate
-    }
-    
-    var updatingProgressVisible: Bool {
-        return deliveryInProgress
-    }
-    
-    private var overrideIsSelectedForUpdate: Bool {
-        if case .loadingComplete(let overrideState) = overrideListState {
-            return overrideState.presets.count > 0
-        } else {
-            return false
-        }
-    }
-    
-    @MainActor
-    private func loadOverrides() async {
-        
-        guard let delegate else {return}
-        
-        overrideListState = .loading
-        
-        do {
-            let overrideState = try await delegate.overrideState()
-            guard overrideState.presets.count > 0 else {
-                enum OverrideViewLoadError: LocalizedError {
-                    case emptyOverrides
-                    var errorDescription: String? { return "No Overrides Available"}
-                }
-                throw OverrideViewLoadError.emptyOverrides
-            }
-            overrideListState = .loadingComplete(overrideState: overrideState)
-            if let activeOverride = overrideState.activeOverride, let preset = overrideState.presets.first(where: {$0.name == activeOverride.name}) {
-                self.pickerSelectedRow = OverridePickerRowModel(preset: preset, activeOverride: activeOverride)
-                self.activeOverride = activeOverride
-            } else {
-                self.pickerSelectedRow = nil
-            }
-        } catch {
-            overrideListState = .loadingError(error)
-        }
-    }
-    
-    @MainActor
-    func setup(delegate: OverrideViewDelegate, deliveryCompleted: (() -> Void)?) async {
-        self.delegate = delegate
-        self.deliveryCompleted = deliveryCompleted
-        await loadOverrides()
-    }
-
-    
-    //MARK: Actions
-    
-    @MainActor
-    func cancelActiveOverrideButtonTapped() async {
-        guard let delegate else {return}
-        
-        deliveryInProgress = true
-        
-        do {
-            try await delegate.cancelOverride()
-            deliveryCompleted?()
-        } catch {
-            lastDeliveryError = error
-        }
-        
-        deliveryInProgress = false
-    }
-    
-    @MainActor
-    func updateButtonTapped() async {
-        
-        guard let delegate else {return}
-        
-        deliveryInProgress = true
-        
-        do {
-            if let selectedOverride = pickerSelectedRow {
-                try await delegate.startOverride(overrideName: selectedOverride.name ?? "",
-                                                                       durationTime: pickerSelectedDuration)
-            } else {
-                //TODO: Throw error
-            }
-            deliveryCompleted?()
-        } catch {
-            lastDeliveryError = error
-        }
-        
-        deliveryInProgress = false
-    }
-    
-    func reloadOverridesTapped() async {
-        await self.loadOverrides()
-    }
-    
-    
-    //MARK: Models
-    
-    enum OverrideListState {
-        case loading
-        case loadingError(_ error: Error)
-        case loadingComplete(overrideState: OverrideState)
-    }
-    
-    enum ActionButtonType {
-        case cancel
-        case update
-    }
-}
-
-protocol OverrideViewDelegate {
-    func startOverride(overrideName: String, durationTime: TimeInterval) async throws
-    func overrideState() async throws -> OverrideState
-    func cancelOverride() async throws
-}
-
 struct OverrideState: Equatable {
     let activeOverride: TemporaryScheduleOverride?
     let presets: [TemporaryScheduleOverride]
@@ -479,60 +249,23 @@ struct OverrideState: Equatable {
     }
 }
 
-struct OverridePickerRowModel: Hashable {
-    public let targetRange: ClosedRange<Double>?
-    public let insulinNeedsScaleFactor: Double?
-    public let symbol: String?
-    public let duration: TimeInterval
-    public let name: String?
-    public let isActive: Bool
-    public let indefiniteDurationAllowed: Bool
-    
-    init(preset: TemporaryScheduleOverride, activeOverride: TemporaryScheduleOverride?) {
-        let indefiniteDurationAllowed = preset.duration == 0
-        if let activeOverride {
-            self.targetRange = activeOverride.targetRange
-            self.insulinNeedsScaleFactor = activeOverride.insulinNeedsScaleFactor
-            self.symbol = activeOverride.symbol
-            self.duration = activeOverride.duration
-            self.name = activeOverride.name
-            self.isActive = true
-            self.indefiniteDurationAllowed = indefiniteDurationAllowed
-        } else {
-            self.targetRange = preset.targetRange
-            self.insulinNeedsScaleFactor = preset.insulinNeedsScaleFactor
-            self.symbol = preset.symbol
-            self.duration = preset.duration
-            self.name = preset.name
-            self.isActive = false
-            self.indefiniteDurationAllowed = indefiniteDurationAllowed
-        }
-    }
-    
-    func presentableDescription() -> String {
-        return "\(symbol ?? "") \(name ?? "")"
-    }
-    
-    public func hash(into hasher: inout Hasher) {
-        hasher.combine(name)
-    }
-    
-    public static func == (lhs: OverridePickerRowModel, rhs: OverridePickerRowModel) -> Bool {
-        return lhs.name == rhs.name &&
-        lhs.symbol == rhs.symbol &&
-        lhs.duration == rhs.duration &&
-        lhs.targetRange == rhs.targetRange &&
-        lhs.insulinNeedsScaleFactor == rhs.insulinNeedsScaleFactor &&
-        lhs.isActive == rhs.isActive
-    }
-}
-
-
 struct OverrideView_Previews: PreviewProvider {
     static var previews: some View {
         let overrides = OverrideViewPreviewMock.mockOverrides
         let delegate = OverrideViewPreviewMock(currentOverride: overrides.first, presets: overrides)
         return OverrideView(delegate: delegate)
+    }
+}
+
+protocol OverrideViewDelegate {
+    func startOverride(overrideName: String, durationTime: TimeInterval) async throws
+    func overrideState() async throws -> OverrideState
+    func cancelOverride() async throws
+}
+
+extension RemoteDataServiceManager: OverrideViewDelegate {
+    func overrideState() async throws -> OverrideState {
+        return OverrideState(activeOverride: activeOverride(), presets: currentProfile?.settings.overridePresets ?? [])
     }
 }
 
@@ -577,12 +310,6 @@ struct OverrideViewPreviewMock: OverrideViewDelegate {
     
 }
 
-extension RemoteDataServiceManager: OverrideViewDelegate {
-    func overrideState() async throws -> OverrideState {
-        return OverrideState(activeOverride: activeOverride(), presets: currentProfile?.settings.overridePresets ?? [])
-    }
-}
-
 extension TemporaryScheduleOverride: Identifiable {
     public var id: String {
         return name ?? ""
@@ -609,33 +336,3 @@ extension TemporaryScheduleOverride: Identifiable {
     }
 }
 
-struct CustomDatePicker: View {
-    @Binding var hourSelection: Int
-    @Binding var minuteSelection: Int
-    
-    static private let maxHours = 24
-    static private let maxMinutes = 60
-    private let hours = [Int](0...Self.maxHours)
-    private let minutes = [0, 15, 30, 45]
-    
-    var body: some View {
-            HStack(spacing: .zero) {
-                Picker(selection: $hourSelection, label: Text("")) {
-                    ForEach(hours, id: \.self) { value in
-                        Text("\(value) hour")
-                            .tag(value)
-                    }
-                }
-                .pickerStyle(.wheel)
-                
-                Picker(selection: $minuteSelection, label: Text("")) {
-                    ForEach(minutes, id: \.self) { value in
-                        Text("\(value) min")
-                            .tag(value)
-                    }
-                    .frame(maxWidth: .infinity, alignment: .center)
-                }
-                .pickerStyle(.wheel)
-            }
-    }
-}
