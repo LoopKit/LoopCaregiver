@@ -17,7 +17,7 @@ struct ContentView: View {
     let settings: CaregiverSettings
     
     init(){
-        let composer = ServiceComposer()
+        let composer = ServiceComposerProduction()
         self.settings = composer.settings
         self.accountService = composer.accountServiceManager
     }

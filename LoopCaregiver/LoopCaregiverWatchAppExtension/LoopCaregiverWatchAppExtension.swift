@@ -29,7 +29,6 @@ struct LoopCaregiverWatchAppExtension: Widget {
     }
     
     func widgetViewModel(entry: SimpleEntry, latestGlucose: NewGlucoseSample) -> WidgetViewModel {
-        //TODO: It is not clear if setting changes will propogate from the Caregiver watch app
         return WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: entry.glucoseDisplayUnits)
     }
 }
@@ -61,6 +60,12 @@ extension ConfigurationAppIntent {
 }
 
 #Preview(as: .accessoryRectangular) {
+    LoopCaregiverWatchAppExtension()
+} timeline: {
+    SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+}
+
+#Preview(as: .accessoryInline) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
     SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)

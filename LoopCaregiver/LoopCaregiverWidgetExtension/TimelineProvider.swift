@@ -16,7 +16,7 @@ struct TimelineProvider: IntentTimelineProvider {
     
     //MARK: Caregiver Services
     
-    let composer = ServiceComposer()
+    let composer = ServiceComposerProduction()
     
     var accountServiceManager: AccountServiceManager {
         return AccountServiceManager(accountService: composer.accountServiceManager)

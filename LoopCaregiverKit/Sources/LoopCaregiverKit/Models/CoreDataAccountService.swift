@@ -143,7 +143,7 @@ protocol PersistentContainerFactory {
 
 class InMemoryPersistentContainerFactory: PersistentContainerFactory {
     func createContainer() -> NSPersistentContainer {
-        let container = NSPersistentContainer(name: "LoopCaregiver")
+        let container = NSPersistentContainer(name: storeFileName, managedObjectModel: managedObjectModel)
         container.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
         container.loadPersistentStores(completionHandler: { (_, error) in
             if let error = error as NSError? {
@@ -153,6 +153,14 @@ class InMemoryPersistentContainerFactory: PersistentContainerFactory {
         
         container.viewContext.automaticallyMergesChangesFromParent = true
         return container
+    }
+    
+    var managedObjectModel: NSManagedObjectModel {
+        return NSManagedObjectModel(contentsOf: Bundle.coreDataModelURL)!
+    }
+    
+    var storeFileName: String {
+        return "LoopCaregiver"
     }
 }
 

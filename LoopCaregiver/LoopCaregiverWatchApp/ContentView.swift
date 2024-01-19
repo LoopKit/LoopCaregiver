@@ -17,8 +17,7 @@ struct ContentView: View {
     let settings: CaregiverSettings
     @State var path: NavigationPath = NavigationPath()
     
-    init(){
-        let composer = ServiceComposer()
+    init(composer: ServiceComposer){
         self.settings = composer.settings
         self.accountService = composer.accountServiceManager
     }
@@ -102,5 +101,6 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    let composer = ServiceComposerPreviews()
+    return ContentView(composer: composer)
 }

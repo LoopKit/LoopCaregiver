@@ -11,7 +11,7 @@ import LoopCaregiverKit
 class IntentHandler: INExtension {
     
     var accountServiceManager: AccountServiceManager {
-        let composer = ServiceComposer()
+        let composer = ServiceComposerProduction()
         return AccountServiceManager(accountService: composer.accountServiceManager)
     }
     

@@ -82,4 +82,13 @@ struct HomeView: View {
     func reloadWidget() {
         WidgetCenter.shared.reloadAllTimelines()
     }
+
+}
+
+#Preview {
+    let composer = ServiceComposerPreviews()
+    return NavigationStack {
+        let looper = composer.accountServiceManager.selectedLooper!
+        HomeView(looperService: composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings))
+    }
 }

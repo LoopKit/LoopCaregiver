@@ -10,15 +10,26 @@ import LoopKit
 
 public class AccountServiceManager: ObservableObject, AccountServiceDelegate, AccountService {
     
+    public typealias RemoteServicesProviderFactory = (_: Looper, _: CaregiverSettings) -> any RemoteDataServiceProvider
     public weak var delegate: AccountServiceDelegate?
     
     //Account Service
     @Published public var loopers: [Looper] = []
     @Published public var selectedLooper: Looper? = nil
     private var accountService: AccountService
+    private let remoteServicesProviderFactory: RemoteServicesProviderFactory
     
-    public init(accountService: AccountService){
+    public init(accountService: AccountService, remoteServicesProviderFactory: RemoteServicesProviderFactory? = nil){
         self.accountService = accountService
+        
+        if let remoteServicesProviderFactory {
+            self.remoteServicesProviderFactory = remoteServicesProviderFactory
+        } else {
+            self.remoteServicesProviderFactory = { (looper, settings) in
+                return NightscoutDataSource(looper: looper, settings: settings)
+            }
+        }
+        
         refreshSync()
         accountService.delegate = self
     }
@@ -52,11 +63,12 @@ public class AccountServiceManager: ObservableObject, AccountServiceDelegate, Ac
     //MARK:
     
     public func createLooperService(looper: Looper, settings: CaregiverSettings) -> LooperService {
-        let remoteDataSource = RemoteDataServiceManager(remoteDataProvider: NightscoutDataSource(looper: looper, settings: settings))
-        remoteDataSource.monitorForUpdates()
+        let remoteDataSource = remoteServicesProviderFactory(looper, settings)
+        let manager = RemoteDataServiceManager(remoteDataProvider: remoteDataSource)
+        manager.monitorForUpdates()
         return LooperService(looper: looper,
                              accountService: self,
-                             remoteDataSource: remoteDataSource,
+                             remoteDataSource: manager,
                              settings: settings
         )
     }

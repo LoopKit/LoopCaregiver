@@ -55,16 +55,16 @@ struct TimelineProvider: AppIntentTimelineProvider {
     }
     
     func placeholder(in context: Context) -> SimpleEntry {
-        let composer = ServiceComposer()
+        let composer = ServiceComposerProduction()
         return SimpleEntry(currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        return await getEntry(composer: ServiceComposer())
+        return await getEntry(composer: ServiceComposerProduction())
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
-        let composer = ServiceComposer()
+        let composer = ServiceComposerProduction()
         let entry = await getEntry(composer: composer)
         
         var entries = [SimpleEntry]()
