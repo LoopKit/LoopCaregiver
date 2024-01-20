@@ -11,6 +11,7 @@ import WatchConnectivity
 public struct NotificationMessage: Identifiable, Equatable {
     public let id = UUID()
     public let text: String
+    public let receivedDate: Date
 }
 
 public final class WatchConnectivityManager: NSObject, ObservableObject {
@@ -60,17 +61,18 @@ public final class WatchConnectivityManager: NSObject, ObservableObject {
 
 extension WatchConnectivityManager: WCSessionDelegate {
     
+    //Each context message must be unique or it will be dropped. https://stackoverflow.com/a/47915741
     public func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         if let notificationText = applicationContext[kMessageKey] as? String {
             DispatchQueue.main.async { [weak self] in
-                self?.notificationMessage = NotificationMessage(text: notificationText)
+                self?.notificationMessage = NotificationMessage(text: notificationText, receivedDate: Date())
             }
         }
     }
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         if let notificationText = message[kMessageKey] as? String {
             DispatchQueue.main.async { [weak self] in
-                self?.notificationMessage = NotificationMessage(text: notificationText)
+                self?.notificationMessage = NotificationMessage(text: notificationText, receivedDate: Date())
             }
         }
     }

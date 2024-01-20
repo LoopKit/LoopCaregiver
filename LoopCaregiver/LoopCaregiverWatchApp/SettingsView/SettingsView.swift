@@ -41,7 +41,7 @@ struct SettingsView: View {
                     Text("Session State: \(WCSession.default.activationState.description())")
                     Text("Companion App Inst: \(WCSession.default.isCompanionAppInstalled.description)")
                     LabeledContent("Phone Reachable", value: WCSession.default.isReachable ? "YES" : "NO")
-                    Text("Last Msg Rec: \(connectivityManager.notificationMessage?.text ?? "")")
+                    Text("Last Msg Date: \(connectivityManager.notificationMessage?.receivedDate.description ?? "")")
                 }
             }
         }

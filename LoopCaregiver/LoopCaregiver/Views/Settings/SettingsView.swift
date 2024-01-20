@@ -145,18 +145,29 @@ struct SettingsView: View {
         }
     }
     
+    @ViewBuilder
     var experimentalSection: some View {
-        Section {
-            if settings.experimentalFeaturesUnlocked || settings.remoteCommands2Enabled {
+        
+        if settings.experimentalFeaturesUnlocked || settings.remoteCommands2Enabled {
+            Section {
                 Toggle("Remote Commands 2", isOn: $settings.remoteCommands2Enabled)
                 Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
                     .font(.footnote)
-                LabeledContent("App Groups", value: settings.appGroupsSupported ? "Enabled" : "Disabled")
-                Text("App Groups are required for Widgets to function.")
-                    .font(.footnote)
+            } header: {
+                SectionHeader(label: "Remote Commands")
+            }
+            Section {
                 Toggle("Demo Mode", isOn: $settings.demoModeEnabled)
                 Text("Demo mode hides sensitive data for Caregiver presentations.")
                     .font(.footnote)
+                if !settings.demoModeEnabled {
+                    Text(addLooperDeepLink)
+                        .textSelection(.enabled)
+                }
+            } header: {
+                SectionHeader(label: "Diagnostics")
+            }
+            Section {
                 Button("Enable Watch App") {
                     WatchConnectivityManager.shared.send(addLooperDeepLink)
                 }
@@ -166,18 +177,14 @@ struct SettingsView: View {
                 
                 Text("The Apple Watch app is very early in development. Search Zulip #caregiver for details")
                     .font(.footnote)
-                if !settings.demoModeEnabled {
-                    Text(addLooperDeepLink)
-                        .textSelection(.enabled)
-                }
-            } else {
-                Text("Disabled                             ")
-                    .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
-                        settings.experimentalFeaturesUnlocked = true
-                    })
+            } header: {
+                SectionHeader(label: "Apple Watch")
             }
-        }  header: {
-            SectionHeader(label: "Experimental Features")
+        } else {
+            Text("Disabled                             ")
+                .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
+                    settings.experimentalFeaturesUnlocked = true
+                })
         }
     }
     

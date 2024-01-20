@@ -158,6 +158,8 @@ public struct CreateLooperDeepLink: DeepLink {
         guard let nsURL = nsURL.absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
             throw CreateLooperDeepLinkError.urlEncodingError(url: nsURL.absoluteString)
         }
+        //TODO: The date is appended to each deep link to ensure we have a unique message received by teh watch each time.
+        //See https://stackoverflow.com/a/47915741
         return "\(host)://\(Self.actionName)?name=\(name)&secretKey=\(secretKey)&nsURL=\(nsURL)&otpURL=\(otpURL)&createdDate=\(Date())"
     }
     
