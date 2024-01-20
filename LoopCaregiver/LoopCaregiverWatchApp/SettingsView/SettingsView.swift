@@ -29,11 +29,14 @@ struct SettingsView: View {
                     })
                 })
                 Section("Loopers") {
-                    List(accountService.loopers, id: \.id) { looper in
-                        Text(looper.name)
+                    List {
+                        ForEach(accountService.loopers, id: \.id) { looper in
+                            Text(looper.name)
+                        }
+                        .onDelete(perform: delete)
                     }
                 }
-                Section("Session Diagnostics") {
+                Section("Phone Connectivity") {
                     Text("Session Supported: \(WCSession.isSupported().description)")
                     Text("Session State: \(WCSession.default.activationState.description())")
                     Text("Companion App Inst: \(WCSession.default.isCompanionAppInstalled.description)")
@@ -52,6 +55,20 @@ struct SettingsView: View {
                 reloadWidget()
             }
         })
+    }
+    
+    
+    func delete(at offsets: IndexSet) {
+        for idex in offsets {
+            let looper = accountService.loopers[idex]
+            do {
+                try accountService.removeLooper(looper)
+            } catch {
+                print("Could not delete looper. \(looper), Error: \(error)")
+            }
+
+        }
+
     }
     
     func reloadWidget() {
