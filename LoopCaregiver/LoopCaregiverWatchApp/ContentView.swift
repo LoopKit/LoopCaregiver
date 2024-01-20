@@ -12,16 +12,11 @@ import WidgetKit
 
 struct ContentView: View {
     
-    @ObservedObject private var watchManager: WatchConnectivityManager
-    @ObservedObject var accountService: AccountServiceManager
-    let settings: CaregiverSettings
-    @State var path: NavigationPath = NavigationPath()
+    @EnvironmentObject var accountService: AccountServiceManager
+    @EnvironmentObject var settings: CaregiverSettings
+    @EnvironmentObject var watchManager: WatchConnectivityManager
     
-    init(composer: ServiceComposer){
-        self.settings = composer.settings
-        self.accountService = composer.accountServiceManager
-        self.watchManager = composer.watchManager
-    }
+    @State var path: NavigationPath = NavigationPath()
     
     var body: some View {
         NavigationStack (path: $path) {
@@ -103,5 +98,8 @@ struct ContentView: View {
 
 #Preview {
     let composer = ServiceComposerPreviews()
-    return ContentView(composer: composer)
+    return ContentView()
+        .environmentObject(composer.accountServiceManager)
+        .environmentObject(composer.settings)
+        .environmentObject(composer.watchManager)
 }

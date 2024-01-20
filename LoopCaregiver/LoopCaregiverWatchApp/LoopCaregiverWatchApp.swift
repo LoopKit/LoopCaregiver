@@ -10,9 +10,13 @@ import SwiftUI
 
 @main
 struct LoopCaregiverWatchApp: App {
+    let composer = ServiceComposerProduction()
     var body: some Scene {
         WindowGroup {
-            ContentView(composer: ServiceComposerProduction())
+            ContentView()
+                .environmentObject(composer.accountServiceManager)
+                .environmentObject(composer.settings)
+                .environmentObject(composer.watchManager)
         }
     }
 }
