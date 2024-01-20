@@ -26,23 +26,23 @@ struct ContentView: View {
         NavigationStack (path: $path) {
             VStack {
                 if let looper = accountService.selectedLooper {
-                    HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
+                    HomeView(connectivityManager: connectivityManager, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
                     //Text("No Looper. Open Loop Caregiver on iPhone.")
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
                 }
             }
+            .navigationDestination(for: String.self, destination: { _ in
+                SettingsView(connectivityManager: connectivityManager, accountService: accountService, settings: settings)
+            })
             .toolbar {
-                ToolbarItem(placement: .topBarTrailing) {
-                    Button("?") {
-                        self.path.append("SettingsView")
+                ToolbarItem(placement: .topBarLeading) {
+                    NavigationLink(value: "SettingsView") {
+                        Image(systemName: "gear")
                     }
                 }
             }
         }
-        .navigationDestination(for: String.self, destination: { _ in
-            SettingsView(accountService: accountService, settings: settings)
-        })
         .onChange(of: connectivityManager.notificationMessage, {
             if let message = connectivityManager.notificationMessage?.text {
                 Task {

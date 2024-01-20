@@ -158,7 +158,7 @@ public struct CreateLooperDeepLink: DeepLink {
         guard let nsURL = nsURL.absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
             throw CreateLooperDeepLinkError.urlEncodingError(url: nsURL.absoluteString)
         }
-        return "\(host)://\(Self.actionName)?name=\(name)&secretKey=\(secretKey)&nsURL=\(nsURL)&otpURL=\(otpURL)"
+        return "\(host)://\(Self.actionName)?name=\(name)&secretKey=\(secretKey)&nsURL=\(nsURL)&otpURL=\(otpURL)&createdDate=\(Date())"
     }
     
     enum CreateLooperDeepLinkError: LocalizedError, Equatable {

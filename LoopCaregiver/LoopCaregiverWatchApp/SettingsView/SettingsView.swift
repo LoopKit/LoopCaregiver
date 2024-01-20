@@ -7,19 +7,21 @@
 
 import LoopCaregiverKit
 import SwiftUI
+import WatchConnectivity
 import WidgetKit
 
 struct SettingsView: View {
     
+    @ObservedObject var connectivityManager: WatchConnectivityManager
     @ObservedObject var accountService: AccountServiceManager
+    @ObservedObject var settings: CaregiverSettings
+    
     @AppStorage("lastPhoneDebugMessage", store: UserDefaults(suiteName: Bundle.main.appGroupSuiteName)) var lastPhoneDebugMessage: String = ""
     @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
-    @ObservedObject var settings: CaregiverSettings
     var settingsViewModel = SettingsViewModel()
     
     var body: some View {
         VStack {
-            //Text(lastPhoneDebugMessage)
             Form {
                 Picker("Glucose", selection: $glucosePreference, content: {
                     ForEach(GlucoseUnitPrefererence.allCases, id: \.self, content: { item in
@@ -30,6 +32,13 @@ struct SettingsView: View {
                     List(accountService.loopers, id: \.id) { looper in
                         Text(looper.name)
                     }
+                }
+                Section("Session Diagnostics") {
+                    Text("Session Supported: \(WCSession.isSupported().description)")
+                    Text("Session State: \(WCSession.default.activationState.description())")
+                    Text("Companion App Inst: \(WCSession.default.isCompanionAppInstalled.description)")
+                    LabeledContent("Phone Reachable", value: WCSession.default.isReachable ? "YES" : "NO")
+                    Text("Last Msg Rec: \(connectivityManager.notificationMessage?.text ?? "")")
                 }
             }
         }

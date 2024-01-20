@@ -11,13 +11,15 @@ import WidgetKit
     
 struct HomeView: View {
     
+    @ObservedObject var connectivityManager: WatchConnectivityManager
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
     @Environment(\.scenePhase) var scenePhase
     
-    init(looperService: LooperService){
+    init(connectivityManager: WatchConnectivityManager, looperService: LooperService){
+        self.connectivityManager = connectivityManager
         self.looperService = looperService
         self.settings = looperService.settings
         self.accountService = looperService.accountService
@@ -32,7 +34,7 @@ struct HomeView: View {
         }
         .navigationTitle(accountService.selectedLooper?.name ?? "Name?")
         .navigationDestination(for: String.self, destination: { _ in
-            SettingsView(accountService: accountService, settings: settings)
+            SettingsView(connectivityManager: connectivityManager, accountService: accountService, settings: settings)
         })
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {

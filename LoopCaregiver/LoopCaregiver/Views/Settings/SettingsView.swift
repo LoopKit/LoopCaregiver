@@ -9,6 +9,7 @@ import Combine
 import LoopCaregiverKit
 import LoopKitUI
 import SwiftUI
+import WatchConnectivity
 
 struct SettingsView: View {
 
@@ -160,6 +161,9 @@ struct SettingsView: View {
                     WatchConnectivityManager.shared.send(addLooperDeepLink)
                 }
                 LabeledContent("Watch Last Sent Message", value: WatchConnectivityManager.shared.lastMessageSent?.description ?? "None")
+                LabeledContent("Watch Reachable", value: WCSession.default.isReachable ? "YES" : "NO")
+                LabeledContent("Activated", value: WatchConnectivityManager.shared.activated ? "YES" : "NO")
+                
                 Text("The Apple Watch app is very early in development. Search Zulip #caregiver for details")
                     .font(.footnote)
                 if !settings.demoModeEnabled {

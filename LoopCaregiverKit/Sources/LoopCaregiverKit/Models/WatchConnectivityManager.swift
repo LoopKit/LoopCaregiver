@@ -18,6 +18,7 @@ public final class WatchConnectivityManager: NSObject, ObservableObject {
     @Published public var notificationMessage: NotificationMessage? = nil
     var pendingMessages = [String]()
     @Published public var lastMessageSent: Date? = nil
+    @Published public var activated: Bool = false
     
     private override init() {
         super.init()
@@ -31,6 +32,7 @@ public final class WatchConnectivityManager: NSObject, ObservableObject {
     private let kMessageKey = "message"
     
     public func send(_ message: String) {
+
         guard WCSession.default.activationState == .activated else {
             pendingMessages.append(message)
             return
@@ -80,6 +82,11 @@ extension WatchConnectivityManager: WCSessionDelegate {
             print("WCSession activation error: \(error)")
         } else {
             DispatchQueue.main.async {
+                
+                if activationState == .activated {
+                    self.activated = true
+                }
+                
                 for message in self.pendingMessages {
                     self.send(message)
                 }
@@ -93,4 +100,19 @@ extension WatchConnectivityManager: WCSessionDelegate {
         session.activate()
     }
     #endif
+}
+
+public extension WCSessionActivationState {
+    func description() -> String {
+        switch self {
+        case .notActivated:
+            return "Not Activated"
+        case .inactive:
+            return "Inactive"
+        case .activated:
+            return "Activated"
+        @unknown default:
+            return "Unknown"
+        }
+    }
 }
