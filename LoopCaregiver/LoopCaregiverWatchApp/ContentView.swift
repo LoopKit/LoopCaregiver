@@ -12,7 +12,7 @@ import WidgetKit
 
 struct ContentView: View {
     
-    @ObservedObject private var connectivityManager = WatchConnectivityManager.shared
+    @ObservedObject private var watchManager: WatchConnectivityManager
     @ObservedObject var accountService: AccountServiceManager
     let settings: CaregiverSettings
     @State var path: NavigationPath = NavigationPath()
@@ -20,20 +20,21 @@ struct ContentView: View {
     init(composer: ServiceComposer){
         self.settings = composer.settings
         self.accountService = composer.accountServiceManager
+        self.watchManager = composer.watchManager
     }
     
     var body: some View {
         NavigationStack (path: $path) {
             VStack {
                 if let looper = accountService.selectedLooper {
-                    HomeView(connectivityManager: connectivityManager, looperService: accountService.createLooperService(looper: looper, settings: settings))
+                    HomeView(connectivityManager: watchManager, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
                     //Text("No Looper. Open Loop Caregiver on iPhone.")
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
                 }
             }
             .navigationDestination(for: String.self, destination: { _ in
-                SettingsView(connectivityManager: connectivityManager, accountService: accountService, settings: settings)
+                SettingsView(connectivityManager: watchManager, accountService: accountService, settings: settings)
             })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -43,8 +44,8 @@ struct ContentView: View {
                 }
             }
         }
-        .onChange(of: connectivityManager.notificationMessage, {
-            if let message = connectivityManager.notificationMessage?.text {
+        .onChange(of: watchManager.notificationMessage, {
+            if let message = watchManager.notificationMessage?.text {
                 Task {
                     try await handleDeepLinkURL(message)
                 }

@@ -7,7 +7,6 @@
 
 import LoopCaregiverKit
 import SwiftUI
-import WatchConnectivity
 import WidgetKit
 
 struct SettingsView: View {
@@ -37,11 +36,11 @@ struct SettingsView: View {
                     }
                 }
                 Section("Phone Connectivity") {
-                    Text("Session Supported: \(WCSession.isSupported().description)")
-                    Text("Session State: \(WCSession.default.activationState.description())")
-                    Text("Companion App Inst: \(WCSession.default.isCompanionAppInstalled.description)")
-                    LabeledContent("Phone Reachable", value: WCSession.default.isReachable ? "YES" : "NO")
-                    Text("Last Msg Date: \(connectivityManager.notificationMessage?.receivedDate.description ?? "")")
+                    LabeledContent("Session Supported", value: connectivityManager.sessionsSupported() ? "YES" : "NO")
+                    LabeledContent("Session Activated", value: connectivityManager.activated ? "YES" : "NO")
+                    LabeledContent("Companion App Inst", value: connectivityManager.companionAppInstalled() ? "YES" : "NO")
+                    LabeledContent("Phone Reachable", value: connectivityManager.isReachable() ? "YES" : "NO")
+                    LabeledContent("Last Msg Date", value: connectivityManager.notificationMessage?.receivedDate.description ?? "")
                 }
             }
         }

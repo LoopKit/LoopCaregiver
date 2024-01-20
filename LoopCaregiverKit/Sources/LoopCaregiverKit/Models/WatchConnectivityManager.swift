@@ -15,18 +15,19 @@ public struct NotificationMessage: Identifiable, Equatable {
 }
 
 public final class WatchConnectivityManager: NSObject, ObservableObject {
-    public static let shared = WatchConnectivityManager()
     @Published public var notificationMessage: NotificationMessage? = nil
     var pendingMessages = [String]()
     @Published public var lastMessageSent: Date? = nil
     @Published public var activated: Bool = false
+    let watchSession: WCSession
     
-    private override init() {
+    public override init() {
+        self.watchSession = WCSession.default
         super.init()
         
         if WCSession.isSupported() {
-            WCSession.default.delegate = self
-            WCSession.default.activate()
+            watchSession.delegate = self
+            watchSession.activate()
         }
     }
     
@@ -34,29 +35,43 @@ public final class WatchConnectivityManager: NSObject, ObservableObject {
     
     public func send(_ message: String) {
 
-        guard WCSession.default.activationState == .activated else {
+        guard watchSession.activationState == .activated else {
             pendingMessages.append(message)
             return
         }
 #if os(iOS)
-        guard WCSession.default.isWatchAppInstalled else {
+        guard watchSession.isWatchAppInstalled else {
             return
         }
 #else
-        guard WCSession.default.isCompanionAppInstalled else {
+        guard watchSession.isCompanionAppInstalled else {
             return
         }
 #endif
         do {
-            try WCSession.default.updateApplicationContext([kMessageKey : message])
+            try watchSession.updateApplicationContext([kMessageKey : message])
             lastMessageSent = Date()
         } catch {
             print("Cannot send message: \(String(describing: error))")
         }
-//        WCSession.default.sendMessage([kMessageKey : message]) { error in
+//        watchSession.sendMessage([kMessageKey : message]) { error in
 //            print("Cannot send message: \(String(describing: error))")
 //        }
     }
+    
+    public func isReachable() -> Bool {
+        return watchSession.isReachable
+    }
+    
+    public func sessionsSupported() -> Bool {
+        return WCSession.isSupported()
+    }
+    
+#if os(watchOS)
+    public func companionAppInstalled() -> Bool {
+        return watchSession.isCompanionAppInstalled
+    }
+#endif
 }
 
 extension WatchConnectivityManager: WCSessionDelegate {

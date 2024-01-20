@@ -9,7 +9,6 @@ import Combine
 import LoopCaregiverKit
 import LoopKitUI
 import SwiftUI
-import WatchConnectivity
 
 struct SettingsView: View {
 
@@ -18,18 +17,20 @@ struct SettingsView: View {
     @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var settings: CaregiverSettings
+    @ObservedObject var watchManager: WatchConnectivityManager
     @Binding var showSheetView: Bool
     @State private var isPresentingConfirm: Bool = false
     @State private var path = NavigationPath()
     @State private var deleteAllCommandsShowing: Bool = false
     @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
     
-    init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, showSheetView: Binding<Bool>) {
+    init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, watchManager: WatchConnectivityManager, showSheetView: Binding<Bool>) {
         self.settingsViewModel = SettingsViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
         self.looperService = looperService
         self.nightscoutCredentialService = NightscoutCredentialService(credentials: looperService.looper.nightscoutCredentials)
         self.accountService = accountService
         self.settings = settings
+        self.watchManager = watchManager
         self._showSheetView = showSheetView
     }
     
@@ -170,11 +171,11 @@ struct SettingsView: View {
             }
             Section {
                 Button("Enable Watch App") {
-                    WatchConnectivityManager.shared.send(addLooperDeepLink)
+                    watchManager.send(addLooperDeepLink)
                 }
-                LabeledContent("Watch Last Sent Message", value: WatchConnectivityManager.shared.lastMessageSent?.description ?? "None")
-                LabeledContent("Watch Reachable", value: WCSession.default.isReachable ? "YES" : "NO")
-                LabeledContent("Activated", value: WatchConnectivityManager.shared.activated ? "YES" : "NO")
+                LabeledContent("Watch Last Sent Message", value: watchManager.lastMessageSent?.description ?? "None")
+                LabeledContent("Watch Reachable", value: watchManager.isReachable() ? "YES" : "NO")
+                LabeledContent("Activated", value: watchManager.activated ? "YES" : "NO")
                 
                 Text("The Apple Watch app is very early in development. Search Zulip #caregiver for details")
                     .font(.footnote)

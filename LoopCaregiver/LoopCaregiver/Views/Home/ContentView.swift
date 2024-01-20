@@ -12,6 +12,7 @@ import WidgetKit
 struct ContentView: View {
     
     @ObservedObject var accountService: AccountServiceManager
+    var watchManager: WatchConnectivityManager
     @State var deepLinkErrorShowing = false
     @State var deepLinkErrorText: String = ""
     let settings: CaregiverSettings
@@ -20,12 +21,13 @@ struct ContentView: View {
         let composer = ServiceComposerProduction()
         self.settings = composer.settings
         self.accountService = composer.accountServiceManager
+        self.watchManager = composer.watchManager
     }
     
     var body: some View {
         return Group {
             if let looper = accountService.selectedLooper {
-                HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings))
+                HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings), watchManager: watchManager)
             } else {
                 FirstRunView(accountService: accountService, settings: settings, showSheetView: true)
             }
@@ -104,6 +106,7 @@ struct HomeView: View {
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
+    var watchManager: WatchConnectivityManager
     
     @State private var showCarbView = false
     @State private var showBolusView = false
@@ -112,11 +115,12 @@ struct HomeView: View {
     
     @Environment(\.scenePhase) var scenePhase
     
-    init(looperService: LooperService){
+    init(looperService: LooperService, watchManager: WatchConnectivityManager){
         self.looperService = looperService
         self.settings = looperService.settings
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource
+        self.watchManager = watchManager
     }
     
     var body: some View {
@@ -157,7 +161,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showSettingsView) {
-            SettingsView(looperService: looperService, accountService: accountService, settings: looperService.settings, showSheetView: $showSettingsView)
+            SettingsView(looperService: looperService, accountService: accountService, settings: looperService.settings, watchManager: watchManager, showSheetView: $showSettingsView)
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
