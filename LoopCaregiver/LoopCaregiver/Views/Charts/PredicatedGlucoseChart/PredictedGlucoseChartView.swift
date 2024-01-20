@@ -6,12 +6,11 @@
 //  Copyright © 2020 LoopKit Authors. All rights reserved.
 //
 
-import LoopCaregiverKit
 import HealthKit
-import SwiftUI
+import LoopCaregiverKit
 import LoopKit
 import LoopKitUI
-
+import SwiftUI
 
 struct PredictedGlucoseChartView: UIViewRepresentable {
     

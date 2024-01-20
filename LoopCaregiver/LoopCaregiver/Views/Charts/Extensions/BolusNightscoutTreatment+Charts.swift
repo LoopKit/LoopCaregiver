@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import NightscoutKit
 import HealthKit
+import NightscoutKit
 
 extension BolusNightscoutTreatment {
     func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {

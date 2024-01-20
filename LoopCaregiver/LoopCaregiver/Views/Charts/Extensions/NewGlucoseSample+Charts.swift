@@ -6,9 +6,8 @@
 //
 
 import Foundation
-import LoopKit
 import HealthKit
-
+import LoopKit
 
 //Loop Charts
 extension NewGlucoseSample: GlucoseValue {

@@ -5,8 +5,8 @@
 //  Created by Bill Gestrich on 10/18/23.
 //
 
-import XCTest
 @testable import LoopCaregiverKit
+import XCTest
 
 final class DeepLinkParserTestCase: XCTestCase {
 

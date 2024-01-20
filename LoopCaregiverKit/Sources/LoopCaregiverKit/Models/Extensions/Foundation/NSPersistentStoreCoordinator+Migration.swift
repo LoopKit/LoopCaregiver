@@ -5,8 +5,8 @@
 //  Created by Bill Gestrich on 6/3/23.
 //
 
-import Foundation
 import CoreData
+import Foundation
 
 extension NSPersistentStoreCoordinator {
     func migrateAndDeleteStore(_ store: NSPersistentStore, atURL: URL, toURL: URL) {

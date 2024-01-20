@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import LoopKit
 import HealthKit
+import LoopKit
 
 public extension NewGlucoseSample {
     

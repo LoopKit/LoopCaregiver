@@ -5,13 +5,12 @@
 //  Created by Bill Gestrich on 11/13/22.
 //
 
-import SwiftUI
 import Charts
-import LoopKit
+import Combine
 import HealthKit
 import LoopCaregiverKit
-import LoopKitUI
-import Combine
+import LoopKit
+import SwiftUI
 
 struct NightscoutChartScrollView: View {
     

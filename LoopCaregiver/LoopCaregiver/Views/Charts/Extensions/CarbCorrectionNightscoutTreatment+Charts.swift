@@ -6,8 +6,8 @@
 //
 
 import Foundation
-import NightscoutKit
 import HealthKit
+import NightscoutKit
 
 extension CarbCorrectionNightscoutTreatment {
     func graphItem(egvValues: [GraphItem], displayUnit: HKUnit) -> GraphItem {

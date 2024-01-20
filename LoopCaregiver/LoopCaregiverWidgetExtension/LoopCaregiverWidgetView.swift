@@ -5,9 +5,9 @@
 //  Created by Bill Gestrich on 6/2/23.
 //
 
+import Foundation
 import LoopCaregiverKit
 import LoopCaregiverKitUI
-import Foundation
 import SwiftUI
 
 struct LoopCaregiverWidgetView : View {

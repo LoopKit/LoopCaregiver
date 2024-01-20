@@ -6,9 +6,9 @@
 //
 
 import Foundation
+import HealthKit
 import LoopKit
 import NightscoutKit
-import HealthKit
 import UIKit //For willEnterForegroundNotification
 
 public class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvider {

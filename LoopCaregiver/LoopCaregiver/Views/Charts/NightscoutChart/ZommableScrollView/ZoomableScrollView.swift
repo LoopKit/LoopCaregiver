@@ -5,8 +5,8 @@
 //  Created by Bill Gestrich on 8/13/23.
 //
 
-import SwiftUI
 import Combine
+import SwiftUI
 
 /*
  Terminology

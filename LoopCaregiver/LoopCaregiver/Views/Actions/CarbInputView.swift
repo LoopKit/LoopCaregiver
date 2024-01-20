@@ -5,10 +5,10 @@
 //  Created by Bill Gestrich on 11/13/22.
 //
 
-import SwiftUI
+import LocalAuthentication
 import LoopCaregiverKit
 import LoopKitUI
-import LocalAuthentication
+import SwiftUI
 
 struct CarbInputView: View {
     

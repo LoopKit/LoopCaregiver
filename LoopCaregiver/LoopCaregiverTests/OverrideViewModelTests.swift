@@ -5,10 +5,10 @@
 //  Created by Bill Gestrich on 10/1/23.
 //
 
-import XCTest
 import Combine
-import NightscoutKit
 @testable import LoopCaregiver
+import NightscoutKit
+import XCTest
 
 final class OverrideViewModelTests: XCTestCase {
 

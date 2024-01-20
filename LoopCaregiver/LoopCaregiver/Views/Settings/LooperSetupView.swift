@@ -5,10 +5,10 @@
 //  Created by Bill Gestrich on 5/11/22.
 //
 
+import CodeScanner
 import Foundation
 import LoopCaregiverKit
 import SwiftUI
-import CodeScanner
 
 struct LooperSetupView: View {
     

@@ -6,11 +6,11 @@
 //  Copyright © 2023 Bill Gestrich. All rights reserved.
 //
 
-import LoopCaregiverKit
-import WidgetKit
 import CoreData
-import LoopKit
 import Intents
+import LoopCaregiverKit
+import LoopKit
+import WidgetKit
 
 struct TimelineProvider: IntentTimelineProvider {
     

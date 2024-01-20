@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 extension UIColor {
     // MARK: - HIG colors
     // See: https://developer.apple.com/ios/human-interface-guidelines/visual-design/color/

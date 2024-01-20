@@ -5,9 +5,9 @@
 //  Created by Bill Gestrich on 8/11/23.
 //
 
-import SwiftUI
 import Charts
 import Combine
+import SwiftUI
 
 struct DemoView: View {
     
