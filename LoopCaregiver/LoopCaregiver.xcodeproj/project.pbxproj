@@ -51,6 +51,8 @@
 		A9A62C7F2AD1BD4C004CD316 /* TimeInterval.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */; };
 		A9B033E4292306A90052AA9E /* CodeScanner in Frameworks */ = {isa = PBXBuildFile; productRef = A9B033E3292306A90052AA9E /* CodeScanner */; };
 		A9B033E829231DCE0052AA9E /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9B033E729231DCE0052AA9E /* SettingsView.swift */; };
+		A9BAEE6C2B5C552D002C7C46 /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BAEE6B2B5C552D002C7C46 /* HomeView.swift */; };
+		A9BAEE6E2B5C555F002C7C46 /* FirstRunView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BAEE6D2B5C555F002C7C46 /* FirstRunView.swift */; };
 		A9BBD8252B2C992900072287 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9BBD8242B2C992900072287 /* LoopCaregiverKit */; };
 		A9BBD8272B2C992F00072287 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9BBD8262B2C992F00072287 /* LoopCaregiverKit */; };
 		A9BBD8292B2C993500072287 /* LoopCaregiverKit in Frameworks */ = {isa = PBXBuildFile; productRef = A9BBD8282B2C993500072287 /* LoopCaregiverKit */; };
@@ -244,6 +246,8 @@
 		A99F2F7E2A2AA19E00F7DE2D /* TimelineProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimelineProvider.swift; sourceTree = "<group>"; };
 		A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeInterval.swift; sourceTree = "<group>"; };
 		A9B033E729231DCE0052AA9E /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
+		A9BAEE6B2B5C552D002C7C46 /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
+		A9BAEE6D2B5C555F002C7C46 /* FirstRunView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirstRunView.swift; sourceTree = "<group>"; };
 		A9BBD8232B2C991D00072287 /* LoopCaregiverKit */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = LoopCaregiverKit; path = ../LoopCaregiverKit; sourceTree = "<group>"; };
 		A9BD0DDF2A89515700988E2C /* ZoomableScrollView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ZoomableScrollView.swift; sourceTree = "<group>"; };
 		A9BD7B522AD0D8D300E73973 /* OverrideInsulinNeedsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideInsulinNeedsView.swift; sourceTree = "<group>"; };
@@ -500,11 +504,13 @@
 		A969296A29279DCB00B8BF43 /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */,
 				A969293A2926ECF500B8BF43 /* BottomBarView.swift */,
 				A9EC197D291FEF940022D39F /* ContentView.swift */,
 				A99DC86429992DD20058EBA5 /* DisclaimerView.swift */,
+				A9BAEE6D2B5C555F002C7C46 /* FirstRunView.swift */,
+				A9BAEE6B2B5C552D002C7C46 /* HomeView.swift */,
 				A96929342926E5CE00B8BF43 /* HUDView.swift */,
-				A9ECCB2B2B29C5270057DEDF /* AppExpirationAlerterRepresentable.swift */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -990,6 +996,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				A970838F2B4D54CC0053D633 /* CustomDatePicker.swift in Sources */,
+				A9BAEE6E2B5C555F002C7C46 /* FirstRunView.swift in Sources */,
 				A9BD0DE02A89515700988E2C /* ZoomableScrollView.swift in Sources */,
 				A9A62C7F2AD1BD4C004CD316 /* TimeInterval.swift in Sources */,
 				A97083912B4D55130053D633 /* OverrideViewModel.swift in Sources */,
@@ -1005,6 +1012,7 @@
 				A96929412926EFEC00B8BF43 /* LooperSetupView.swift in Sources */,
 				A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
+				A9BAEE6C2B5C552D002C7C46 /* HomeView.swift in Sources */,
 				A9744DEA2933B0FE000A3D6A /* View.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,
 				A9D3FF222A6C3B99000C891D /* Color.swift in Sources */,
