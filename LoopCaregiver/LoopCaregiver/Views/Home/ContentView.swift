@@ -10,17 +10,12 @@ import SwiftUI
 
 struct ContentView: View {
     
-    @ObservedObject var accountService: AccountServiceManager
-    var watchManager: WatchConnectivityManager
+    @EnvironmentObject var accountService: AccountServiceManager
+    @EnvironmentObject var settings: CaregiverSettings
+    @EnvironmentObject var watchManager: WatchConnectivityManager
+    
     @State var deepLinkErrorShowing = false
     @State var deepLinkErrorText: String = ""
-    let settings: CaregiverSettings
-    
-    init(composer: ServiceComposer){
-        self.settings = composer.settings
-        self.accountService = composer.accountServiceManager
-        self.watchManager = composer.watchManager
-    }
     
     var body: some View {
         return Group {

@@ -13,7 +13,10 @@ struct LoopCaregiverApp: App {
     let composer = ServiceComposerProduction()
     var body: some Scene {
         WindowGroup {
-            ContentView(composer: composer)
+            ContentView()
+                .environmentObject(composer.accountServiceManager)
+                .environmentObject(composer.settings)
+                .environmentObject(composer.watchManager)
         }
     }
 }
