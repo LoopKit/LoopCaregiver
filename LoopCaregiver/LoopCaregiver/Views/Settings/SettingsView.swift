@@ -163,7 +163,7 @@ struct SettingsView: View {
                 Button("Copy Deep Link") {
                     UIPasteboard.general.string = addLooperDeepLink
                 }
-                Text("WARNING: A deep link should NEVER be shared as it holds your Looper's secrets which will allow remote bolusing/carbs. Tapping the above row will copy the deep link to your clipboard. You can paste the link to the Safari URL field on another phone. It will open Caregiver, if installed, and add your Looper like you went through the setup process . This is useful if you have a phone without a camera for scanning the QR code.")
+                Text("WARNING: A deep link should NEVER be shared as it holds your Looper's secrets which will allow remote bolusing/carbs. Tapping the above row will copy the deep link to your clipboard. You can paste the link to the Safari URL field on another phone. It will open Caregiver, if installed, and add your Looper like you went through the setup process. This is useful if you have a phone without a camera for scanning the QR code.")
                     .font(.footnote)
             } header: {
                 SectionHeader(label: "Diagnostics")
