@@ -19,7 +19,7 @@ public class ServiceComposerProduction: ServiceComposer {
         if let appGroupName = Bundle.main.appGroupSuiteName, let _ = FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: appGroupName) {
             appGroupsSupported = true
             userDefaults = UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
-            containerFactory = InMemoryPersistentContainerFactory()// AppGroupPersisentContainerFactory(appGroupName: appGroupName)
+            containerFactory = AppGroupPersisentContainerFactory(appGroupName: appGroupName)
         } else {
             userDefaults = UserDefaults.standard
             containerFactory = NoAppGroupsPersistentContainerFactory()
