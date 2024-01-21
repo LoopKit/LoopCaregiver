@@ -397,6 +397,17 @@ struct SettingsView: View {
 
 }
 
+#Preview {
+    let composer = ServiceComposerPreviews()
+    let looper = composer.accountServiceManager.selectedLooper!
+    var showSheetView = true
+    let showSheetBinding = Binding<Bool>(get: {showSheetView}, set: {showSheetView = $0})
+    let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
+    let remoteDataSerivceManager = RemoteDataServiceManager(remoteDataProvider: RemoteDataServiceProviderSimulator())
+    return SettingsView(looperService: looperService, accountService: composer.accountServiceManager, settings: composer.settings, watchManager: composer.watchManager, showSheetView: showSheetBinding)
+}
+
+
 class SettingsViewModel: ObservableObject {
     
     @Published var selectedLooper: Looper {

@@ -11,6 +11,10 @@ import NightscoutKit
 
 public class RemoteDataServiceProviderSimulator: RemoteDataServiceProvider {
     
+    public init() {
+        
+    }
+    
     public func checkAuth() async throws {
         
     }

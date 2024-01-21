@@ -91,6 +91,7 @@ struct HomeView: View {
     let composer = ServiceComposerPreviews()
     return NavigationStack {
         let looper = composer.accountServiceManager.selectedLooper!
-        HomeView(connectivityManager: composer.watchManager, looperService: composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings))
+        let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
+        HomeView(connectivityManager: composer.watchManager, looperService: looperService)
     }
 }
