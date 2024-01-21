@@ -61,8 +61,6 @@
 		A9BD7B552AD17AAD00E73973 /* PresetEditView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9BD7B542AD17AAD00E73973 /* PresetEditView.swift */; };
 		A9C89ED72A7074EE00EFD938 /* UIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED62A7074EE00EFD938 /* UIColor.swift */; };
 		A9C89ED92A70758000EFD938 /* UIColor+HIG.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */; };
-		A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; };
-		A9CA10302A7FF73200EE114C /* SwiftCharts in Embed Frameworks */ = {isa = PBXBuildFile; productRef = A9CA102E2A7FF6A700EE114C /* SwiftCharts */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		A9CFDD1E2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1D2AEBFF1200FA701B /* LoopCaregiverWatchApp.swift */; };
 		A9CFDD202AEBFF1200FA701B /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9CFDD1F2AEBFF1200FA701B /* ContentView.swift */; };
 		A9CFDD222AEBFF1400FA701B /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A9CFDD212AEBFF1400FA701B /* Assets.xcassets */; };
@@ -149,7 +147,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				A9CA10302A7FF73200EE114C /* SwiftCharts in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -337,7 +334,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A9CA102F2A7FF6A700EE114C /* SwiftCharts in Frameworks */,
 				A9ECCB342B2C73270057DEDF /* LoopKitUI in Frameworks */,
 				A9BBD8252B2C992900072287 /* LoopCaregiverKit in Frameworks */,
 				A9ECCB322B2C73270057DEDF /* LoopKit in Frameworks */,
@@ -781,7 +777,6 @@
 			name = LoopCaregiver;
 			packageProductDependencies = (
 				A9B033E3292306A90052AA9E /* CodeScanner */,
-				A9CA102E2A7FF6A700EE114C /* SwiftCharts */,
 				A9ECCB312B2C73270057DEDF /* LoopKit */,
 				A9ECCB332B2C73270057DEDF /* LoopKitUI */,
 				A9BBD8242B2C992900072287 /* LoopCaregiverKit */,
@@ -853,7 +848,6 @@
 			mainGroup = A9EC196F291FEF940022D39F;
 			packageReferences = (
 				A9B033E2292306A90052AA9E /* XCRemoteSwiftPackageReference "CodeScanner" */,
-				A9CA102D2A7FF6A700EE114C /* XCRemoteSwiftPackageReference "SwiftCharts" */,
 				A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */,
 			);
 			productRefGroup = A9EC1979291FEF940022D39F /* Products */;
@@ -1633,14 +1627,6 @@
 				minimumVersion = 2.0.0;
 			};
 		};
-		A9CA102D2A7FF6A700EE114C /* XCRemoteSwiftPackageReference "SwiftCharts" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/ivanschuetz/SwiftCharts";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
-		};
 		A9ECCB302B2C73270057DEDF /* XCRemoteSwiftPackageReference "LoopKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/LoopKit/LoopKit.git";
@@ -1681,11 +1667,6 @@
 		A9BBD8282B2C993500072287 /* LoopCaregiverKit */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = LoopCaregiverKit;
-		};
-		A9CA102E2A7FF6A700EE114C /* SwiftCharts */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = A9CA102D2A7FF6A700EE114C /* XCRemoteSwiftPackageReference "SwiftCharts" */;
-			productName = SwiftCharts;
 		};
 		A9ECCB312B2C73270057DEDF /* LoopKit */ = {
 			isa = XCSwiftPackageProductDependency;
