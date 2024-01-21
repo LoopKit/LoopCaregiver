@@ -29,8 +29,8 @@ public class OTPManager: ObservableObject {
     }
     
     private func getOTPCode() throws -> String? {
-        let token = Token(url: URL(string: otpURL)!)
-        return token?.currentPassword
+        let token = try Token(url: URL(string: otpURL)!)
+        return token.currentPassword
     }
 
     private func refreshCurrentOTP() {

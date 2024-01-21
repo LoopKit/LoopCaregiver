@@ -15,7 +15,7 @@ let package = Package(
         .package(url: "https://github.com/LoopKit/LoopKit.git", branch: "dev"),
         //.package(path: "../../LoopKit"),
         .package(url: "https://github.com/gestrich/NightscoutKit.git", branch: "feature/2023-07/bg/remote-commands"),
-        .package(url: "https://github.com/mattrubin/OneTimePassword.git", revision: "8e4022f2852d77240d0a17482cbfe325354aac70"),
+        .package(url: "https://github.com/mattrubin/OneTimePassword.git", branch: "develop"),
     ],
     targets: [
         .target(
