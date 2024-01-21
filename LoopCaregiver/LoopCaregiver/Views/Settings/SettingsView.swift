@@ -167,6 +167,8 @@ struct SettingsView: View {
                 }
                 .pickerStyle(.wheel)
             }
+            Text("Delivery limits only apply to this app. These do not change Loop or Nightscout settings.")
+                .font(.footnote)
         } header: {
             SectionHeader(label: "Delivery Limits")
         }
