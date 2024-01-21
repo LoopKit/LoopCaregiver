@@ -23,6 +23,10 @@ struct SettingsView: View {
     @State private var path = NavigationPath()
     @State private var deleteAllCommandsShowing: Bool = false
     @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
+    @State var maxCarbAmountPickerShowing = false
+    private let maxCarbAmountIncrements = Array(stride(from: 0, through: 100, by: 5))
+    @State var maxBolusAmountPickerShowing = false
+    private let maxBolusIncrements = Array(stride(from: 0, through: 10, by: 1))
     
     init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, watchManager: WatchConnectivityManager, showSheetView: Binding<Bool>) {
         self.settingsViewModel = SettingsViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
@@ -40,6 +44,7 @@ struct SettingsView: View {
                 looperSection
                 addNewLooperSection
                 commandsSection
+                deliveryLimitsSection
                 unitsSection
                 timelineSection
                 if let profileExpiration = BuildDetails.default.profileExpiration {
@@ -123,6 +128,47 @@ struct SettingsView: View {
                     Spacer()
                 }
             }
+        }
+    }
+    
+    var deliveryLimitsSection: some View {
+        Section {
+            LabeledContent("Max Carbs", value: String(settings.maxCarbAmount) + " g")
+                .background(Color.white.opacity(0.0000001)) //support tap
+                .onTapGesture {
+                    withAnimation(.linear) {
+                        maxCarbAmountPickerShowing.toggle()
+                    }
+                }
+            if maxCarbAmountPickerShowing {
+                Picker(selection: $settings.maxCarbAmount, label: Text("")) {
+                    ForEach(maxCarbAmountIncrements, id: \.self) { value in
+                        Text("\(value)")
+                            .tag(value)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .pickerStyle(.wheel)
+            }
+            LabeledContent("Max Bolus", value: String(settings.maxBolusAmount) + " U")
+                .background(Color.white.opacity(0.0000001)) //support tap
+                .onTapGesture {
+                    withAnimation(.linear) {
+                        maxBolusAmountPickerShowing.toggle()
+                    }
+                }
+            if maxBolusAmountPickerShowing {
+                Picker(selection: $settings.maxBolusAmount, label: Text("")) {
+                    ForEach(maxBolusIncrements, id: \.self) { value in
+                        Text("\(value)")
+                            .tag(value)
+                    }
+                    .frame(maxWidth: .infinity, alignment: .center)
+                }
+                .pickerStyle(.wheel)
+            }
+        } header: {
+            SectionHeader(label: "Delivery Limits")
         }
     }
     

@@ -17,6 +17,8 @@ public class CaregiverSettings: ObservableObject {
     @Published public var remoteCommands2Enabled: Bool
     @Published public var demoModeEnabled: Bool
     @Published public var disclaimerAcceptedDate: Date?
+    @Published public var maxCarbAmount: Int
+    @Published public var maxBolusAmount: Int
     
     let userDefaults: UserDefaults
     
@@ -41,6 +43,8 @@ public class CaregiverSettings: ObservableObject {
         self.demoModeEnabled = userDefaults.demoModeEnabled
         self.experimentalFeaturesUnlocked = userDefaults.experimentalFeaturesUnlocked
         self.disclaimerAcceptedDate = userDefaults.disclaimerAcceptedDate
+        self.maxCarbAmount = userDefaults.maxCarbAmount
+        self.maxBolusAmount = userDefaults.maxBolusAmount
         
         //Binding
         self.bindToPublishers()
@@ -83,6 +87,18 @@ public class CaregiverSettings: ObservableObject {
                 self.userDefaults.setValue(val, forKey: self.userDefaults.disclaimerAcceptedDateKey)
             }
         }.store(in: &cancellables)
+        
+        $maxCarbAmount.sink { val in
+            if val != self.userDefaults.maxCarbAmount {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.maxCarbAmountKey)
+            }
+        }.store(in: &cancellables)
+        
+        $maxBolusAmount.sink { val in
+            if val != self.userDefaults.maxBolusAmount {
+                self.userDefaults.setValue(val, forKey: self.userDefaults.maxBolusAmountKey)
+            }
+        }.store(in: &cancellables)
     }
     
     func bindToUserDefaults() {
@@ -114,6 +130,14 @@ public class CaregiverSettings: ObservableObject {
         
         if self.disclaimerAcceptedDate != userDefaults.disclaimerAcceptedDate {
             self.disclaimerAcceptedDate = userDefaults.disclaimerAcceptedDate
+        }
+        
+        if self.maxCarbAmount != userDefaults.maxCarbAmount {
+            self.maxCarbAmount = userDefaults.maxCarbAmount
+        }
+        
+        if self.maxBolusAmount != userDefaults.maxBolusAmount {
+            self.maxBolusAmount = userDefaults.maxBolusAmount
         }
     }
     
@@ -201,6 +225,14 @@ public extension UserDefaults {
         return "disclaimerAcceptedDate"
     }
     
+    var maxCarbAmountKey: String {
+        return "maxCarbsAmount"
+    }
+    
+    var maxBolusAmountKey: String {
+        return "maxBolusAmount"
+    }
+    
     @objc dynamic var glucosePreference: GlucoseUnitPrefererence {
         return GlucoseUnitPrefererence(rawValue: integer(forKey: glucoseUnitKey)) ?? .milligramsPerDeciliter
     }
@@ -219,6 +251,20 @@ public extension UserDefaults {
     
     @objc dynamic var experimentalFeaturesUnlocked: Bool {
         return bool(forKey: experimentalFeaturesUnlockedKey)
+    }
+    
+    @objc dynamic var maxCarbAmount: Int {
+        guard let maxCarbAmount = object(forKey: maxCarbAmountKey) as? Int else {
+            return 50
+        }
+        return maxCarbAmount
+    }
+    
+    @objc dynamic var maxBolusAmount: Int {
+        guard let maxBolus = object(forKey: maxBolusAmountKey) as? Int else {
+            return 10
+        }
+        return maxBolus
     }
     
     @objc dynamic var disclaimerAcceptedDate: Date? {

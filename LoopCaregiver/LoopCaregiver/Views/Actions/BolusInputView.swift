@@ -25,7 +25,6 @@ struct BolusInputView: View {
     @State private var nowDate: Date = Date()
     @FocusState private var bolusInputViewIsFocused: Bool
     
-    private let maxBolusAmount = 10.0 //TODO: Check Looper's max bolus amount
     private let unitFrameWidth: CGFloat = 20.0
     
     var body: some View {
@@ -36,6 +35,7 @@ struct BolusInputView: View {
                     if let errorText {
                         Text(errorText)
                             .foregroundColor(.critical)
+                            .padding()
                     }
                     if let deviceDate = remoteDataSource.latestDeviceStatus?.timestamp, remoteDataSource.recommendedBolus != nil {
                         let interval = nowDate.timeIntervalSince(deviceDate)
@@ -157,12 +157,19 @@ struct BolusInputView: View {
         let _ = try getBolusFieldValues()
     }
     
+    private func maxBolusAmount() -> Int {
+        return looperService.settings.maxBolusAmount
+    }
+    
     private func getBolusFieldValues() throws -> BolusInputViewFormValues {
         
         guard let bolusAmountInUnits = LocalizationUtils.doubleFromUserInput(bolusAmount),
-                bolusAmountInUnits > 0,
-                bolusAmountInUnits <= maxBolusAmount else {
-            throw BolusInputViewError.invalidBolusAmount(maxBolusAmount: maxBolusAmount)
+                bolusAmountInUnits > 0 else {
+            throw BolusInputViewError.invalidBolusAmount
+        }
+        
+        guard bolusAmountInUnits <= Double(maxBolusAmount()) else {
+            throw BolusInputViewError.exceedsMaxAllowed(maxAllowed: maxBolusAmount())
         }
     
         return BolusInputViewFormValues(bolusAmount: bolusAmountInUnits)
@@ -193,13 +200,16 @@ struct BolusInputViewFormValues {
 
 
 enum BolusInputViewError: LocalizedError {
-    case invalidBolusAmount(maxBolusAmount: Double)
+    case invalidBolusAmount
+    case exceedsMaxAllowed(maxAllowed: Int)
     
     var errorDescription: String? {
         switch self {
-        case .invalidBolusAmount(let maxBolusAmount):
-            let localizedAmount = LocalizationUtils.presentableStringFromBolusAmount(maxBolusAmount)
-            return "Enter a valid bolus amount up to \(localizedAmount) units"
+        case .invalidBolusAmount:
+            return "Enter a valid bolus amount."
+        case .exceedsMaxAllowed(let maxAllowed):
+            let localizedAmount = LocalizationUtils.presentableStringFromBolusAmount(Double(maxAllowed))
+            return "Enter a bolus amount up to \(localizedAmount) U. The maximum can be increased in Caregiver Settings."
         }
     }
     
