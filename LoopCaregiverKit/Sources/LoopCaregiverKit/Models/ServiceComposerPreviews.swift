@@ -27,14 +27,4 @@ public class ServiceComposerPreviews: ServiceComposer {
         try! self.accountServiceManager.addLooper(looper)
         self.accountServiceManager.selectedLooper = looper
     }
-    
-//    public func createLooperServiceWithSampleLooper() -> LooperService {
-//        let remoteDataSource = RemoteDataServiceManager(remoteDataProvider: RemoteDataServiceProviderSimulator())
-//        remoteDataSource.monitorForUpdates()
-//        return LooperService(looper: accountServiceManager.selectedLooper!,
-//                             accountService: self.accountServiceManager,
-//                             remoteDataSource: remoteDataSource,
-//                             settings: settings
-//        )
-//    }
 }
