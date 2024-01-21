@@ -1,6 +1,5 @@
 #  Caregiver App
 
-
 ## Warning
 
 * Loop Remote code, such as this Caregiver app, are highly experimental and may be subject to issues that could cause serious risks to one's health/life.
@@ -11,6 +10,11 @@
 * The Nightscout QR code and API Key should be secured. Anyone with this information can remotely send treatments (bolus, carbs, etc).
 * The phone with Caregiver installed should have a locking mechanism. Anyone with access to the Caregiver app can remotely send treatments (bolus, carbs, etc). If a phone is lost or stolen, the QR code in Loop's Settings should be reset.
 * There may be other risks not known or mentioned here.
+
+## Minimum Required Versions
+
+* iOS 16
+* WatchOS 10
 
 ## Clone Repo
 
