@@ -31,7 +31,6 @@
 		A970838F2B4D54CC0053D633 /* CustomDatePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = A970838E2B4D54CC0053D633 /* CustomDatePicker.swift */; };
 		A97083912B4D55130053D633 /* OverrideViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97083902B4D55130053D633 /* OverrideViewModel.swift */; };
 		A97083932B4D55A00053D633 /* OverridePickerRowModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = A97083922B4D55A00053D633 /* OverridePickerRowModel.swift */; };
-		A9744DEA2933B0FE000A3D6A /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DE92933B0FE000A3D6A /* View.swift */; };
 		A9744DEC293405A4000A3D6A /* PinchZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A9744DEB293405A4000A3D6A /* PinchZoom.swift */; };
 		A98348912AD206CD0034ABB2 /* PresetRowView.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98348902AD206CD0034ABB2 /* PresetRowView.swift */; };
 		A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */ = {isa = PBXBuildFile; fileRef = A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */; };
@@ -219,7 +218,6 @@
 		A97083902B4D55130053D633 /* OverrideViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverrideViewModel.swift; sourceTree = "<group>"; };
 		A97083922B4D55A00053D633 /* OverridePickerRowModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverridePickerRowModel.swift; sourceTree = "<group>"; };
 		A973364229678EA300DFE395 /* NightscoutUploadKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = NightscoutUploadKit.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		A9744DE92933B0FE000A3D6A /* View.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		A9744DEB293405A4000A3D6A /* PinchZoom.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PinchZoom.swift; sourceTree = "<group>"; };
 		A98348902AD206CD0034ABB2 /* PresetRowView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresetRowView.swift; sourceTree = "<group>"; };
 		A98F5E102930F18A00A03580 /* NewGlucoseSample+Charts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NewGlucoseSample+Charts.swift"; sourceTree = "<group>"; };
@@ -543,7 +541,6 @@
 				A9C89ED62A7074EE00EFD938 /* UIColor.swift */,
 				A9C89ED82A70758000EFD938 /* UIColor+HIG.swift */,
 				A9A62C7E2AD1BD4C004CD316 /* TimeInterval.swift */,
-				A9744DE92933B0FE000A3D6A /* View.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1008,7 +1005,6 @@
 				A98F5E112930F18A00A03580 /* NewGlucoseSample+Charts.swift in Sources */,
 				A9EC197E291FEF940022D39F /* ContentView.swift in Sources */,
 				A9BAEE6C2B5C552D002C7C46 /* HomeView.swift in Sources */,
-				A9744DEA2933B0FE000A3D6A /* View.swift in Sources */,
 				A947026C293254B500FB3E59 /* COBChartView.swift in Sources */,
 				A9D3FF222A6C3B99000C891D /* Color.swift in Sources */,
 				A9BD7B552AD17AAD00E73973 /* PresetEditView.swift in Sources */,

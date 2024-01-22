@@ -11,6 +11,8 @@ import NightscoutKit
 
 public class RemoteDataServiceProviderSimulator: RemoteDataServiceProvider {
     
+    let startDate = Date().addingTimeInterval(-60)
+    
     public init() {
         
     }
@@ -20,8 +22,15 @@ public class RemoteDataServiceProviderSimulator: RemoteDataServiceProvider {
     }
     
     public func fetchGlucoseSamples() async throws -> [NewGlucoseSample] {
-        let sample = NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345")
-        return [sample]
+        let minutesSinceStart = Date().timeIntervalSince(startDate) / 60.0
+        var result = [NewGlucoseSample]()
+        for minute in 0...Int(minutesSinceStart) {
+            let glucoseValue = min(Double(100 + (minute * 10)), 300)
+            let firstSample = NewGlucoseSample(date: startDate.addingTimeInterval(60 * Double(minute)), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: glucoseValue), condition: .none, trend: .up, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345")
+            result.append(firstSample)
+        }
+
+        return result
     }
     
     

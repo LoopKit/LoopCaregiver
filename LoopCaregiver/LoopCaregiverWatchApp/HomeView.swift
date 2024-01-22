@@ -6,6 +6,7 @@
 //
 
 import LoopCaregiverKit
+import LoopCaregiverKitUI
 import SwiftUI
 import WidgetKit
     
@@ -28,9 +29,28 @@ struct HomeView: View {
     
     var body: some View {
         VStack {
-            Text(glucoseText())
-                .strikethrough(egvIsOutdated())
-                .font(.largeTitle)
+            HStack {
+                Text(remoteDataSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
+                    .strikethrough(egvIsOutdated())
+                    .font(.largeTitle)
+                    .foregroundColor(egvValueColor())
+                if let egv = remoteDataSource.currentGlucoseSample {
+                    Image(systemName: egv.arrowImageName())
+                        .resizable()
+                        .aspectRatio(contentMode: .fit)
+                        .frame(width: 15.0)
+                        .foregroundColor(egvValueColor())
+                }
+                VStack {
+                    Text(lastEGVTimeFormatted())
+                        .font(.footnote)
+                        .if(egvIsOutdated(), transform: { view in
+                            view.foregroundColor(.red)
+                        })
+                            Text(lastEGVDeltaFormatted())
+                            .font(.footnote)
+                }
+            }
         }
         .navigationTitle(accountService.selectedLooper?.name ?? "Name?")
         .navigationDestination(for: String.self, destination: { _ in
@@ -55,7 +75,7 @@ struct HomeView: View {
         }
         .onChange(of: scenePhase, { oldValue, newValue in
             Task {
-                await looperService.remoteDataSource.updateData()
+                await remoteDataSource.updateData()
             }
         })
     }
@@ -74,11 +94,47 @@ struct HomeView: View {
         return lastGlucoseValue - priorGlucoseValue
     }
     
+    func lastEGVTimeFormatted() -> String {
+        guard let currentEGV = remoteDataSource.currentGlucoseSample else {
+            return ""
+        }
+        
+        return currentEGV.date.formatted(.dateTime.hour().minute())
+    }
+    
     func egvIsOutdated() -> Bool {
         guard let currentEGV = remoteDataSource.currentGlucoseSample else {
             return true
         }
         return Date().timeIntervalSince(currentEGV.date) > 60 * 10
+    }
+    
+    func egvValueColor() -> Color {
+        if let currentEGV = remoteDataSource.currentGlucoseSample {
+            return ColorType(quantity: currentEGV.quantity).color
+        } else {
+            return .white
+        }
+    }
+    
+    func lastEGVDeltaFormatted() -> String {
+        
+        guard let lastEGVChange = self.lastGlucoseChange() else {
+            return ""
+        }
+        
+        let formatter = NumberFormatter()
+        formatter.positivePrefix = "+"
+        formatter.minimumFractionDigits = 0
+        formatter.maximumFractionDigits = 1
+        formatter.numberStyle = .decimal
+        
+        guard let formattedEGV = formatter.string(from: lastEGVChange as NSNumber) else {
+            return ""
+        }
+        
+        return formattedEGV
+        
     }
     
     func reloadWidget() {
