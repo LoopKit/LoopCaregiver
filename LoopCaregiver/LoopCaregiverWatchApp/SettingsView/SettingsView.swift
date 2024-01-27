@@ -38,9 +38,22 @@ struct SettingsView: View {
                 Section("Phone Connectivity") {
                     LabeledContent("Session Supported", value: connectivityManager.sessionsSupported() ? "YES" : "NO")
                     LabeledContent("Session Activated", value: connectivityManager.activated ? "YES" : "NO")
-                    LabeledContent("Companion App Inst", value: connectivityManager.companionAppInstalled() ? "YES" : "NO")
+                    LabeledContent("Companion App Inst", value: connectivityManager.isCounterpartAppInstalled() ? "YES" : "NO")
                     LabeledContent("Phone Reachable", value: connectivityManager.isReachable() ? "YES" : "NO")
                     LabeledContent("Last Msg Date", value: connectivityManager.notificationMessage?.receivedDate.description ?? "")
+                }
+                Section("Widgets") {
+                    Button(action: {
+                        WidgetCenter.shared.invalidateConfigurationRecommendations()
+                    }, label: {
+                        Text("Invalidate Recommendations")
+                    })
+                    Button(action: {
+                        
+                        WidgetCenter.shared.reloadAllTimelines()
+                    }, label: {
+                        Text("Reload Timeline")
+                    })
                 }
             }
         }
@@ -58,8 +71,8 @@ struct SettingsView: View {
     
     
     func delete(at offsets: IndexSet) {
-        for idex in offsets {
-            let looper = accountService.loopers[idex]
+        for index in offsets {
+            let looper = accountService.loopers[index]
             do {
                 try accountService.removeLooper(looper)
             } catch {
