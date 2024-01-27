@@ -218,15 +218,13 @@ struct SettingsView: View {
                 SectionHeader(label: "Diagnostics")
             }
             Section {
-                Button("Enable Watch App") {
+                Button("Activate Loopers") {
                     watchManager.send(addLooperDeepLink)
                 }
-                LabeledContent("Watch Last Sent Message", value: watchManager.lastMessageSent?.description ?? "None")
-                LabeledContent("Watch Reachable", value: watchManager.isReachable() ? "YES" : "NO")
-                LabeledContent("Activated", value: watchManager.activated ? "YES" : "NO")
                 
-                Text("The Apple Watch app is very early in development. Search Zulip #caregiver for details")
+                Text("Ensure the Watch app is open before activating Loopers.")
                     .font(.footnote)
+                LabeledContent("Watch App Open", value: watchManager.isReachable() ? "YES" : "NO")
             } header: {
                 SectionHeader(label: "Apple Watch")
             }
