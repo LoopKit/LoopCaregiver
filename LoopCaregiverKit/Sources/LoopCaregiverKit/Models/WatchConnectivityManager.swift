@@ -15,11 +15,12 @@ public struct NotificationMessage: Identifiable, Equatable {
 }
 
 public final class WatchConnectivityManager: NSObject, ObservableObject {
+    
     @Published public var notificationMessage: NotificationMessage? = nil
-    var pendingMessages = [String]()
     @Published public var lastMessageSent: Date? = nil
     @Published public var activated: Bool = false
-    let watchSession: WCSession
+    private var pendingMessages = [String]()
+    private let watchSession: WCSession
     
     public override init() {
         self.watchSession = WCSession.default
@@ -39,39 +40,34 @@ public final class WatchConnectivityManager: NSObject, ObservableObject {
             pendingMessages.append(message)
             return
         }
-#if os(iOS)
-        guard watchSession.isWatchAppInstalled else {
+
+        guard isCounterpartAppInstalled() else {
             return
         }
-#else
-        guard watchSession.isCompanionAppInstalled else {
-            return
-        }
-#endif
+
         do {
             try watchSession.updateApplicationContext([kMessageKey : message])
             lastMessageSent = Date()
         } catch {
             print("Cannot send message: \(String(describing: error))")
         }
-//        watchSession.sendMessage([kMessageKey : message]) { error in
-//            print("Cannot send message: \(String(describing: error))")
-//        }
     }
     
     public func isReachable() -> Bool {
-        return watchSession.isReachable
+        return watchSession.isReachable && activated
     }
     
     public func sessionsSupported() -> Bool {
         return WCSession.isSupported()
     }
     
-#if os(watchOS)
-    public func companionAppInstalled() -> Bool {
+    public func isCounterpartAppInstalled() -> Bool {
+#if os(iOS)
+        return watchSession.isWatchAppInstalled
+#else
         return watchSession.isCompanionAppInstalled
-    }
 #endif
+    }
 }
 
 extension WatchConnectivityManager: WCSessionDelegate {
