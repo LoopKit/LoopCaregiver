@@ -109,11 +109,4 @@ struct TimelineProvider: IntentTimelineProvider {
             completion(timeline)
         }
     }
-
-    func recommendations() -> [IntentRecommendation<ConfigurationIntent>] {
-        //The docs suggest this is inactive on iOS but check for WatchOS when supported
-        return [
-            IntentRecommendation(intent: ConfigurationIntent(), description: "Caregiver")
-        ]
-    }
 }
