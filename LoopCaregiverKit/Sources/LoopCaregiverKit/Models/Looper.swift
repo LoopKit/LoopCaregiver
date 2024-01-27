@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class Looper: ObservableObject, Hashable {
+public class Looper: ObservableObject, Hashable, Codable {
     
     public var identifier: UUID
     public var name: String

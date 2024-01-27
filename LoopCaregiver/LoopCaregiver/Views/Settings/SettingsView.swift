@@ -219,7 +219,11 @@ struct SettingsView: View {
             }
             Section {
                 Button("Activate Loopers") {
-                    watchManager.send(addLooperDeepLink)
+                    do {
+                        try activateLoopersOnWatch()
+                    } catch {
+                        print("Error activating Loopers on watch: \(error)")
+                    }
                 }
                 
                 Text("Ensure the Watch app is open before activating Loopers.")
@@ -234,6 +238,14 @@ struct SettingsView: View {
                     settings.experimentalFeaturesUnlocked = true
                 })
         }
+    }
+    
+    func activateLoopersOnWatch() throws {
+        let loopers = accountService.loopers
+        let watchConfiguration = WatchConfiguration(loopers: loopers)
+        let data = try JSONEncoder().encode(watchConfiguration)
+        let dataString = String(data: data, encoding: .utf8)!
+        watchManager.send(dataString)
     }
     
     var addLooperDeepLink: String {

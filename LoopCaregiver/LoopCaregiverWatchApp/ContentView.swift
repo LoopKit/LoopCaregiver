@@ -24,8 +24,8 @@ struct ContentView: View {
                 if let looper = accountService.selectedLooper {
                     HomeView(connectivityManager: watchManager, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
-                    //Text("No Looper. Open Loop Caregiver on iPhone.")
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
+                    //Text("Open Caregiver Settings on your Phone to setup the Watch.")
                 }
             }
             .navigationDestination(for: String.self, destination: { _ in
@@ -42,18 +42,59 @@ struct ContentView: View {
         .onChange(of: watchManager.notificationMessage, {
             if let message = watchManager.notificationMessage?.text {
                 Task {
-                    try await handleDeepLinkURL(message)
+                    guard let data = message.data(using: .utf8) else {
+                        return
+                    }
+                    guard let watchConfiguration = try? JSONDecoder().decode(WatchConfiguration.self, from: data) else
+                    {
+                        return
+                    }
+
+                    await updateWatchConfiguration(watchConfiguration: watchConfiguration)
+                }
+            }
+        })
+        .onOpenURL(perform: { (url) in
+            Task {
+                do {
+                    try await handleDeepLinkURL(url)
+                } catch {
+                    print("Error handling deep link: \(error)")
                 }
             }
         })
     }
     
-    @MainActor func handleDeepLinkURL(_ urlString: String) async throws {
-        UserDefaults(suiteName: Bundle.main.appGroupSuiteName)?.updateLastPhoneDebugMessage(Date().description)
-        guard let url = URL(string: urlString) else {
-            return
+    @MainActor func updateWatchConfiguration(watchConfiguration: WatchConfiguration) async {
+        
+        let existingLoopers = accountService.loopers
+        
+        var removedLoopers = [Looper]()
+        for existingLooper in existingLoopers {
+            if !watchConfiguration.loopers.contains(where: { $0.id == existingLooper.id }) {
+                removedLoopers.append(existingLooper)
+            }
+        }
+        for looper in removedLoopers {
+            try? accountService.removeLooper(looper)
         }
         
+        var addedLoopers = [Looper]()
+        for configurationLooper in watchConfiguration.loopers {
+            if !existingLoopers.contains(where: { $0.id == configurationLooper.id }) {
+                addedLoopers.append(configurationLooper)
+            }
+        }
+        
+        for looper in addedLoopers {
+            try? accountService.addLooper(looper)
+        }
+        
+        //To ensure new Loopers show in widget recommended configurations.
+        WidgetCenter.shared.invalidateConfigurationRecommendations()
+    }
+    
+    @MainActor func handleDeepLinkURL(_ url: URL) async throws {
         let deepLink = try DeepLinkParser().parseDeepLink(url: url)
         switch deepLink {
         case .addLooper(let createLooperDeepLink):
