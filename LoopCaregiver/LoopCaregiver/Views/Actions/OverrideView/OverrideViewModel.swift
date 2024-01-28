@@ -220,10 +220,24 @@ class OverrideViewModel: ObservableObject, Identifiable {
     
     //MARK: Models
     
-    enum OverrideListState {
+    enum OverrideListState: Equatable {
+        
         case loading
         case loadingError(_ error: Error)
         case loadingComplete(overrideState: OverrideState)
+        
+        static func == (lhs: OverrideViewModel.OverrideListState, rhs: OverrideViewModel.OverrideListState) -> Bool {
+            switch (lhs, rhs) {
+            case (.loading, .loading):
+                return true
+            case (.loadingError(let lhsError), .loadingError(let rhsError)):
+                return lhsError.localizedDescription == rhsError.localizedDescription
+            case (.loadingComplete(let lhsState), .loadingComplete(let rhsState)):
+                return lhsState == rhsState
+            default:
+                return false
+            }
+        }
     }
     
     enum ActionButtonType {
