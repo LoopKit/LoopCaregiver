@@ -49,6 +49,7 @@ struct ChartsListView: View {
                               dateInterval: loopGraphInterval,
                               isInteractingWithChart: $isInteractingWithInsulinDeliveryChart)
             }
+            .frame(maxHeight: 150.0)
             ChartWrapperView(title:"Active Carbohydrates", subtitle: formattedCOB(), hideLabels: $isInteractingWithActiveCarbsChart) {
                 /*
                  if remoteDataSource.glucoseSamples.count > 0, remoteDataSource.predictedGlucose.count > 0 {

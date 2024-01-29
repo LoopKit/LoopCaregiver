@@ -61,8 +61,22 @@ struct HUDView: View {
             }.onChange(of: hudViewModel.selectedLooper) { newValue in
                 looperPopoverShowing = false
             }
+            if let activeOverride = nightscoutDataSource.activeOverride() {
+                HStack {
+                    Text(activeOverride.presentableDescription())
+                        .bold()
+                        .font(.subheadline)
+                    Spacer()
+                    if let endTimeDescription = activeOverride.endTimeDescription() {
+                        Text(endTimeDescription)
+                            .foregroundColor(.gray)
+                            .bold()
+                            .font(.subheadline)
+                    }
+                }
+
+            }
         }
-        
     }
     
    var pickerButton: some View {

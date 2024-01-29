@@ -18,6 +18,13 @@ public extension TemporaryScheduleOverride {
         return "\(symbol ?? "") \(name ?? "")"
     }
     
+    func endTimeDescription() -> String? {
+        guard duration < 60 * 60 * 24 else { return nil }
+        let endDate = Date().addingTimeInterval(duration)
+        let endTimeText = DateFormatter.localizedString(from: endDate, dateStyle: .none, timeStyle: .short)
+        return String(format: NSLocalizedString("until %@", comment: "The format for the description of a custom preset end date"), endTimeText)
+    }
+    
     func targetRangePresentableDescription() -> String? {
         guard let targetRange else { return nil }
         return "\(Int(targetRange.lowerBound)) - \(Int(targetRange.upperBound))"
