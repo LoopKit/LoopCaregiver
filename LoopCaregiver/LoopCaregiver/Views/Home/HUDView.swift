@@ -67,12 +67,6 @@ struct HUDView: View {
                         .bold()
                         .font(.subheadline)
                     Spacer()
-                    if let endTimeDescription = activeOverride.endTimeDescription() {
-                        Text(endTimeDescription)
-                            .foregroundColor(.gray)
-                            .bold()
-                            .font(.subheadline)
-                    }
                 }
 
             }
