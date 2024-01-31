@@ -17,10 +17,19 @@ public extension TemporaryScheduleOverride {
     func presentableDescription() -> String {
         return "\(symbol ?? "") \(name ?? "")"
     }
-
+    
     func targetRangePresentableDescription() -> String? {
         guard let targetRange else { return nil }
         return "\(Int(targetRange.lowerBound)) - \(Int(targetRange.upperBound))"
+    }
+}
+
+public extension OverrideStatus {
+    func endTimeDescription() -> String? {
+        guard let duration, duration < 60 * 60 * 24 else { return nil }
+        let endDate = timestamp.addingTimeInterval(duration)
+        let endTimeText = DateFormatter.localizedString(from: endDate, dateStyle: .none, timeStyle: .short)
+        return String(format: NSLocalizedString("until %@", comment: "The format for the description of a custom preset end date"), endTimeText)
     }
 }
 

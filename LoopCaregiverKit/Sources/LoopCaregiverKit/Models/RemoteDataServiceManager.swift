@@ -280,8 +280,7 @@ public class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvid
         return try await remoteDataProvider.fetchCurrentProfile()
     }
     
-    public func activeOverride() -> NightscoutKit.TemporaryScheduleOverride? {
-        
+    public func activeOverrideAndStatus() -> (override: NightscoutKit.TemporaryScheduleOverride, status: NightscoutKit.OverrideStatus)? {
         /*
          There are 3 sources of the current override from Nightscout
          1. Devicestatus.overrideStatus: Used by NS Plugin (bubble view)
@@ -320,7 +319,11 @@ public class RemoteDataServiceManager: ObservableObject, RemoteDataServiceProvid
 //            }
 //        }
         
-        return override
+        return (override, overrideStatus)
+    }
+    
+    public func activeOverride() -> NightscoutKit.TemporaryScheduleOverride? {
+        return activeOverrideAndStatus()?.override
     }
     
     public func fetchRecentCommands() async throws -> [RemoteCommand] {

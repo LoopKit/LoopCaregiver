@@ -61,12 +61,18 @@ struct HUDView: View {
             }.onChange(of: hudViewModel.selectedLooper) { newValue in
                 looperPopoverShowing = false
             }
-            if let activeOverride = nightscoutDataSource.activeOverride() {
+            if let (activeOverride, status) = nightscoutDataSource.activeOverrideAndStatus() {
                 HStack {
                     Text(activeOverride.presentableDescription())
                         .bold()
                         .font(.subheadline)
                     Spacer()
+                    if let endTimeDescription = status.endTimeDescription() {
+                        Text(endTimeDescription)
+                            .foregroundColor(.gray)
+                            .bold()
+                            .font(.subheadline)
+                    }
                 }
 
             }
