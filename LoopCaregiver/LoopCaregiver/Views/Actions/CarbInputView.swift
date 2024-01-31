@@ -274,7 +274,9 @@ struct CarbInputView: View {
         }
         
         let now = Date()
-        let consumedDate = pickerConsumedDate
+        //We "randomize" the milliseconds to avoid issue with NS which
+        //doesn't allow entries at the same second.
+        let consumedDate = pickerConsumedDate.dateUsingCurrentSeconds()
         
         let oldestAcceptedDate = now.addingTimeInterval(-60 * 60 * Double(maxPastCarbEntryHours))
         let latestAcceptedDate = now.addingTimeInterval(60 * 60 * Double(maxFutureCarbEntryHours))
@@ -366,4 +368,26 @@ enum CarbInputViewError: LocalizedError {
     let showSheetBinding = Binding<Bool>(get: {showSheetView}, set: {showSheetView = $0})
     let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
     return CarbInputView(looperService: looperService, showSheetView: showSheetBinding)
+}
+
+extension Date {
+    func dateUsingCurrentSeconds() -> Date {
+        let calendar = Calendar.current
+
+         // Extracting components from the original date
+         var components = calendar.dateComponents([.year, .month, .day, .hour, .minute], from: self)
+
+         // Getting the current seconds and milliseconds
+         let now = Date()
+         let nowSeconds = calendar.component(.second, from: now)
+         let nowMillisecond = calendar.component(.nanosecond, from: now) / 1_000_000
+
+         // Setting the seconds and millisecond components
+         components.second = nowSeconds
+         components.nanosecond = nowMillisecond * 1_000_000
+
+         // Creating a new date with these components
+         return calendar.date(from: components) ?? self
+    }
+
 }
