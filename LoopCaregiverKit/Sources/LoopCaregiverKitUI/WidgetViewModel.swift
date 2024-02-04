@@ -8,6 +8,7 @@
 import Foundation
 import HealthKit
 import LoopKit
+import SwiftUI
 
 public struct WidgetViewModel {
     
@@ -93,6 +94,10 @@ public struct WidgetViewModel {
         case .downDownDown:
             return "arrow.down"
         }
+    }
+    
+    public var egvValueColor: Color {
+        return ColorType(quantity: latestGlucose.quantity).color
     }
     
     var timeFormat: DateFormatter {

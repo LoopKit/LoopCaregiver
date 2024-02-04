@@ -7,6 +7,7 @@
 
 import Intents
 import LoopCaregiverKit
+import LoopKit
 import SwiftUI
 import WidgetKit
 
@@ -23,22 +24,19 @@ struct LoopCaregiverWidget: Widget {
         .configurationDisplayName("Loop Caregiver")
         .description("Displays Looper's last BG.")
         .supportedFamilies([
-//            .accessoryRectangular,
-//            .accessoryInline,
             .accessoryCircular,
             .systemSmall,
-//            .systemMedium,
-//            .systemLarge,
-//            .systemExtraLarge
         ])
     }
 }
 
+// Select the LoopCaregiver target for previews
 struct LoopCaregiverWidget_Previews: PreviewProvider {
     static var previews: some View {
-        let nsCredentials = NightscoutCredentials(url: URL(string: "https://wwww.sample.com")!, secretKey: "12345", otpURL: "12345")
-        let entry = SimpleEntry( looper: Looper(identifier: UUID(), name: "Test", nightscoutCredentials: nsCredentials, lastSelectedDate: Date()), currentGlucoseSample: .none, lastGlucoseChange: 0.0, date: Date(), entryIndex: 0, isLastEntry: true)
         let composer = ServiceComposerPreviews()
+        let looper = composer.accountServiceManager.selectedLooper!
+        let glucoseSample = NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345")
+        let entry = SimpleEntry(looper: looper, currentGlucoseSample: glucoseSample, lastGlucoseChange: 10, date: .now, entryIndex: 0, isLastEntry: false)
         return LoopCaregiverWidgetView(entry: entry, settings: composer.settings)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }

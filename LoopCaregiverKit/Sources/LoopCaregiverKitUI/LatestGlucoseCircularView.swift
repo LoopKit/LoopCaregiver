@@ -13,6 +13,7 @@ import SwiftUI
 public struct LatestGlucoseCircularView: View {
     
     public let viewModel: WidgetViewModel
+    @Environment(\.colorScheme) var colorScheme
     
     public init(viewModel: WidgetViewModel) {
         self.viewModel = viewModel
@@ -24,6 +25,7 @@ public struct LatestGlucoseCircularView: View {
                 .strikethrough(viewModel.isGlucoseStale)
                 .font(.footnote)
             Text(viewModel.currentGlucoseText)
+                .foregroundStyle(egvColor)
                 .strikethrough(viewModel.isGlucoseStale)
                 .font(.headline)
                 .bold()
@@ -31,14 +33,21 @@ public struct LatestGlucoseCircularView: View {
                 Image(systemName: currentTrendImageName)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
+                    .foregroundStyle(egvColor)
                     .frame(maxWidth: 15)
                     .offset(.init(width: 0.0, height: -7.0))
             }
         }
     }
     
+    var egvColor: Color {
+        colorScheme == .dark ? viewModel.egvValueColor : .primary
+    }
+    
 }
 
+// TODO: fails to render and breaks other previes afer failure
+/*
 struct CurrentBGView_Previews: PreviewProvider {
     static var previews: some View {
         let latestGlucose = NewGlucoseSample(date: Date(), quantity: .init(unit: .gramsPerUnit, doubleValue: 1.0), condition: .aboveRange, trend: .down, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "12345")
@@ -46,3 +55,4 @@ struct CurrentBGView_Previews: PreviewProvider {
         LatestGlucoseCircularView(viewModel: viewModel)
     }
 }
+*/

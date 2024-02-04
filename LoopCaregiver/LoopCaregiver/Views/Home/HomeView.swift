@@ -107,7 +107,5 @@ struct HomeView: View {
     var showSheetView = true
     let showSheetBinding = Binding<Bool>(get: {showSheetView}, set: {showSheetView = $0})
     let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
-    let remoteDataSerivceManager = RemoteDataServiceManager(remoteDataProvider: RemoteDataServiceProviderSimulator())
-    
     return HomeView(looperService: looperService, watchManager: composer.watchManager)
 }
