@@ -1,8 +1,8 @@
 //
-//  WatchConnectivityManager.swift
-//  WeatherApp
+//  WatchSession.swift
 //
-//  Created by Bahalek on 2022-01-04.
+//
+//  Created by Bill Gestrich on 2/9/24.
 //
 
 import Foundation
@@ -14,7 +14,7 @@ public struct NotificationMessage: Identifiable, Equatable {
     public let receivedDate: Date
 }
 
-public final class WatchConnectivityManager: NSObject, ObservableObject {
+public final class WatchSession: NSObject, ObservableObject {
     
     @Published public var notificationMessage: NotificationMessage? = nil
     @Published public var lastMessageSent: Date? = nil
@@ -70,7 +70,7 @@ public final class WatchConnectivityManager: NSObject, ObservableObject {
     }
 }
 
-extension WatchConnectivityManager: WCSessionDelegate {
+extension WatchSession: WCSessionDelegate {
     
     //Each context message must be unique or it will be dropped. https://stackoverflow.com/a/47915741
     public func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {

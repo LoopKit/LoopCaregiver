@@ -11,7 +11,7 @@ import WidgetKit
 
 struct SettingsView: View {
     
-    @ObservedObject var connectivityManager: WatchConnectivityManager
+    @ObservedObject var connectivityManager: WatchSession
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var settings: CaregiverSettings
     

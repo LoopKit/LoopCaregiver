@@ -10,5 +10,5 @@ import Foundation
 public protocol ServiceComposer {
     var settings: CaregiverSettings {get}
     var accountServiceManager: AccountServiceManager {get}
-    var watchManager: WatchConnectivityManager {get}
+    var watchSession: WatchSession {get}
 }

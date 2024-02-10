@@ -16,7 +16,7 @@ struct HomeView: View {
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
-    var watchManager: WatchConnectivityManager
+    var watchSession: WatchSession
     
     @State private var showCarbView = false
     @State private var showBolusView = false
@@ -25,12 +25,12 @@ struct HomeView: View {
     
     @Environment(\.scenePhase) var scenePhase
     
-    init(looperService: LooperService, watchManager: WatchConnectivityManager){
+    init(looperService: LooperService, watchSession: WatchSession){
         self.looperService = looperService
         self.settings = looperService.settings
         self.accountService = looperService.accountService
         self.remoteDataSource = looperService.remoteDataSource
-        self.watchManager = watchManager
+        self.watchSession = watchSession
     }
     
     var body: some View {
@@ -73,7 +73,7 @@ struct HomeView: View {
             }
         }
         .sheet(isPresented: $showSettingsView) {
-            SettingsView(looperService: looperService, accountService: accountService, settings: looperService.settings, watchManager: watchManager, showSheetView: $showSettingsView)
+            SettingsView(looperService: looperService, accountService: accountService, settings: looperService.settings, watchSession: watchSession, showSheetView: $showSettingsView)
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
@@ -107,5 +107,5 @@ struct HomeView: View {
     var showSheetView = true
     let showSheetBinding = Binding<Bool>(get: {showSheetView}, set: {showSheetView = $0})
     let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
-    return HomeView(looperService: looperService, watchManager: composer.watchManager)
+    return HomeView(looperService: looperService, watchSession: composer.watchSession)
 }

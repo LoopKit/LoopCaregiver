@@ -14,7 +14,7 @@ struct ContentView: View {
     
     @EnvironmentObject var accountService: AccountServiceManager
     @EnvironmentObject var settings: CaregiverSettings
-    @EnvironmentObject var watchManager: WatchConnectivityManager
+    @EnvironmentObject var watchSession: WatchSession
     
     @State var path: NavigationPath = NavigationPath()
     
@@ -22,14 +22,14 @@ struct ContentView: View {
         NavigationStack (path: $path) {
             VStack {
                 if let looper = accountService.selectedLooper {
-                    HomeView(connectivityManager: watchManager, looperService: accountService.createLooperService(looper: looper, settings: settings))
+                    HomeView(connectivityManager: watchSession, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
                     //Text("Open Caregiver Settings on your Phone to setup the Watch.")
                 }
             }
             .navigationDestination(for: String.self, destination: { _ in
-                SettingsView(connectivityManager: watchManager, accountService: accountService, settings: settings)
+                SettingsView(connectivityManager: watchSession, accountService: accountService, settings: settings)
             })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -39,8 +39,8 @@ struct ContentView: View {
                 }
             }
         }
-        .onChange(of: watchManager.notificationMessage, {
-            if let message = watchManager.notificationMessage?.text {
+        .onChange(of: watchSession.notificationMessage, {
+            if let message = watchSession.notificationMessage?.text {
                 Task {
                     guard let data = message.data(using: .utf8) else {
                         return
@@ -142,5 +142,5 @@ struct ContentView: View {
     return ContentView()
         .environmentObject(composer.accountServiceManager)
         .environmentObject(composer.settings)
-        .environmentObject(composer.watchManager)
+        .environmentObject(composer.watchSession)
 }

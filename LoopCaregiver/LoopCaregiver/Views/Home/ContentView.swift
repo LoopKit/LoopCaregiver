@@ -12,7 +12,7 @@ struct ContentView: View {
     
     @EnvironmentObject var accountService: AccountServiceManager
     @EnvironmentObject var settings: CaregiverSettings
-    @EnvironmentObject var watchManager: WatchConnectivityManager
+    @EnvironmentObject var watchSession: WatchSession
     
     @State var deepLinkErrorShowing = false
     @State var deepLinkErrorText: String = ""
@@ -20,7 +20,7 @@ struct ContentView: View {
     var body: some View {
         return Group {
             if let looper = accountService.selectedLooper {
-                HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings), watchManager: watchManager)
+                HomeView(looperService: accountService.createLooperService(looper: looper, settings: settings), watchSession: watchSession)
             } else {
                 FirstRunView(accountService: accountService, settings: settings, showSheetView: true)
             }

@@ -10,14 +10,14 @@ import Foundation
 public class ServiceComposerPreviews: ServiceComposer {
     public let settings: CaregiverSettings
     public let accountServiceManager: AccountServiceManager
-    public var watchManager: WatchConnectivityManager
+    public var watchSession: WatchSession
     
     public init() {
         let containerFactory = InMemoryPersistentContainerFactory()
         let userDefaults = UserDefaults(suiteName: Bundle.main.appGroupSuiteName)!
         self.settings = CaregiverSettings(userDefaults: userDefaults, appGroupsSupported: true)
         self.accountServiceManager = AccountServiceManager(accountService: CoreDataAccountService(containerFactory: containerFactory), remoteServicesProviderFactory: { (_, _) in RemoteDataServiceProviderSimulator()})
-        self.watchManager = WatchConnectivityManager()
+        self.watchSession = WatchSession()
         self.addTestLooper()
     }
     

@@ -12,14 +12,14 @@ import WidgetKit
     
 struct HomeView: View {
     
-    @ObservedObject var connectivityManager: WatchConnectivityManager
+    @ObservedObject var connectivityManager: WatchSession
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var remoteDataSource: RemoteDataServiceManager
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var looperService: LooperService
     @Environment(\.scenePhase) var scenePhase
     
-    init(connectivityManager: WatchConnectivityManager, looperService: LooperService){
+    init(connectivityManager: WatchSession, looperService: LooperService){
         self.connectivityManager = connectivityManager
         self.looperService = looperService
         self.settings = looperService.settings
@@ -148,6 +148,6 @@ struct HomeView: View {
     return NavigationStack {
         let looper = composer.accountServiceManager.selectedLooper!
         let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
-        HomeView(connectivityManager: composer.watchManager, looperService: looperService)
+        HomeView(connectivityManager: composer.watchSession, looperService: looperService)
     }
 }
