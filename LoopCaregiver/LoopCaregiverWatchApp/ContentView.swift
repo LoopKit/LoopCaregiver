@@ -17,6 +17,9 @@ struct ContentView: View {
     @EnvironmentObject var settings: CaregiverSettings
     @EnvironmentObject var watchService: WatchService
     
+    @State var deepLinkErrorShowing = false
+    @State var deepLinkErrorText: String = ""
+    
     @State var path: NavigationPath = NavigationPath()
     
     var body: some View {
@@ -25,8 +28,7 @@ struct ContentView: View {
                 if let looper = accountService.selectedLooper {
                     HomeView(connectivityManager: watchService, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
-                    Text("The Caregiver Watch app feature is not complete. Stay tuned.")
-                    //Text("Open Caregiver Settings on your Phone to setup the Watch.")
+                    Text("Open Caregiver Settings on your iPhone and tap 'Setup Watch'")
                 }
             }
             .navigationDestination(for: String.self, destination: { _ in
@@ -37,6 +39,12 @@ struct ContentView: View {
                     NavigationLink(value: "SettingsView") {
                         Image(systemName: "gear")
                     }
+                }
+            }
+            .alert(deepLinkErrorText, isPresented: $deepLinkErrorShowing) {
+                Button(role: .cancel) {
+                } label: {
+                    Text("OK")
                 }
             }
         }
@@ -59,6 +67,15 @@ struct ContentView: View {
                 }
             }
         })
+        .onAppear {
+            if accountService.selectedLooper == nil {
+                do {
+                    try watchService.requestWatchConfiguration()
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
     
     @MainActor func updateWatchConfiguration(watchConfiguration: WatchConfiguration) async {

@@ -20,17 +20,43 @@ struct LoopCaregiverWatchAppExtension: Widget {
 
     var body: some WidgetConfiguration {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: provider) { entry in
-            if let latestGlucose = entry.currentGlucoseSample {
-                WidgetView(viewModel: widgetViewModel(entry: entry, latestGlucose: latestGlucose))
-            } else {
-                Text("??")
-            }
+            Group {
+                if let latestGlucose = entry.currentGlucoseSample {
+                    WidgetView(viewModel: widgetViewModel(entry: entry, latestGlucose: latestGlucose))
+                } else {
+                    Text("??")
+                }
+            }.widgetURL(widgetURL(looper: entry.looper))
         }
     }
     
-    func widgetViewModel(entry: SimpleEntry, latestGlucose: NewGlucoseSample) -> WidgetViewModel {
-        return WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: entry.glucoseDisplayUnits)
+    func widgetURL(looper: Looper?) -> URL {
+        
+        if let looper = looper {
+            let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
+            return URL(string: deepLink.toURL())!
+        } else {
+            let deepLink = SelectLooperDeepLink(looperUUID: "")
+            return URL(string: deepLink.toURL())!
+        }
+
     }
+    
+    func widgetViewModel(entry: SimpleEntry, latestGlucose: NewGlucoseSample) -> WidgetViewModel {
+        return WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: entry.glucoseDisplayUnits, looper: entry.looper)
+    }
+    
+    func widgetURL(entry: SimpleEntry) -> URL {
+        if let looper = entry.looper {
+            let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
+            return URL(string: deepLink.toURL())!
+        } else {
+            let deepLink = SelectLooperDeepLink(looperUUID: "")
+            return URL(string: deepLink.toURL())!
+        }
+
+    }
+
 }
 
 struct WidgetView: View {
@@ -51,22 +77,14 @@ struct WidgetView: View {
     }
 }
 
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
-    }
-}
-
 #Preview(as: .accessoryRectangular) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
 }
 
 #Preview(as: .accessoryInline) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
 }

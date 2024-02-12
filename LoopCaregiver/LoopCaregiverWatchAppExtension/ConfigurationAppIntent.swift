@@ -9,10 +9,21 @@ import AppIntents
 import WidgetKit
 
 struct ConfigurationAppIntent: WidgetConfigurationIntent {
+    
     static var title: LocalizedStringResource = "Configuration"
-    static var description = IntentDescription("Caregiver Watch App Intent.")
+    static var description = IntentDescription("Caregiver Watch App")
 
-    // An example configurable parameter.
-    @Parameter(title: "Support Coming Soon", default: "😃")
-    var favoriteEmoji: String
+    @Parameter(title: "LooperID")
+    var looperID: String?
+
+    @Parameter(title: "Name")
+    var name: String?
+    
+    init() {
+    }
+    
+    init(looperID: String?, name: String?) {
+        self.looperID = looperID
+        self.name = name
+    }
 }

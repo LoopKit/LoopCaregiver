@@ -23,16 +23,6 @@ public final class WatchService: NSObject, ObservableObject, WatchConnectivitySe
         self.connectivityService.delegate = self
     }
     
-    #if os(iOS)
-    public func sendLoopersToWatch() throws {
-        let loopers = try accountService.getLoopers()
-        let watchConfiguration = WatchConfiguration(loopers: loopers)
-        let data = try JSONEncoder().encode(watchConfiguration)
-        let dataString = String(data: data, encoding: .utf8)!
-        connectivityService.send(dataString)
-    }
-    #endif
-    
     public func isReachable() -> Bool {
         return connectivityService.isReachable()
     }
@@ -49,14 +39,13 @@ public final class WatchService: NSObject, ObservableObject, WatchConnectivitySe
     // WatchConnectivityServiceDelegate
     
     public func didReceiveMessage(_ notificationMessage: NotificationMessage) {
-        
-        guard let data = notificationMessage.text.data(using: .utf8) else {
-            return
-        }
-        
-        if let watchConfiguration = try? JSONDecoder().decode(WatchConfiguration.self, from: data) {
-            receivedWatchConfiguration = watchConfiguration
-        }
+#if os(watchOS)
+        watchDidReceiveMessage(notificationMessage)
+#elseif os(iOS)
+        iOSDidReceiveMessage(notificationMessage)
+#else
+        assert("Unsupported platform")
+#endif
     }
     
     public func activatedStateChanged(_ activated: Bool) {
@@ -66,5 +55,63 @@ public final class WatchService: NSObject, ObservableObject, WatchConnectivitySe
     public func lastMessageSentDateChanged(_ lastMessageSentDate: Date) {
         self.lastMessageSent = lastMessageSentDate
     }
-    
 }
+
+
+#if os(watchOS)
+extension WatchService {
+    public func watchDidReceiveMessage(_ notificationMessage: NotificationMessage) {
+        
+        guard let data = notificationMessage.text.data(using: .utf8) else {
+            return
+        }
+        
+        if let watchConfiguration = try? JSONDecoder().decode(WatchConfiguration.self, from: data) {
+            receivedWatchConfiguration = watchConfiguration
+        } else {
+            assert(false, "Unhandled message")
+        }
+    }
+    
+    public func requestWatchConfiguration() throws {
+        let deepLink = RequestWatchConfigurationDeepLink()
+        connectivityService.send(deepLink.toURL())
+    }
+}
+#endif
+
+#if os(iOS)
+extension WatchService {
+    public func iOSDidReceiveMessage(_ notificationMessage: NotificationMessage) {
+        
+        guard let data = notificationMessage.text.data(using: .utf8) else {
+            return
+        }
+        
+        if let stringVal = String(data: data, encoding: .utf8),
+           let url = URL(string: stringVal) {
+            do {
+                let deepLink = try DeepLinkParser().parseDeepLink(url: url)
+                switch deepLink {
+                case .requestWatchConfigurationDeepLink:
+                    try self.sendLoopersToWatch()
+                default:
+                    assert(false, "Unhandled case")
+                }
+            } catch {
+                
+            }
+        } else {
+            assert(false, "Unhandled message")
+        }
+    }
+    
+    public func sendLoopersToWatch() throws {
+        let loopers = try accountService.getLoopers()
+        let watchConfiguration = WatchConfiguration(loopers: loopers)
+        let data = try JSONEncoder().encode(watchConfiguration)
+        let dataString = String(data: data, encoding: .utf8)!
+        connectivityService.send(dataString)
+    }
+}
+#endif

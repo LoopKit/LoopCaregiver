@@ -7,11 +7,12 @@
 
 import Foundation
 import HealthKit
+import LoopCaregiverKit
 import LoopKit
 import WidgetKit
 
 struct SimpleEntry: TimelineEntry {
-    
+    let looper: Looper?
     let currentGlucoseSample: NewGlucoseSample?
     let lastGlucoseChange: Double?
     let date: Date
