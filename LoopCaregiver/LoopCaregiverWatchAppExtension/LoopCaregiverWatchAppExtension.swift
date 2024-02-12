@@ -22,6 +22,7 @@ struct LoopCaregiverWatchAppExtension: Widget {
         AppIntentConfiguration(kind: kind, intent: ConfigurationAppIntent.self, provider: provider) { entry in
             if let latestGlucose = entry.currentGlucoseSample {
                 WidgetView(viewModel: widgetViewModel(entry: entry, latestGlucose: latestGlucose))
+                    .widgetURL(widgetURL(entry: entry))
             } else {
                 Text("??")
             }
@@ -31,6 +32,18 @@ struct LoopCaregiverWatchAppExtension: Widget {
     func widgetViewModel(entry: SimpleEntry, latestGlucose: NewGlucoseSample) -> WidgetViewModel {
         return WidgetViewModel(timelineEntryDate: entry.date, latestGlucose: latestGlucose, lastGlucoseChange: entry.lastGlucoseChange, isLastEntry: entry.isLastEntry, glucoseDisplayUnits: entry.glucoseDisplayUnits)
     }
+    
+    func widgetURL(entry: SimpleEntry) -> URL {
+        if let looper = entry.looper {
+            let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
+            return URL(string: deepLink.toURL())!
+        } else {
+            let deepLink = SelectLooperDeepLink(looperUUID: "")
+            return URL(string: deepLink.toURL())!
+        }
+
+    }
+
 }
 
 struct WidgetView: View {
@@ -48,25 +61,18 @@ struct WidgetView: View {
             LatestGlucoseCircularView(viewModel: viewModel)
                 .containerBackground(.fill.tertiary, for: .widget)
         }
-    }
-}
-
-extension ConfigurationAppIntent {
-    fileprivate static var smiley: ConfigurationAppIntent {
-        let intent = ConfigurationAppIntent()
-        intent.favoriteEmoji = "😀"
-        return intent
+        //Woudl tapping send a depp link to the watch?
     }
 }
 
 #Preview(as: .accessoryRectangular) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
 }
 
 #Preview(as: .accessoryInline) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
 }

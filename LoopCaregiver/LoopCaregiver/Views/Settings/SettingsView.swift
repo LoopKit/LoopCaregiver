@@ -207,7 +207,7 @@ struct SettingsView: View {
                     }
                 }
                 
-                Text("Ensure the Watch app is open before activating Loopers.")
+                Text("Setup will transfer all Loopers to Caregiver on your Apple Watch.")
                     .font(.footnote)
                 LabeledContent("Watch App Open", value: watchService.isReachable() ? "YES" : "NO")
             } header: {
