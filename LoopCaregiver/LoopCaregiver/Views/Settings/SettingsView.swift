@@ -199,6 +199,21 @@ struct SettingsView: View {
         
         if settings.experimentalFeaturesUnlocked || settings.remoteCommands2Enabled {
             Section {
+                Button("Setup Watch") {
+                    do {
+                        try activateLoopersOnWatch()
+                    } catch {
+                        print("Error activating Loopers on watch: \(error)")
+                    }
+                }
+                
+                Text("Ensure the Watch app is open before activating Loopers.")
+                    .font(.footnote)
+                LabeledContent("Watch App Open", value: watchSession.isReachable() ? "YES" : "NO")
+            } header: {
+                SectionHeader(label: "Apple Watch")
+            }
+            Section {
                 Toggle("Remote Commands 2", isOn: $settings.remoteCommands2Enabled)
                 Text("Remote commands 2 requires a special Nightscout deploy and Loop version. This will enable command status and other features. See Zulip #caregiver for details")
                     .font(.footnote)
@@ -217,26 +232,15 @@ struct SettingsView: View {
             } header: {
                 SectionHeader(label: "Diagnostics")
             }
-            Section {
-                Button("Activate Loopers") {
-                    do {
-                        try activateLoopersOnWatch()
-                    } catch {
-                        print("Error activating Loopers on watch: \(error)")
-                    }
-                }
-                
-                Text("Ensure the Watch app is open before activating Loopers.")
-                    .font(.footnote)
-                LabeledContent("Watch App Open", value: watchSession.isReachable() ? "YES" : "NO")
-            } header: {
-                SectionHeader(label: "Apple Watch")
-            }
         } else {
-            Text("Disabled                             ")
-                .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
-                    settings.experimentalFeaturesUnlocked = true
-                })
+            Section {
+                Text("Disabled                             ")
+                    .simultaneousGesture(LongPressGesture(minimumDuration: 5.0).onEnded { _ in
+                        settings.experimentalFeaturesUnlocked = true
+                    })
+            } header: {
+                SectionHeader(label: "Diagnostics")
+            }
         }
     }
     
