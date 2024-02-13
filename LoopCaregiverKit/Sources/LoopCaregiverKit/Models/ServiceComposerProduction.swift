@@ -10,7 +10,6 @@ import Foundation
 public class ServiceComposerProduction: ServiceComposer {
     public let settings: CaregiverSettings
     public let accountServiceManager: AccountServiceManager
-    public let watchSession: WatchSession
     public let watchService: WatchService
     
     public init() {
@@ -31,6 +30,5 @@ public class ServiceComposerProduction: ServiceComposer {
         self.accountServiceManager = AccountServiceManager(accountService: CoreDataAccountService(containerFactory: containerFactory))
 
         self.watchService = WatchService(accountService: self.accountServiceManager)
-        self.watchSession = self.watchService.watchSession
     }
 }

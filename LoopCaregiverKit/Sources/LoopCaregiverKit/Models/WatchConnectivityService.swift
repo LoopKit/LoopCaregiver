@@ -1,8 +1,8 @@
 //
-//  WatchSession.swift
+//  WatchConnectivityService.swift
+//  
 //
-//
-//  Created by Bill Gestrich on 2/9/24.
+//  Created by Bill Gestrich on 2/13/24.
 //
 
 import Foundation
@@ -14,14 +14,13 @@ public struct NotificationMessage: Identifiable, Equatable {
     public let receivedDate: Date
 }
 
-public final class WatchSession: NSObject, ObservableObject {
+public final class WatchConnectivityService: NSObject, ObservableObject {
     
-    @Published public var notificationMessage: NotificationMessage? = nil
-    @Published public var lastMessageSent: Date? = nil
-    @Published public var activated: Bool = false
     private var pendingMessages = [String]()
     private let watchSession: WCSession
-    
+    private var activated: Bool = false
+    public weak var delegate: (WatchConnectivityServiceDelegate)?
+     
     public override init() {
         self.watchSession = WCSession.default
         super.init()
@@ -47,7 +46,7 @@ public final class WatchSession: NSObject, ObservableObject {
 
         do {
             try watchSession.updateApplicationContext([kMessageKey : message])
-            lastMessageSent = Date()
+            delegate?.lastMessageSentDateChanged(Date())
         } catch {
             print("Cannot send message: \(String(describing: error))")
         }
@@ -70,20 +69,22 @@ public final class WatchSession: NSObject, ObservableObject {
     }
 }
 
-extension WatchSession: WCSessionDelegate {
+extension WatchConnectivityService: WCSessionDelegate {
     
     //Each context message must be unique or it will be dropped. https://stackoverflow.com/a/47915741
     public func session(_ session: WCSession, didReceiveApplicationContext applicationContext: [String : Any]) {
         if let notificationText = applicationContext[kMessageKey] as? String {
             DispatchQueue.main.async { [weak self] in
-                self?.notificationMessage = NotificationMessage(text: notificationText, receivedDate: Date())
+                guard let self else {return}
+                self.delegate?.didReceiveMessage(NotificationMessage(text: notificationText, receivedDate: Date()))
             }
         }
     }
     public func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
         if let notificationText = message[kMessageKey] as? String {
             DispatchQueue.main.async { [weak self] in
-                self?.notificationMessage = NotificationMessage(text: notificationText, receivedDate: Date())
+                guard let self else {return}
+                self.delegate?.didReceiveMessage(NotificationMessage(text: notificationText, receivedDate: Date()))
             }
         }
     }
@@ -128,4 +129,10 @@ public extension WCSessionActivationState {
             return "Unknown"
         }
     }
+}
+
+public protocol WatchConnectivityServiceDelegate: AnyObject {
+    func didReceiveMessage(_ notificationMessage: NotificationMessage)
+    func activatedStateChanged(_ activated: Bool)
+    func lastMessageSentDateChanged(_ lastMessageSentDate: Date)
 }

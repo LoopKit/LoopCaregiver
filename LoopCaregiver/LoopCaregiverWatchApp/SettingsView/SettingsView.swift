@@ -11,7 +11,7 @@ import WidgetKit
 
 struct SettingsView: View {
     
-    @ObservedObject var connectivityManager: WatchSession
+    @ObservedObject var connectivityManager: WatchService
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var settings: CaregiverSettings
     
@@ -40,7 +40,6 @@ struct SettingsView: View {
                     LabeledContent("Session Activated", value: connectivityManager.activated ? "YES" : "NO")
                     LabeledContent("Companion App Inst", value: connectivityManager.isCounterpartAppInstalled() ? "YES" : "NO")
                     LabeledContent("Phone Reachable", value: connectivityManager.isReachable() ? "YES" : "NO")
-                    LabeledContent("Last Msg Date", value: connectivityManager.notificationMessage?.receivedDate.description ?? "")
                 }
                 Section("Widgets") {
                     Button(action: {

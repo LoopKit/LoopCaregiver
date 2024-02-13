@@ -14,7 +14,7 @@ struct ContentView: View {
     
     @EnvironmentObject var accountService: AccountServiceManager
     @EnvironmentObject var settings: CaregiverSettings
-    @EnvironmentObject var watchSession: WatchSession
+    @EnvironmentObject var watchService: WatchService
     
     @State var path: NavigationPath = NavigationPath()
     
@@ -22,14 +22,14 @@ struct ContentView: View {
         NavigationStack (path: $path) {
             VStack {
                 if let looper = accountService.selectedLooper {
-                    HomeView(connectivityManager: watchSession, looperService: accountService.createLooperService(looper: looper, settings: settings))
+                    HomeView(connectivityManager: watchService, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
                     Text("The Caregiver Watch app feature is not complete. Stay tuned.")
                     //Text("Open Caregiver Settings on your Phone to setup the Watch.")
                 }
             }
             .navigationDestination(for: String.self, destination: { _ in
-                SettingsView(connectivityManager: watchSession, accountService: accountService, settings: settings)
+                SettingsView(connectivityManager: watchService, accountService: accountService, settings: settings)
             })
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -39,18 +39,10 @@ struct ContentView: View {
                 }
             }
         }
-        .onChange(of: watchSession.notificationMessage, {
-            if let message = watchSession.notificationMessage?.text {
+        .onChange(of: watchService.receivedWatchConfiguration, {
+            if let receivedWatchConfiguration = watchService.receivedWatchConfiguration {
                 Task {
-                    guard let data = message.data(using: .utf8) else {
-                        return
-                    }
-                    guard let watchConfiguration = try? JSONDecoder().decode(WatchConfiguration.self, from: data) else
-                    {
-                        return
-                    }
-
-                    await updateWatchConfiguration(watchConfiguration: watchConfiguration)
+                    await updateWatchConfiguration(watchConfiguration: receivedWatchConfiguration)
                 }
             }
         })
@@ -142,5 +134,5 @@ struct ContentView: View {
     return ContentView()
         .environmentObject(composer.accountServiceManager)
         .environmentObject(composer.settings)
-        .environmentObject(composer.watchSession)
+        .environmentObject(composer.watchService)
 }

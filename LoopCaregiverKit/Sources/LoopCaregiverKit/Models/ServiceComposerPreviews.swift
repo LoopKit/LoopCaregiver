@@ -10,7 +10,6 @@ import Foundation
 public class ServiceComposerPreviews: ServiceComposer {
     public let settings: CaregiverSettings
     public let accountServiceManager: AccountServiceManager
-    public var watchSession: WatchSession
     public var watchService: WatchService
     
     public init() {
@@ -19,7 +18,6 @@ public class ServiceComposerPreviews: ServiceComposer {
         self.settings = CaregiverSettings(userDefaults: userDefaults, appGroupsSupported: true)
         self.accountServiceManager = AccountServiceManager(accountService: CoreDataAccountService(containerFactory: containerFactory), remoteServicesProviderFactory: { (_, _) in RemoteDataServiceProviderSimulator()})
         self.watchService = WatchService(accountService: self.accountServiceManager)
-        self.watchSession = self.watchService.watchSession
         self.addTestLooper()
     }
     

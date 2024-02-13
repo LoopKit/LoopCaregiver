@@ -17,7 +17,7 @@ struct SettingsView: View {
     @ObservedObject var nightscoutCredentialService: NightscoutCredentialService
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var settings: CaregiverSettings
-    @ObservedObject var watchSession: WatchSession
+    @ObservedObject var watchService: WatchService
     @Binding var showSheetView: Bool
     @State private var isPresentingConfirm: Bool = false
     @State private var path = NavigationPath()
@@ -28,13 +28,13 @@ struct SettingsView: View {
     @State var maxBolusAmountPickerShowing = false
     private let maxBolusIncrements = Array(stride(from: 0, through: 10, by: 1))
     
-    init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, watchSession: WatchSession, showSheetView: Binding<Bool>) {
+    init(looperService: LooperService, accountService: AccountServiceManager, settings: CaregiverSettings, watchService: WatchService, showSheetView: Binding<Bool>) {
         self.settingsViewModel = SettingsViewModel(selectedLooper: looperService.looper, accountService: looperService.accountService, settings: settings)
         self.looperService = looperService
         self.nightscoutCredentialService = NightscoutCredentialService(credentials: looperService.looper.nightscoutCredentials)
         self.accountService = accountService
         self.settings = settings
-        self.watchSession = watchSession
+        self.watchService = watchService
         self._showSheetView = showSheetView
     }
     
@@ -209,7 +209,7 @@ struct SettingsView: View {
                 
                 Text("Ensure the Watch app is open before activating Loopers.")
                     .font(.footnote)
-                LabeledContent("Watch App Open", value: watchSession.isReachable() ? "YES" : "NO")
+                LabeledContent("Watch App Open", value: watchService.isReachable() ? "YES" : "NO")
             } header: {
                 SectionHeader(label: "Apple Watch")
             }
@@ -245,11 +245,11 @@ struct SettingsView: View {
     }
     
     func activateLoopersOnWatch() throws {
-        let loopers = accountService.loopers
-        let watchConfiguration = WatchConfiguration(loopers: loopers)
-        let data = try JSONEncoder().encode(watchConfiguration)
-        let dataString = String(data: data, encoding: .utf8)!
-        watchSession.send(dataString)
+        do {
+            try watchService.sendLoopersToWatch()
+        } catch {
+            print("Error activating Loopers \(error)")
+        }
     }
     
     var addLooperDeepLink: String {
@@ -418,7 +418,7 @@ struct SettingsView: View {
     let showSheetBinding = Binding<Bool>(get: {showSheetView}, set: {showSheetView = $0})
     let looperService = composer.accountServiceManager.createLooperService(looper: looper, settings: composer.settings)
     let remoteDataSerivceManager = RemoteDataServiceManager(remoteDataProvider: RemoteDataServiceProviderSimulator())
-    return SettingsView(looperService: looperService, accountService: composer.accountServiceManager, settings: composer.settings, watchSession: composer.watchSession, showSheetView: showSheetBinding)
+    return SettingsView(looperService: looperService, accountService: composer.accountServiceManager, settings: composer.settings, watchService: composer.watchService, showSheetView: showSheetBinding)
 }
 
 

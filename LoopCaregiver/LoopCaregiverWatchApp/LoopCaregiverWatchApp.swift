@@ -16,7 +16,7 @@ struct LoopCaregiverWatchApp: App {
             ContentView()
                 .environmentObject(composer.accountServiceManager)
                 .environmentObject(composer.settings)
-                .environmentObject(composer.watchSession)
+                .environmentObject(composer.watchService)
         }
     }
 }
