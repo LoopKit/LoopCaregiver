@@ -14,10 +14,10 @@ struct SettingsView: View {
     @ObservedObject var connectivityManager: WatchService
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var settings: CaregiverSettings
+    @StateObject var settingsViewModel = SettingsViewModel()
     
     @AppStorage("lastPhoneDebugMessage", store: UserDefaults(suiteName: Bundle.main.appGroupSuiteName)) var lastPhoneDebugMessage: String = ""
     @State private var glucosePreference: GlucoseUnitPrefererence = .milligramsPerDeciliter
-    var settingsViewModel = SettingsViewModel()
     
     var body: some View {
         VStack {
@@ -40,6 +40,7 @@ struct SettingsView: View {
                     LabeledContent("Session Activated", value: connectivityManager.activated ? "YES" : "NO")
                     LabeledContent("Companion App Inst", value: connectivityManager.isCounterpartAppInstalled() ? "YES" : "NO")
                     LabeledContent("Phone Reachable", value: connectivityManager.isReachable() ? "YES" : "NO")
+                    LabeledContent("Network", value: settingsViewModel.networkAvailable ? "YES" : "NO")
                 }
                 Section("Widgets") {
                     Button(action: {

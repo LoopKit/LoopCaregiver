@@ -8,41 +8,42 @@
 import Combine
 import Foundation
 import LoopCaregiverKit
+import Network
 import SwiftUI
 
 class SettingsViewModel: ObservableObject {
     
-    /*
-    @Published var selectedLooper: Looper {
-        didSet {
-            do {
-                try accountService.updateActiveLoopUser(selectedLooper)
-            } catch {
-                print(error)
+    let monitor: NWPathMonitor
+    @Published var networkAvailable: Bool
+    
+    init() {
+        self.networkAvailable = false
+        self.monitor = NWPathMonitor()
+        self.startNetworkMonitor()
+    }
+    
+    func startNetworkMonitor() {
+        let monitor = self.monitor
+        Task { [weak self] in
+            for await path in monitor {
+                guard let self else { return }
+                if path.status == .satisfied {
+                    await self.updateNetworkAvailable(available: true)
+                } else {
+                    await self.updateNetworkAvailable(available: false)
+                }
             }
         }
-    }
-    @ObservedObject var accountService: AccountServiceManager
-    private var settings: CaregiverSettings
-    private var subscribers: Set<AnyCancellable> = []
-    
-    init(selectedLooper: Looper, accountService: AccountServiceManager, settings: CaregiverSettings) {
-        self.selectedLooper = selectedLooper
-        self.accountService = accountService
-        self.settings = settings
         
-        self.accountService.$selectedLooper.sink { val in
-        } receiveValue: { [weak self] updatedUser in
-            if let self, let updatedUser, self.selectedLooper != updatedUser {
-                self.selectedLooper = updatedUser
-            }
-        }.store(in: &subscribers)
+        let queue = DispatchQueue(label: "Monitor")
+        monitor.start(queue: queue)
     }
     
-    func loopers() -> [Looper] {
-        return accountService.loopers
+    @MainActor
+    func updateNetworkAvailable(available: Bool) {
+        self.networkAvailable = available
     }
-     */
+    
 }
 
 
