@@ -7,6 +7,7 @@
 
 import Foundation
 import HealthKit
+import LoopCaregiverKit
 import LoopKit
 import SwiftUI
 
@@ -17,13 +18,15 @@ public struct WidgetViewModel {
     public let lastGlucoseChange: Double?
     public let isLastEntry: Bool
     public let glucoseDisplayUnits: HKUnit
+    public let looper: Looper?
     
-    public init(timelineEntryDate: Date, latestGlucose: NewGlucoseSample, lastGlucoseChange: Double? = nil, isLastEntry: Bool, glucoseDisplayUnits: HKUnit) {
+    public init(timelineEntryDate: Date, latestGlucose: NewGlucoseSample, lastGlucoseChange: Double? = nil, isLastEntry: Bool, glucoseDisplayUnits: HKUnit, looper: Looper?) {
         self.timelineEntryDate = timelineEntryDate
         self.latestGlucose = latestGlucose
         self.lastGlucoseChange = lastGlucoseChange
         self.isLastEntry = isLastEntry
         self.glucoseDisplayUnits = glucoseDisplayUnits
+        self.looper = looper
     }
     
     public var currentGlucoseDateText: String {
