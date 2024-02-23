@@ -63,6 +63,15 @@ struct ContentView: View {
                 }
             }
         })
+        .onAppear {
+            if accountService.selectedLooper == nil {
+                do {
+                    try watchService.requestWatchConfiguration()
+                } catch {
+                    print(error)
+                }
+            }
+        }
     }
     
     @MainActor func updateWatchConfiguration(watchConfiguration: WatchConfiguration) async {
@@ -101,6 +110,8 @@ struct ContentView: View {
             try await handleAddLooperDeepLink(createLooperDeepLink)
         case .selectLooper(let selectLooperDeepLink):
             try await handleSelectLooperDeepLink(selectLooperDeepLink)
+        case .requestWatchConfigurationDeepLink:
+            assert(false, "Should not be received from iPhone")
         }
     }
     
@@ -124,9 +135,15 @@ struct ContentView: View {
         guard let looper = accountService.loopers.first(where: {$0.id == deepLink.looperUUID}) else {
             deepLinkErrorShowing = true
             if accountService.loopers.isEmpty {
+                // This could send a request to phone to send Loopers
                 deepLinkErrorText = "No Loopers available on Watch. Open Caregiver Settings on your iPhone and tap 'Setup Watch'. Then remove this complication from your Watch face and add it again."
+                do {
+                    try watchService.requestWatchConfiguration()
+                } catch {
+                    print(error)
+                }
             } else {
-                deepLinkErrorText = "No Looper selected. Remove this complication from your Watch face and add it again."
+                deepLinkErrorText = "The selected complication is invalid. You must remove it from your Apple Watch face and add it again."
             }
 
             return

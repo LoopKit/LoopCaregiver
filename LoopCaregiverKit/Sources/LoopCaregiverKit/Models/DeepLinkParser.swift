@@ -29,6 +29,9 @@ public class DeepLinkParser {
         } else if action == SelectLooperDeepLink.actionName {
             let deepLink = try SelectLooperDeepLink(pathParts: pathComponents, queryParameters: queryParameters)
             return .selectLooper(deepLink: deepLink)
+        } else if action == RequestWatchConfigurationDeepLink.actionName {
+            let deepLink = try RequestWatchConfigurationDeepLink(pathParts: pathComponents, queryParameters: queryParameters)
+            return .requestWatchConfigurationDeepLink(deepLink: deepLink)
         } else {
             throw DeepLinkError.unknownAction(actionName: action)
         }
@@ -66,6 +69,7 @@ public class DeepLinkParser {
 public enum DeepLinkAction {
     case selectLooper(deepLink: SelectLooperDeepLink)
     case addLooper(deepLink: CreateLooperDeepLink)
+    case requestWatchConfigurationDeepLink(deepLink: RequestWatchConfigurationDeepLink)
 }
 
 public protocol DeepLink {
@@ -158,7 +162,7 @@ public struct CreateLooperDeepLink: DeepLink {
         guard let nsURL = nsURL.absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
             throw CreateLooperDeepLinkError.urlEncodingError(url: nsURL.absoluteString)
         }
-        //TODO: The date is appended to each deep link to ensure we have a unique message received by teh watch each time.
+        //TODO: The date is appended to each deep link to ensure we have a unique message received by the watch each time.
         //See https://stackoverflow.com/a/47915741
         return "\(host)://\(Self.actionName)?name=\(name)&secretKey=\(secretKey)&nsURL=\(nsURL)&otpURL=\(otpURL)&createdDate=\(Date())"
     }
@@ -185,4 +189,21 @@ public struct CreateLooperDeepLink: DeepLink {
             }
         }
     }
+}
+
+public struct RequestWatchConfigurationDeepLink: DeepLink {
+    
+    public init() {
+    }
+    
+    public init(pathParts: [String], queryParameters: [String: String]) throws {
+        self = RequestWatchConfigurationDeepLink()
+    }
+    
+    public func toURL() -> String {
+        //TODO: The date is appended to each deep link to ensure we have a unique message received by the watch each time.
+        return "\(host)://\(Self.actionName)?createdDate=\(Date())"
+    }
+    
+    public static let actionName = "requestWatchConfiguration"
 }

@@ -50,6 +50,8 @@ struct ContentView: View {
                 try await handleAddLooperDeepLink(createLooperDeepLink)
             case .selectLooper(let selectLooperDeepLink):
                 try await handleSelectLooperDeepLink(selectLooperDeepLink)
+            case .requestWatchConfigurationDeepLink(let requestWatchConfigurationDeepLink):
+                try await handleRequestWatchConfigurationDeepLink(requestWatchConfigurationDeepLink)
             }
         }
         
@@ -75,6 +77,11 @@ struct ContentView: View {
             }
             try accountService.addLooper(looper)
             try accountService.updateActiveLoopUser(looper)
+        }
+        
+        @MainActor
+        func handleRequestWatchConfigurationDeepLink(_ deepLink: RequestWatchConfigurationDeepLink) async throws {
+            try watchService.sendLoopersToWatch()
         }
     }
 }
