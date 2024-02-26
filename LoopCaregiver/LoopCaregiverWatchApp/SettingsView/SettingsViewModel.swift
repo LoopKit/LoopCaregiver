@@ -8,40 +8,53 @@
 import Combine
 import Foundation
 import LoopCaregiverKit
-import Network
 import SwiftUI
 
 class SettingsViewModel: ObservableObject {
     
-    let monitor: NWPathMonitor
     @Published var networkAvailable: Bool
+    @Published var timer: Timer?
     
     init() {
         self.networkAvailable = false
-        self.monitor = NWPathMonitor()
-        self.startNetworkMonitor()
-    }
-    
-    func startNetworkMonitor() {
-        let monitor = self.monitor
-        Task { [weak self] in
-            for await path in monitor {
-                guard let self else { return }
-                if path.status == .satisfied {
-                    await self.updateNetworkAvailable(available: true)
-                } else {
-                    await self.updateNetworkAvailable(available: false)
-                }
-            }
+        self.timer = createTimer()
+        Task {
+            await self.checkNetwork()
         }
-        
-        let queue = DispatchQueue(label: "Monitor")
-        monitor.start(queue: queue)
     }
     
     @MainActor
     func updateNetworkAvailable(available: Bool) {
         self.networkAvailable = available
+    }
+    
+    private func createTimer() -> Timer {
+        let timer = Timer(timeInterval: 30, repeats: true, block: { _ in
+            Task {
+                await self.checkNetwork()
+            }
+        })
+        RunLoop.main.add(timer, forMode: .default)
+        return timer
+    }
+    
+    private func checkNetwork() async {
+        do {
+            guard let url = URL(string: "https://www.google.com") else { return }
+            guard let (_, response) = try await URLSession.shared.data(from: url) as? (Data, HTTPURLResponse) else {
+                await self.updateNetworkAvailable(available: false)
+                return
+            }
+            let responseValid = response.statusCode >= 200 && response.statusCode <= 299
+            await self.updateNetworkAvailable(available: responseValid)
+        } catch {
+            await self.updateNetworkAvailable(available: false)
+        }
+    }
+    
+    
+    deinit {
+        self.timer?.invalidate()
     }
     
 }
