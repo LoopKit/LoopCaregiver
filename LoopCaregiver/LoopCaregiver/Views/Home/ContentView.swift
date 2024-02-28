@@ -11,6 +11,7 @@ import SwiftUI
 struct ContentView: View {
     
     @EnvironmentObject var accountService: AccountServiceManager
+    var deepLinkHandler: DeepLinkHandler
     @EnvironmentObject var settings: CaregiverSettings
     @EnvironmentObject var watchService: WatchService
     
@@ -27,7 +28,7 @@ struct ContentView: View {
         }.onOpenURL(perform: { (url) in
             Task {
                 do {
-                    try await handleDeepLinkURL(url)
+                    try await deepLinkHandler.handleDeepLinkURL(url)
                 } catch {
                     deepLinkErrorShowing = true
                     deepLinkErrorText = error.localizedDescription
@@ -41,40 +42,5 @@ struct ContentView: View {
             }
         }
         .background(AppExpirationAlerterRepresentable())
-        
-        @MainActor func handleDeepLinkURL(_ url: URL) async throws {
-            
-            let deepLink = try DeepLinkParser().parseDeepLink(url: url)
-            switch deepLink {
-            case .addLooper(let createLooperDeepLink):
-                try await handleAddLooperDeepLink(createLooperDeepLink)
-            case .selectLooper(let selectLooperDeepLink):
-                try await handleSelectLooperDeepLink(selectLooperDeepLink)
-            }
-        }
-        
-        @MainActor
-        func handleSelectLooperDeepLink(_ deepLink: SelectLooperDeepLink) async throws {
-            guard let looper = accountService.loopers.first(where: {$0.id == deepLink.looperUUID}) else {
-                return
-            }
-            
-            if accountService.selectedLooper != looper {
-                accountService.selectedLooper = looper
-            }
-        }
-        
-        @MainActor
-        func handleAddLooperDeepLink(_ deepLink: CreateLooperDeepLink) async throws {
-            let looper = Looper(identifier: UUID(), name: deepLink.name, nightscoutCredentials: NightscoutCredentials(url: deepLink.nsURL, secretKey: deepLink.secretKey, otpURL: deepLink.otpURL.absoluteString), lastSelectedDate: Date())
-            let service = accountService.createLooperService(looper: looper, settings: settings)
-            try await service.remoteDataSource.checkAuth()
-
-            if let existingLooper = accountService.loopers.first(where: {$0.name == looper.name}) {
-                try accountService.removeLooper(existingLooper)
-            }
-            try accountService.addLooper(looper)
-            try accountService.updateActiveLoopUser(looper)
-        }
     }
 }
