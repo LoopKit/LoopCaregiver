@@ -54,6 +54,8 @@ struct ContentView: View {
                     reloadWidget()
                 } catch {
                     print("Error handling deep link: \(error)")
+                    deepLinkErrorText = error.localizedDescription
+                    deepLinkErrorShowing = true
                 }
             }
         })

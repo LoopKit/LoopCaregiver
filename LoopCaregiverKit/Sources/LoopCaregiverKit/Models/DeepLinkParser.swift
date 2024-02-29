@@ -66,6 +66,7 @@ public class DeepLinkParser {
 public enum DeepLinkAction {
     case selectLooper(deepLink: SelectLooperDeepLink)
     case addLooper(deepLink: CreateLooperDeepLink)
+    case requestWatchConfigurationDeepLink(deepLink: RequestWatchConfigurationDeepLink)
 }
 
 public protocol DeepLink {
@@ -185,4 +186,21 @@ public struct CreateLooperDeepLink: DeepLink {
             }
         }
     }
+}
+
+public struct RequestWatchConfigurationDeepLink: DeepLink {
+    
+    public init() {
+    }
+    
+    public init(pathParts: [String], queryParameters: [String: String]) throws {
+        self = RequestWatchConfigurationDeepLink()
+    }
+    
+    public func toURL() -> String {
+        //TODO: The date is appended to each deep link to ensure we have a unique message received by the watch each time.
+        return "\(host)://\(Self.actionName)?createdDate=\(Date())"
+    }
+    
+    public static let actionName = "requestWatchConfiguration"
 }

@@ -32,6 +32,8 @@ public class DeepLinkHandlerPhone: DeepLinkHandler {
             try await handleAddLooperDeepLink(createLooperDeepLink)
         case .selectLooper(let selectLooperDeepLink):
             try await handleSelectLooperDeepLink(selectLooperDeepLink)
+        case .requestWatchConfigurationDeepLink(let requestWatchConfigurationDeepLink):
+            try await handleRequestWatchConfigurationDeepLink(requestWatchConfigurationDeepLink)
         }
     }
     
@@ -58,6 +60,15 @@ public class DeepLinkHandlerPhone: DeepLinkHandler {
         try accountService.addLooper(looper)
         try accountService.updateActiveLoopUser(looper)
     }
+    
+    @MainActor
+    func handleRequestWatchConfigurationDeepLink(_ deepLink: RequestWatchConfigurationDeepLink) async throws {
+        #if os(iOS)
+        try watchService.sendLoopersToWatch()
+        #else
+        fatalError("Unexpected to be called on Watch")
+        #endif
+    }
 }
 
 
@@ -80,6 +91,8 @@ public class DeepLinkHandlerWatch: DeepLinkHandler {
             try await handleAddLooperDeepLink(createLooperDeepLink)
         case .selectLooper(let selectLooperDeepLink):
             try await handleSelectLooperDeepLink(selectLooperDeepLink)
+        case .requestWatchConfigurationDeepLink:
+            assert(false, "Should not be received from iPhone")
         }
     }
     
@@ -101,6 +114,13 @@ public class DeepLinkHandlerWatch: DeepLinkHandler {
     func handleSelectLooperDeepLink(_ deepLink: SelectLooperDeepLink) async throws {
         guard let looper = accountService.loopers.first(where: {$0.id == deepLink.looperUUID}) else {
             if accountService.loopers.isEmpty {
+                do {
+#if os(watchOS)
+                    try watchService.requestWatchConfiguration()
+#endif
+                } catch {
+                    print(error)
+                }
                 throw DeepLinkSelectLooperError.noLoopersOnWatch
             } else {
                 throw DeepLinkSelectLooperError.invalidLoopersOnWatch
