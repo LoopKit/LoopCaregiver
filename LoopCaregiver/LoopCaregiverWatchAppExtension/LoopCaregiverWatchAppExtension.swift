@@ -27,6 +27,7 @@ struct LoopCaregiverWatchAppExtension: Widget {
                     Text("??")
                 }
             }.widgetURL(widgetURL(looper: entry.looper))
+                .containerBackground(.fill.tertiary, for: .widget)
         }
     }
     
@@ -69,10 +70,8 @@ struct WidgetView: View {
         switch family {
         case .accessoryInline:
             LatestGlucoseInlineView(viewModel: viewModel)
-                .containerBackground(.fill.tertiary, for: .widget)
         default:
             LatestGlucoseCircularView(viewModel: viewModel)
-                .containerBackground(.fill.tertiary, for: .widget)
         }
     }
 }
