@@ -56,8 +56,7 @@ class TimelineProvider: AppIntentTimelineProvider {
     
     func placeholder(in context: Context) -> SimpleEntry {
         let composer = ServiceComposerProduction()
-        let sample = NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100), condition: .none, trend: .up, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345")
-        return SimpleEntry(looper: nil, currentGlucoseSample: sample, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits)
+        return SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample.placeholder(), lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits)
     }
 
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {

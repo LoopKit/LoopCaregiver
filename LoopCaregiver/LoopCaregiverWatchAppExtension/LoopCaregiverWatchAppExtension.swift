@@ -80,11 +80,11 @@ struct WidgetView: View {
 #Preview(as: .accessoryRectangular) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample.placeholder(), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
 }
 
 #Preview(as: .accessoryInline) {
     LoopCaregiverWatchAppExtension()
 } timeline: {
-    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345"), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
+    SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample.placeholder(), lastGlucoseChange: nil, date: .now, entryIndex: 0, isLastEntry: false, glucoseDisplayUnits: .milligramsPerDeciliter)
 }

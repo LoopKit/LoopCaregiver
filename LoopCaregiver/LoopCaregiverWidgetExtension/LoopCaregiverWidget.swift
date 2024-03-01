@@ -35,8 +35,7 @@ struct LoopCaregiverWidget_Previews: PreviewProvider {
     static var previews: some View {
         let composer = ServiceComposerPreviews()
         let looper = composer.accountServiceManager.selectedLooper!
-        let glucoseSample = NewGlucoseSample(date: Date(), quantity: .init(unit: .milligramsPerDeciliter, doubleValue: 100.0), condition: .none, trend: .flat, trendRate: .none, isDisplayOnly: false, wasUserEntered: false, syncIdentifier: "1345")
-        let entry = SimpleEntry(looper: looper, currentGlucoseSample: glucoseSample, lastGlucoseChange: 10, date: .now, entryIndex: 0, isLastEntry: false)
+        let entry = SimpleEntry(looper: looper, currentGlucoseSample: NewGlucoseSample.placeholder(), lastGlucoseChange: 10, date: .now, entryIndex: 0, isLastEntry: false)
         return LoopCaregiverWidgetView(entry: entry, settings: composer.settings)
             .previewContext(WidgetPreviewContext(family: .systemSmall))
     }
