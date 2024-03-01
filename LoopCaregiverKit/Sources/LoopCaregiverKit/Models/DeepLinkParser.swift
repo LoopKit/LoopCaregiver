@@ -73,7 +73,7 @@ public enum DeepLinkAction {
 }
 
 public protocol DeepLink {
-    func toURL() throws -> String
+    func toURL() throws -> URL
     var host: String { get }
     static var actionName: String { get }
 }
@@ -98,8 +98,8 @@ public struct SelectLooperDeepLink: DeepLink {
         self = SelectLooperDeepLink(looperUUID: uuid)
     }
     
-    public func toURL() -> String {
-        return "\(host)://\(Self.actionName)/\(looperUUID)"
+    public func toURL() -> URL {
+        return URL(string: "\(host)://\(Self.actionName)/\(looperUUID)")!
     }
     
     public static let actionName = "selectLooper"
@@ -155,7 +155,7 @@ public struct CreateLooperDeepLink: DeepLink {
         self = CreateLooperDeepLink(name: name, nsURL: nightscoutURL, secretKey: apiSecret, otpURL: otpURL)
     }
     
-    public func toURL() throws -> String {
+    public func toURL() throws -> URL {
         guard let otpURL = otpURL.absoluteString.addingPercentEncoding(withAllowedCharacters: .alphanumerics) else {
             throw CreateLooperDeepLinkError.urlEncodingError(url: otpURL.absoluteString)
         }
@@ -164,7 +164,7 @@ public struct CreateLooperDeepLink: DeepLink {
         }
         //TODO: The date is appended to each deep link to ensure we have a unique message received by the watch each time.
         //See https://stackoverflow.com/a/47915741
-        return "\(host)://\(Self.actionName)?name=\(name)&secretKey=\(secretKey)&nsURL=\(nsURL)&otpURL=\(otpURL)&createdDate=\(Date())"
+        return URL(string: "\(host)://\(Self.actionName)?name=\(name)&secretKey=\(secretKey)&nsURL=\(nsURL)&otpURL=\(otpURL)&createdDate=\(Date())")!
     }
     
     enum CreateLooperDeepLinkError: LocalizedError, Equatable {
@@ -200,9 +200,9 @@ public struct RequestWatchConfigurationDeepLink: DeepLink {
         self = RequestWatchConfigurationDeepLink()
     }
     
-    public func toURL() -> String {
+    public func toURL() -> URL {
         //TODO: The date is appended to each deep link to ensure we have a unique message received by the watch each time.
-        return "\(host)://\(Self.actionName)?createdDate=\(Date())"
+        return URL(string: "\(host)://\(Self.actionName)?createdDate=\(Date())")!
     }
     
     public static let actionName = "requestWatchConfiguration"

@@ -262,7 +262,7 @@ struct SettingsView: View {
         let secretKey = selectedLooper.nightscoutCredentials.secretKey
         let deepLink = CreateLooperDeepLink(name: selectedLooper.name, nsURL: selectedLooper.nightscoutCredentials.url, secretKey: secretKey, otpURL: otpURL)
         do {
-            return try deepLink.toURL()
+            return try deepLink.toURL().absoluteString
         } catch {
             return ""
         }

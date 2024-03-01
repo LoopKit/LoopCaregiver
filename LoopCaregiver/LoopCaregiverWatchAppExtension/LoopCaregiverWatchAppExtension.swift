@@ -34,10 +34,10 @@ struct LoopCaregiverWatchAppExtension: Widget {
         
         if let looper = looper {
             let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
-            return URL(string: deepLink.toURL())!
+            return deepLink.toURL()
         } else {
             let deepLink = SelectLooperDeepLink(looperUUID: "")
-            return URL(string: deepLink.toURL())!
+            return deepLink.toURL()
         }
 
     }
@@ -49,10 +49,10 @@ struct LoopCaregiverWatchAppExtension: Widget {
     func widgetURL(entry: SimpleEntry) -> URL {
         if let looper = entry.looper {
             let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
-            return URL(string: deepLink.toURL())!
+            return deepLink.toURL()
         } else {
             let deepLink = SelectLooperDeepLink(looperUUID: "")
-            return URL(string: deepLink.toURL())!
+            return deepLink.toURL()
         }
 
     }
