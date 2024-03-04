@@ -28,7 +28,8 @@ struct ContentView: View {
                 if let looper = accountService.selectedLooper {
                     HomeView(connectivityManager: watchService, looperService: accountService.createLooperService(looper: looper, settings: settings))
                 } else {
-                    Text("Open Caregiver Settings on your iPhone and tap 'Setup Watch'")
+                    Text("The Caregiver Watch app feature is not complete. Stay tuned.")
+                    //Text("Open Caregiver Settings on your iPhone and tap 'Setup Watch'")
                 }
             }
             .navigationDestination(for: String.self, destination: { _ in
