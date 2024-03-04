@@ -28,8 +28,6 @@ class TimelineProvider: AppIntentTimelineProvider {
                 var looper: Looper
                 if let configurationLooper = try composer.accountServiceManager.getLoopers().first(where: {$0.id == configuration.looperID}) {
                     looper = configurationLooper
-//                } else if let selectedLooper = composer.accountServiceManager.selectedLooper {
-//                    looper = selectedLooper
                 } else {
                     continuation.resume(returning: SimpleEntry(looper: nil, currentGlucoseSample: nil, lastGlucoseChange: nil, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: composer.settings.glucoseDisplayUnits))
                     return
@@ -92,39 +90,6 @@ class TimelineProvider: AppIntentTimelineProvider {
     }
     
     func recommendations() -> [AppIntentRecommendation<ConfigurationAppIntent>] {
-        /*
-         
-         The soution:
-         
-         1. No recommended widget shows until Caregiver app is opened
-         2. All available Loopers show.
-         3. If Looper is deleted, a lookup by name can be done.
-            Make a unique name constraint in Core Data?
-         4. If Looper can't be found by name, show an error that widget needs reconfigured.
-            This could be a safety mechanism. Parents may have multilpe children and be looking at the wrong looper.
-         
-         
-         Ask watch for Loopers
-         
-         -Watch on appear, send message to phone asking for loopers
-         -Show message to open phone
-         -Phone home view
-            Monitor for WatchManager message
-            Send Loopers
-         
-         Smoke Test
-         
-         -Delete both sims
-         -Close both sims
-         -Build to both sims
-         -Check that widget unavaiable
-         -Open Phone and add 2 Loopers
-         -Open watch and add Loopers
-         -Check that 2 widgets can be added
-         -Check that tapping widget opens respective Looper
-         -Delete 1 Looper on Watch
-         -Check that error shows
-         */
         var result: [AppIntentRecommendation<ConfigurationAppIntent>] = []
         let composer = ServiceComposerProduction()
         do {
@@ -137,11 +102,6 @@ class TimelineProvider: AppIntentTimelineProvider {
         } catch {
             print(error)
         }
-        
-//        if result.isEmpty {
-//            let placeholderRecommendation = AppIntentRecommendation(intent: ConfigurationAppIntent(looperID: nil, name: nil), description: "TODO: Default!")
-//            result = [placeholderRecommendation]
-//        }
         
         return result
     }
