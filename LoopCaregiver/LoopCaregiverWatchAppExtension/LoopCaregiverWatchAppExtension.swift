@@ -32,7 +32,6 @@ struct LoopCaregiverWatchAppExtension: Widget {
     }
     
     func widgetURL(looper: Looper?) -> URL {
-        
         if let looper = looper {
             let deepLink = SelectLooperDeepLink(looperUUID: looper.id)
             return deepLink.toURL()
@@ -40,7 +39,6 @@ struct LoopCaregiverWatchAppExtension: Widget {
             let deepLink = SelectLooperDeepLink(looperUUID: "")
             return deepLink.toURL()
         }
-
     }
     
     func widgetViewModel(entry: SimpleEntry, latestGlucose: NewGlucoseSample) -> WidgetViewModel {
