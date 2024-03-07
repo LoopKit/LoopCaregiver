@@ -40,11 +40,8 @@ class TimelineProvider: AppIntentTimelineProvider {
     
     /// Shows when widget is in the gallery and other "transient" times per docs.
     func snapshot(for configuration: ConfigurationAppIntent, in context: Context) async -> SimpleEntry {
-        if context.isPreview { // Docs suggest returning quickly when context.isPreview is true
-            return SimpleEntry(looper: nil, currentGlucoseSample: NewGlucoseSample.placeholder(), lastGlucoseChange: 15, date: Date(), entryIndex: 0, isLastEntry: true, glucoseDisplayUnits: .milligramsPerDeciliter)
-        } else {
-            return await getEntry(composer: ServiceComposerProduction(), configuration: configuration)
-        }
+        // Docs suggest returning quickly when context.isPreview is true although we probably never want fake data
+        return await getEntry(composer: ServiceComposerProduction(), configuration: configuration)
     }
     
     func timeline(for configuration: ConfigurationAppIntent, in context: Context) async -> Timeline<SimpleEntry> {
