@@ -28,28 +28,38 @@ struct HomeView: View {
     }
     
     var body: some View {
-        VStack {
+        VStack  (spacing: 0) {
+            //BG number
             HStack {
                 Text(remoteDataSource.currentGlucoseSample?.presentableStringValue(displayUnits: settings.glucoseDisplayUnits) ?? " ")
                     .strikethrough(egvIsOutdated())
-                    .font(.largeTitle)
+                    .font(.custom("SF Compact", fixedSize:50))
                     .foregroundColor(egvValueColor())
+            }
+            //Trend arrow
+            HStack {
                 if let egv = remoteDataSource.currentGlucoseSample {
                     Image(systemName: egv.arrowImageName())
                         .resizable()
                         .aspectRatio(contentMode: .fit)
-                        .frame(width: 15.0)
-                        .foregroundColor(egvValueColor())
+                        .frame(width:25.0)
+                        .offset(.init(width: 0.0, height: 3.0))
                 }
-                VStack {
-                    Text(lastEGVTimeFormatted())
-                        .font(.footnote)
-                        .if(egvIsOutdated(), transform: { view in
-                            view.foregroundColor(.red)
-                        })
-                            Text(lastEGVDeltaFormatted())
-                            .font(.footnote)
-                }
+                //BG delta
+                Text(lastEGVDeltaFormatted())
+                    .strikethrough(egvIsOutdated())
+                    .font(.custom("SF Compact", fixedSize:40))
+                
+            }
+            //Time since last reading in mm:ss format
+            HStack {
+                Text(durSinceEGV())
+                    .font(.custom("SF Compact", fixedSize:30))
+                Text("ago")
+                    .font(.custom("SF Compact", fixedSize:30))
+                    .if(egvIsOutdated(), transform: { view in
+                        view.foregroundColor(.red)
+                    })
             }
         }
         .navigationTitle(accountService.selectedLooper?.name ?? "Name?")
@@ -100,6 +110,28 @@ struct HomeView: View {
         }
         
         return currentEGV.date.formatted(.dateTime.hour().minute())
+    }
+    
+    //Minutes since last BG reading
+    func minSinceEGV() -> String {
+        guard let currentEGV = remoteDataSource.currentGlucoseSample else {
+            return "0"
+        }
+        return String(Int(Date().timeIntervalSince(currentEGV.date)) / 60)
+    }
+    
+    //Seconds since last BG reading
+    func secSinceEGV() -> String {
+        guard let currentEGV = remoteDataSource.currentGlucoseSample else {
+            return "00"
+        }
+        let seconds = Int(Date().timeIntervalSince(currentEGV.date)) % 60
+        return(String(format: "%02d", seconds))
+    }
+    
+    //Time since last reading in mm:ss
+    func durSinceEGV() -> String {
+        return minSinceEGV() + ":" + secSinceEGV()
     }
     
     func egvIsOutdated() -> Bool {
