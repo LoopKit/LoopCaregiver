@@ -58,6 +58,11 @@ jobs:
       - name: Check Distribution certificate and launch Nuke certificates if needed
         run: bundle exec fastlane check_and_renew_certificates
         id: check_certs
+        
+      - name: Debug Nuke Vars
+        run: |
+          echo "ENABLE_NUKE_CERTS=${{ vars.ENABLE_NUKE_CERTS }}"
+          echo "FORCE_NUKE_CERTS=${{ vars.FORCE_NUKE_CERTS }}"
 
       - name: Set output and annotations based on Fastlane result
         id: set_output
