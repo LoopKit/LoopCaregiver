@@ -277,12 +277,15 @@ jobs:
       - name: Sync clock
         run: sudo sntp -sS time.windows.com
 
-      # 自动设置构建号（使用 GitHub Actions 的运行号保证唯一递增）
-      - name: Set build number
+      # 自动设置构建号并确认 Info.plist 的值
+      - name: Set and confirm build number
         run: |
           INFO_PLIST="LoopCaregiver/LoopCaregiver/Info.plist"
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $GITHUB_RUN_NUMBER" "$INFO_PLIST"
-          echo "Build number set to $GITHUB_RUN_NUMBER"
+          echo "=== Build number set to $GITHUB_RUN_NUMBER ==="
+          echo "=== Info.plist values ==="
+          /usr/libexec/PlistBuddy -c "Print :CFBundleShortVersionString" "$INFO_PLIST"
+          /usr/libexec/PlistBuddy -c "Print :CFBundleVersion" "$INFO_PLIST"
 
       # Build signed LoopCaregiver IPA file
       - name: Fastlane Build & Archive
