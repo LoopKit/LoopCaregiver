@@ -298,36 +298,51 @@ jobs:
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
           
-      # Inspect IPA before uploading (合并 & 幂等)
-      - name: Inspect code signing from IPA
+      # Inspect IPA before uploading (修正版)
+      - name: Inspect code signing & compatibility
         run: |
           set -e
-          # 1) 干净环境 + 静默覆盖解压
+          # 幂等解包
           rm -rf ipa_tmp prof.plist
           unzip -o -q artifacts/*.ipa -d ipa_tmp
           APP=$(ls -d ipa_tmp/Payload/*.app | head -1)
           INFO="$APP/Info.plist"
-
+          BIN="$APP/$(/usr/libexec/PlistBuddy -c 'Print :CFBundleExecutable' "$INFO")"
+      
           echo "=== BUNDLE INFO ==="
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$INFO"
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$INFO"
-          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$INFO"
-          /usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$INFO" 2>/dev/null || echo "MinimumOSVersion=N/A"
-
-          echo "=== PROFILE (embedded.mobileprovision) ==="
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$INFO" || true
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$INFO" || true
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$INFO" || true
+          /usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$INFO" 2>/dev/null || echo "MinimumOSVersion: N/A"
+      
+          echo "=== PROFILE (embedded.mobileprovision) BASIC ==="
           security cms -D -i "$APP/embedded.mobileprovision" > prof.plist
-          /usr/libexec/PlistBuddy -c 'Print :Name' prof.plist
-          /usr/libexec/PlistBuddy -c 'Print :UUID' prof.plist
-          /usr/libexec/PlistBuddy -c 'Print :ExpirationDate' prof.plist
-          /usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' prof.plist
-          /usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' prof.plist
-          /usr/libexec/PlistBuddy -c 'Print :Entitlements:beta-reports-active' prof.plist
-
-          echo "=== APP ENTITLEMENTS (actual signed) ==="
-          /usr/bin/codesign -d --entitlements :- "$APP" | plutil -p - | grep -A5 "com.apple.security.application-groups" || echo "No App Groups in app entitlements"
-
-          echo "=== PROFILE ENTITLEMENTS (allowed by profile) ==="
-          /usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' prof.plist || echo "No App Groups in profile"
+          /usr/libexec/PlistBuddy -c 'Print :Name' prof.plist || true
+          /usr/libexec/PlistBuddy -c 'Print :UUID' prof.plist || true
+          /usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' prof.plist || true
+          /usr/libexec/PlistBuddy -c 'Print :ExpirationDate' prof.plist || true
+          /usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' prof.plist || true
+          /usr/libexec/PlistBuddy -c 'Print :Entitlements:beta-reports-active' prof.plist || true
+      
+          echo "=== PROFILE ENTITLEMENTS (FULL) ==="
+          /usr/libexec/PlistBuddy -c 'Print :Entitlements' prof.plist || true
+          echo "=== PROFILE App Groups ==="
+          /usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' prof.plist 2>/dev/null || echo "No App Groups in profile"
+      
+          echo "=== APP ENTITLEMENTS (FULL, actually signed) ==="
+          /usr/bin/codesign -d --entitlements :- "$APP" 2>/dev/null | plutil -p - || true
+      
+          echo "=== App Groups - APP vs PROFILE ==="
+          echo "APP:"
+          /usr/bin/codesign -d --entitlements :- "$APP" 2>/dev/null | plutil -p - | grep -A5 "com.apple.security.application-groups" || echo "No App Groups in app"
+          echo "PROFILE:"
+          /usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' prof.plist 2>/dev/null || echo "No App Groups in profile"
+      
+          echo "=== DEVICE COMPAT ==="
+          /usr/libexec/PlistBuddy -c 'Print :UIDeviceFamily' "$INFO" 2>/dev/null || echo "UIDeviceFamily: N/A"
+          /usr/libexec/PlistBuddy -c 'Print :CFBundleSupportedPlatforms' "$INFO" 2>/dev/null || echo "CFBundleSupportedPlatforms: N/A"
+          echo "=== ARCH ==="
+          lipo -info "$BIN" || true
 
       # Upload to TestFlight
       - name: Fastlane upload to TestFlight
