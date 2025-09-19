@@ -316,7 +316,22 @@ jobs:
           /usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' prof.plist
           /usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' prof.plist
           /usr/libexec/PlistBuddy -c 'Print :Entitlements:beta-reports-active' prof.plist
-          
+      # 读取 App 的实际 entitlements（App 自己声明要什么）
+      - name: Show app entitlements
+        run: |
+          unzip -q artifacts/*.ipa -d ipa_tmp
+          APP=$(ls -d ipa_tmp/Payload/*.app | head -1)
+          echo "=== APP ENTITLEMENTS ==="
+          /usr/bin/codesign -d --entitlements :- "$APP" | plutil -p - | grep -A5 "com.apple.security.application-groups" || echo "No App Groups"
+
+      # 读取 Profile 里给的 entitlements（Profile 允许什么）
+      - name: Show profile entitlements
+        run: |
+          APP=$(ls -d ipa_tmp/Payload/*.app | head -1)
+          security cms -D -i "$APP/embedded.mobileprovision" > prof.plist
+          echo "=== PROFILE ENTITLEMENTS ==="
+          /usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' prof.plist || echo "No App Groups in profile"
+
       # Upload to TestFlight
       - name: Fastlane upload to TestFlight
         run: bundle exec fastlane caregiver_release
