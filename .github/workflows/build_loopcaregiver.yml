@@ -297,17 +297,23 @@ jobs:
           FASTLANE_ISSUER_ID: ${{ secrets.FASTLANE_ISSUER_ID }}
           FASTLANE_KEY: ${{ secrets.FASTLANE_KEY }}
           MATCH_PASSWORD: ${{ secrets.MATCH_PASSWORD }}
-      # Inspect IPA before uploading (自检步骤)
+          
+      # Inspect IPA before uploading (合并 & 幂等)
       - name: Inspect code signing from IPA
         run: |
-          unzip -q artifacts/*.ipa -d ipa_tmp
+          set -e
+          # 1) 干净环境 + 静默覆盖解压
+          rm -rf ipa_tmp prof.plist
+          unzip -o -q artifacts/*.ipa -d ipa_tmp
           APP=$(ls -d ipa_tmp/Payload/*.app | head -1)
           INFO="$APP/Info.plist"
+
           echo "=== BUNDLE INFO ==="
           /usr/libexec/PlistBuddy -c 'Print :CFBundleIdentifier' "$INFO"
           /usr/libexec/PlistBuddy -c 'Print :CFBundleShortVersionString' "$INFO"
           /usr/libexec/PlistBuddy -c 'Print :CFBundleVersion' "$INFO"
           /usr/libexec/PlistBuddy -c 'Print :MinimumOSVersion' "$INFO" 2>/dev/null || echo "MinimumOSVersion=N/A"
+
           echo "=== PROFILE (embedded.mobileprovision) ==="
           security cms -D -i "$APP/embedded.mobileprovision" > prof.plist
           /usr/libexec/PlistBuddy -c 'Print :Name' prof.plist
@@ -316,20 +322,11 @@ jobs:
           /usr/libexec/PlistBuddy -c 'Print :TeamIdentifier:0' prof.plist
           /usr/libexec/PlistBuddy -c 'Print :Entitlements:application-identifier' prof.plist
           /usr/libexec/PlistBuddy -c 'Print :Entitlements:beta-reports-active' prof.plist
-      # 读取 App 的实际 entitlements（App 自己声明要什么）
-      - name: Show app entitlements
-        run: |
-          unzip -q artifacts/*.ipa -d ipa_tmp
-          APP=$(ls -d ipa_tmp/Payload/*.app | head -1)
-          echo "=== APP ENTITLEMENTS ==="
-          /usr/bin/codesign -d --entitlements :- "$APP" | plutil -p - | grep -A5 "com.apple.security.application-groups" || echo "No App Groups"
 
-      # 读取 Profile 里给的 entitlements（Profile 允许什么）
-      - name: Show profile entitlements
-        run: |
-          APP=$(ls -d ipa_tmp/Payload/*.app | head -1)
-          security cms -D -i "$APP/embedded.mobileprovision" > prof.plist
-          echo "=== PROFILE ENTITLEMENTS ==="
+          echo "=== APP ENTITLEMENTS (actual signed) ==="
+          /usr/bin/codesign -d --entitlements :- "$APP" | plutil -p - | grep -A5 "com.apple.security.application-groups" || echo "No App Groups in app entitlements"
+
+          echo "=== PROFILE ENTITLEMENTS (allowed by profile) ==="
           /usr/libexec/PlistBuddy -c 'Print :Entitlements:com.apple.security.application-groups' prof.plist || echo "No App Groups in profile"
 
       # Upload to TestFlight
