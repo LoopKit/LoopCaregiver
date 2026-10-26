@@ -52,12 +52,13 @@ struct BolusInputView: View {
                     .frame(maxWidth: .infinity)
                     .disabled(disableForm())
                     .padding()
-                    .confirmationDialog("Are you sure?",
-                                        isPresented: $isPresentingConfirm) {
-                        Button("Deliver \(bolusAmount) of insulin to \(looperService.looper.name)?", role: .none) {
+                    .alert("Are you sure?", isPresented: $isPresentingConfirm) {
+                        Button("Deliver") {
                             deliverConfirmationButtonTapped()
                         }
                         Button("Cancel", role: .cancel) {}
+                    } message: {
+                        Text("Deliver \(bolusAmount) U of insulin to \(looperService.looper.name)?")
                     }
                 }
                 .disabled(submissionInProgress)
