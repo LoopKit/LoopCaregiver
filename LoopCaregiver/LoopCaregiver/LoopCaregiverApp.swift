@@ -11,6 +11,11 @@ import SwiftUI
 @main
 struct LoopCaregiverApp: App {
     let composer = ServiceComposerProduction()
+
+    init() {
+        CaregiverAnalytics.shared.recordAppLaunch()
+    }
+
     var body: some Scene {
         WindowGroup {
             ContentView(deepLinkHandler: composer.deepLinkHandler)

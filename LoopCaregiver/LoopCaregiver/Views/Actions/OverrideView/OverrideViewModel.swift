@@ -183,6 +183,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
         
         do {
             try await delegate.cancelOverride()
+            CaregiverAnalytics.shared.recordOverrideEnded()
             deliveryCompleted?()
         } catch {
             lastDeliveryError = error
@@ -201,6 +202,7 @@ class OverrideViewModel: ObservableObject, Identifiable {
             if let selectedOverride = pickerSelectedRow {
                 try await delegate.startOverride(overrideName: selectedOverride.name ?? "",
                                                  durationTime: pickerSelectedDuration)
+                CaregiverAnalytics.shared.recordOverrideEnacted()
             } else {
                 // TODO: Throw error
             }

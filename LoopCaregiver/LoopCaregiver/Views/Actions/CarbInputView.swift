@@ -254,6 +254,7 @@ struct CarbInputView: View {
             submissionInProgress = true
             do {
                 try await deliverCarbs()
+                CaregiverAnalytics.shared.recordCarbEntrySent()
                 showSheetView = false
             } catch {
                 errorText = error.localizedDescription

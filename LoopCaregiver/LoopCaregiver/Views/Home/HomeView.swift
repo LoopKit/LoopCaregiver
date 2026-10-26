@@ -63,6 +63,7 @@ struct HomeView: View {
         .ignoresSafeArea(.keyboard) // Avoid keyboard bounce when popping back from sheets
         .sheet(isPresented: $showCarbView) {
             CarbInputView(looperService: looperService, settings: settings, showSheetView: $showCarbView)
+                .onAppear { CaregiverAnalytics.shared.recordCarbEntryScreen() }
         }
         .sheet(isPresented: $showBolusView) {
             BolusInputView(
@@ -71,6 +72,7 @@ struct HomeView: View {
                 remoteDataSource: looperService.remoteDataSource,
                 showSheetView: $showBolusView
             )
+            .onAppear { CaregiverAnalytics.shared.recordBolusScreen() }
         }
         .sheet(isPresented: $showOverrideView) {
             NavigationStack {
@@ -88,6 +90,7 @@ struct HomeView: View {
                 }
                 .navigationBarTitle(Text("Custom Preset"), displayMode: .inline)
             }
+            .onAppear { CaregiverAnalytics.shared.recordOverrideScreen() }
         }
         .sheet(isPresented: $showSettingsView) {
             SettingsView(
@@ -97,6 +100,7 @@ struct HomeView: View {
                 watchService: watchService,
                 showSheetView: $showSettingsView
             )
+            .onAppear { CaregiverAnalytics.shared.recordSettingsScreen() }
         }
         .onChange(of: scenePhase) { newPhase in
             if newPhase == .active {
