@@ -24,8 +24,7 @@ final class CaregiverAnalytics: ObservableObject {
     static let defaultPreference = UsageDataPrivacyPreference.shareInstallationStatsOnly
 
     // Caregiver's own key, so its devices are counted apart from Loop's.
-    // No client is created while this is empty.
-    private static let apiKey = ""
+    private static let apiKey = "af4024053dd2d5acd95c8a6efed46012"
     private static let serverURL = "https://ingest.loopkit.org/v1/events"
     private static let preferenceKey = "com.loopkit.LoopCaregiver.UsageDataPrivacyPreference"
 
