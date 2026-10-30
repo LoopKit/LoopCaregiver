@@ -144,6 +144,7 @@ struct BolusInputView: View {
             submissionInProgress = true
             do {
                 try await deliverBolus()
+                CaregiverAnalytics.shared.recordBolusSent()
                 showSheetView = false
             } catch {
                 errorText = error.localizedDescription

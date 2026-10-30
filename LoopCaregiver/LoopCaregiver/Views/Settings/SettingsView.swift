@@ -20,6 +20,7 @@ struct SettingsView: View {
     @ObservedObject var accountService: AccountServiceManager
     @ObservedObject var settings: CaregiverSettings
     @ObservedObject var watchService: WatchService
+    @ObservedObject private var analytics = CaregiverAnalytics.shared
     @Binding var showSheetView: Bool
     @State private var isPresentingConfirm = false
     @State private var path = NavigationPath()
@@ -65,6 +66,7 @@ struct SettingsView: View {
                     appExpirationSection(profileExpiration: profileExpiration)
                 }
                 watchSection
+                privacySection
                 experimentalSection
             }
             .toolbar {
@@ -239,6 +241,18 @@ struct SettingsView: View {
             LabeledContent("Watch App Open", value: watchService.isReachable() ? "YES" : "NO")
         } header: {
             SectionHeader(label: "Apple Watch")
+        }
+    }
+
+    var privacySection: some View {
+        Section {
+            NavigationLink {
+                UsageDataPrivacyPreferenceView(analytics: analytics, onboardingMode: false)
+            } label: {
+                LabeledContent("Usage Data Sharing", value: analytics.usageDataPrivacyPreference.title)
+            }
+        } header: {
+            SectionHeader(label: "Privacy")
         }
     }
 
