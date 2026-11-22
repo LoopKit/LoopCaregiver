@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1F0000012FBA000100000001 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 1F0000002FBA000100000001 /* AppIcon.icon */; };
+		1F0000022FBA000100000001 /* AppIcon.icon in Resources */ = {isa = PBXBuildFile; fileRef = 1F0000002FBA000100000001 /* AppIcon.icon */; };
 		4D492955A138485368E2B7C6 /* UsageDataPrivacyPreferenceView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F4B4F58CB39FBA2B3BB2ECD3 /* UsageDataPrivacyPreferenceView.swift */; };
 		53C1CDAB9C7870D2102A7818 /* Amplitude in Frameworks */ = {isa = PBXBuildFile; productRef = 4C5860D11752FD025F494399 /* Amplitude */; };
 		A90152942C321FF90067D123 /* PinchZoom.swift in Sources */ = {isa = PBXBuildFile; fileRef = A90152932C321FF90067D123 /* PinchZoom.swift */; };
@@ -180,6 +182,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1F0000002FBA000100000001 /* AppIcon.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = AppIcon.icon; sourceTree = "<group>"; };
 		0A06DB512A6A6F9C3877D12C /* CaregiverAnalyticsTests.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CaregiverAnalyticsTests.swift; sourceTree = "<group>"; };
 		31662B31AFCE5DD7569F0C58 /* CaregiverAnalytics.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; path = CaregiverAnalytics.swift; sourceTree = "<group>"; };
 		3D717B1629799E8A00B31B03 /* LoopCaregiver.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = LoopCaregiver.xcconfig; sourceTree = "<group>"; };
@@ -557,6 +560,7 @@
 			isa = PBXGroup;
 			children = (
 				A9C666392ADAD41700D3B5CA /* README.md */,
+				1F0000002FBA000100000001 /* AppIcon.icon */,
 				A9688E2D299730C500CDD4D6 /* LICENSE */,
 				A99BC5182AE56468006D52EF /* fastlane */,
 				A99BC5172AE5645B006D52EF /* .github */,
@@ -838,6 +842,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0000022FBA000100000001 /* AppIcon.icon in Resources */,
 				A9CFDD252AEBFF1400FA701B /* Preview Assets.xcassets in Resources */,
 				A9CFDD222AEBFF1400FA701B /* Assets.xcassets in Resources */,
 			);
@@ -855,6 +860,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1F0000012FBA000100000001 /* AppIcon.icon in Resources */,
 				A9EC1983291FEF950022D39F /* Preview Assets.xcassets in Resources */,
 				B63A43E02B2603DD004CFEAA /* BuildDetails.plist in Resources */,
 				A9EC1980291FEF950022D39F /* Assets.xcassets in Resources */,
